@@ -1,0 +1,33 @@
+.component {
+    visibility: visible;
+    transition: visibility 0s linear 5s;
+  }
+  
+  .component.hide {
+    visibility: hidden;
+  }
+
+  #tooltip{
+    background-color: white;
+  border-radius: 5px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  padding: 3px;
+  text-align: center;
+  border: 1px solid;
+  width: 350px;
+   margin-top: 10px;
+   display: flex;
+  }
+
+  
+#tooltip p{
+    color:tomato;
+    font-size: 14px;
+    
+  }
+
+  .svg{
+    height: 30px;
+    width: 30px;
+    margin-right: 20px;
+  }
