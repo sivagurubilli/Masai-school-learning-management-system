@@ -1,16 +1,17 @@
 import React,{useState} from 'react'
 import { masaiimage } from '../../assets/assets';
-import  Tooltip  from "../Tooltip/Tooltip" 
+import  Tooltip  from "../Tooltip/Tooltip";
 import { validateEmail } from '../Helper';
 import { Flex, Box, Input,FormControl,FormLabel, Image,
     Checkbox,  Button, HStack, Text,Container } from "@chakra-ui/react";
+
 
 const ForgetPassword = () => {
 
     const [show,setShow]= useState(false)
     const [email,setemail] = useState(false)
-
-       const handleSubmit=(e)=>{
+   
+      const handleSubmit=(e)=>{
           e.preventDefault();
          if (validateEmail(email)===false) {
            setShow(true)
@@ -20,9 +21,10 @@ const ForgetPassword = () => {
     }
 
   return (
-    <div className='container'>    
+    <>
+   <div className='container'>   
     <Container w="100%"  centerContent>
-     <Image boxSize='120px' mt ="70px" objectFit='contain'  src={masaiimage} alt='Masai logo' />
+     <Image boxSize='120px' mt ="0px" objectFit='contain'  src={masaiimage} alt='Masai logo' />
    
       <Box w={["full","md"]}
          p="20px"
@@ -52,6 +54,7 @@ const ForgetPassword = () => {
     </Box>
   </Container>
 </div>
+</>
   )
 }
 

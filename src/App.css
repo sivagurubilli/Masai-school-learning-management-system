@@ -6,6 +6,8 @@ body{
 }
 .container{
   height: 100vh;
-  padding: 20px;
+  background-color: rgb(243,244,246);
+}
+:root{
   background-color: rgb(243,244,246);
 }

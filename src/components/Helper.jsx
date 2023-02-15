@@ -7,7 +7,7 @@
       //  this function is for validating password 
 export const validatePassword = (password) => {
    
-    if(password.length<8){
+    if(password.length < 8){
         return "password Should Contain  8 Characters"
      }
     if(/[A-Z]/.test(password)===false){

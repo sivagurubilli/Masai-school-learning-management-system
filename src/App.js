@@ -4,11 +4,14 @@ import Navbar from "./components/Navbar/Navbar.jsx"
 import Allroutes from './components/Allroutes';
 
 
+
+
 function App() {
   return (
     <div className="App">
-    <Navbar/>
+    
     <Allroutes />
+    
     </div>
   );
 }

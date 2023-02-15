@@ -2,7 +2,7 @@ import React , { useState } from 'react';
 import './Adminlogin.css';
 import { masaiimage } from '../../assets/assets';
 import Tooltip from "../../components/Tooltip/Tooltip";
-import { Flex, Box, Input,FormControl,FormLabel, Image, Checkbox,  Button,Container,  HStack} from "@chakra-ui/react";
+import { Flex, Text,Box, Input,FormControl,FormLabel, Image, Checkbox,  Button,Container,  HStack} from "@chakra-ui/react";
 import { validatePassword,validateEmail} from '../../components/Helper';
 
 
@@ -15,7 +15,6 @@ const Adminlogin = () => {
    const [passwordError,setPasswordError] = useState()
  const [showPasswordError,setShowPasswordError] =useState(false)
 
-// const passwordError = "Password must have more than 8 characters, contain a capital letter, contain a number, and should not contain an underscore."
 
 const handleSubmit = (e) => {
   e.preventDefault();
@@ -45,6 +44,7 @@ const handleSubmit = (e) => {
        <Box w={["full","md"]}
          p="10px 20px 20px 30px"
          mx="auto"
+
          border={['none']}
          bg="white"
          borderColor={["",'grey.300']}
@@ -57,28 +57,28 @@ const handleSubmit = (e) => {
 
 
         <FormControl>
-             <FormLabel fontWeight="500" color="rgb(31,41,55)" fontSize="15px" mt={4}>Email</FormLabel>
-                 <Input required="true" variant='outline'  placeholder='email' onChange={(e)=>setLoginEmail(e.target.value)}/>
+             <FormLabel fontSize=".900rem" fontWeight="500" color="rgb(55 65 81)" mt={4}>Email</FormLabel>
+                 <Input required="true" variant='outline'  placeholder='Email' onChange={(e)=>setLoginEmail(e.target.value)}/>
                     {show && (<Tooltip value={"Please enter a valid email address."} show={show} setShow={setShow}/>)}
         </FormControl>
 
 
        <FormControl>
-          <FormLabel  fontWeight="500" color="rgb(31,33,40)" fontSize="15px" mt={4} >Password</FormLabel>
-             <Input variant='outline' required placeholder='password' onChange={(e)=>setLoginPassword(e.target.value)} />
+          <FormLabel  fontSize=".900rem"  fontWeight="500" color="rgb(55 65 81)" mt={4} >Password</FormLabel>
+             <Input variant='outline' required placeholder='Password' onChange={(e)=>setLoginPassword(e.target.value)} />
                    {showPasswordError && (<Tooltip value ={passwordError} show={showPasswordError} setShow={setShowPasswordError}/>)}
         </FormControl>
 
 
 
-         <HStack mt='10px' w='full' justify="space-between">
-               <Checkbox>Remember Me</Checkbox>
+         <HStack mt='10px' w='full'>
+               <Checkbox ></Checkbox><Text color={"rgb(75 85 99"} fontSize=".900rem">Remember Me</Text>
           </HStack>
 
       <Flex justifyContent="flex-end">
         <HStack>
-           <Button variant="link" textDecoration="underline" color="fire">Forget your password?</Button>
-           <Button bg="black" h="35px"   w="80px" color="white"  rounded="10px" onClick={handleSubmit}>Login</Button>
+           <Button variant="link" fontSize={".900rem"} textDecoration="underline" color="rgb(75 85 99)">Forget your password?</Button>
+           <Button bg="rgb(31 41 55)" h="35px"   w="80px" color="white"  rounded="10px" onClick={handleSubmit}>Login</Button>
         </HStack>
       </Flex>
    </Box>
