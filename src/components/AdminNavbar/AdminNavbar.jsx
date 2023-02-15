@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import "./AdminNavbar.css"
-import Profilecomponent from "../ProfileComponent/Profilecomponent"
+import Profilecomponent from "../StudentNavbar/Profilecomponent"
 import { Link,NavLink } from "react-router-dom";
  import { Divider, Text,Flex, Image,Box,  Heading, Hide,  Show,  Tooltip, } from '@chakra-ui/react'
 import { masaiimage } from '../../assets/assets';
@@ -47,6 +47,8 @@ const Navbar = () => {
            <Box className='li' ><NavLink  activeClassName="active-link" to ="/admin/problems" >problems</NavLink></Box>
 
         </Flex>
+        
+{/*  this part is about display hamburger in menu item for small screeens  */}
             <Box ml={"100px"} onClick={()=>setshow1(!show1)}>  gurubilli siva
              <i style={{marginLeft:"20px"}} className="fa-solid fa-circle-chevron-down" ></i>
            </Box> 

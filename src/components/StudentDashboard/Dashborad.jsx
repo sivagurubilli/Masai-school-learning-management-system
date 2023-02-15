@@ -4,7 +4,7 @@ import {useParams} from "react-router-dom";
 import {Box} from "@chakra-ui/react"
 import '../../App.css'
 import AdminNavbar from '../AdminNavbar/AdminNavbar';
-import Navbar from '../Navbar/Navbar';
+import Navbar from '../StudentNavbar/Navbar';
 
 const Dashborad = () => {
     

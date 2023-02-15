@@ -3,7 +3,7 @@ import Tooltip from "../../components/Tooltip/Tooltip"
 import { useReducer } from 'react';
 import { masaiimage,recaptchasitekey,reacptchasecret } from '../../assets/assets';
 import  '../../App.css';
-import { validateEmail,validatePassword } from '../../components/Helper';
+import { validateEmail,validatePassword } from '../../components/Emailvalidator';
 import ReCAPTCHA from "react-google-recaptcha";
 import { Flex, Box, Input,FormControl,FormLabel, Image,
    Checkbox,  Button, HStack,Container } from "@chakra-ui/react";
@@ -70,31 +70,30 @@ const [show,setShow]= useState(false)
     }
   };
 
-//  this function for validating email
 
 
 
- const handleSubmit = (e) => {
+const handleSubmit = (e) => {
     e.preventDefault();
     handlerecaptchaSubmit();
 
     if(!state.name){
-     setShowempty(true)
+         setShowempty(true)
     }
-
+  // validating email
     if (validateEmail(state.email)===false) {
-      setShow(true)
+           setShow(true)
      }
 
+   //validating password
     let res= validatePassword(state.password)
-    
-    if(res){
-      setPasswordError(res)
-     setShowPasswordError(true)
+      if(res){
+           setPasswordError(res)
+        setShowPasswordError(true)
  
       }
      if(state.password!==state.reEnteredPassword){
-    setShowRetypeError(true)
+               setShowRetypeError(true)
      }
     else {
     
@@ -106,8 +105,7 @@ const [show,setShow]= useState(false)
 
   return (
     <>
-    
-    <div className='container'>    
+     <div className='container'>    
       <Container w="100%"  centerContent>
        <Image boxSize='120px' objectFit='contain' mt="40px" src={masaiimage} alt='Masai logo' />
          <Box w={["full","md"]}

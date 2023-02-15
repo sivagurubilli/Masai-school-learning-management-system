@@ -1,7 +1,7 @@
 import React,{useState} from 'react'
 import { masaiimage } from '../../assets/assets';
 import  Tooltip  from "../Tooltip/Tooltip";
-import { validateEmail } from '../Helper';
+import { validateEmail } from '../Emailvalidator';
 import { Flex, Box, Input,FormControl,FormLabel, Image,
     Checkbox,  Button, HStack, Text,Container } from "@chakra-ui/react";
 
