@@ -4,7 +4,7 @@ import { useReducer } from 'react';
 import { masaiimage,recaptchasitekey,reacptchasecret } from '../../assets/assets';
 import  '../../App.css';
 import { validateEmail,validatePassword } from '../../components/Helper';
-import ReCAPTCHA from "react-google-recaptcha"
+import ReCAPTCHA from "react-google-recaptcha";
 import { Flex, Box, Input,FormControl,FormLabel, Image,
    Checkbox,  Button, HStack,Container } from "@chakra-ui/react";
 
@@ -41,9 +41,6 @@ const [show,setShow]= useState(false)
  const [showempty,setShowempty]= useState(false)
  const [recaptchaToken, setRecaptchaToken] = useState(null);
  const reRef = useRef() 
-
-
-
 
   //onclicking on recaptcha set recaptcha token
   const handleRecaptcha = (token) => {
@@ -90,9 +87,11 @@ const [show,setShow]= useState(false)
      }
 
     let res= validatePassword(state.password)
+    
     if(res){
-     setPasswordError(res)
+      setPasswordError(res)
      setShowPasswordError(true)
+ 
       }
      if(state.password!==state.reEnteredPassword){
     setShowRetypeError(true)
@@ -106,6 +105,8 @@ const [show,setShow]= useState(false)
 
 
   return (
+    <>
+    
     <div className='container'>    
       <Container w="100%"  centerContent>
        <Image boxSize='120px' objectFit='contain' mt="40px" src={masaiimage} alt='Masai logo' />
@@ -123,27 +124,27 @@ const [show,setShow]= useState(false)
   <ul>  These credentials do not match our records.</ul></p>} */}
   
      <FormControl>
-           <FormLabel fontWeight="500" color="rgb(31,41,55)" fontSize="15px" mt={4}>Name</FormLabel>
+           <FormLabel fontWeight="500" color="rgb(55 65 81)" fontSize=".900rem" mt={4}>Name</FormLabel>
              <Input isRequired variant='outline'  placeholder='Name'  onChange={(e) =>setState({ type: "name", payload: e.target.value })}/>
                  {showempty && (<Tooltip value={"please fill all feilds"} show={showempty} setShow={setShowempty}/>)}
       </FormControl>
 
      <FormControl>
-           <FormLabel fontWeight="500" color="rgb(31,41,55)" fontSize="15px" mt={4}>Email</FormLabel>
-            <Input  variant='outline'  placeholder='email' onChange={(e) =>setState({ type: "email", payload: e.target.value })}/>
+           <FormLabel fontWeight="500"color="rgb(55 65 81)" fontSize=".900rem"  mt={4}>Email</FormLabel>
+            <Input  variant='outline'  placeholder='Email' onChange={(e) =>setState({ type: "email", payload: e.target.value })}/>
                  {show && (<Tooltip value={"Please enter a valid email address."} show={show} setShow={setShow}/>)}
       </FormControl>
   
    
      <FormControl>
-           <FormLabel  fontWeight="500" color="rgb(31,33,40)" fontSize="15px" mt={4} >Password</FormLabel>
-            <Input variant='outline' required placeholder='password' onChange={(e) =>setState({ type: "password", payload: e.target.value })} />
+           <FormLabel  fontWeight="500"color="rgb(55 65 81)" fontSize=".900rem" mt={4} >Password</FormLabel>
+            <Input variant='outline' required placeholder='Password' onChange={(e) =>setState({ type: "password", payload: e.target.value })} />
              {showPasswordError && (<Tooltip value ={passwordError} show={showPasswordError} setShow={setShowPasswordError}/>)}
       </FormControl>
 
    
       <FormControl>
-            <FormLabel  fontWeight="500" color="rgb(31,33,40)" fontSize="15px" mt={4} >Re-enter Password</FormLabel>
+            <FormLabel  fontWeight="500" color="rgb(55 65 81)" fontSize=".900rem" mt={4} >Re-enter Password</FormLabel>
                <Input variant='outline'  placeholder='Re-enter Password' onChange={(e) =>setState({ type: "reEnteredPassword", payload: e.target.value })} />
                   {showRetypePassword && (<Tooltip value ={"password did not matched"} show={showRetypePassword} setShow={setShowRetypeError}/>)}
        </FormControl>
@@ -154,12 +155,13 @@ const [show,setShow]= useState(false)
 
      <Flex justifyContent="flex-end">
           <HStack>
-              <Button bg="black" h="40px" w="90px" color="white"  rounded="10px" onClick={handleSubmit}>Signup</Button>
+              <Button  bg="rgb(31 41 55)" h="35px"  w="90px" color="white"  rounded="10px" onClick={handleSubmit}>Signup</Button>
           </HStack>
       </Flex>
     </Box>
  </Container>
 </div>
+</>
 
   )
 }

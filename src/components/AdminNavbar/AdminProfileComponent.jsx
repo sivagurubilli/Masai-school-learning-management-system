@@ -3,7 +3,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { Box,Text,Divider } from '@chakra-ui/react'
 // this component is for when clicking user name in navbar this component should display
-const Profilecomponent = ({setshow1}) => {
+const AdminProfileComponent = ({setshow1}) => {
 
   return (
     
@@ -14,8 +14,8 @@ const Profilecomponent = ({setshow1}) => {
       position="absolute"
       width="200px"
       height="auto"
+      marginTop="-10px"
       marginLeft="82%"
-      mt="-10px"
       border="1px solid #778087"
       borderRadius="5px"
       boxShadow="0 5px 15px rgba(0,0,0,0.06)"
@@ -24,8 +24,8 @@ const Profilecomponent = ({setshow1}) => {
       
     >
     <Text color="#778087" fontSize="sm" padding="5px">Manage Access</Text>
-    <Text color="black"  padding="5px"><Link to="/user/profile" onClick={()=>setshow1(false)}>Profile</Link></Text>
-     <Text color="black"  padding="5px"><Link to="/transcript" onClick={()=>setshow1(false)}>Transcript </Link></Text>
+    <Text color="black"  padding="5px"><Link to="/admin/profile" onClick={()=>setshow1(false)}>Profile</Link></Text>
+     <Text color="black"  padding="5px"><Link to="admin/transcript" onClick={()=>setshow1(false)}>Transcript </Link></Text>
      <Divider borderColor="gray.300"/>
     <Text color="black"  padding="10px">Logout</Text>
     </Box>
@@ -33,4 +33,4 @@ const Profilecomponent = ({setshow1}) => {
   )
 }
 
-export default Profilecomponent
+export default AdminProfileComponent
