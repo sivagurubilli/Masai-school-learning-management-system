@@ -2,7 +2,7 @@
 
 .li{
     text-decoration: none;
-    font-size: .900rem;;
+    font-size: .950rem;;
     font-weight: 600px;
     color:rgb(77, 88, 100);
     padding-left: 10px;
@@ -114,21 +114,10 @@
         color: blue;
         border-left: 2px solid tomato;
     }
-    #navbar-mobile li a.hover{
-      content:"";
-      width:100%;
-     padding: 10px;
-      position: absolute;
-     margin-left: -20px;
-     margin-top: -10px;
-     background-color: skyblue;
-      color: blue;
-      border-left: 2px solid tomato;
-  }
-
+  
   #bar{
-        width: 20px;
-        height: 20px;
+        width: 30px;
+        height: 30px;
       
   
     }
