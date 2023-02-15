@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import './Adminlogin.css';
 import { masaiimage } from '../../../assets/assets';
 import Tooltip from '../../../components/Tooltip/Tooltip';
+import { validatePassword, validateEmail } from '../../../components/Emailvalidator';
+import Navbar from '../../../components/StudentNavbar/Navbar';
+import Secondnav from '../../../components/AdminsideComponents/AdminLecture/Secondnav';
 import {
   Flex,
   Text,
@@ -14,10 +17,9 @@ import {
   Button,
   Container,
   HStack,
+  FormErrorMessage,
 } from '@chakra-ui/react';
-import { validatePassword, validateEmail } from '../../../components/Emailvalidator';
-import Navbar from '../../../components/StudentNavbar/Navbar';
-import Secondnav from '../../../components/AdminsideComponents/AdminLecture/Secondnav';
+
 
 interface IAdminLoginProps {}
   
@@ -34,6 +36,10 @@ const Adminlogin = () => {
   const [show, setShow] = useState(false);
   const [passwordError, setPasswordError] = useState<IValidationError | undefined>();
   const [showPasswordError, setShowPasswordError] = useState(false);
+  const [emailError,setEmailError] = useState(false)
+  const [emailError1,setEmailError1] = useState("")
+
+
 
   const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -42,14 +48,25 @@ const Adminlogin = () => {
     if (res) {
       setPasswordError({ message: res });
       setShowPasswordError(true);
-    }
+    
             //validating email
-    if (validateEmail(loginEmail) === false) {
-      setShow(true);
+    
+    
     } else {
+      
       // code to submit the form goes here. after get api
     }
   };
+
+  const handleChange=(e: React.ChangeEvent<HTMLInputElement>)=>{
+    setLoginEmail(e.target.value)
+     setEmailError(false)
+          if (validateEmail(loginEmail) === false) {
+           setEmailError1("email wrong")
+            setEmailError(true)
+
+}
+  }
 
   return (
     <div className='container'>
@@ -67,12 +84,13 @@ const Adminlogin = () => {
           borderRadius={10}
           boxShadow='2px 4px 6px rgba(0, 0, 0, 0.1)'
         >
-          <FormControl>
+          <FormControl isInvalid={emailError}>
             <FormLabel fontSize='.900rem' fontWeight='500' color='rgb(55 65 81)' mt={4}>
               Email
             </FormLabel>
-            <Input variant='outline' placeholder='Email' onChange={(e) => setLoginEmail(e.target.value)} />
-            {show && <Tooltip value={'Please enter a valid email address.'} show={show} setShow={setShow} />}
+            <Input variant='outline' placeholder='Email' onChange={handleChange} />
+            <FormErrorMessage color={"tomoto"}>{emailError1}</FormErrorMessage>
+           
           </FormControl>
           <FormControl>
             <FormLabel fontSize='.900rem' fontWeight='500' color='rgb(55 65 81)' mt={4}>
@@ -106,4 +124,4 @@ const Adminlogin = () => {
   )
 }
 
-export default Adminlogin
+export default Adminlogin;

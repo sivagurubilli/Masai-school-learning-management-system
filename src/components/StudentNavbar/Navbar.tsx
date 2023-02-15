@@ -16,7 +16,7 @@ const Navbar = () => {
   
   return (
    <>
-    <Box position={'sticky'} top='0' bg='whiteAlpha.900' w='100%' zIndex='1'>
+    <Box position="relative" top='0' bg='whiteAlpha.900' w='100%' zIndex='1'>
       <Box boxShadow='sm' >
         <Flex position={'relative'}
           w={"97%"}
@@ -29,7 +29,7 @@ const Navbar = () => {
             <Link to="/dashboard"> <Image objectFit='contain' minH={"30px"} minW="80px" src={masaiimage} alt='Masai logo' /></Link>
 
             <Hide below='md'>
-              <Flex w="70%" justifyContent={"space-around"} align="center" >
+              <Flex w="65%" justifyContent={"space-around"} align="center" >
                 <Box className='li' >
                   <NavLink  to="/lectures" >Lectures</NavLink>
                 </Box>
@@ -62,7 +62,7 @@ const Navbar = () => {
                 </Box>
               </Flex>
 
-              <Box ml={"100px"} onClick={() => setShowProfile(!showProfile)}>gurubilli siva
+              <Box ml={"100px"} onClick={() => setShowProfile(!showProfile)}>gurubilli siva (fw15_393)
                 <i style={{ marginLeft: "20px" }} className="fa-solid fa-circle-chevron-down"></i>
               </Box>
             </Hide>

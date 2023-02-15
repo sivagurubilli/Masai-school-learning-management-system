@@ -172,7 +172,7 @@ const AdminSignup = () => {
 
      <Flex justifyContent="flex-end">
           <HStack>
-              <Button  bg="rgb(31 41 55)" h="35px"  w="90px" color="white"  rounded="10px" onClick={handleSubmit}>Signup</Button>
+              <Button  colorScheme='grey' h="35px"  w="90px" color="white"  rounded="10px" onClick={handleSubmit}>Signup</Button>
           </HStack>
       </Flex>
     </Box>
