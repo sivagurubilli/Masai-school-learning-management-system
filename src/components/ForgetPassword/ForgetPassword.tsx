@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { masaiimage } from "../../assets/assets";
+import { masaiimage } from "../../Assets/Assets";
 import Tooltip from "../Tooltip/Tooltip";
 import { validateEmail } from "../Emailvalidator";
 import {

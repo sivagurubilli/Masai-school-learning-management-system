@@ -13,7 +13,7 @@ import {
   Show,
   Tooltip,
 } from "@chakra-ui/react";
-import { masaiimage } from "../../assets/assets";
+import { masaiimage } from "../../Assets/Assets";
 
 const Navbar = () => {
   const [clicked, setClicked] = useState(false);

@@ -1,7 +1,11 @@
-import React, { useState } from "react";
+import React, { useState  ,Dispatch } from "react";
+import { useDispatch, useSelector } from 'react-redux';
 import "./Adminlogin.css";
-import { masaiimage } from "../../../assets/assets";
+import { masaiimage } from "../../../Assets/Assets";
 import Tooltip from "../../../components/Tooltip/Tooltip";
+import  {RootState}  from "../../../redux/store";
+import { AdminLoginAction } from "../../../redux/Authreducer/actions";
+
 import {
   Flex,
   Text,
@@ -21,7 +25,11 @@ import {
 } from "../../../components/Emailvalidator";
 
 
-interface IAdminLoginProps {}
+interface IAdminLoginProps {
+
+  loginEmail: string;
+  loginPassword: string;
+}
 
 //validation Error state
 interface IValidationError {
@@ -34,25 +42,26 @@ const Adminlogin = () => {
   const [loginPassword, setLoginPassword] = useState("");
   const [forgotPass, setForgotPass] = useState(false);
   const [show, setShow] = useState(false);
-  const [passwordError, setPasswordError] = useState<
-    IValidationError | undefined
-  >();
-  const [showPasswordError, setShowPasswordError] = useState(false);
+  const dispatch: Dispatch<any> = useDispatch()
+  const {isAuthenticated,isAdmin } = useSelector((store: RootState) => store.Authreducer)
+
+
+  const handleEmail=(event: React.ChangeEvent<HTMLInputElement>)=>{
+    setShow(false)
+    setLoginEmail(event.target.value)
+    if(validateEmail(event.target.value)===false){
+      setShow(true)
+
+    }
+  } 
 
   const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    //validating password
-    let res = validatePassword(loginPassword);
-    if (res) {
-      setPasswordError({ message: res });
-      setShowPasswordError(true);
-    }
-    //validating email
-    if (validateEmail(loginEmail) === false) {
-      setShow(true);
-    } else {
+   
+   
+   dispatch(AdminLoginAction({  loginEmail,loginPassword}))
       // code to submit the form goes here. after get api
-    }
+    
   };
 
   return (
@@ -77,7 +86,7 @@ const Adminlogin = () => {
           borderRadius={10}
           boxShadow="2px 4px 6px rgba(0, 0, 0, 0.1)"
         >
-          <FormControl>
+          <FormControl >
             <FormLabel
               fontSize=".875rem"
               fontWeight="500"
@@ -89,7 +98,7 @@ const Adminlogin = () => {
             <Input
               variant="outline"
               placeholder="Email"
-              onChange={(e) => setLoginEmail(e.target.value)}
+              onChange={handleEmail}
             />
             {show && (
               <Tooltip
@@ -114,13 +123,8 @@ const Adminlogin = () => {
               placeholder="Password"
               onChange={(e) => setLoginPassword(e.target.value)}
             />
-            {showPasswordError && (
-              <Tooltip
-                value={passwordError?.message || ""}
-                show={showPasswordError}
-                setShow={setShowPasswordError}
-              />
-            )}
+           
+          
           </FormControl>
           <HStack mt="10px" w="full">
             <Checkbox></Checkbox>

@@ -3,7 +3,6 @@ import Secondnavbar from "./Secondnavbar";
 import { useParams } from "react-router-dom";
 import { Box } from "@chakra-ui/react";
 import "../../App.css";
-import AdminNavbar from "../AdminsideComponents/AdminNavbar/AdminNavbar";
 import Navbar from "../StudentNavbar/Navbar";
 
 // this component displays student side dashboard

@@ -1,4 +1,7 @@
-import React, { useRef, useReducer, useState } from "react";
+import React, { useRef, useReducer, useState,Dispatch } from "react";
+import { useDispatch, useSelector } from 'react-redux';
+import  {RootState}  from "../../../redux/store";
+import { AdminsignupAction } from "../../../redux/Authreducer/actions";
 import Tooltip from "../../../components/Tooltip/Tooltip";
 import {
   validateEmail,
@@ -9,8 +12,9 @@ import {
   masaiimage,
   recaptchasitekey,
   reacptchasecret,
-} from "../../../assets/assets";
+} from "../../../Assets/Assets";
 import "../../../App.css";
+
 import {
   Flex,
   Box,
@@ -31,6 +35,8 @@ interface SignupFormState {
   password: string;
   reEnteredPassword: string;
 }
+
+
 
 // reducer action types  for handling reducer  function
 type SignupFormAction =
@@ -72,13 +78,23 @@ const AdminSignup = () => {
   const [showempty, setShowEmpty] = useState(false);
   const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null);
   const reRef = useRef<ReCAPTCHA>(null);
-
+  const dispatch: Dispatch<any> = useDispatch()
+  const {isAuthenticated,isAdmin } = useSelector((store: RootState) => store.Authreducer)
   // onclicking on recaptcha set recaptcha token
   const handleRecaptcha = (token: string | null) => {
     setRecaptchaToken(token);
     console.log(token);
   };
 
+
+  const adminSignupDetails:  SignupFormState= {
+    name: state.name,
+    email: state.email,
+    password: state.password,
+    reEnteredPassword: state.reEnteredPassword
+    
+    
+  };
   // validating for reacptcha
   const handleRecaptchaSubmit = async () => {
     try {
@@ -102,6 +118,8 @@ const AdminSignup = () => {
       console.error(error);
     }
   };
+
+
   const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     handleRecaptchaSubmit();
@@ -125,6 +143,8 @@ const AdminSignup = () => {
     } else {
       setPasswordError("");
       //  code to submit the form goes here. after get api
+      dispatch(AdminsignupAction(adminSignupDetails));
+      // dispatch(AdminsignupAction({state.name,state.email,state.password,state.reEnteredPassword}))
     }
   };
 

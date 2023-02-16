@@ -12,7 +12,7 @@ import {
   Show,
   Tooltip,
 } from "@chakra-ui/react";
-import { masaiimage } from "../../../assets/assets";
+import { masaiimage } from "../../../Assets/Assets";
 import AdminProfileComponent from "./AdminProfileComponent";
 
 //admin side navbar
