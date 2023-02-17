@@ -1,5 +1,5 @@
 import './App.css';
-import Allroutes from './components/Allroutes';
+import Allroutes from './Components/Allroutes';
 import React from 'react';
 import axios from "axios"
 

@@ -1,8 +1,8 @@
 import React from "react";
 import "../../../App.css";
-import Secondnav from "../../../components/AdminsideComponents/AdminLecture/Secondnav";
+import Secondnav from "../../../Components/AdminsideComponents/AdminLecture/Secondnav";
 
-import Navbar from "../../../components/StudentNavbar/Navbar";
+import Navbar from "../../../Components/StudentNavbar/Navbar";
 
 const AdminLecture = () => {
   return (

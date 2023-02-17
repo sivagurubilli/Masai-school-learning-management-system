@@ -1,9 +1,10 @@
-import AdminLecture from "../Pages/Adminsidepages/AdminLecturePage/AdminLecture";
-import AdminSignup from "../Pages/Adminsidepages/AdminSignup/Adminsignup";
+import AdminLecture from "../Pages/AdminSidePages/AdminLecturePage/index";
+import AdminSignup from "../Pages/AdminSidePages/AdminSignup/index";
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import Adminlogin from "../Pages/Adminsidepages/AdminLogin/Adminlogin";
-import ForgetPassword from "./ForgetPassword/ForgetPassword";
+import Adminlogin from "../Pages/AdminSidePages/AdminLogin/index";
+import ForgetPassword from "./ForgetPassword";
+import StudentSignup from '../Pages/StudentSidePages/StudentSignup/StudentSignup'
 import Dashborad from "./StudentDashboard/Dashborad";
 
 const Allroutes = () => {
@@ -15,6 +16,7 @@ const Allroutes = () => {
         <Route path="/admin/lectures" element={<AdminLecture />} />
         <Route path="/admin/signup" element={<AdminSignup />} />
         <Route path="/admin/login" element={<Adminlogin />} />
+        <Route path ="/student/signup" element ={<StudentSignup/>}/>
         <Route path="/user/profile" />
         <Route path="/transcript" />
       </Routes>

@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, Dispatch } from "react";
 import { masaiimage } from "../../Assets/Assets";
 import Tooltip from "../Tooltip/Tooltip";
 import { validateEmail } from "../Emailvalidator";
+import { useDispatch } from "react-redux";
 import {
   Flex,
   Box,
@@ -16,17 +17,22 @@ import {
   Container,
 } from "@chakra-ui/react";
 
+interface LoginUser {
+  email: string;
+}
+
 // this component is for sending request  for passward reset link
 const ForgetPassword = () => {
   const [show, setShow] = useState(false);
-  const [email, setEmail] = useState<string>("");
+  const [email, setEmail] = useState("");
+  const dispatch: Dispatch<any> = useDispatch();
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (validateEmail(email) === false) {
       setShow(true);
     }
-
+    dispatch({});
     // send password reset link to mail
   };
 

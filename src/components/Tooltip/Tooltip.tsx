@@ -2,13 +2,13 @@ import React, { useState, useEffect } from "react";
 import "./Tooltip.css";
 import { Box, Text } from "@chakra-ui/react";
 
-type Props = {
+type IToolTip = {
   value: string | undefined;
   show: boolean;
   setShow: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const Tooltip = ({ value, show, setShow }: Props) => {
+const Tooltip = ({ value, show, setShow }:IToolTip) => {
   // after 5 secs tooltip disapppear
   useEffect(() => {
     setTimeout(() => {
