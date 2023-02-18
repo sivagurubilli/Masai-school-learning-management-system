@@ -32,7 +32,7 @@ interface IFormData {
 }
 
 const validationSchema = yup.object().shape({
-  name: yup.string().min(3, "Name should not be less than 3 character"),
+  name: yup.string().required("This feild is required").min(3, "Name should not be less than 3 character"),
   email: yup.string().required("Email is required").email("Email is invalid"),
   password: yup
     .string()
@@ -102,7 +102,7 @@ export default function AdminSignup() {
             borderRadius={10}
             boxShadow="2px 4px 6px rgba(0, 0, 0, 0.1)"
           >
-            <form onSubmit={handleSubmit}>
+            <form  onSubmit={handleSubmit}>
               <div>
                 <FormLabel
                   fontSize=".875rem"
@@ -174,7 +174,7 @@ export default function AdminSignup() {
                   variant="outline"
                   type="password"
                   placeholder="Re Enter Password"
-                  name="reenterpassword"
+                  name="reEnterPassword"
                   onChange={handleChange}
                   value={values.reEnterPassword}
                 />

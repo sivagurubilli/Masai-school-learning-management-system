@@ -23,11 +23,13 @@ import {
 
 import {
   AdminSignupService,
+  getBatchArrray,
   IAdminAccountCreate,
   
 } from "../../../Services/AuthServices";
 import "./index.css";
 import { useNavigate } from "react-router-dom";
+import Recaptchavalid from "./Recaptchavalid";
 interface IFormData {
   name: string;
   batch: string;
@@ -39,8 +41,8 @@ interface IFormData {
 }
 
 const validationSchema = yup.object().shape({
-  name: yup.string().min(3, "Name must be 3 character"),
-  email: yup.string().required("Email is required").email("Email is invalid"),
+  name: yup.string().required("This feild is required").min(3, "Name must be 3 character"),
+  email: yup.string().email("Email is invalid"),
   password: yup
     .string()
     .min(8, "Password must be 8 characters long")
@@ -64,7 +66,7 @@ const initialValues: IFormData = {
 };
 
 const onSubmit = async (values: IFormData) => {
-  console.log(values);
+ 
   AdminSignupService(values);
 };
 
@@ -81,6 +83,16 @@ export default function StudentSignup() {
   const gotoLogin = () => {
     navigate("/student/login");
   };
+
+  // getBatchArrray().then((res)=>{
+  //     res.Array
+  //   }).catch(err)=>{
+  //     conosle.log(err)
+  //   }
+
+
+
+
   return (
     <>
       <div className="container">
@@ -138,7 +150,7 @@ export default function StudentSignup() {
                 value={values.batch}
                 placeholder="Select an option"
               >
-                {batchValues.map((option) => (
+                { getBatchArrray.map((option) => (
                   <option key={option.value} value={option.value}>
                     {option.label}
                   </option>
@@ -217,13 +229,13 @@ export default function StudentSignup() {
                   variant="outline"
                   type="password"
                   placeholder="Re Enter Password"
-                  name="reenterpassword"
+                  name="reEnterPassword"
                   onChange={handleChange}
                   value={values.reEnterPassword}
                 />
                 {errors.reEnterPassword && <div className="error-showing-pop-up">{errors.reEnterPassword}</div>}
               </div>
-
+        {/* <Recaptchavalid /> */}
               <Flex justifyContent="flex-between">
                 <button className="buttonlogin"  onClick={gotoLogin}>
                   <Text fontSize="14px">

@@ -46,7 +46,7 @@ export async function StudentSignupService(
 export async function AdminSignupService(
   data: IAdminAccountCreate
 ): Promise<IAdminAccountCreate> {
-  console.log(data, "sicva");
+  
   const response = await axios.post<IAdminAccountCreate>("/api/admin/signup", {
     studentaccountDetails: data,
   });
@@ -61,10 +61,11 @@ interface IbatchArray {
   student:string[];
 }
 
-export async function getBatchArrray(): Promise<IbatchArray[]> {
 
-    const response: AxiosResponse<IbatchArray[]> = await axios.get('/api/batch');
-    return response.data;
+export async function getBatchArrray() {
+
+    const response: AxiosResponse<IbatchArray[]> = await axios.get('api/batch');
+    return response.data
  
 }
 interface IsectionArray {

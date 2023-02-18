@@ -21,7 +21,7 @@ interface IFormData {
   username: string;
   password: string;
   rememberMe: boolean;
-  isAuthenticated: boolean;
+ 
 }
 
 const validationSchema = yup.object().shape({
@@ -32,23 +32,23 @@ const validationSchema = yup.object().shape({
   password: yup
     .string()
     .min(8, "Password must be at least 8 characters")
-    .required("Password is required"),
+   
 });
 
 const initialValues: IFormData = {
   username: "",
   password: "",
   rememberMe: false,
-  isAuthenticated: false,
+ 
 };
 
 const onSubmit = async (values: IFormData) => {
    LoginService(values);
-  if (values.rememberMe === true && values.isAuthenticated) {
+  if (values.rememberMe) {
     localStorage.setItem("username", values.username);
     localStorage.setItem("password", values.password);
   }
-  if (values.rememberMe === false && values.isAuthenticated) {
+  if (values.rememberMe) {
     sessionStorage.setItem("username", values.username);
     sessionStorage.setItem("password", values.password);
   }

@@ -31,7 +31,7 @@ const validationSchema = yup.object().shape({
   password: yup
     .string()
     .min(8, "Password must be at least 8 characters")
-    .required("Password is required"),
+    
 });
 
 const initialValues: IFormData = {
@@ -43,11 +43,11 @@ const initialValues: IFormData = {
 
 const onSubmit = async (values: IFormData) => {
   LoginService(values)
-  if (values.rememberMe === true ) {
+  if (values.rememberMe ) {
     localStorage.setItem("username", values.username);
     localStorage.setItem("password", values.password);
   }
-  if (values.rememberMe === false ) {
+  if (values.rememberMe) {
     sessionStorage.setItem("username", values.username);
     sessionStorage.setItem("password", values.password);
   }
@@ -57,7 +57,8 @@ export default function AdminLogin() {
   const { handleSubmit, handleChange, values, errors } = useFormik({
     initialValues,
     validationSchema,
-    onSubmit,
+    onSubmit
+    
   });
 
   const navigate = useNavigate()
@@ -85,7 +86,8 @@ export default function AdminLogin() {
             borderColor={["", "grey.300"]}
             borderRadius={10}
             boxShadow="2px 4px 6px rgba(0, 0, 0, 0.1)"
-          >
+          > 
+          
             <form onSubmit={handleSubmit}>
               <div>
                 <FormLabel
@@ -94,12 +96,12 @@ export default function AdminLogin() {
                   color="rgb(55 65 81)"
                   mt={4}
                 >
-                  username
+                  Emial
                 </FormLabel>
                 <Input
                   variant="outline"
                   type="username"
-                  placeholder="username"
+                  placeholder="Email"
                   name="username"
                   onChange={handleChange}
                   value={values.username}
