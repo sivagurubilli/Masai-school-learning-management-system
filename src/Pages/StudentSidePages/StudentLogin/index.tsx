@@ -7,6 +7,14 @@ import { Button, Checkbox, Container, Flex, FormLabel, HStack, Input, Text } fro
 import {Box ,Image} from "@chakra-ui/react"
 import { masaiimage } from '../../../Assets/Assets';
 
+
+
+
+
+
+
+
+
 interface IFormData {
   
   email: string;
@@ -26,9 +34,7 @@ const initialValues: IFormData = {
 };
 
 const onSubmit = async (values: IFormData) => {
-   
-
-
+  console.log(values,"sivaa");
 };
 
 export default function App() {

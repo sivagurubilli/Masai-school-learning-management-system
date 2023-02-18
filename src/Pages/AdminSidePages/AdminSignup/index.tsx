@@ -1,6 +1,7 @@
 import React, { useRef, useReducer, useEffect,useState, Dispatch } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ReCAPTCHA from "react-google-recaptcha";
+import bcrypt from "bcryptjs";
 import "../AdminLogin/index.css"
 import {
   loadCaptchaEnginge,
@@ -44,6 +45,7 @@ interface ISignupFormState {
   email: string;
   password: string;
   reEnteredPassword: string;
+  hashedPassword: string;
   recaptchaToken: string | null;
 }
 
@@ -75,6 +77,7 @@ type SignupFormAction =
   | { type: "email"; payload: string }
   | { type: "password"; payload: string }
   | { type: "reEnteredPassword"; payload: string }
+  | { type :"hashedPassword"; payload:string}
   | { type: "recaptchatoken"; payload: string | null };
 
 // initial state signup form
@@ -83,6 +86,7 @@ const initialState: ISignupFormState = {
   email: "",
   password: "",
   reEnteredPassword: "",
+  hashedPassword:"",
   recaptchaToken: "",
 };
 
@@ -95,8 +99,11 @@ const reducer = (state: ISignupFormState, action: SignupFormAction) => {
       return { ...state, email: action.payload };
     case "password":
       return { ...state, password: action.payload };
+
     case "reEnteredPassword":
       return { ...state, reEnteredPassword: action.payload };
+      case "hashedPassword":
+        return { ...state, hashedPassword: action.payload };
     default:
       return state;
   }
@@ -119,7 +126,7 @@ const AdminSignup = () => {
   });
   const[captchaState,setCaptchaState] = useState<Icaptchavalue>({
     captchaValue:"",
-    captchaError:false
+    captchaError:true
 })
 useEffect(()=>{
     loadCaptchaEnginge(8);
@@ -234,27 +241,29 @@ const  AdminAccountCreation =async()=>{
   const AdminsignupDetails:  IAdminAccountCreate = {
     name: state.name,
     email: state.email,
-    password: state.password,
-    reEnteredPassword: state.reEnteredPassword,
-  
-   
+    password: state.hashedPassword,
   };
 
  const res= await AdminSignupService(AdminsignupDetails)
- console.log(res)
+
  }
 
 
 // when clicking on signup button user handle api call for signup
   const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
- 
+    const salt = bcrypt.genSaltSync(10);
+    const hashedPassword = bcrypt.hashSync(state.password, salt);
+    if (hashedPassword) {
+      setState({ type: "hashedPassword", payload: hashedPassword });
+    }
     //  code to submit the form goes here. after get api
      if((!state.name || !state.email || !state.password || !state.reEnteredPassword)  || ( formErrorState.showEmptyError===true || formErrorState.emailError===true || formErrorState.passwordError ===true
       || formErrorState.showRetypePasswordError ===true || captchaState.captchaError===true)){
         setFormErrorState({...formErrorState, responseErrorfromBackend:true})
 
     }else{
+     
       setFormErrorState({...formErrorState,responseErrorfromBackend:false})
      // handling services for api calling
      AdminAccountCreation()
@@ -398,24 +407,21 @@ const  AdminAccountCreation =async()=>{
           <LoadCanvasTemplate />
           </Box>
           <FormLabel htmlFor="user_captcha_input">Enter Captcha</FormLabel>
+          <Flex justifyContent={"space-between"}>
           <Input
             id="user_captcha_input"
-            width={"140px"}
+            width={"50%"}
             name="user_captcha_input"
             type="text"
             value={captchaState.captchaValue}
             placeholder="Enter Captcha"
             onChange={handleCaptchaChange}
           />
-          <Button colorScheme="blue" ml="20px" onClick={doSubmit}>
-            Submit
+          <Button bg="rgb(31 41 55)" ml="10px"   rounded="10px"
+                  _hover={{ bg: "black" }} pl="20px" pr= "20px"  w="auto" color="white"  onClick={doSubmit}>
+           {((captchaState.captchaValue!=="") && captchaState.captchaError===false )?"Cpatcha Matched":"Submit"}
           </Button>
-          {captchaState.captchaError && (
-              <div className="email-error-showing-popup">
-                {"Please enter correct captcha"}
-              </div>
-              
-            )}
+        </Flex>
         </FormControl>
       </Box>
 

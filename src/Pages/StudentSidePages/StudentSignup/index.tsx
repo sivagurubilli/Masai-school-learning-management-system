@@ -116,7 +116,7 @@ const reducer = (state: ISignupFormState, action: SignupFormAction) => {
   }
 };
 
-const AdminSignup = () => {
+const StudentSignup = () => {
   const [state, setState] = useReducer(reducer, initialState);
  const [formErrorState,setFormErrorState]  = useState<IFormErrorState>({
   passwordError: false,
@@ -217,7 +217,7 @@ const AdminSignup = () => {
   };
 
   
-  const handlebatchChange = (event: React.ChangeEvent<HTMLInputElement>):void=> {
+  const handlebatchChange = (event: React.ChangeEvent<HTMLInputElement>)=> {
 setState({type:"batch",payload:event.target.value})
   }
 
@@ -302,7 +302,7 @@ setState({type:"batch",payload:event.target.value})
              color="grey"
              fontSize=".900rem"
              fontWeight="500"
-           // onChange={handlebatchChange}
+            // onChange={handlebatchChange}
            >
              {batchValues.map((option) => (
                <option  key={option.value} value={option.value}>
@@ -345,7 +345,7 @@ setState({type:"batch",payload:event.target.value})
               <Input
                 variant="outline"
                 placeholder="Email"
-                onChange={handleEmailChange}
+                // onChange={handleEmailChange}
               />
                 {formErrorState.emailError && (
               <div className="email-error-showing-popup">
@@ -439,4 +439,4 @@ setState({type:"batch",payload:event.target.value})
   );
 };
 
-export default AdminSignup;
+export default StudentSignup;

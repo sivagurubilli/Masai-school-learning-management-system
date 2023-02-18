@@ -1,0 +1,32 @@
+ const AdminLoginChecking = async () => {
+    const AdminloginDetails: IAuthAdminlogin = {
+      email: state.email,
+      password: state.password,
+    };
+
+    const isAuth = await AdminLoginService(AdminloginDetails);
+  };
+
+  // when  click on login button call the the api with email and password as payload
+  const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+
+    if (state.password && state.email) {
+      // code to submit the form goes here. after get api
+      AdminLoginChecking();
+  
+    }
+    // if rememberme is checked and is authenticated logic goes heree
+    if (state.rememberMe === true && isAuthenticated) {
+      localStorage.setItem("email", state.email);
+      localStorage.setItem("password", state.password);
+    }
+    if (state.rememberMe === false && isAuthenticated) {
+      sessionStorage.setItem("email", state.email);
+      sessionStorage.setItem("password", state.password);
+    }
+
+    if (state.password === "") {
+      setLoginFormError({ ...loginFormError, loginErrorFromBackend: true });
+    }
+  };

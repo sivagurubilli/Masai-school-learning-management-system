@@ -4,8 +4,9 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 import Adminlogin from "../Pages/AdminSidePages/AdminLogin/index";
 import ForgetPassword from "./ForgetPassword";
-import StudentSignup from '../Pages/StudentSidePages/StudentSignup/StudentSignup'
+import StudentSignup from '../Pages/StudentSidePages/StudentSignup'
 import Dashborad from "./StudentDashboard/Dashborad";
+import App from "../Pages/StudentSidePages/StudentLogin";
 
 const Allroutes = () => {
   return (
@@ -17,6 +18,7 @@ const Allroutes = () => {
         <Route path="/admin/signup" element={<AdminSignup />} />
         <Route path="/admin/login" element={<Adminlogin />} />
         <Route path ="/student/signup" element ={<StudentSignup/>}/>
+        <Route path ="/student/login" element ={<App/>} />
         <Route path="/user/profile" />
         <Route path="/transcript" />
       </Routes>
