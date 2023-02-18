@@ -11,6 +11,7 @@ export interface IAuthAdminlogin {
 export interface IAuthStudentlogin {
     email: string;
     password: string;
+    rememberMe:boolean
   }
 
   export interface IStudentAccountCreate{
@@ -41,7 +42,8 @@ export async function AdminLoginService(data:IAuthAdminlogin): Promise<IAuthAdmi
 }
 
 export async function StudentLoginService(data:IAuthStudentlogin): Promise<IAuthStudentlogin> {
-    const {email,password} = data
+    const {email,password,rememberMe} = data
+    console.log(rememberMe,email)
     const salt = bcrypt.genSaltSync(10);
     const hashedPassword = bcrypt.hashSync(password, salt);
     

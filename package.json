@@ -13,10 +13,11 @@
     "@types/react-google-recaptcha": "^2.1.5",
     "bcrypt": "^5.1.0",
     "bcryptjs": "^2.4.3",
-
+    "buffer": "^6.0.3",
     "email-validator": "^2.0.4",
     "formik": "^2.2.9",
     "framer-motion": "^9.0.2",
+    "modern-react-captcha": "^3.0.0",
     "path-browserify": "^1.0.1",
     "re": "^0.1.4",
     "react": "^18.2.0",

@@ -9,8 +9,7 @@ body{
     
   }
 
-
-  .email-error-showing-popup{
+  .error-showing-popup{
     width: auto;
     height: auto;
    background-color: white;
@@ -23,17 +22,40 @@ body{
   justify-content: center;
    align-items: center;
    display: flex;
-
+  
   }
   .button{
     background-color: rgb(31 41 55);
-    
+    margin-top: 20px;
     height:35px;
     width:90px;
     color:white;
        border-radius: 10px;
+       margin-left: 20px;
   }
-
+  
   .button:hover{
     background-color: black;
+  }
+
+  .buttonlogin{
+    color:rgb(55 65 81);
+    margin-top: 20px;
+    height:35px;
+    font-size:.875rem;
+       font-weight:500;
+    width:300px;
+   text-decoration: underline;
+       border-radius: 10px;
+       margin-left: 20px;
+  }
+  
+  .buttonlogin:hover{
+    color: black;
+  }
+
+  .selectbatch{
+             color:grey;
+             font-size :.900rem;
+             font-weight:500
   }
