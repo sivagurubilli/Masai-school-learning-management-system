@@ -1,5 +1,5 @@
 import React, { useState, Dispatch } from "react";
-import { masaiimage } from "../../Assets/Assets";
+import { masaiimage } from "../../assets/assets";
 import Tooltip from "../Tooltip/Tooltip";
 
 import { useDispatch } from "react-redux";

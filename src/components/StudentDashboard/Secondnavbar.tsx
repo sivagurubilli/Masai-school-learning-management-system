@@ -9,7 +9,7 @@ import {
   Spacer,
   useMediaQuery,
 } from "@chakra-ui/react";
-import { referAndEarnLink, sprintplanlink } from "../../Assets/Assets";
+import { referAndEarnLink, sprintplanlink } from "../../assets/assets";
 
 // this component is navbar below component in dash board page
 const SecondNavbar = () => {

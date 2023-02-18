@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import * as yup from "yup";
 import { useFormik } from "formik";
-
 import {
   Button,
   Checkbox,
@@ -19,7 +18,7 @@ import {
   gifloader,
   masaiimage,
   sectionValues,
-} from "../../../Assets/Assets";
+} from "../../../assets/assets";
 
 import {
   AdminSignupService,
@@ -64,6 +63,9 @@ const initialValues: IFormData = {
   reEnterPassword: "",
   isAuthenticated: false,
 };
+
+
+
 
 const onSubmit = async (values: IFormData) => {
  
@@ -150,7 +152,7 @@ export default function StudentSignup() {
                 value={values.batch}
                 placeholder="Select an option"
               >
-                { getBatchArrray.map((option) => (
+                { batchValues.map((option) => (
                   <option key={option.value} value={option.value}>
                     {option.label}
                   </option>
