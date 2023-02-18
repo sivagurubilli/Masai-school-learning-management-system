@@ -14,18 +14,18 @@ import {
 } from "@chakra-ui/react";
 import { Box, Image } from "@chakra-ui/react";
 import { masaiimage } from "../../../Assets/Assets";
-import { StudentLoginService } from "../../../Services/AuthServices";
+import { LoginService } from "../../../Services/AuthServices";
 import { useNavigate } from "react-router-dom";
 
 interface IFormData {
-  email: string;
+  username: string;
   password: string;
   rememberMe: boolean;
   isAuthenticated: boolean;
 }
 
 const validationSchema = yup.object().shape({
-  email: yup
+  username: yup
     .string()
     .email("Invalid email address")
     .required("Email is required"),
@@ -36,20 +36,20 @@ const validationSchema = yup.object().shape({
 });
 
 const initialValues: IFormData = {
-  email: "",
+  username: "",
   password: "",
   rememberMe: false,
   isAuthenticated: false,
 };
 
 const onSubmit = async (values: IFormData) => {
-  StudentLoginService(values);
+   LoginService(values);
   if (values.rememberMe === true && values.isAuthenticated) {
-    localStorage.setItem("email", values.email);
+    localStorage.setItem("username", values.username);
     localStorage.setItem("password", values.password);
   }
   if (values.rememberMe === false && values.isAuthenticated) {
-    sessionStorage.setItem("email", values.email);
+    sessionStorage.setItem("username", values.username);
     sessionStorage.setItem("password", values.password);
   }
 };
@@ -99,13 +99,13 @@ export default function StudentLogin() {
                 </FormLabel>
                 <Input
                   variant="outline"
-                  type="email"
+                  type="username"
                   placeholder="Email"
-                  name="email"
+                  name="username"
                   onChange={handleChange}
-                  value={values.email}
+                  value={values.username}
                 />
-                {errors.email && <div className="error-showing-popup">{errors.email}</div>}
+                {errors.username && <div className="error-showing-popup">{errors.username}</div>}
               </div>
               <div>
                 <FormLabel

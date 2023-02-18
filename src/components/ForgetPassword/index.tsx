@@ -1,7 +1,7 @@
 import React, { useState, Dispatch } from "react";
 import { masaiimage } from "../../Assets/Assets";
 import Tooltip from "../Tooltip/Tooltip";
-import { validateEmail } from "../Emailvalidator";
+
 import { useDispatch } from "react-redux";
 import {
   Flex,
@@ -29,9 +29,9 @@ const ForgetPassword = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (validateEmail(email) === false) {
-      setShow(true);
-    }
+    // if (validateEmail(email) === false) {
+    //   setShow(true);
+    // }
     dispatch({});
     // send password reset link to mail
   };

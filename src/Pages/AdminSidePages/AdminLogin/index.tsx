@@ -15,19 +15,19 @@ import {
 import { Box, Image } from "@chakra-ui/react";
 import { masaiimage } from "../../../Assets/Assets";
 import { useNavigate } from "react-router-dom";
+import { LoginService } from "../../../Services/AuthServices";
 
 interface IFormData {
-  email: string;
+  username: string;
   password: string;
   rememberMe: boolean;
-  isAuthenticated: boolean;
 }
 
 const validationSchema = yup.object().shape({
-  email: yup
+  username: yup
     .string()
     .email("Invalid email address")
-    .required("Email is required"),
+    .required("username is required"),
   password: yup
     .string()
     .min(8, "Password must be at least 8 characters")
@@ -35,19 +35,20 @@ const validationSchema = yup.object().shape({
 });
 
 const initialValues: IFormData = {
-  email: "",
+  username: "",
   password: "",
   rememberMe: false,
-  isAuthenticated: false,
+ 
 };
 
 const onSubmit = async (values: IFormData) => {
-  if (values.rememberMe === true && values.isAuthenticated) {
-    localStorage.setItem("email", values.email);
+  LoginService(values)
+  if (values.rememberMe === true ) {
+    localStorage.setItem("username", values.username);
     localStorage.setItem("password", values.password);
   }
-  if (values.rememberMe === false && values.isAuthenticated) {
-    sessionStorage.setItem("email", values.email);
+  if (values.rememberMe === false ) {
+    sessionStorage.setItem("username", values.username);
     sessionStorage.setItem("password", values.password);
   }
 };
@@ -93,17 +94,17 @@ export default function AdminLogin() {
                   color="rgb(55 65 81)"
                   mt={4}
                 >
-                  Email
+                  username
                 </FormLabel>
                 <Input
                   variant="outline"
-                  type="email"
-                  placeholder="Email"
-                  name="email"
+                  type="username"
+                  placeholder="username"
+                  name="username"
                   onChange={handleChange}
-                  value={values.email}
+                  value={values.username}
                 />
-                {errors.email && <div className="error-showing-popup">{errors.email}</div>}
+                {errors.username && <div className="error-showing-popup">{errors.username}</div>}
               </div>
               <div>
                 <FormLabel

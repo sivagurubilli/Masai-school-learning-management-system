@@ -62,3 +62,18 @@ body{
              font-size :.900rem;
              font-weight:500
   }
+
+  .captchamatched{
+  
+    color:green;
+    width: auto;
+    height: 30px;
+
+  }
+
+  .captchanotmatched{
+
+    color:red;
+    width: auto;
+    height: 30px;
+  }

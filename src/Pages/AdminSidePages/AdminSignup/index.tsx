@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import * as yup from "yup";
 import { useFormik } from "formik";
-import ReactCaptcha from "modern-react-captcha";
+
+
 import {
   Button,
   Checkbox,
@@ -27,22 +28,22 @@ interface IFormData {
   password: string;
   reEnterPassword: string;
   captchaMatched: boolean;
-  isAuthenticated: boolean;
+ 
 }
 
 const validationSchema = yup.object().shape({
-  name: yup.string().min(3, "name must be 3 character"),
+  name: yup.string().min(3, "Name should not be less than 3 character"),
   email: yup.string().required("Email is required").email("Email is invalid"),
   password: yup
     .string()
-    .min(8, "password must be 8 characters long")
-    .matches(/[0-9]/, "password requires a number")
-    .matches(/[A-Z]/, "password requires a uppercase letter")
-    .matches(/[a-z]/, "password requires a lowercase letter")
-    .matches(/[^\w]/, "password requires a symbol"),
+    .min(8, "Password must be 8 characters long")
+    .matches(/[0-9]/, "Password requires a number")
+    .matches(/[A-Z]/, "Password requires a uppercase letter")
+    .matches(/[a-z]/, "Password requires a lowercase letter")
+    .matches(/[_]/, "Password requires a underScore Symbol"),
   confirm: yup
     .string()
-    .oneOf([yup.ref("password")], "must match password field value"),
+    .oneOf([yup.ref("password")], "ReEntered Password must match witch previous password"),
 });
 
 const initialValues: IFormData = {
@@ -51,7 +52,7 @@ const initialValues: IFormData = {
   password: "",
   reEnterPassword: "",
   captchaMatched: false,
-  isAuthenticated: false,
+  
 };
 
 const onSubmit = async (values: IFormData) => {
@@ -78,6 +79,8 @@ export default function AdminSignup() {
   const gotoLogin = () => {
     navigate("/admin/login");
   };
+
+
   return (
     <>
       <div className="container">
@@ -179,22 +182,13 @@ export default function AdminSignup() {
               </div>
 
               <Box w="200px" mt="20px">
-                {/* <ReactCaptcha
-                  charset="ulns"
-                  length={6}
-                  color="white"
-                  bgColor="blue"
-                  width="300px"
-                  reloadIcon={gifloader}
-                  handleSuccess={handleSuccess}
-                  handleFailure={handleFailure}
-                /> */}
+              
 
-                {signupState.captchaMatched ? (
-                  <p className="cpathamatched">captcha matched</p>
+                {/* {signupState.captchaMatched ? (
+                  <p className="captchamatched">captcha matched</p>
                 ) : (
-                  <p>captcha not matched</p>
-                )}
+                  <p className="captchanotmatched">captcha not matched</p>
+                )} */}
               </Box>
               <Flex justifyContent="flex-end">
                 <button className="buttonlogin" onClick={gotoLogin}>
