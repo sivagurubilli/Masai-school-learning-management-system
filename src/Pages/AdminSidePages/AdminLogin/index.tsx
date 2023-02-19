@@ -1,6 +1,6 @@
 import * as yup from "yup";
 import { useFormik } from "formik";
-import React from "react";
+import React,{useState,useEffect} from "react";
 import "./index.css";
 import {
   Button,
@@ -17,55 +17,76 @@ import { masaiimage } from "../../../assets/assets";
 import { useNavigate } from "react-router-dom";
 import { LoginService } from "../../../Services/AuthServices";
 
+//interface form form data
 interface IFormData {
   username: string;
   password: string;
+  token: string;
   rememberMe: boolean;
+  error:string;
 }
 
+//validating schema for yup library
 const validationSchema = yup.object().shape({
   username: yup
     .string()
-    .email("Invalid email address")
-    .required("username is required"),
+    .email("Invalid Email address")
+    .required("Email  is required"),
   password: yup
     .string()
     .min(8, "Password must be at least 8 characters")
-    
+    .required("password is required"),
 });
 
+//initial values for form data
 const initialValues: IFormData = {
   username: "",
   password: "",
+  token: "",
   rememberMe: false,
- 
+  error:""
 };
 
-const onSubmit = async (values: IFormData) => {
-  LoginService(values)
-  if (values.rememberMe ) {
-    localStorage.setItem("username", values.username);
-    localStorage.setItem("password", values.password);
-  }
-  if (values.rememberMe) {
-    sessionStorage.setItem("username", values.username);
-    sessionStorage.setItem("password", values.password);
-  }
-};
-
+//admin login component
 export default function AdminLogin() {
-  const { handleSubmit, handleChange, values, errors } = useFormik({
-    initialValues,
-    validationSchema,
-    onSubmit
-    
-  });
 
-  const navigate = useNavigate()
+  const [isLoading,setLoading] = useState<boolean>(false)
+  const navigate = useNavigate();
 
-  const gotoSignup =()=>{
-    navigate("/admin/signup")
-  }
+  //when clicking on onSubmit button call loginservices for api calling
+  const onSubmit = async (values: IFormData) => {
+
+
+
+     
+    setLoading(true)
+    setTimeout(()=>{
+      setLoading(false)
+    },3000)
+
+
+    LoginService(values);
+    if (values.rememberMe) {
+      localStorage.setItem("username", values.username);
+      localStorage.setItem("password", values.password);
+    }
+    if (!values.rememberMe) {
+      sessionStorage.setItem("username", values.username);
+      sessionStorage.setItem("password", values.password);
+    }
+  };
+
+  //destructuring the different methods in useformik
+  const { handleSubmit, handleChange, handleBlur, values, touched, errors } =
+    useFormik({
+      initialValues,
+      validationSchema,
+      onSubmit,
+    });
+
+  const gotoSignup = () => {
+    navigate("/admin/signup");
+  };
   return (
     <>
       <div className="container">
@@ -80,14 +101,14 @@ export default function AdminLogin() {
             w={["full", "md"]}
             p="10px 20px 20px 30px"
             mx="auto"
+            h="auto"
             mt="30px"
             border={["none"]}
             bg="white"
             borderColor={["", "grey.300"]}
             borderRadius={10}
             boxShadow="2px 4px 6px rgba(0, 0, 0, 0.1)"
-          > 
-          
+          >
             <form onSubmit={handleSubmit}>
               <div>
                 <FormLabel
@@ -104,9 +125,12 @@ export default function AdminLogin() {
                   placeholder="Email"
                   name="username"
                   onChange={handleChange}
+                  onBlur={handleBlur}
                   value={values.username}
                 />
-                {errors.username && <div className="error-showing-popup">{errors.username}</div>}
+                {touched.username && errors.username && (
+                  <div className="error-showing-popup">{errors.username}</div>
+                )}
               </div>
               <div>
                 <FormLabel
@@ -123,9 +147,12 @@ export default function AdminLogin() {
                   placeholder="Password"
                   name="password"
                   onChange={handleChange}
+                  onBlur={handleBlur}
                   value={values.password}
                 />
-                {errors.password && <div className="error-showing-popup">{errors.password}</div>}
+                {touched.password && errors.password && (
+                  <div className="error-showing-popup">{errors.password}</div>
+                )}
               </div>
               <HStack mt="10px" w="full">
                 <Checkbox
@@ -139,26 +166,50 @@ export default function AdminLogin() {
                 </Text>
               </HStack>
 
-              <Flex mt ="20px" justifyContent="flex-end">
-                <HStack>
+              <Flex mt ="10px"  justifyContent="space-between" flexWrap="wrap">
+                <Box >
                   <Button
                     variant="link"
-                    mr="55px"
+                   h="auto"
+                   mt="20px"
                     _hover={{ color: "black" }}
                     fontSize={".850rem"}
                     textDecoration="underline"
                     color="rgb(75 85 99)"
+                    ml="50px"
                     onClick={() => navigate("/forgotpassword")}
                   >
                     Forget your password?
                   </Button>
-                  <button className="button"  onClick={gotoSignup}>
-                    <Text fontSize="14px"> SIGN UP</Text>
-                  </button>
-                  <button className="button" type="submit">
-                    <Text fontSize="14px"> LOG IN</Text>
-                  </button>
-                </HStack>
+                  </Box>
+                  <Box>
+                  <Button
+                bg="rgb(31 41 55)"
+                color="white"
+                _hover={{ bg: "rgb(55 65 81)" }}
+                type="submit"
+                w="90px"
+                h="35px"
+                ml="10px"
+                mt="10px"
+              >
+              <Text fontSize="14px">SIGN UP</Text>
+              </Button>
+                  <Button
+                isLoading={isLoading}
+                bg="rgb(31 41 55)"
+                color="white"
+                _hover={{ bg: "rgb(55 65 81)" }}
+                
+                type="submit"
+                w="90px"
+                h="35px"
+                ml="10px"
+                mt="10px"
+              >
+              <Text fontSize="14px">LOG IN</Text>
+              </Button>
+                  </Box>
               </Flex>
             </form>
           </Box>

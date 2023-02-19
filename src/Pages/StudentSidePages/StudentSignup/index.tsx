@@ -12,23 +12,26 @@ import {
   Select,
   Text,
 } from "@chakra-ui/react";
+
 import { Box, Image } from "@chakra-ui/react";
 import {
   batchValues,
-  gifloader,
   masaiimage,
   sectionValues,
 } from "../../../assets/assets";
 
 import {
-  AdminSignupService,
+  StudentSignupService,
   getBatchArrray,
+  getSectionArray,
   IAdminAccountCreate,
-  
+  IBatchResponse,IbatchObject,
+  ISectionResponse,ISectionObject
 } from "../../../Services/AuthServices";
 import "./index.css";
 import { useNavigate } from "react-router-dom";
-import Recaptchavalid from "./Recaptchavalid";
+
+//interface for form data
 interface IFormData {
   name: string;
   batch: string;
@@ -36,21 +39,24 @@ interface IFormData {
   email: string;
   password: string;
   reEnterPassword: string;
-  isAuthenticated: boolean;
+  error:string;
+  status:number
+ 
 }
 
+//validation schema for validating form values using yup library
 const validationSchema = yup.object().shape({
   name: yup.string().required("This feild is required").min(3, "Name must be 3 character"),
-  email: yup.string().email("Email is invalid"),
+  email: yup.string().email("Email is invalid").required("Email is required"),
   password: yup
-    .string()
+    .string().required("Password is required")
     .min(8, "Password must be 8 characters long")
     .matches(/[0-9]/, "Password requires a number")
     .matches(/[A-Z]/, "Password requires a uppercase letter")
     .matches(/[a-z]/, "Password requires a lowercase letter")
     .matches(/[_]/, "Password requires a underScore Symbol"),
-  confirm: yup
-    .string()
+  reEnterPassword: yup
+    .string().required("Please Re-enter the password")
     .oneOf([yup.ref("password")], "ReEntered Password must match witch previous password"),
 });
 
@@ -61,21 +67,58 @@ const initialValues: IFormData = {
   section: "",
   password: "",
   reEnterPassword: "",
-  isAuthenticated: false,
+  error:"",
+  status:10
 };
 
 
 
 
-const onSubmit = async (values: IFormData) => {
- 
-  AdminSignupService(values);
-};
 
+
+// student Signup component
 export default function StudentSignup() {
-  const [signupState, setSignupState] = useState(initialValues);
+ 
+  const [BackendError,setBackendError] = useState({
+    backendErrorMessage:"",
+    errorFromBackend:false
+  })
+const [isLoading,setLoading] = useState(false)
+  const [batchDetails,setBatchDetails] = useState([])
+  const [sectionDetails,setSectionDetails] = useState([])
+   
+  
+  useEffect(()=>{
+  getBatchArrray().then((res:any)=>{
+  setBatchDetails(res)
+  })
+  getSectionArray().then((res:any)=>{
+    setSectionDetails(res)
+    })
+   },[])
 
-  const { handleSubmit, handleChange, values, errors } = useFormik({
+
+//onsubmitting call services for manage apis
+  const onSubmit = async (values: IFormData) => {
+    
+    setLoading(true)
+    setTimeout(()=>{
+      setLoading(false)
+    },3000)
+
+
+    StudentSignupService(values).then((res)=>{
+       if(res.status==200){
+  navigate("/student/login")
+       }
+    }).catch((err)=>{
+      setBackendError({backendErrorMessage:err,errorFromBackend:true})
+    });
+  };
+
+
+//destructuring methods from useformik library 
+  const { handleSubmit, handleBlur, touched, handleChange, values, errors } = useFormik({
     initialValues,
     validationSchema,
     onSubmit,
@@ -86,11 +129,6 @@ export default function StudentSignup() {
     navigate("/student/login");
   };
 
-  // getBatchArrray().then((res)=>{
-  //     res.Array
-  //   }).catch(err)=>{
-  //     conosle.log(err)
-  //   }
 
 
 
@@ -110,12 +148,21 @@ export default function StudentSignup() {
             p="10px 20px 20px 30px"
             mx="auto"
             mt="30px"
+            h="auto"
             border={["none"]}
             bg="white"
             borderColor={["", "grey.300"]}
             borderRadius={10}
             boxShadow="2px 4px 6px rgba(0, 0, 0, 0.1)"
           >
+           { BackendError.errorFromBackend && <div className="errorlist">
+              <ul>
+               <p >Whoops! Something went wrong.
+                   <li> These credentials do not match our records.</li>
+
+                   </p>
+                    </ul>
+              </div>}
             <form onSubmit={handleSubmit}>
               <div>
                 <FormLabel
@@ -133,9 +180,10 @@ export default function StudentSignup() {
                   placeholder="Name"
                   name="name"
                   onChange={handleChange}
+                  onBlur={handleBlur}
                   value={values.name}
                 />
-                {errors.name && <div className="error-showing-popup">{errors.name}</div>}
+                {touched.name && errors.name && <div className="error-showing-popup">{errors.name}</div>}
               </div>
               <FormLabel
                 fontWeight="500"
@@ -152,9 +200,9 @@ export default function StudentSignup() {
                 value={values.batch}
                 placeholder="Select an option"
               >
-                { batchValues.map((option) => (
-                  <option key={option.value} value={option.value}>
-                    {option.label}
+                { batchDetails?.map((option:IbatchObject) => (
+                  <option  value={option.batch_name}>
+                    {option.batch_name}
                   </option>
                 ))}
               </Select>
@@ -174,9 +222,9 @@ export default function StudentSignup() {
                 onChange={handleChange}
                 value={values.section}
               >
-                {sectionValues.map((option) => (
-                  <option key={option.value} value={option.value}>
-                    {option.label}
+                {sectionDetails.map((option:ISectionObject) => (
+                  <option key={option.id} value={option.section_name}>
+                    {option.section_name}
                   </option>
                 ))}
               </Select>
@@ -195,9 +243,10 @@ export default function StudentSignup() {
                   placeholder="Email"
                   name="email"
                   onChange={handleChange}
+                  onBlur={handleBlur}
                   value={values.email}
                 />
-                {errors.email && <div className="error-showing-popup">{errors.email}</div>}
+                {touched.email && errors.email && <div className="error-showing-popup">{errors.email}</div>}
               </div>
               <div>
                 <FormLabel
@@ -214,9 +263,10 @@ export default function StudentSignup() {
                   placeholder="Password"
                   name="password"
                   onChange={handleChange}
+                  onBlur={handleBlur}
                   value={values.password}
                 />
-                {errors.password && <div className="error-showing-popup">{errors.password}</div>}
+                {touched.password && errors.password && <div className="error-showing-popup">{errors.password}</div>}
               </div>
               <div>
                 <FormLabel
@@ -233,20 +283,33 @@ export default function StudentSignup() {
                   placeholder="Re Enter Password"
                   name="reEnterPassword"
                   onChange={handleChange}
+                  onBlur={handleBlur}
                   value={values.reEnterPassword}
                 />
-                {errors.reEnterPassword && <div className="error-showing-pop-up">{errors.reEnterPassword}</div>}
+                {touched.reEnterPassword && errors.reEnterPassword && <div className="error-showing-pop-up">{errors.reEnterPassword}</div>}
               </div>
-        {/* <Recaptchavalid /> */}
+                 
               <Flex justifyContent="flex-between">
                 <button className="buttonlogin"  onClick={gotoLogin}>
                   <Text fontSize="14px">
                     If Already Signup? please Log in here
                   </Text>
                 </button>
-                <button className="button" type="submit">
-                  <Text fontSize="14px">SIGN UP</Text>
-                </button>
+              
+                  <Button
+                isLoading={isLoading}
+                bg="rgb(31 41 55)"
+                color="white"
+                _hover={{ bg: "rgb(55 65 81)" }}
+                
+                type="submit"
+                w="90px"
+                h="35px"
+                ml="10px"
+                mt="10px"
+              >
+              <Text fontSize="14px">SIGN UP</Text>
+              </Button>
               </Flex>
             </form>
           </Box>

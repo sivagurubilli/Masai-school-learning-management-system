@@ -1,79 +1,74 @@
+body {
+  background-color: rgb(243, 244, 246);
+}
+.container {
+  height: auto;
+}
 
-
-body{
-    background-color: rgb(243,244,246);
-  
-  }
-  .container{
-    height: auto;
-    
-  }
-  
-  
-  .email-error-showing-popup{
-    width: auto;
-    height: auto;
-   background-color: white;
-   border: 1px solid rgb(41, 40, 40);
-   border-radius: 10px;
-   color:  red;
-   margin-top: 6px;
-   padding-top: 5px;
-   padding-bottom: 5px;
+.email-error-showing-popup {
+  width: auto;
+  height: auto;
+  background-color: white;
+  color: red;
+  margin-top: 6px;
+  padding-top: 5px;
+  padding-bottom: 5px;
   justify-content: center;
-   align-items: center;
-   display: flex;
-  
-  }
-  .button{
-    background-color: rgb(31 41 55);
-    margin-top: 20px;
-    height:35px;
-    width:90px;
-    color:white;
-       border-radius: 10px;
-       margin-left: 20px;
-  }
-  
-  .button:hover{
-    background-color: black;
-  }
+  align-items: center;
+  display: flex;
+}
+.button {
+  background-color: rgb(31 41 55);
+  margin-top: 20px;
+  height: 35px;
+  width: auto;
+  min-width: 90px;
+  color: white;
+  border-radius: 10px;
+}
 
-  .buttonlogin{
-    color:rgb(55 65 81);
-    margin-top: 20px;
-    height:35px;
-    font-size:.875rem;
-       font-weight:500;
-    width:300px;
-   text-decoration: underline;
-       border-radius: 10px;
-       margin-left: 20px;
-  }
-  
-  .buttonlogin:hover{
-    color: black;
-  }
+.button:hover {
+  background-color: rgb(55 65 81);
+}
 
-  .selectbatch{
-    
-             
-             color:grey;
-             font-size :.900rem;
-             font-weight:500
+.buttonlogin {
+  color: rgb(55 65 81);
+  margin-top: 20px;
+  height: 20px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  width: 200px;
+
+  text-decoration: underline;
+  border-radius: 10px;
+
+  height: auto;
+}
+
+.buttonlogin:hover {
+  color: rgb(55 65 81);
+}
+
+.selectbatch {
+  color: grey;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.captchamatched {
+  color: green;
+  width: auto;
+  height: 30px;
+}
+
+.captchanotmatched {
+  color: red;
+  width: auto;
+  height: 30px;
+}
+
+@media screen and (min-width: 350px) {
+  body {
+    min-width: 350px;
   }
-
-  .captchamatched{
-  
-    color:green;
-    width: auto;
-    height: 30px;
-
-  }
-
-  .captchanotmatched{
-
-    color:red;
-    width: auto;
-    height: 30px;
-  }
+}
