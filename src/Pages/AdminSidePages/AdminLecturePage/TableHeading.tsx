@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import {
   Table,
   Thead,
@@ -13,7 +14,9 @@ import {
   TableContainer,
   Box,
 } from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
 const TableHeading = () => {
+
   const ads = [
     {
       id: 1,
@@ -25,7 +28,7 @@ const TableHeading = () => {
       concludes: "12.30",
     },
     {
-      id: 1,
+      id: 2,
       title: "siva wete349995995995",
       created: "siva",
 
@@ -34,6 +37,10 @@ const TableHeading = () => {
       concludes: "12.30",
     },
   ];
+const navigate = useNavigate()
+
+  
+
 
   return (
     <div>
@@ -76,20 +83,22 @@ const TableHeading = () => {
                   <Td w="15%">{ad.concludes}</Td>
                   <Td w="15%">
                     <Flex>
-                      <Button
+                    <Link to={`/admin/lectures/${ad.id}`}>  <Button
                         variant="link"
                         textDecoration={"none"}
                         color="blue"
+                        
                       >
                         View
-                      </Button>
-                      <Button
+                      </Button></Link>
+                      <Link to={`/admin/lectures/edit/${ad.id}`}>  <Button
                         variant="link"
                         textDecoration={"none"}
                         color="blue"
+                        
                       >
                         Edit
-                      </Button>
+                      </Button></Link>
                     </Flex>
                     <Button variant="link" textDecoration={"none"} color="blue">
                       Attendance

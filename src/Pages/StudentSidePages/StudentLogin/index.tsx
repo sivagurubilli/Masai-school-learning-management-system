@@ -37,7 +37,7 @@ const validationSchema = yup.object().shape({
     .email("Invalid Email address")
     .required("Email is required"),
   password: yup
-    .string()
+    .string().required("password is required")
     .min(8, "Password must be at least 8 characters")
    
 });
@@ -102,7 +102,7 @@ export default function StudentLogin() {
     sessionStorage.setItem("password", values.password);
   }
   if(res.token && res.user.roles[0].name!=="NORMAL_USER"){
-    navigate("admin/dashboard")
+    navigate("student/dashboard")
   }
      
    }if(!res.token){

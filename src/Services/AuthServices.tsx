@@ -60,7 +60,7 @@ export async function LoginService(data: IAuthlogin): Promise<IAuthloginResponse
   const salt = bcrypt.genSaltSync(10);
   const hashedPassword = bcrypt.hashSync(password, salt);
 try{
-  const response = await axios.post("https://1dac-202-142-114-239.in.ngrok.io/api/login", {
+  const response = await axios.post("https://reqres.in/api/login", {
     "username":username,
     "password":password
   });
@@ -68,8 +68,8 @@ try{
   
   return response.data;
 }catch(error:any){
-  
-  return error.response.data.message
+  console.log(error)
+  return error.response
 }
 }
 

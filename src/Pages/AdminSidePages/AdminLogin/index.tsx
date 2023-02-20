@@ -83,12 +83,15 @@ export default function AdminLogin() {
        sessionStorage.setItem("username", values.username);
        sessionStorage.setItem("password", values.password);
      }
-        
-      }else{
-       setBackendError({ ...BackendError,
-       errorFromBackend:true})
-      }
-    })
+    }
+        if(!res.token){
+      setBackendError({ ...BackendError,
+      errorFromBackend:true})
+     }
+      
+  })
+  
+  
        
     if (values.rememberMe) {
       localStorage.setItem("username", values.username);

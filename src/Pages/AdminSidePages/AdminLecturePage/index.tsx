@@ -52,7 +52,7 @@ const AdminLecture = () => {
       <Navbar />
       <Secondnav />
 
-      <Box w="80%" ml="10%" mt="60px" h="auto">
+      <Box w="80%" ml="10%" mt="60px" h="auto"    boxShadow="2px 4px 6px rgba(0, 0, 0, 0.1)">
         <Box w="100%" p="2%" bg="white" h="auto">
           <Grid templateColumns="repeat(4, 1fr)" gap={4}>
             <Input
