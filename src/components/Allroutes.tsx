@@ -7,16 +7,21 @@ import ForgetPassword from "./ForgetPassword";
 import StudentSignup from '../Pages/StudentSidePages/StudentSignup'
 import Dashborad from "./StudentDashboard/Dashborad";
 import App from "../Pages/StudentSidePages/StudentLogin";
+import AdminDashboard from "../Pages/AdminSidePages/AdminDashboar";
 
 const Allroutes = () => {
   return (
     <div>
       <Routes>
-        <Route path="/dashboard" element={<Dashborad />} />
-        <Route path="/forgotpassword" element={<ForgetPassword />} />
+        <Route path ="/admin/" element={<AdminDashboard/>}/>
+   
         <Route path="/admin/lectures" element={<AdminLecture />} />
         <Route path="/admin/signup" element={<AdminSignup />} />
         <Route path="/admin/login" element={<Adminlogin />} />
+        <Route path="/student/dashboard" element={<Dashborad />} />
+
+        
+        <Route path="/forgotpassword" element={<ForgetPassword />} />
         <Route path ="/student/signup" element ={<StudentSignup/>}/>
         <Route path ="/student/login" element ={<App/>} />
         <Route path="/user/profile" />

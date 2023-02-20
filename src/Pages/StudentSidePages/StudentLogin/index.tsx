@@ -88,9 +88,10 @@ export default function StudentLogin() {
 
 
     LoginService(values).then((res:IAuthloginResponse)=>{
- 
+
    if(res.token && res.user.roles[0].name==="NORMAL_USER"){
     navigate("/student/dashboard")
+
      //setting for remember me in
    if (values.rememberMe && res.token) {
     localStorage.setItem("username", values.username);
@@ -100,13 +101,18 @@ export default function StudentLogin() {
     sessionStorage.setItem("username", values.username);
     sessionStorage.setItem("password", values.password);
   }
+  if(res.token && res.user.roles[0].name!=="NORMAL_USER"){
+    navigate("admin/dashboard")
+  }
      
+   }if(!res.token){
+    setBackendError({ ...BackendError,
+    errorFromBackend:true})
    }
-    }).catch((error)=>{
-      setBackendError({...BackendError,backendErrorMessage:error})
-    });
+    
    
- };
+ });
+}
 
 //destructuring methods from useFormik
  const { handleSubmit, handleChange,handleBlur, touched, values, errors } = useFormik({
@@ -226,6 +232,7 @@ export default function StudentLogin() {
                 h="35px"
                 ml="10px"
                 mt="10px"
+                onClick={()=>navigate("/student/signup")}
               >
               <Text fontSize="14px">SIGN UP</Text>
               </Button>

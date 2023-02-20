@@ -24,9 +24,8 @@ import {
   StudentSignupService,
   getBatchArrray,
   getSectionArray,
-  IAdminAccountCreate,
   IBatchResponse,IbatchObject,
-  ISectionResponse,ISectionObject
+  ISectionResponse,ISectionObject, IAuthsignupResponse
 } from "../../../Services/AuthServices";
 import "./index.css";
 import { useNavigate } from "react-router-dom";
@@ -39,9 +38,7 @@ interface IFormData {
   email: string;
   password: string;
   reEnterPassword: string;
-  error:string;
-  status:number
- 
+
 }
 
 //validation schema for validating form values using yup library
@@ -67,8 +64,7 @@ const initialValues: IFormData = {
   section: "",
   password: "",
   reEnterPassword: "",
-  error:"",
-  status:10
+ 
 };
 
 
@@ -107,15 +103,17 @@ const [isLoading,setLoading] = useState(false)
     },3000)
 
 
-    StudentSignupService(values).then((res)=>{
-       if(res.status==200){
+    StudentSignupService(values).then((res:IAuthsignupResponse)=>{
+       if(res.name && res.roles[0].name==="NORMAL_USER"){
   navigate("/student/login")
        }
-    }).catch((err)=>{
-      setBackendError({backendErrorMessage:err,errorFromBackend:true})
-    });
-  };
-
+       
+       if(!res.name){
+        setBackendError({...BackendError, errorFromBackend:true});
+       }
+    })
+  
+    }
 
 //destructuring methods from useformik library 
   const { handleSubmit, handleBlur, touched, handleChange, values, errors } = useFormik({
@@ -200,11 +198,11 @@ const [isLoading,setLoading] = useState(false)
                 value={values.batch}
                 placeholder="Select an option"
               >
-                { batchDetails?.map((option:IbatchObject) => (
+                {/* { batchDetails?.map((option:IbatchObject) => (
                   <option  value={option.batch_name}>
                     {option.batch_name}
                   </option>
-                ))}
+                ))} */}
               </Select>
 
               <FormLabel
@@ -222,11 +220,11 @@ const [isLoading,setLoading] = useState(false)
                 onChange={handleChange}
                 value={values.section}
               >
-                {sectionDetails.map((option:ISectionObject) => (
+                {/* {sectionDetails.map((option:ISectionObject) => (
                   <option key={option.id} value={option.section_name}>
                     {option.section_name}
                   </option>
-                ))}
+                ))} */}
               </Select>
               <div>
                 <FormLabel
@@ -306,7 +304,7 @@ const [isLoading,setLoading] = useState(false)
                 w="90px"
                 h="35px"
                 ml="10px"
-                mt="10px"
+                mt="20px"
               >
               <Text fontSize="14px">SIGN UP</Text>
               </Button>

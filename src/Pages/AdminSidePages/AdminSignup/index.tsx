@@ -18,6 +18,8 @@ import { gifloader, masaiimage } from "../../../assets/assets";
 import {
   AdminSignupService,
   IAdminAccountCreate,
+  IAuthsignupResponse,
+
 } from "../../../Services/AuthServices";
 import "./index.css";
 import { useNavigate } from "react-router-dom";
@@ -75,6 +77,11 @@ const initialCaptcha: Icaptchamatched = {
 //signup for admin component start here
 export default function AdminSignup() {
   const [signupState, setSignupState] = useState(initialValues);
+  const [BackendError,setBackendError] = useState({
+    backendErrorMessage:"",
+    errorFromBackend:false
+  })
+const [isLoading,setLoading] = useState(false)
   const [CaptchaMatched, setCaptchaMatched] = useState(initialCaptcha);
   const navigate = useNavigate();
 
@@ -84,9 +91,30 @@ export default function AdminSignup() {
   // using formik and yup library just checking validations using useformik
   //onSubmitting value call the services for api call
   const onSubmit = async (values: IFormData) => {
+   
     if (CaptchaMatched.captchaMatch) {
-      AdminSignupService(values);
-    }
+
+       
+    setLoading(true)
+    setTimeout(()=>{
+      setLoading(false)
+    },3000)
+
+
+    AdminSignupService(values).then((res:IAuthsignupResponse)=>{
+       
+      
+      if(res.name && res.roles[0].name!=="NORMAL_USER"){
+   navigate("/admin/login")
+        }
+        
+        if(!res.name){
+         setBackendError({...BackendError, errorFromBackend:true});
+        }
+     })
+   
+     }
+    
   };
 
   //destructuring all values from useformik
@@ -225,9 +253,20 @@ export default function AdminSignup() {
                   If Already Signup? please Log in here
                 </Text>
               </button>
-              <button className="button" type="submit">
-                <Text fontSize="14px">SIGN UP</Text>
-              </button>
+              <Button
+                isLoading={isLoading}
+                bg="rgb(31 41 55)"
+                color="white"
+                _hover={{ bg: "rgb(55 65 81)" }}
+                
+                type="submit"
+                w="90px"
+                h="35px"
+                ml="10px"
+                mt="20px"
+              >
+              <Text fontSize="14px">SIGN UP</Text>
+              </Button>
             </Flex>
           </form>
         </Box>

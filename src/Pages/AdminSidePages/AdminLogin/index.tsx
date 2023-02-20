@@ -15,7 +15,7 @@ import {
 import { Box, Image } from "@chakra-ui/react";
 import { masaiimage } from "../../../assets/assets";
 import { useNavigate } from "react-router-dom";
-import { LoginService } from "../../../Services/AuthServices";
+import { LoginService,IAuthloginResponse } from "../../../Services/AuthServices";
 
 //interface form form data
 interface IFormData {
@@ -51,6 +51,10 @@ const initialValues: IFormData = {
 export default function AdminLogin() {
 
   const [isLoading,setLoading] = useState<boolean>(false)
+  const [BackendError,setBackendError] =useState({
+    backendErrorMessage:"",
+    errorFromBackend:false
+  })
   const navigate = useNavigate();
 
   //when clicking on onSubmit button call loginservices for api calling
@@ -65,7 +69,27 @@ export default function AdminLogin() {
     },3000)
 
 
-    LoginService(values);
+
+    LoginService(values).then((res:IAuthloginResponse)=>{
+
+      if(res.token && res.user.roles[0].name!=="NORMAL_USER"){
+       navigate("/admin/dashboard")
+        //setting for remember me in
+      if (values.rememberMe && res.token) {
+       localStorage.setItem("username", values.username);
+       localStorage.setItem("password", values.password);
+     }
+     if (!values.rememberMe) {
+       sessionStorage.setItem("username", values.username);
+       sessionStorage.setItem("password", values.password);
+     }
+        
+      }else{
+       setBackendError({ ...BackendError,
+       errorFromBackend:true})
+      }
+    })
+       
     if (values.rememberMe) {
       localStorage.setItem("username", values.username);
       localStorage.setItem("password", values.password);
@@ -84,9 +108,7 @@ export default function AdminLogin() {
       onSubmit,
     });
 
-  const gotoSignup = () => {
-    navigate("/admin/signup");
-  };
+ 
   return (
     <>
       <div className="container">
@@ -108,7 +130,19 @@ export default function AdminLogin() {
             borderColor={["", "grey.300"]}
             borderRadius={10}
             boxShadow="2px 4px 6px rgba(0, 0, 0, 0.1)"
-          >
+            >
+            {
+              BackendError.errorFromBackend && 
+              <div className="errorlist">
+                <ul>
+                 <p >Whoops! Something went wrong.
+                     <li> These credentials do not match our records.</li>
+  
+                     </p>
+                      </ul>
+                </div>}
+
+       
             <form onSubmit={handleSubmit}>
               <div>
                 <FormLabel
@@ -192,6 +226,7 @@ export default function AdminLogin() {
                 h="35px"
                 ml="10px"
                 mt="10px"
+                onClick={()=>navigate("/admin/signup")}
               >
               <Text fontSize="14px">SIGN UP</Text>
               </Button>

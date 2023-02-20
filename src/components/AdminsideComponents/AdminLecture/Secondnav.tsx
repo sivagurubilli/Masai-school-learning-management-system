@@ -29,10 +29,10 @@ const Secondnav = () => {
         mx="auto"
       >
         <Box mb={isLargerThan900 ? 0 : 2}>
-          <Heading size="md">Lectures</Heading>
+          <Heading size="md" >Lectures</Heading>
         </Box>
 
-        <ButtonGroup spacing={2}>
+        <ButtonGroup spacing={2} >
           <Button
             bg="rgb(51, 61, 76)"
             h="35px"

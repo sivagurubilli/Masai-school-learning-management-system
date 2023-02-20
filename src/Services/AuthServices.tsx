@@ -24,14 +24,28 @@ export interface IAuthloginResponse{
     ]
 }
 }
+
+export interface IAuthsignupResponse{
+ 
+  
+    id: number,
+    name: string,
+    email: string,
+    roles: [
+        {
+            id: number,
+            name: string
+        }
+    ]
+}
+
 export interface IStudentAccountCreate {
   name: string;
   batch: string;
   section: string;
   email: string;
   password: string;
-  error:string;
-  status:number
+  
 }
 
 export interface IAdminAccountCreate {
@@ -46,38 +60,46 @@ export async function LoginService(data: IAuthlogin): Promise<IAuthloginResponse
   const salt = bcrypt.genSaltSync(10);
   const hashedPassword = bcrypt.hashSync(password, salt);
 try{
-  const response = await axios.post("https://fe65-202-142-114-239.in.ngrok.io/api/login", {
+  const response = await axios.post("https://1dac-202-142-114-239.in.ngrok.io/api/login", {
     "username":username,
     "password":password
   });
 
-  console.log(response)
+  
   return response.data;
 }catch(error:any){
-  console.log(error)
-  return error
+  
+  return error.response.data.message
 }
 }
 
 export async function StudentSignupService(
-  data: IStudentAccountCreate
-): Promise<IStudentAccountCreate> {
- console.log(data)
-  const response = await axios.post<IStudentAccountCreate>(
-    "/api/student/signup",
-    { studentaccountDetails: data }
+  data: IAdminAccountCreate
+): Promise<IAuthsignupResponse> {
+  const {email,name,password}=data
+ try{
+  const response = await axios.post(
+    "https://1dac-202-142-114-239.in.ngrok.io/api/signup",
+    {name,email,password}
   );
   return response.data;
+ }catch(error:any){
+   return error.error
+}
 }
 
 export async function AdminSignupService(
-  data: IAdminAccountCreate
-): Promise<IAdminAccountCreate> {
-  console.log(data)
-  const response = await axios.post<IAdminAccountCreate>("/api/admin/signup", {
-    studentaccountDetails: data,
-  });
+  data:IAdminAccountCreate
+): Promise<IAuthsignupResponse> {
+  const {email,name,password}=data
+  try{
+  const response = await axios.post("https://1dac-202-142-114-239.in.ngrok.io/api/signup", {
+    email,name,password}
+  );
   return response.data
+}catch(error:any){
+ return error.error
+}
 }
 
 
