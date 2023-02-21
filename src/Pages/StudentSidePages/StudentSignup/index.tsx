@@ -11,9 +11,8 @@ import {
   Input,
   Select,
   Text,
+  Box, Image 
 } from "@chakra-ui/react";
-
-import { Box, Image } from "@chakra-ui/react";
 import {
   batchValues,
   masaiimage,
@@ -68,10 +67,6 @@ const initialValues: IFormData = {
 };
 
 
-
-
-
-
 // student Signup component
 export default function StudentSignup() {
  
@@ -104,15 +99,13 @@ const [isLoading,setLoading] = useState(false)
 
 
     StudentSignupService(values).then((res:IAuthsignupResponse)=>{
-       if(res.name && res.roles[0].name==="NORMAL_USER"){
-  navigate("/student/login")
-       }
-       
-       if(!res.name){
+      if(!res.name){
         setBackendError({...BackendError, errorFromBackend:true});
-       }
+       } 
+      if(res.name && res.roles[0].name==="NORMAL_USER"){
+  navigate("/student/login")
+       } 
     })
-  
     }
 
 //destructuring methods from useformik library 
@@ -128,9 +121,6 @@ const [isLoading,setLoading] = useState(false)
   };
 
 
-
-
-
   return (
     <>
       <div className="container">
@@ -142,21 +132,21 @@ const [isLoading,setLoading] = useState(false)
             alt="Masai logo"
           />
           <Box
-            w={["full", "md"]}
+            w= {["full", "md"]}
             p="10px 20px 20px 30px"
             mx="auto"
             mt="30px"
             h="auto"
-            border={["none"]}
+            border="none"
             bg="white"
-            borderColor={["", "grey.300"]}
+            borderColor= "grey.300"
             borderRadius={10}
             boxShadow="2px 4px 6px rgba(0, 0, 0, 0.1)"
           >
            { BackendError.errorFromBackend && <div className="errorlist">
               <ul>
                <p >Whoops! Something went wrong.
-                   <li> These credentials do not match our records.</li>
+                   <li> User Already Rigister with theese credintials</li>
 
                    </p>
                     </ul>

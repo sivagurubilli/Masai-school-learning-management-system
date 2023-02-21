@@ -1,6 +1,6 @@
 import * as yup from "yup";
 import { useFormik } from "formik";
-import React,{useState,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import "./index.css";
 import {
   Button,
@@ -14,21 +14,25 @@ import {
 } from "@chakra-ui/react";
 import { Box, Image } from "@chakra-ui/react";
 import { masaiimage } from "../../../assets/assets";
-import { LoginService ,IAuthloginResponse} from "../../../Services/AuthServices";
+import {
+  LoginService,
+  IAuthloginResponse,
+} from "../../../Services/AuthServices";
 import { Navigate, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { bindActionCreators } from "redux";
+import { actionCreators } from "../../../redux/Authreducer";
 
 //interface for form data
 interface IFormData {
   username: string;
   password: string;
   rememberMe: boolean;
- 
 }
-interface IErrorDisplay{
-  backendErrorMessage:string
- errorFromBackend:boolean
+interface IErrorDisplay {
+  backendErrorMessage: string;
+  errorFromBackend: boolean;
 }
-
 
 //valiadation schema for yup library
 const validationSchema = yup.object().shape({
@@ -37,89 +41,84 @@ const validationSchema = yup.object().shape({
     .email("Invalid Email address")
     .required("Email is required"),
   password: yup
-    .string().required("password is required")
-    .min(8, "Password must be at least 8 characters")
-   
+    .string()
+    .required("password is required")
+    .min(8, "Password must be at least 8 characters"),
 });
 
-const initialValues : IFormData={
+const initialValues: IFormData = {
   username: "",
   password: "",
   rememberMe: false,
-}
+};
 
 //student login component
 export default function StudentLogin() {
-
- 
-  const [BackendError,setBackendError] = useState({
-    backendErrorMessage:"",
-    errorFromBackend:false
-  })
-
-  const [isLoading,setLoading] = useState<boolean>(false)
+  const [BackendError, setBackendError] = useState({
+    backendErrorMessage: "",
+    errorFromBackend: false,
+  });
+  const dispatch = useDispatch();
+  const { Isauthenticated } = bindActionCreators(actionCreators, dispatch);
+  const [isLoading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
- 
 
-    useEffect(()=>{
-   const username1=localStorage.getItem("username")
-   const password1=localStorage.getItem("password")
- 
-   if(username1 && password1){
-   
- 
-   }
-    },[])
+  useEffect(() => {
+    const username1 = localStorage.getItem("username");
+    const password1 = localStorage.getItem("password");
 
+    if (username1 && password1) {
+    }
+  }, []);
 
+  const gotoSignup = () => {
+    navigate("/student/signup");
+  };
 
-  const gotoSignup=()=>{
-    navigate("/student/signup")
-  }
-
-  //on submitting form it checks the validations using formik and use services here 
+  //on submitting form it checks the validations using formik and use services here
   const onSubmit = async (values: IFormData) => {
-   
-   
-    setLoading(true)
-    setTimeout(()=>{
-      setLoading(false)
-    },3000)
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 3000);
 
+    //calling login service api
+    LoginService(values).then((res: IAuthloginResponse) => {
+      //setting for remember me in
+      if (values.rememberMe && res.token) {
+        localStorage.setItem("lmsToken", res.token);
+        localStorage.setItem("lmsUserType", res.user.roles[0].name);
+        localStorage.setItem("username", values.username);
+      }
 
-    LoginService(values).then((res:IAuthloginResponse)=>{
+      if (!values.rememberMe) {
+        sessionStorage.setItem("username", values.username);
+        sessionStorage.setItem("password", values.password);
+      }
+      if (res.token && res.user.roles[0].name == "NORMAL_USER") {
+        Isauthenticated({
+          isAuth: true,
+          username: res.user.name,
+          isAdmin: false,
+        });
+      }
+      if (res.token) {
+        navigate("/student/dashboard");
+      }
 
-   if(res.token && res.user.roles[0].name==="NORMAL_USER"){
-    navigate("/student/dashboard")
+      if (!res.token) {
+        setBackendError({ ...BackendError, errorFromBackend: true });
+      }
+    });
+  };
 
-     //setting for remember me in
-   if (values.rememberMe && res.token) {
-    localStorage.setItem("username", values.username);
-    localStorage.setItem("password", values.password);
-  }
-  if (!values.rememberMe) {
-    sessionStorage.setItem("username", values.username);
-    sessionStorage.setItem("password", values.password);
-  }
-  if(res.token && res.user.roles[0].name!=="NORMAL_USER"){
-    navigate("student/dashboard")
-  }
-     
-   }if(!res.token){
-    setBackendError({ ...BackendError,
-    errorFromBackend:true})
-   }
-    
-   
- });
-}
-
-//destructuring methods from useFormik
- const { handleSubmit, handleChange,handleBlur, touched, values, errors } = useFormik({
- initialValues,
-  validationSchema,
-  onSubmit,
-});
+  //destructuring methods from useFormik
+  const { handleSubmit, handleChange, handleBlur, touched, values, errors } =
+    useFormik({
+      initialValues,
+      validationSchema,
+      onSubmit,
+    });
 
   return (
     <>
@@ -143,16 +142,16 @@ export default function StudentLogin() {
             borderRadius={10}
             boxShadow="2px 4px 6px rgba(0, 0, 0, 0.1)"
           >
-
-            {BackendError.errorFromBackend && 
-            <div className="errorlist">
-              <ul>
-               <p >Whoops! Something went wrong.
-                   <li> These credentials do not match our records.</li>
-
-                   </p>
-                    </ul>
-              </div>}
+            {BackendError.errorFromBackend && (
+              <div className="errorlist">
+                <ul>
+                  <p>
+                    Whoops! Something went wrong.
+                    <li> These credentials do not match our records.</li>
+                  </p>
+                </ul>
+              </div>
+            )}
             <form onSubmit={handleSubmit}>
               <div>
                 <FormLabel
@@ -169,10 +168,12 @@ export default function StudentLogin() {
                   placeholder="Email"
                   name="username"
                   onChange={handleChange}
-                  onBlur ={handleBlur}
+                  onBlur={handleBlur}
                   value={values.username}
                 />
-                {touched.username && errors.username && <div className="error-showing-popup">{errors.username}</div>}
+                {touched.username && errors.username && (
+                  <div className="error-showing-popup">{errors.username}</div>
+                )}
               </div>
               <div>
                 <FormLabel
@@ -192,7 +193,9 @@ export default function StudentLogin() {
                   onBlur={handleBlur}
                   value={values.password}
                 />
-                {touched.password && errors.password && <div className="error-showing-popup">{errors.password}</div>}
+                {touched.password && errors.password && (
+                  <div className="error-showing-popup">{errors.password}</div>
+                )}
               </div>
               <HStack mt="10px" w="full">
                 <Checkbox
@@ -206,12 +209,12 @@ export default function StudentLogin() {
                 </Text>
               </HStack>
 
-              <Flex mt ="10px"  justifyContent="space-between" flexWrap="wrap">
-                <Box >
+              <Flex mt="10px" justifyContent="space-between" flexWrap="wrap">
+                <Box>
                   <Button
                     variant="link"
-                   h="auto"
-                   mt="20px"
+                    h="auto"
+                    mt="20px"
                     _hover={{ color: "black" }}
                     fontSize={".850rem"}
                     textDecoration="underline"
@@ -221,36 +224,35 @@ export default function StudentLogin() {
                   >
                     Forget your password?
                   </Button>
-                  </Box>
-                  <Box>
+                </Box>
+                <Box>
                   <Button
-                bg="rgb(31 41 55)"
-                color="white"
-                _hover={{ bg: "rgb(55 65 81)" }}
-                type="submit"
-                w="90px"
-                h="35px"
-                ml="10px"
-                mt="10px"
-                onClick={()=>navigate("/student/signup")}
-              >
-              <Text fontSize="14px">SIGN UP</Text>
-              </Button>
+                    bg="rgb(31 41 55)"
+                    color="white"
+                    _hover={{ bg: "rgb(55 65 81)" }}
+                    type="submit"
+                    w="90px"
+                    h="35px"
+                    ml="10px"
+                    mt="10px"
+                    onClick={() => navigate("/student/signup")}
+                  >
+                    <Text fontSize="14px">SIGN UP</Text>
+                  </Button>
                   <Button
-                isLoading={isLoading}
-                bg="rgb(31 41 55)"
-                color="white"
-                _hover={{ bg: "rgb(55 65 81)" }}
-                
-                type="submit"
-                w="90px"
-                h="35px"
-                ml="10px"
-                mt="10px"
-              >
-              <Text fontSize="14px">LOG IN</Text>
-              </Button>
-                  </Box>
+                    isLoading={isLoading}
+                    bg="rgb(31 41 55)"
+                    color="white"
+                    _hover={{ bg: "rgb(55 65 81)" }}
+                    type="submit"
+                    w="90px"
+                    h="35px"
+                    ml="10px"
+                    mt="10px"
+                  >
+                    <Text fontSize="14px">LOG IN</Text>
+                  </Button>
+                </Box>
               </Flex>
             </form>
           </Box>

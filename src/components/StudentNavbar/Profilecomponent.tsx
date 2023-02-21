@@ -1,13 +1,23 @@
 import React from "react";
 
-import { Link } from "react-router-dom";
-import { Box, Text, Divider } from "@chakra-ui/react";
+import { Link, useNavigate } from "react-router-dom";
+import { Box, Text, Divider, Button } from "@chakra-ui/react";
 // this component is for when clicking user name in navbar this component should display
 interface ProfilecomponentProps {
   setshow1: (show: boolean) => void;
 }
 
+
+
 const Profilecomponent = ({ setshow1 }: ProfilecomponentProps) => {
+
+  const navigate = useNavigate()
+  const Logout =()=>{
+    localStorage.clear();
+    setshow1(false)
+    navigate("student/login")
+  }
+  
   return (
     <Box
       display="flex"
@@ -38,9 +48,11 @@ const Profilecomponent = ({ setshow1 }: ProfilecomponentProps) => {
         </Link>
       </Text>
       <Divider borderColor="gray.300" />
-      <Text color="black" padding="10px">
+      
+      <Text  _hover={{"cursor":"pointer"}} color="black" padding="10px" onClick={Logout} >
         Logout
       </Text>
+     
     </Box>
   );
 };

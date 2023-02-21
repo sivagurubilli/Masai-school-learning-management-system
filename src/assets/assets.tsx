@@ -27,3 +27,19 @@ export const sectionValues =[
 { value: "rct211", label: "rct211" },
 ]
 
+export const NavbarArray  = ["Lectures","Assignments","Quizzes","Tickets"
+,"Discussions",
+"Notifications",
+"Messages",
+"Electives",
+"Announcements",
+"Courses"]
+
+export const NavbarAdminArray  = ["Lectures","Assignments","Quizzes","Tickets"
+,"Discussions",
+"Notifications",
+"Messages",
+"Electives",
+"Announcements",
+"Questions",
+"problems"]

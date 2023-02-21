@@ -1,6 +1,6 @@
 import * as yup from "yup";
 import { useFormik } from "formik";
-import React,{useState,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import "./index.css";
 import {
   Button,
@@ -15,7 +15,10 @@ import {
 import { Box, Image } from "@chakra-ui/react";
 import { masaiimage } from "../../../assets/assets";
 import { useNavigate } from "react-router-dom";
-import { LoginService,IAuthloginResponse } from "../../../Services/AuthServices";
+import {
+  LoginService,
+  IAuthloginResponse,
+} from "../../../Services/AuthServices";
 
 //interface form form data
 interface IFormData {
@@ -23,7 +26,7 @@ interface IFormData {
   password: string;
   token: string;
   rememberMe: boolean;
-  error:string;
+  error: string;
 }
 
 //validating schema for yup library
@@ -44,63 +47,43 @@ const initialValues: IFormData = {
   password: "",
   token: "",
   rememberMe: false,
-  error:""
+  error: "",
 };
 
 //admin login component
 export default function AdminLogin() {
+  const [isLoading, setLoading] = useState<boolean>(false);
+  const [BackendError, setBackendError] = useState({
+    backendErrorMessage: "",
+    errorFromBackend: false,
+  });
 
-  const [isLoading,setLoading] = useState<boolean>(false)
-  const [BackendError,setBackendError] =useState({
-    backendErrorMessage:"",
-    errorFromBackend:false
-  })
   const navigate = useNavigate();
 
   //when clicking on onSubmit button call loginservices for api calling
   const onSubmit = async (values: IFormData) => {
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 3000);
 
-
-
-     
-    setLoading(true)
-    setTimeout(()=>{
-      setLoading(false)
-    },3000)
-
-
-
-    LoginService(values).then((res:IAuthloginResponse)=>{
-
-      if(res.token && res.user.roles[0].name!=="NORMAL_USER"){
-       navigate("/admin/dashboard")
-        //setting for remember me in
+    LoginService(values).then((res: IAuthloginResponse) => {
       if (values.rememberMe && res.token) {
-       localStorage.setItem("username", values.username);
-       localStorage.setItem("password", values.password);
-     }
-     if (!values.rememberMe) {
-       sessionStorage.setItem("username", values.username);
-       sessionStorage.setItem("password", values.password);
-     }
-    }
-        if(!res.token){
-      setBackendError({ ...BackendError,
-      errorFromBackend:true})
-     }
-      
-  })
-  
-  
-       
-    if (values.rememberMe) {
-      localStorage.setItem("username", values.username);
-      localStorage.setItem("password", values.password);
-    }
-    if (!values.rememberMe) {
-      sessionStorage.setItem("username", values.username);
-      sessionStorage.setItem("password", values.password);
-    }
+        localStorage.setItem("lmsToken", res.token);
+        localStorage.setItem("lmsUserType", res.user.roles[0].name);
+        localStorage.setItem("username", values.username);
+      }
+      if (!values.rememberMe && res.token) {
+        sessionStorage.setItem("username", values.username);
+        sessionStorage.setItem("password", values.password);
+      }
+      if (res.token) {
+        navigate("/admin/lectures");
+      }
+      if (!res.token) {
+        setBackendError({ ...BackendError, errorFromBackend: true });
+      }
+    });
   };
 
   //destructuring the different methods in useformik
@@ -111,7 +94,6 @@ export default function AdminLogin() {
       onSubmit,
     });
 
- 
   return (
     <>
       <div className="container">
@@ -133,19 +115,17 @@ export default function AdminLogin() {
             borderColor={["", "grey.300"]}
             borderRadius={10}
             boxShadow="2px 4px 6px rgba(0, 0, 0, 0.1)"
-            >
-            {
-              BackendError.errorFromBackend && 
+          >
+            {BackendError.errorFromBackend && (
               <div className="errorlist">
                 <ul>
-                 <p >Whoops! Something went wrong.
-                     <li> These credentials do not match our records.</li>
-  
-                     </p>
-                      </ul>
-                </div>}
-
-       
+                  <p>
+                    Whoops! Something went wrong.
+                    <li> These credentials do not match our records.</li>
+                  </p>
+                </ul>
+              </div>
+            )}
             <form onSubmit={handleSubmit}>
               <div>
                 <FormLabel
@@ -203,12 +183,12 @@ export default function AdminLogin() {
                 </Text>
               </HStack>
 
-              <Flex mt ="10px"  justifyContent="space-between" flexWrap="wrap">
-                <Box >
+              <Flex mt="10px" justifyContent="space-between" flexWrap="wrap">
+                <Box>
                   <Button
                     variant="link"
-                   h="auto"
-                   mt="20px"
+                    h="auto"
+                    mt="20px"
                     _hover={{ color: "black" }}
                     fontSize={".850rem"}
                     textDecoration="underline"
@@ -218,36 +198,35 @@ export default function AdminLogin() {
                   >
                     Forget your password?
                   </Button>
-                  </Box>
-                  <Box>
+                </Box>
+                <Box>
                   <Button
-                bg="rgb(31 41 55)"
-                color="white"
-                _hover={{ bg: "rgb(55 65 81)" }}
-                type="submit"
-                w="90px"
-                h="35px"
-                ml="10px"
-                mt="10px"
-                onClick={()=>navigate("/admin/signup")}
-              >
-              <Text fontSize="14px">SIGN UP</Text>
-              </Button>
+                    bg="rgb(31 41 55)"
+                    color="white"
+                    _hover={{ bg: "rgb(55 65 81)" }}
+                    type="submit"
+                    w="90px"
+                    h="35px"
+                    ml="10px"
+                    mt="10px"
+                    onClick={() => navigate("/admin/signup")}
+                  >
+                    <Text fontSize="14px">SIGN UP</Text>
+                  </Button>
                   <Button
-                isLoading={isLoading}
-                bg="rgb(31 41 55)"
-                color="white"
-                _hover={{ bg: "rgb(55 65 81)" }}
-                
-                type="submit"
-                w="90px"
-                h="35px"
-                ml="10px"
-                mt="10px"
-              >
-              <Text fontSize="14px">LOG IN</Text>
-              </Button>
-                  </Box>
+                    isLoading={isLoading}
+                    bg="rgb(31 41 55)"
+                    color="white"
+                    _hover={{ bg: "rgb(55 65 81)" }}
+                    type="submit"
+                    w="90px"
+                    h="35px"
+                    ml="10px"
+                    mt="10px"
+                  >
+                    <Text fontSize="14px">LOG IN</Text>
+                  </Button>
+                </Box>
               </Flex>
             </form>
           </Box>

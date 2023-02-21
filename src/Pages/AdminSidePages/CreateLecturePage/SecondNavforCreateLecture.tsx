@@ -12,7 +12,7 @@ import {
 } from "@chakra-ui/react";
 
 // this component is lecture page navbar down below component
-const SecondNavforLectureDetail = ({ id }: { id: string | undefined }) => {
+const SecondNavforLectureCreate = () => {
   const navigate = useNavigate();
   const [isLargerThan900] = useMediaQuery("(min-width: 900px)");
 
@@ -40,16 +40,7 @@ const SecondNavforLectureDetail = ({ id }: { id: string | undefined }) => {
               BACK
             </Button>
           </Link>
-          <Link to={`/admin/lectures/edit/${id}`}>
-            <Button
-              bg="rgb(51, 61, 76)"
-              h={isLargerThan900 ? "35px" : "auto"}
-              color="white"
-              _hover={{ bg: "rgb(41, 51, 66)" }}
-            >
-              EDIT
-            </Button>
-          </Link>
+          
           <Button
             bg="rgb(51, 61, 76)"
             h={isLargerThan900 ? "35px" : "auto"}
@@ -64,17 +55,11 @@ const SecondNavforLectureDetail = ({ id }: { id: string | undefined }) => {
             _hover={{ bg: "rgb(41, 51, 66)" }}>
             COPY
           </Button>
-          <Button
-            bg="red"
-            h={isLargerThan900 ? "35px" : "auto"}
-            color="white"
-            _hover={{ bg: "red" }}>
-            DELETE
-          </Button>
+          
         </ButtonGroup>
       </Flex>
     </Box>
   );
 };
 
-export default SecondNavforLectureDetail;
+export default SecondNavforLectureCreate;

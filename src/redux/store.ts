@@ -5,7 +5,7 @@ import {
   compose,
 } from "redux";
 import thunk from "redux-thunk";
-import { reducer as Authreducer } from "./Authreducer/reducer";
+import  {reducer as Authreducer} from "./Authreducer/reducer";
 declare global {
   interface Window {
     __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;

@@ -14,16 +14,13 @@ import {
 } from "@chakra-ui/react";
 import { Box, Image } from "@chakra-ui/react";
 import { gifloader, masaiimage } from "../../../assets/assets";
-
 import {
   AdminSignupService,
   IAdminAccountCreate,
   IAuthsignupResponse,
-
 } from "../../../Services/AuthServices";
 import "./index.css";
 import { useNavigate } from "react-router-dom";
-
 import Captcha from "./Captcha";
 
 //interface for form data
@@ -91,30 +88,21 @@ const [isLoading,setLoading] = useState(false)
   // using formik and yup library just checking validations using useformik
   //onSubmitting value call the services for api call
   const onSubmit = async (values: IFormData) => {
-   
     if (CaptchaMatched.captchaMatch) {
-
-       
-    setLoading(true)
+     setLoading(true)
     setTimeout(()=>{
       setLoading(false)
     },3000)
-
-
-    AdminSignupService(values).then((res:IAuthsignupResponse)=>{
-       
-      
+    
+    AdminSignupService(values).then((res:IAuthsignupResponse)=>{  
       if(res.name && res.roles[0].name!=="NORMAL_USER"){
    navigate("/admin/login")
-        }
-        
+        } 
         if(!res.name){
          setBackendError({...BackendError, errorFromBackend:true});
         }
      })
-   
      }
-    
   };
 
   //destructuring all values from useformik
@@ -149,16 +137,14 @@ const [isLoading,setLoading] = useState(false)
           h="auto"
           borderColor={["", "grey.300"]}
           borderRadius={10}
-          boxShadow="2px 4px 6px rgba(0, 0, 0, 0.1)"
-        >
+          boxShadow="2px 4px 6px rgba(0, 0, 0, 0.1)">
           <form onSubmit={handleSubmit}>
             <div>
               <FormLabel
                 fontSize=".875rem"
                 fontWeight="500"
                 color="rgb(55 65 81)"
-                mt={4}
-              >
+                mt={4} >
                 Name
               </FormLabel>
               <Input
@@ -168,8 +154,7 @@ const [isLoading,setLoading] = useState(false)
                 name="name"
                 onChange={handleChange}
                 onBlur={handleBlur}
-                value={values.name}
-              />
+                value={values.name} />
               {touched.name && errors.name && (
                 <div className="error-showing-popup">{errors.name}</div>
               )}
@@ -180,8 +165,7 @@ const [isLoading,setLoading] = useState(false)
                 fontSize=".875rem"
                 fontWeight="500"
                 color="rgb(55 65 81)"
-                mt={4}
-              >
+                mt={4} >
                 Email
               </FormLabel>
               <Input
@@ -191,8 +175,7 @@ const [isLoading,setLoading] = useState(false)
                 name="email"
                 onChange={handleChange}
                 onBlur={handleBlur}
-                value={values.email}
-              />
+                value={values.email}/>
               {touched.email && errors.email && (
                 <div className="error-showing-popup">{errors.email}</div>
               )}
@@ -202,8 +185,7 @@ const [isLoading,setLoading] = useState(false)
                 fontSize=".875rem"
                 fontWeight="500"
                 color="rgb(55 65 81)"
-                mt={4}
-              >
+                mt={4} >
                 Password
               </FormLabel>
               <Input
@@ -213,8 +195,7 @@ const [isLoading,setLoading] = useState(false)
                 name="password"
                 onChange={handleChange}
                 onBlur={handleBlur}
-                value={values.password}
-              />
+                value={values.password}  />
               {touched.password && errors.password && (
                 <div className="error-showing-popup">{errors.password}</div>
               )}
@@ -224,8 +205,7 @@ const [isLoading,setLoading] = useState(false)
                 fontSize=".875rem"
                 fontWeight="500"
                 color="rgb(55 65 81)"
-                mt={4}
-              >
+                mt={4}>
                 Re Enter Password
               </FormLabel>
               <Input
@@ -258,7 +238,6 @@ const [isLoading,setLoading] = useState(false)
                 bg="rgb(31 41 55)"
                 color="white"
                 _hover={{ bg: "rgb(55 65 81)" }}
-                
                 type="submit"
                 w="90px"
                 h="35px"

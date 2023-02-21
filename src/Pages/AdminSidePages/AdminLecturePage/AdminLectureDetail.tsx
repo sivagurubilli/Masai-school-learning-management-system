@@ -16,9 +16,7 @@ const AdminLectureDetail = () => {
       flexDirection="column"
       minHeight="100vh"
       bg="gray.50"
-      pb="20%"
-      
-    >
+      pb="20%"    >
       <Navbar />
       <SecondNavforLectureDetail id={id} />
       <Box
@@ -28,8 +26,7 @@ const AdminLectureDetail = () => {
         bg="white"
         textAlign="start"
         boxShadow="2px 4px 6px rgba(0, 0, 0, 0.1)"
-       h="auto"
-      >
+       h="auto" >
         <Box p="3%" h="120px">
           <Text>sissssssssssiiiiiis</Text>
           <Flex alignItems="center" flexWrap="wrap">
@@ -40,8 +37,7 @@ const AdminLectureDetail = () => {
               size="sm"
               borderRadius="10px"
               p="6px"
-              ml="10px"
-            >
+              ml="10px" >
               Check Attendance
             </Badge>
           </Flex>
@@ -62,8 +58,7 @@ const AdminLectureDetail = () => {
               p="6px"
               bg="orange"
               borderRadius="10px"
-              color="white"
-            >
+              color="white" >
               CODING
             </Badge>
             <Badge
@@ -71,8 +66,7 @@ const AdminLectureDetail = () => {
               p="6px"
               borderRadius="10px"
               bg="blue.500"
-              color="white"
-            >
+              color="white"  >
               VIDEO
             </Badge>
           </Flex>
@@ -83,19 +77,15 @@ const AdminLectureDetail = () => {
             <Text ml="30%">1996-33-45 - 12.90pm</Text>
           </Flex>
         </Box>
-       
         <Box bg="white" h="60px" p="20px">
           <Flex>
             <Text>Concludes</Text>
             <Text ml="30%">1996-33-45 - 12.90pm</Text>
-          </Flex>
-       
-        
+          </Flex> 
      </Box>
 </Box>
 </Box>
 </div>
-    
   )
 }
 

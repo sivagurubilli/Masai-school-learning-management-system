@@ -1,15 +1,10 @@
 
-
 body{
     background-color: rgb(243,244,246);
-  
   }
   .container{
-    height: auto;
-    
+    height: auto; 
   }
-  
-  
   .email-error-showing-popup{
     width: auto;
     height: auto;
@@ -34,11 +29,9 @@ body{
        border-radius: 10px;
        margin-left: 20px;
   }
-  
   .button:hover{
     background-color: black;
   }
-
   .buttonlogin{
     color:rgb(55 65 81);
     margin-top: 20px;
@@ -49,30 +42,22 @@ body{
    text-decoration: underline;
        border-radius: 10px;
        margin-left: 20px;
-  }
-  
+  } 
   .buttonlogin:hover{
     color: black;
   }
-
-  .selectbatch{
-    
-             
+  .selectbatch{             
              color:grey;
              font-size :.900rem;
              font-weight:500
   }
-
   .captchamatched{
-  
     color:green;
     width: auto;
     height: 30px;
-
   }
 
   .captchanotmatched{
-
     color:red;
     width: auto;
     height: 30px;

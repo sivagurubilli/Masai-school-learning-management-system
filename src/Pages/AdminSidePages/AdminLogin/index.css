@@ -1,20 +1,14 @@
 
-
 body{
   background-color: rgb(243,244,246);
-
 }
 .container{
   height: auto;
-  
 }
-
-
 .error-showing-popup{
   width: auto;
   height: auto;
  background-color:white;
-
  color: red;
  margin-top: 6px;
  padding-top: 5px;
@@ -25,14 +19,12 @@ justify-content: center;
 }
 .button{
   background-color: rgb(31 41 55);
-  
   height:35px;
   width:90px;
   min-width: 90px;
   color:white;
-     border-radius: 10px;
+ border-radius: 10px;
 }
-
 .button:hover{
   background-color: rgb(55 65 81);
 }

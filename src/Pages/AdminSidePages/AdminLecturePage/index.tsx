@@ -11,12 +11,23 @@ import {
 import React, { useState } from "react";
 import "./index.css";
 import Secondnav from "../../../components/AdminsideComponents/AdminLecture/Secondnav";
-
 import Navbar from "../../../components/AdminsideComponents/AdminNavbar/index";
 import TableHeading from "./TableHeading";
 
+interface IFilteredValues {
+  title: string,
+  batch: string,
+  section:  string,
+  type: string,
+  user:  string,
+  date:  string,
+  week:  string,
+  day:  string,
+}
+
+
 const AdminLecture = () => {
-  const [filterValues, setFilterValues] = useState({
+  const [filterValues, setFilterValues] = useState<IFilteredValues>({
     title: "",
     batch: "",
     section: "",
@@ -30,13 +41,11 @@ const AdminLecture = () => {
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = event.target;
     setFilterValues({ ...filterValues, [name]: value });
-    console.log(filterValues);
   };
 
   const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setFilterValues({ ...filterValues, [name]: value });
-    console.log(filterValues);
   };
   const Reset = () => {};
 
@@ -51,7 +60,6 @@ const AdminLecture = () => {
     <div className="container">
       <Navbar />
       <Secondnav />
-
       <Box w="80%" ml="10%" mt="60px" h="auto"    boxShadow="2px 4px 6px rgba(0, 0, 0, 0.1)">
         <Box w="100%" p="2%" bg="white" h="auto">
           <Grid templateColumns="repeat(4, 1fr)" gap={4}>
@@ -69,14 +77,12 @@ const AdminLecture = () => {
               md: "1fr 1fr 1fr 1fr",
               lg: "1fr 1fr 1fr 1fr",
             }}
-            gap={4}
-          >
+            gap={4}>
             <Select
               name="branch"
               onChange={handleChange}
               width={selectWidth}
-              placeholder="Select branch"
-            >
+              placeholder="Select branch" >
               <option value="branch1">Branch 1</option>
               <option value="branch2">Branch 2</option>
               <option value="branch3">Branch 3</option>
@@ -86,8 +92,7 @@ const AdminLecture = () => {
               name="section"
               width={selectWidth}
               placeholder="Select section"
-              onChange={handleChange}
-            >
+              onChange={handleChange}>
               <option value="section1">Section 1</option>
               <option value="section2">Section 2</option>
               <option value="section3">Section 3</option>
@@ -97,8 +102,7 @@ const AdminLecture = () => {
               name="type"
               width={selectWidth}
               placeholder="Select type"
-              onChange={handleChange}
-            >
+              onChange={handleChange} >
               <option value="type1">Type 1</option>
               <option value="type2">Type 2</option>
               <option value="type3">Type 3</option>
@@ -147,8 +151,7 @@ const AdminLecture = () => {
               name="day"
               width={selectWidth}
               placeholder="Select week day"
-              onChange={handleChange}
-            >
+              onChange={handleChange}>
               <option value="Monday">Monday</option>
               <option value="Tuesday">Tuesday</option>
               <option value="Wednesday">Wednesday</option>
@@ -163,8 +166,7 @@ const AdminLecture = () => {
               bg="rgb(31 41 55)"
               color="white"
               _hover={{ bg: "rgb(55 65 81)" }}
-              onClick={Reset}
-            >
+              onClick={Reset}>
               Reset
             </Button>
           </Flex>

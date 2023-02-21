@@ -18,9 +18,9 @@ const Secondnav = () => {
   const [isLargerThan900] = useMediaQuery("(min-width: 900px)");
 
   return (
-    <Box bg="white" p={2}>
+    <Box bg="white"  zIndex={isLargerThan900? "0":"1"} position="relative" mt="2px" p={2}>
       <Flex
-        h={isLargerThan900 ? "50px" : "auto"}
+        h={isLargerThan900 ? "50px" : "100px"}
         direction={isLargerThan900 ? "row" : "column"}
         alignItems="center"
         justifyContent="space-between"
@@ -38,7 +38,7 @@ const Secondnav = () => {
             h="35px"
             color="white"
             _hover={{ bg: "rgb(41, 51, 66)" }}
-            onClick={() => navigate("/bookmarks")}
+            onClick={() => navigate("/admin/create-lectures")}
           >
             {" "}
             Create Lectures
@@ -48,6 +48,7 @@ const Secondnav = () => {
             h="35px"
             color="white"
             _hover={{ bg: "rgb(41, 51, 66)" }}
+            onClick={() => navigate("/admin/create-bulk-lectures")}
           >
             {" "}
             Create Bulk Lectures
