@@ -3,12 +3,13 @@ import AdminSignup from "../Pages/AdminSidePages/AdminSignup/index";
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 import Adminlogin from "../Pages/AdminSidePages/AdminLogin/index";
-import ForgetPassword from "./ForgetPassword";
 import StudentSignup from '../Pages/StudentSidePages/StudentSignup'
 import Dashborad from "./StudentDashboard/Dashborad";
 import App from "../Pages/StudentSidePages/StudentLogin";
 import AdminDashboard from "../Pages/AdminSidePages/AdminDashboar";
-import AdminLectureDetail from "../Pages/AdminSidePages/AdminLecturePage/AdminLectureDetail"
+import AdminLectureDetail from "../Pages/AdminSidePages/AdminLecturePage/AdminLectureDetail";
+import ForgetPassword from "../Pages/ForgotPassword/index";
+import ResetPassword from "../Pages/ResetPassword/index";
 
 const Allroutes = () => {
   return (
@@ -23,9 +24,11 @@ const Allroutes = () => {
 
 
         <Route path="/student/dashboard" element={<Dashborad />} />
+        <Route path="/forgot-password" element={< ForgetPassword/>} />
+        <Route path="/reset-password" element={< ResetPassword/>} />
 
 
-        <Route path="/forgotpassword" element={<ForgetPassword />} />
+        
         <Route path ="/student/signup" element ={<StudentSignup/>}/>
         <Route path ="/student/login" element ={<App/>} />
         <Route path="/user/profile" />
