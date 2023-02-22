@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import DateTimePicker from 'react-datetime-picker';
 import {
     Container,
     Box,
@@ -11,19 +12,27 @@ import {
     FormLabel,
     Text,
   } from "@chakra-ui/react";
-  import { ICreateLectureValues } from '@/Services/LectureServices';
+  import { ICreateLectureValues } from '../../../Services/LectureServices';
 import { Categoery } from "../../../assets/assets";
 
 const InputTakingSection = ({LectureValues,setLectureValues}:any) => {
 
     const [isZoomlinkValid,setZoomLinkValid ] = useState(false)
     const [touched, setTouched] = useState({zoomLink: false });
+  const [startTime,onStartChange] = useState(new Date())
+  const [endTime,onEndChange] = useState(new Date())
+ 
+    useEffect(()=>{
+          setLectureValues({ ...LectureValues,schedule:startTime,conclude:endTime });
+          console.log(LectureValues)
+              },[startTime,endTime])
 
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         const { name, value } = event.target;
         setLectureValues({ ...LectureValues, [name]: value });
       };
 
+      //input blur is for only when error showing in user inters into input feild
       function handleInputBlur(inputName: string) {
         setTouched((prevState) => ({ ...prevState, [inputName]: true }));
       }
@@ -32,14 +41,14 @@ const InputTakingSection = ({LectureValues,setLectureValues}:any) => {
       const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = event.target;
         setLectureValues({ ...LectureValues, [name]: value });
-        console.log(LectureValues)
+       
       };
     //for hide or show video
       const Hidevideo = () => {
         setLectureValues({ ...LectureValues, hideVideo: !LectureValues.hideVideo });
         console.log(LectureValues);
       };
-     
+    
       //create Lecture service for create lecture
      const gridColumn = useBreakpointValue({
         base: "1 / -1", // Full width on small screens
@@ -159,27 +168,14 @@ const InputTakingSection = ({LectureValues,setLectureValues}:any) => {
           >
             <Box>
               <FormLabel color="rgb(75 85 99)">Start time</FormLabel>
-              <Input
-                type="date"
-                name="date"
-                width={selectWidth}
-                color="rgb(75 85 99)"
-                placeholder="Select date"
-                value={LectureValues.schedule}
-                onChange={handleInputChange}
-              />
+              
+               <DateTimePicker  value={startTime}
+                onChange={onStartChange} />
             </Box>
             <Box>
-              <FormLabel color="rgb(75 85 99)">End time</FormLabel>
-              <Input
-                type="date"
-                name="date"
-                width={selectWidth}
-                color="rgb(75 85 99)"
-                placeholder="Select date"
-                value={LectureValues.conclude}
-                onChange={handleInputChange}
-              />
+              <FormLabel  color="rgb(75 85 99)">End time</FormLabel>
+              <DateTimePicker  name="conclude"  width={selectWidth} color="rgb(75 85 99)"  value={endTime}
+                onChange={onEndChange} />
             </Box>
             <Box>
               <FormLabel color="rgb(75 85 99)">Select Tags</FormLabel>

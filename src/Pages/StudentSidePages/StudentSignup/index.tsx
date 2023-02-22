@@ -3,20 +3,16 @@ import * as yup from "yup";
 import { useFormik } from "formik";
 import {
   Button,
-  Checkbox,
   Container,
   Flex,
   FormLabel,
-  HStack,
   Input,
   Select,
   Text,
   Box, Image 
 } from "@chakra-ui/react";
 import {
-  batchValues,
   masaiimage,
-  sectionValues,
 } from "../../../assets/assets";
 
 import {

@@ -93,8 +93,7 @@ const ForgetPassword = () => {
                                     fontWeight="500"
                                     color="rgb(31,41,55)"
                                     fontSize="15px"
-                                    mt={4}
-                                >
+                                    mt={4} >
                                     Password
                                 </FormLabel>
                                 <Input
@@ -102,8 +101,7 @@ const ForgetPassword = () => {
                                     variant="outline"
                                     placeholder="New Password"
                                     onChange={handleChange}
-                                    value={values.password}
-                                />
+                                    value={values.password} />
                                 {errors.password && (
                                     <div className="error-showing-popup">{errors.password}</div>
                                 )}
@@ -140,13 +138,14 @@ const ForgetPassword = () => {
                                 <HStack>
                                     <Button
                                         isLoading={isLoading}
-                                        bg="black"
+                                       
                                         h="40px"
                                         mt="20px"
                                         w="auto"
                                         color="white"
                                         rounded="10px"
-                                        _hover={{ bg: "rgb(55 65 81)" }}
+                                    bg="rgb(31 41 55)"
+                                     _hover={{ bg: "rgb(76, 84, 95)" }}
                                         type="submit"
                                     >
                                         Password Reset

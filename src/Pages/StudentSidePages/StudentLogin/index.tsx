@@ -102,7 +102,7 @@ export default function StudentLogin() {
           isAdmin: false,
         });
       }
-      if (res.token) {
+      if (res.token && res.user.roles[0].name == "NORMAL_USER") {
         navigate("/student/dashboard");
       }
 

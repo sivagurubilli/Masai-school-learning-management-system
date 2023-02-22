@@ -102,13 +102,13 @@ const ForgetPassword = () => {
                                 <HStack>
                                     <Button
                                         isLoading={isLoading}
-                                        bg="black"
                                         h="40px"
                                         mt="20px"
                                         w="auto"
                                         color="white"
                                         rounded="10px"
-                                        _hover={{ bg: "rgb(55 65 81)" }}
+                                        bg="rgb(31 41 55)"
+                                        _hover={{ bg: "rgb(76, 84, 95)" }}
                                         type="submit"
                                     >
                                         Email Password Reset Link

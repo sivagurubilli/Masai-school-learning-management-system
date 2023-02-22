@@ -15,14 +15,12 @@ import AdminLectureCreate from "../Pages/AdminSidePages/CreateLecturePage";
 import AdminLectureEdit from "../Pages/AdminSidePages/CreateLecturePage/EditLecture";
 import CreateBulkLecture from "../Pages/AdminSidePages/CreateLecturePage/CreateBulkLecture";
 import ResetPassword from "../Pages/ResetPassword/index"
+
 const Allroutes = () => {
-
-
   return (
     <div>
       <Routes>
         <Route path ="/" element ={<LandingPage />}/>
-      
        <Route element ={<PrivateRoute />}>
        <Route path ="/admin/" element={<AdminDashboard/>}/>
         <Route path="/admin/lectures"  element= { <AdminLecture />}/>

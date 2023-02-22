@@ -10,8 +10,8 @@ interface IPrtectedRoutes{
 
 const PrivateRoute= () => {
     const state = useSelector((state:RootState)=>state.Authreducer)
-    const usertype = localStorage.getItem("usertype");
-    return (usertype ? <Outlet /> :<Navigate to ="/admin/login" replace />)
+    const username = localStorage.getItem("username");
+    return (username ? <Outlet /> :<Navigate to ="/admin/login" replace />)
 
 }
 
