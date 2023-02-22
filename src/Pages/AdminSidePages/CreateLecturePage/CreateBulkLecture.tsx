@@ -3,10 +3,11 @@ import { Box, Button, Input, Text } from '@chakra-ui/react'
 import React from 'react'
 import "./index.css"
 import SecondNavforLectureCreate from './SecondNavforCreateLecture'
+
+
 const CreateBulkLecture = () => {
 
-
-    const handlefileChange=(event: React.ChangeEvent<HTMLInputElement>)=> {
+     const handlefileChange=(event: React.ChangeEvent<HTMLInputElement>)=> {
         const selectedFile = event.target.files?.[0];
         console.log(selectedFile);
     }
@@ -15,7 +16,8 @@ const CreateBulkLecture = () => {
     const CreateBulkLectures=()=>{
 
     }
-  return (
+  
+    return (
     <div className='container'>
 <Navbar />
 <SecondNavforLectureCreate/>
@@ -41,7 +43,7 @@ const CreateBulkLecture = () => {
               bg="rgb(31 41 55)"
               _hover={{ bg: "rgb(76, 84, 95)" }}
               onClick={CreateBulkLectures}> create bulk Lectures</Button>
-  </Box>
+       </Box>
     </div>
   )
 }

@@ -14,7 +14,7 @@ import PrivateRoute from "./PrivateRoutes";
 import AdminLectureCreate from "../Pages/AdminSidePages/CreateLecturePage";
 import AdminLectureEdit from "../Pages/AdminSidePages/CreateLecturePage/EditLecture";
 import CreateBulkLecture from "../Pages/AdminSidePages/CreateLecturePage/CreateBulkLecture";
-
+import ResetPassword from "../Pages/ResetPassword/index"
 const Allroutes = () => {
 
 
@@ -36,9 +36,13 @@ const Allroutes = () => {
        </Route>
         <Route path="/admin/signup" element={<AdminSignup />} />
         <Route path="/admin/login" element={<Adminlogin />} />
+        <Route path="/admin/lectures/:id" element={<AdminLectureDetail />} />
+        <Route path="/student/dashboard" element={<Dashborad />} />
+        <Route path="/forgotpassword" element={<ForgetPassword />} />
+        
         <Route path ="/student/signup" element ={<StudentSignup/>}/>
         <Route path ="/student/login" element ={<App/>} />
-        <Route path="/forgotpassword" element={<ForgetPassword />} />
+        <Route path="/reset-password" element={< ResetPassword/>} />
       </Routes>
     </div>
   );

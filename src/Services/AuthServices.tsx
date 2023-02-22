@@ -1,10 +1,6 @@
-import { actionCreators } from "../../src/redux/Authreducer/index";
-import { Iisauthstate } from "../redux/Authreducer/reducer";
+
 import axios, { AxiosResponse } from "axios";
 import bcrypt from "bcryptjs";
-import { useDispatch } from "react-redux";
-import { Dispatch, AnyAction, bindActionCreators } from "redux";
-
 export interface IAuthlogin {
   username: string;
   password: string;
@@ -21,6 +17,7 @@ export interface IAuthloginResponse {
     email: string;
     roles: [
       {
+
         id: number;
         name: string;
       }
@@ -38,6 +35,20 @@ export interface IAuthsignupResponse {
       name: string;
     }
   ];
+
+  }
+
+export interface IAuthsignupResponse {
+  id: number,
+  name: string,
+  email: string,
+  roles: [
+    {
+      id: number,
+      name: string
+    }
+  ]
+
 }
 export interface IStudentAccountCreate {
   name: string;
@@ -77,6 +88,7 @@ export async function LoginService(
   const hashedPassword = bcrypt.hashSync(password, salt);
   try {
     const response = await axios.post("https://reqres.in/api/login", {
+
       email: username,
       password: password,
     });
@@ -91,6 +103,7 @@ export async function LoginService(
 export async function StudentSignupService(
   data: IAdminAccountCreate
 ): Promise<IAuthsignupResponse> {
+
   const { email, name, password } = data;
   try {
     const response = await axios.post(
@@ -100,12 +113,14 @@ export async function StudentSignupService(
     return response.data;
   } catch (error: any) {
     return error.response.data;
+
   }
 }
 
 export async function AdminSignupService(
   data: IAdminAccountCreate
 ): Promise<IAuthsignupResponse> {
+
   const { email, name, password } = data;
   try {
     const response = await axios.post(
@@ -140,3 +155,64 @@ export async function getSectionArray() {
     return error;
   }
 }
+
+export interface IBatchResponse {
+  IbatchArray: IbatchObject[]
+}
+
+export interface IbatchObject {
+  id: number;
+  batch_name: string;
+  student: string[];
+}
+
+export interface ISectionResponse {
+  IsectionArray: ISectionObject[]
+}
+
+export interface ISectionObject {
+  id: number;
+  batch_name: string;
+  student: string[];
+}
+
+
+export interface IForgotPassword {
+  email: string;
+}
+
+export async function ForgotPasswordService(
+  data: IForgotPassword
+): Promise<any> {
+  const { email } = data;
+  const response = await axios.post(
+     "https://75f5-202-142-70-11.in.ngrok.io/forgot-password",
+    {
+      email,
+    },
+    {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    }
+  );
+  return "We have Mailed You  Password Reset Link";
+}
+
+export interface IReset {
+  password: string;
+  confirmPassword: string;
+}
+export async function ResetService(data: IReset): Promise<any> {
+  const response = await axios.post<IReset>(
+    "https://75f5-202-142-70-11.in.ngrok.io/reset-password/",
+    data,
+    {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    }
+  );
+  return "Something went wrong";
+}
+

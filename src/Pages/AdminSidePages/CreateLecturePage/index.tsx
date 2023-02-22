@@ -15,8 +15,6 @@ import {
 } from "../../../Services/LectureServices";
 import InputTakingSection from "./InputTakingSection";
 
-
-
 const AdminLectureCreate = () => {
   const [LectureValues, setLectureValues] = useState<ICreateLectureValues>({
     title: "",
@@ -41,8 +39,7 @@ const AdminLectureCreate = () => {
     LecturePostService(LectureValues).then((res) => {});
   };
 
-
-  return (
+ return (
     <div className="container">
       <Navbar />
       <SecondNavforLectureCreate />
@@ -51,8 +48,7 @@ const AdminLectureCreate = () => {
         ml="10%"
         mt="60px"
         h="auto"
-        boxShadow="2px 4px 6px rgba(0, 0, 0, 0.1)"
-      >
+        boxShadow="2px 4px 6px rgba(0, 0, 0, 0.1)">
         <Box w="100%" p="2%" bg="white" h="auto">
 
      <InputTakingSection LectureValues={LectureValues} setLectureValues ={setLectureValues} />

@@ -11,26 +11,18 @@ import {
     FormLabel,
     Text,
   } from "@chakra-ui/react";
-  import { Calendar } from 'react-big-calendar';
-import 'react-big-calendar/lib/css/react-big-calendar.css';
-
   import { ICreateLectureValues } from '@/Services/LectureServices';
 import { Categoery } from "../../../assets/assets";
 
-
-  
 const InputTakingSection = ({LectureValues,setLectureValues}:any) => {
 
     const [isZoomlinkValid,setZoomLinkValid ] = useState(false)
     const [touched, setTouched] = useState({zoomLink: false });
 
- 
-      
-    const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         const { name, value } = event.target;
         setLectureValues({ ...LectureValues, [name]: value });
       };
-
 
       function handleInputBlur(inputName: string) {
         setTouched((prevState) => ({ ...prevState, [inputName]: true }));
@@ -42,14 +34,14 @@ const InputTakingSection = ({LectureValues,setLectureValues}:any) => {
         setLectureValues({ ...LectureValues, [name]: value });
         console.log(LectureValues)
       };
-    
+    //for hide or show video
       const Hidevideo = () => {
         setLectureValues({ ...LectureValues, hideVideo: !LectureValues.hideVideo });
         console.log(LectureValues);
       };
+     
       //create Lecture service for create lecture
-    
-      const gridColumn = useBreakpointValue({
+     const gridColumn = useBreakpointValue({
         base: "1 / -1", // Full width on small screens
         md: "1 / 4", // Span two columns on medium screens
         lg: "1 / 5", // Span two columns starting from the second column on large screens
@@ -61,13 +53,11 @@ const InputTakingSection = ({LectureValues,setLectureValues}:any) => {
         const zoomLinkRegex = /^https?:\/\/(?:www\.)?zoom.us\/(?:j\/)?(?:[0-9]{9,15})(?:\?pwd=[a-zA-Z0-9_-]+)?$/;
         return zoomLinkRegex.test(link);
       }
-
+//checking for zoomlink is valid or not
       function handleLinkChange(event: React.ChangeEvent<HTMLInputElement>) {
         const newLink = event.target.value;
         setLectureValues({...LectureValues,zoomLink:newLink})
         setZoomLinkValid(isZoomLink(newLink));
-       
-       
       }
 
     return (
