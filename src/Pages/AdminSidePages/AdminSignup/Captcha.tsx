@@ -77,12 +77,12 @@ const Captcha = ({ setCaptcha1 }: any) => {
             <Button
               ml="20px"
               mt="8"
-              bg="rgb(31 41 55)"
               minWidth="90px"
               h="35px"
               borderRadius="10px"
               color="white"
-              _hover={{ bg: "rgb(55 65 81)" }}
+              bg="rgb(31 41 55)"
+              _hover={{ bg: "rgb(76, 84, 95)" }}
               onClick={handleRetry}
             >
               Retry
@@ -126,9 +126,9 @@ const Captcha = ({ setCaptcha1 }: any) => {
 
               <Button
                 isLoading={isLoading}
-                bg="rgb(31 41 55)"
                 color="white"
-                _hover={{ bg: "rgb(55 65 81)" }}
+                bg="rgb(31 41 55)"
+                    _hover={{ bg: "rgb(76, 84, 95)" }}
                 width="auto"
                 onClick={onSubmit}
                 w="auto"

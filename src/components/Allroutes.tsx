@@ -13,6 +13,7 @@ import LandingPage from "../Pages/AdminSidePages/LandingPage";
 import PrivateRoute from "./PrivateRoutes";
 import AdminLectureCreate from "../Pages/AdminSidePages/CreateLecturePage";
 import AdminLectureEdit from "../Pages/AdminSidePages/CreateLecturePage/EditLecture";
+import CreateBulkLecture from "../Pages/AdminSidePages/CreateLecturePage/CreateBulkLecture";
 
 const Allroutes = () => {
 
@@ -29,6 +30,7 @@ const Allroutes = () => {
         <Route path="/admin/lectures/edit/:id" element={<AdminLectureEdit />} />
         <Route path="/student/dashboard" element={<Dashborad />} />
         <Route path ="/admin/create-lectures" element ={<AdminLectureCreate/>}/>
+        <Route path="/admin/create-bulk-lectures" element ={<CreateBulkLecture/>}/>
         <Route path="/user/profile" />
         <Route path="/transcript" />
        </Route>

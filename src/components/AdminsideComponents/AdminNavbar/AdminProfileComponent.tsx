@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 
 import { Link, useNavigate } from "react-router-dom";
 import { Box, Text, Divider } from "@chakra-ui/react";
@@ -10,6 +10,19 @@ interface ProfilecomponentProps {
 
 const AdminProfileComponent = ({ setshow1 }: ProfilecomponentProps) => {
    const navigate = useNavigate()
+
+   const bodyRef = useRef(document.body);
+
+   useEffect(() => {
+     bodyRef.current.addEventListener('click', handleBodyClick);
+     return () => {
+       bodyRef.current.removeEventListener('click', handleBodyClick);
+     };
+   }, []);
+ 
+   function handleBodyClick() {
+    setshow1(false)
+   }
   const Logout =()=>{
     localStorage.clear()
     setshow1(false)

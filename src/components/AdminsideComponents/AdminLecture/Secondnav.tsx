@@ -34,20 +34,20 @@ const Secondnav = () => {
 
         <ButtonGroup spacing={2} >
           <Button
-            bg="rgb(51, 61, 76)"
             h="35px"
             color="white"
-            _hover={{ bg: "rgb(41, 51, 66)" }}
+            bg="rgb(31 41 55)"
+            _hover={{ bg: "rgb(76, 84, 95)" }}
             onClick={() => navigate("/admin/create-lectures")}
           >
             {" "}
             Create Lectures
           </Button>
           <Button
-            bg="rgb(51, 61, 76)"
             h="35px"
             color="white"
-            _hover={{ bg: "rgb(41, 51, 66)" }}
+            bg="rgb(31 41 55)"
+                    _hover={{ bg: "rgb(76, 84, 95)" }}
             onClick={() => navigate("/admin/create-bulk-lectures")}
           >
             {" "}

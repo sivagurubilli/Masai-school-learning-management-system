@@ -41,7 +41,7 @@ const AdminLectureDetail = () => {
               Check Attendance
             </Badge>
           </Flex>
-          <Text>user nrupul </Text>
+          <Text>user elon </Text>
         </Box>
 
         <Box bg="gray.100" h="60px" p="20px">
@@ -83,6 +83,55 @@ const AdminLectureDetail = () => {
             <Text ml="30%">1996-33-45 - 12.90pm</Text>
           </Flex> 
      </Box>
+     <Box bg="gray.100" h="60px" p="20px">
+          <Flex >
+            <Text>Schedule</Text>
+            <Badge
+              ml="30%"
+              p="6px"
+              bg="blue"
+              borderRadius="10px"
+              color="white" >
+              CODING
+            </Badge>
+          </Flex>
+        </Box>
+        <Box bg="white" h="60px" p="20px">
+          <Flex>
+            <Text>User</Text>
+            <Text ml="35%">Kovela</Text>
+          </Flex> 
+     </Box>
+     <Box bg="gray.100" h="60px" p="20px">
+          <Flex >
+            <Text>Optional</Text>
+            <Text ml="33%">Yes</Text>
+          </Flex>
+        </Box>
+        <Box bg="white" h="60px" p="20px">
+          <Flex>
+            <Text>Hide Video</Text>
+            <Text ml="31%">YES</Text>
+          </Flex> 
+     </Box>
+     <Box bg="gray.100" h="60px" p="20px">
+          <Flex >
+            <Text>Zoom Link</Text>
+            <Text ml="30%">Zoom Link</Text>
+          </Flex>
+        </Box>
+        <Box bg="white" h="60px" p="20px">
+          <Flex>
+            <Text>Conclde At</Text>
+            <Text ml="30%">Concluding Date</Text>
+          </Flex> 
+     </Box>
+     <Box bg="gray.100" h="60px" p="20px">
+          <Flex >
+            <Text>Updating At</Text>
+            <Text ml="30%">Updating At</Text>
+          </Flex>
+        </Box>
 </Box>
 </Box>
 </div>

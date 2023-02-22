@@ -286,10 +286,9 @@ const [isLoading,setLoading] = useState(false)
               
                   <Button
                 isLoading={isLoading}
-                bg="rgb(31 41 55)"
                 color="white"
-                _hover={{ bg: "rgb(55 65 81)" }}
-                
+                bg="rgb(31 41 55)"
+              _hover={{ bg: "rgb(76, 84, 95)" }}
                 type="submit"
                 w="90px"
                 h="35px"

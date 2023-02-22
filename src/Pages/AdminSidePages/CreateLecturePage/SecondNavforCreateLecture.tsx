@@ -32,27 +32,26 @@ const SecondNavforLectureCreate = () => {
         <ButtonGroup spacing={2}>
           <Link to={`/admin/lectures`}>
             <Button
-              bg="rgb(51, 61, 76)"
               h={isLargerThan900 ? "35px" : "auto"}
               color="white"
-              _hover={{ bg: "rgb(41, 51, 66)" }}
-            >
+                bg="rgb(31 41 55)"
+                    _hover={{ bg: "rgb(76, 84, 95)" }}>
               BACK
             </Button>
           </Link>
           
           <Button
-            bg="rgb(51, 61, 76)"
             h={isLargerThan900 ? "35px" : "auto"}
             color="white"
-            _hover={{ bg: "rgb(41, 51, 66)" }}>
+              bg="rgb(31 41 55)"
+                    _hover={{ bg: "rgb(76, 84, 95)" }}>
             DISCUSSIONS
           </Button>
           <Button
-            bg="rgb(51, 61, 76)"
             h={isLargerThan900 ? "35px" : "auto"}
             color="white"
-            _hover={{ bg: "rgb(41, 51, 66)" }}>
+              bg="rgb(31 41 55)"
+             _hover={{ bg: "rgb(76, 84, 95)" }}>
             COPY
           </Button>
           

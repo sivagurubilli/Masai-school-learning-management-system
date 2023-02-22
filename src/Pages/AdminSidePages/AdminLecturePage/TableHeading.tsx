@@ -39,9 +39,6 @@ const TableHeading = () => {
   ];
 const navigate = useNavigate()
 
-  
-
-
   return (
     <div>
       <Box overflow={"auto"}>
@@ -69,8 +66,7 @@ const navigate = useNavigate()
                         variant="solid"
                         h="20px"
                         w="40px"
-                        pl="8px"
-                      >
+                        pl="8px" >
                         LIVE
                       </Badge>
                     </Text>
@@ -86,17 +82,13 @@ const navigate = useNavigate()
                     <Link to={`/admin/lectures/${ad.id}`}>  <Button
                         variant="link"
                         textDecoration={"none"}
-                        color="blue"
-                        
-                      >
+                        color="blue">
                         View
                       </Button></Link>
                       <Link to={`/admin/lectures/edit/${ad.id}`}>  <Button
                         variant="link"
                         textDecoration={"none"}
-                        color="blue"
-                        
-                      >
+                        color="blue">
                         Edit
                       </Button></Link>
                     </Flex>

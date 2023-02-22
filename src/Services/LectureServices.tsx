@@ -4,12 +4,18 @@ import axios from "axios";
 export interface ICreateLectureValues {
   title: string;
   batch: string;
-  section: string;
-  type: string;
-  user: string;
-  date: string;
-  week: string;
-  day: string;
+  categoery:string,
+  section: string,
+  type: string,
+  schedule:string,
+  conclude:string,
+  user: string,
+  tags:string,
+  hideVideo:boolean,
+  zoomLink:string,
+  week: string,
+  day: string,
+  notes:string
 }
 
 export interface ILecturePostResponse {}
@@ -17,7 +23,13 @@ export interface ILecturePostResponse {}
 export async function LecturePostService(
   data: ICreateLectureValues
 ): Promise<ILecturePostResponse> {
-  const { title, batch, section, type, user, date, week, day } = data;
+  const { title, batch, section, type, user,  categoery,
+  schedule,
+  conclude,
+  tags,
+  hideVideo,
+  zoomLink,
+  notes, week } = data;
   try {
     const response = await axios.post("https://reqres.in/api/create/lecture", {
       title: title,
@@ -25,9 +37,14 @@ export async function LecturePostService(
       section: section,
       type: type,
       user: user,
-      date: date,
+      categoery:categoery,
+      schedule:schedule,
+      conclude:conclude,
+      tags:tags,
+      hideVideo:hideVideo,
+      zoomLink:zoomLink,
+      notes:notes,
       week: week,
-      " day": day,
     });
 
     return response.data;
@@ -41,7 +58,13 @@ export async function LectureEditService(
   data: ICreateLectureValues,
   id: string | undefined
 ): Promise<ILecturePostResponse> {
-  const { title, batch, section, type, user, date, week, day } = data;
+  const { title, batch, section, type, user,  categoery,
+    schedule,
+    conclude,
+    tags,
+    hideVideo,
+    zoomLink,
+    notes, week } = data;
 
   try {
     const response = await axios.patch(
@@ -52,9 +75,14 @@ export async function LectureEditService(
         section: section,
         type: type,
         user: user,
-        date: date,
+        categoery:categoery,
+        schedule:schedule,
+        conclude:conclude,
+        tags:tags,
+        hideVideo:hideVideo,
+        zoomLink:zoomLink,
+        notes:notes,
         week: week,
-        " day": day,
       }
     );
 

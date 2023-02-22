@@ -43,3 +43,6 @@ export const NavbarAdminArray  = ["Lectures","Assignments","Quizzes","Tickets"
 "Announcements",
 "Questions",
 "problems"]
+
+
+export const Categoery = ["General","Coding Platform","CSBT","DA","DSA Coding", "Maths","Logic","Scrum"]

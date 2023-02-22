@@ -76,12 +76,10 @@ height: auto;
            font-size :.900rem;
            font-weight:500
 }
-
 .errorlist{
   color: red;
   padding-top: 10px;
 }
-
 .errorlist li{
   margin-left: 50px;
 }
