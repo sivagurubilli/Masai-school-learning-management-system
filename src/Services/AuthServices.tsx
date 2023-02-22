@@ -141,10 +141,10 @@ export interface IForgotPassword {
 
 export async function ForgotPasswordService(
   data: IForgotPassword
-): Promise<IForgotPassword> {
+): Promise<any> {
   const { email } = data;
   const response = await axios.post(
-    "https://75f5-202-142-70-11.in.ngrok.io/forgot-password",
+     "https://75f5-202-142-70-11.in.ngrok.io/forgot-password",
     {
       email,
     },
@@ -154,14 +154,14 @@ export async function ForgotPasswordService(
       },
     }
   );
-  return response.data;
+  return "We have Mailed You  Password Reset Link";
 }
 
 export interface IReset {
   password: string;
   confirmPassword: string;
 }
-export async function ResetService(data: IReset): Promise<IReset> {
+export async function ResetService(data: IReset): Promise<any> {
   const response = await axios.post<IReset>(
     "https://75f5-202-142-70-11.in.ngrok.io/reset-password/",
     data,
@@ -171,5 +171,5 @@ export async function ResetService(data: IReset): Promise<IReset> {
       },
     }
   );
-  return response.data;
+  return "Something went wrong";
 }

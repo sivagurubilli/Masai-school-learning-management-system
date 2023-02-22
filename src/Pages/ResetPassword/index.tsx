@@ -44,10 +44,13 @@ const initialValues: IFormData = {
 
 const ForgetPassword = () => {
     const [isLoading, setLoading] = useState<boolean>(false)
+    const [message, setMessage]= useState<string>("")
     const onSubmit = async (values: IFormData) => {
-        console.log(values)
-        ResetService(values);
-
+        ResetService(values).then((res: any) => {
+            setMessage(res)
+        }).catch((err: any) => {
+            setMessage(err)
+        });
         setLoading(true)
         setTimeout(() => {
             setLoading(false)
@@ -83,6 +86,7 @@ const ForgetPassword = () => {
                         <Text fontSize="16px" color="rgb(113, 120, 128)">
                             Reset your password
                         </Text>
+                        {message ? <Box color="#48BB78" >{message}</Box>:<Box></Box>}
                         <form onSubmit={handleSubmit}>
                             <div >
                                 <FormLabel

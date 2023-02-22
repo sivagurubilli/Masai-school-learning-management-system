@@ -32,18 +32,17 @@ const initialValues: IFormData = {
 
 const ForgetPassword = () => {
     const [isLoading, setLoading] = useState<boolean>(false)
+    const [message, setMessage]= useState<string>("")
     const onSubmit = async (values: IFormData) => {
-        console.log(values)
-        ForgotPasswordService(values).then((res: IForgotPassword) => {
-            console.log(res)
+        ForgotPasswordService(values).then((res: any) => {
+            setMessage(res)
         }).catch((err: any) => {
-            console.log(err)
+            setMessage(err)
         })
         setLoading(true)
         setTimeout(() => {
             setLoading(false)
         }, 3000)
-
     };
 
     const { handleSubmit, handleChange, values, errors } = useFormik({
@@ -62,7 +61,6 @@ const ForgetPassword = () => {
                         src={masaiimage}
                         alt="Masai logo"
                     />
-
                     <Box
                         w={["full", "md"]}
                         p="20px"
@@ -78,6 +76,7 @@ const ForgetPassword = () => {
                             address and we will email password reset link. That will allow to
                             chooose new one.
                         </Text>
+                        {message ? <Box color="#48BB78" >{message}</Box>:<Box></Box>}
                         <form onSubmit={handleSubmit}>
                             <div >
                                 <FormLabel
@@ -99,7 +98,6 @@ const ForgetPassword = () => {
                                     <div className="error-showing-popup">{errors.email}</div>
                                 )}
                             </div>
-
                             <Flex justifyContent="flex-end">
                                 <HStack>
                                     <Button
