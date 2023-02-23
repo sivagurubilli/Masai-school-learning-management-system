@@ -95,12 +95,10 @@
     color: blue;
     border-left: 2px solid tomato;
   }
-
   #bar {
     width: 30px;
     height: 30px;
   }
-
   #navbar-mobile.active {
     right: 0;
     display: flex;

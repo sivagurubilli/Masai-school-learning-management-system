@@ -173,13 +173,10 @@ const InputTakingSection = ({LectureValues,setLectureValues}:any) => {
           >
             <Box>
               <FormLabel color="rgb(75 85 99)">Start time</FormLabel>
-               {/* <DateTimePicker  value={startTime}
-                onChange={onStartChange} /> */}
+
             </Box>
             <Box>
               <FormLabel  color="rgb(75 85 99)">End time</FormLabel>
-              {/* <DateTimePicker  name="conclude"  width={selectWidth} color="rgb(75 85 99)"  value={endTime}
-                onChange={onEndChange} /> */}
             </Box>
             <Box>
               <FormLabel color="rgb(75 85 99)">Select Tags</FormLabel>
