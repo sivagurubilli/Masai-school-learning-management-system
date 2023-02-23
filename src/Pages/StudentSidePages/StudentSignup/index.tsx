@@ -38,7 +38,6 @@ interface IFormData {
   email: string;
   password: string;
   reEnterPassword: string;
-
 }
 
 //validation schema for validating form values using yup library
@@ -67,13 +66,8 @@ const initialValues: IFormData = {
  
 };
 
-
-
-
-
-
 // student Signup component
-export default function StudentSignup() {
+export default function StudentSignup({setGotoSignup}:any) {
  
   const [BackendError,setBackendError] = useState({
     backendErrorMessage:"",
@@ -83,7 +77,8 @@ const [isLoading,setLoading] = useState(false)
   const [batchDetails,setBatchDetails] = useState([])
   const [sectionDetails,setSectionDetails] = useState([])
    
-  
+  const navigate = useNavigate();
+
   useEffect(()=>{
   getBatchArrray().then((res:any)=>{
   setBatchDetails(res)
@@ -104,15 +99,14 @@ const [isLoading,setLoading] = useState(false)
 
 
     StudentSignupService(values).then((res:IAuthsignupResponse)=>{
-       if(res.name && res.roles[0].name==="NORMAL_USER"){
-  navigate("/student/login")
+      console.log(res)
+       if(res.name){
+        setGotoSignup(false)
        }
-       
        if(!res.name){
         setBackendError({...BackendError, errorFromBackend:true});
        }
     })
-  
     }
 
 //destructuring methods from useformik library 
@@ -122,19 +116,15 @@ const [isLoading,setLoading] = useState(false)
     onSubmit,
   });
 
-  const navigate = useNavigate();
+    // function toggle go to sign up and login components
   const gotoLogin = () => {
-    navigate("/student/login");
-  };
-
-
-
-
+   setGotoSignup(false)
+  }
 
   return (
     <>
       <div className="container">
-        <Container mt="60px" alignItems="center" w="100%" centerContent>
+        <Container mt="60px" paddingBottom={"100px"} alignItems="center" w="100%" centerContent>
           <Image
             height="60px"
             objectFit="contain"
@@ -156,7 +146,7 @@ const [isLoading,setLoading] = useState(false)
            { BackendError.errorFromBackend && <div className="errorlist">
               <ul>
                <p >Whoops! Something went wrong.
-                   <li> These credentials do not match our records.</li>
+                   <li>User is already registered with theese credintials</li>
 
                    </p>
                     </ul>
@@ -171,7 +161,6 @@ const [isLoading,setLoading] = useState(false)
                 >
                   Name
                 </FormLabel>
-
                 <Input
                   variant="outline"
                   type="name"
@@ -204,13 +193,11 @@ const [isLoading,setLoading] = useState(false)
                   </option>
                 ))} */}
               </Select>
-
               <FormLabel
                 fontWeight="500"
                 color="rgb(55 65 81)"
                 fontSize=".900rem"
-                mt={4}
-              >
+                mt={4}>
                 Select Section
               </FormLabel>
               <Select
@@ -288,7 +275,7 @@ const [isLoading,setLoading] = useState(false)
               </div>
                  
               <Flex justifyContent="flex-between">
-                <button className="buttonlogin"  onClick={gotoLogin}>
+                <button className="buttonlogin" type="button"  onClick={gotoLogin}>
                   <Text fontSize="14px">
                     If Already Signup? please Log in here
                   </Text>
@@ -299,7 +286,6 @@ const [isLoading,setLoading] = useState(false)
                 bg="rgb(31 41 55)"
                 color="white"
                 _hover={{ bg: "rgb(55 65 81)" }}
-                
                 type="submit"
                 w="90px"
                 h="35px"

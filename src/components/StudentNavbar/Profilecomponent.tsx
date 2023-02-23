@@ -7,29 +7,26 @@ interface ProfilecomponentProps {
   setshow1: (show: boolean) => void;
 }
 
-
-
 const Profilecomponent = ({ setshow1 }: ProfilecomponentProps) => {
-
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const bodyRef = useRef(document.body);
 
   useEffect(() => {
-    bodyRef.current.addEventListener('click', handleBodyClick);
+    bodyRef.current.addEventListener("click", handleBodyClick);
     return () => {
-      bodyRef.current.removeEventListener('click', handleBodyClick);
+      bodyRef.current.removeEventListener("click", handleBodyClick);
     };
   }, []);
 
   function handleBodyClick() {
-    setshow1(false)
+    setshow1(false);
   }
-  const Logout =()=>{
+  const Logout = () => {
     localStorage.clear();
-    setshow1(false)
-    navigate("student/login")
-  }
-  
+    setshow1(false);
+    navigate("student/login");
+  };
+
   return (
     <Box
       display="flex"
@@ -60,11 +57,15 @@ const Profilecomponent = ({ setshow1 }: ProfilecomponentProps) => {
         </Link>
       </Text>
       <Divider borderColor="gray.300" />
-      
-      <Text  _hover={{"cursor":"pointer"}} color="black" padding="10px" onClick={Logout} >
+
+      <Text
+        _hover={{ cursor: "pointer" }}
+        color="black"
+        padding="10px"
+        onClick={Logout}
+      >
         Logout
       </Text>
-     
     </Box>
   );
 };

@@ -15,40 +15,20 @@ export interface IAuthloginResponse {
     id: number;
     name: string;
     email: string;
-    roles: [
-      {
-
-        id: number;
-        name: string;
-      }
-    ];
+    roles: Array<IRoles>
   };
 }
 
-export interface IAuthsignupResponse {
-  id: number;
-  name: string;
-  email: string;
-  roles: [
-    {
-      id: number;
-      name: string;
-    }
-  ];
 
+interface IRoles{
+  id:number,
+  name:string
   }
-
 export interface IAuthsignupResponse {
   id: number,
   name: string,
   email: string,
-  roles: [
-    {
-      id: number,
-      name: string
-    }
-  ]
-
+  roles:Array<IRoles>
 }
 export interface IStudentAccountCreate {
   name: string;
@@ -87,10 +67,10 @@ export async function LoginService(
   const salt = bcrypt.genSaltSync(10);
   const hashedPassword = bcrypt.hashSync(password, salt);
   try {
-    const response = await axios.post("https://reqres.in/api/login", {
+    const response = await axios.post(" https://624e-202-142-114-239.in.ngrok.io/api/login", {
 
-      email: username,
-      password: password,
+     "username": username,
+      "password": password,
     });
 
     return response.data;
@@ -107,8 +87,8 @@ export async function StudentSignupService(
   const { email, name, password } = data;
   try {
     const response = await axios.post(
-      "https://a354-202-142-114-239.in.ngrok.io/api/signup",
-      { name: name, email: email, password: password }
+      "https://624e-202-142-114-239.in.ngrok.io/api/signup/admin",
+      { name, email ,password }
     );
     return response.data;
   } catch (error: any) {
@@ -124,8 +104,8 @@ export async function AdminSignupService(
   const { email, name, password } = data;
   try {
     const response = await axios.post(
-      "https://a354-202-142-114-239.in.ngrok.io/api/signup",
-      { name: name, email: email, password: password }
+      "https://624e-202-142-114-239.in.ngrok.io/api/signup",
+      { name, email, password }
     );
     console.log(response);
     return response.data;
@@ -160,7 +140,7 @@ export interface IBatchResponse {
   IbatchArray: IbatchObject[]
 }
 
-export interface IbatchObject {
+export interface IBatchObject {
   id: number;
   batch_name: string;
   student: string[];

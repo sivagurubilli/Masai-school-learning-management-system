@@ -20,7 +20,7 @@ const TableHeading = () => {
   const ads = [
     {
       id: 1,
-      title: "siva wete349995995995",
+      title: " javascript typescript 49995995995",
       created: "siva",
 
       batch: "fw121",
@@ -29,7 +29,7 @@ const TableHeading = () => {
     },
     {
       id: 2,
-      title: "siva wete349995995995",
+      title: " javascript typescript 349995995995",
       created: "siva",
 
       batch: "fw121",

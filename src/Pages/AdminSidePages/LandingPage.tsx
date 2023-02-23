@@ -7,12 +7,16 @@ const LandingPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const usertype = localStorage.getItem("lmsUserType");
-    if (usertype === "NORMAL_USER") {
+    const usertype = localStorage.getItem("UserType");
+    const username = localStorage.getItem("Username");
+    if (username && usertype === "STUDENT_USER") {
       navigate("/student/dashboard");
     }
+    if (username && usertype! == "STUDENT_USER") {
+      navigate("/admin/dashboard");
+    }
     if (!usertype) {
-      navigate("/student/login");
+      navigate("/login");
     }
   }, []);
 

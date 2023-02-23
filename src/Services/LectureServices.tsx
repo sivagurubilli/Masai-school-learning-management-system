@@ -32,19 +32,19 @@ export async function LecturePostService(
   notes, week } = data;
   try {
     const response = await axios.post("https://reqres.in/api/create/lecture", {
-      title: title,
-      batch: batch,
-      section: section,
-      type: type,
-      user: user,
-      categoery:categoery,
-      schedule:schedule,
-      conclude:conclude,
-      tags:tags,
-      hideVideo:hideVideo,
-      zoomLink:zoomLink,
-      notes:notes,
-      week: week,
+      title,
+      batch,
+      section,
+      type,
+      user,
+      categoery,
+      schedule,
+      conclude,
+      tags,
+      hideVideo,
+      zoomLink,
+      notes,
+      week,
     });
 
     return response.data;
@@ -70,19 +70,19 @@ export async function LectureEditService(
     const response = await axios.patch(
       `https://reqres.in/api/create/lecture/${id}`,
       {
-        title: title,
-        batch: batch,
-        section: section,
-        type: type,
-        user: user,
-        categoery:categoery,
-        schedule:schedule,
-        conclude:conclude,
-        tags:tags,
-        hideVideo:hideVideo,
-        zoomLink:zoomLink,
-        notes:notes,
-        week: week,
+        title,
+        batch,
+        section,
+        type,
+        user,
+        categoery,
+        schedule,
+        conclude,
+        tags,
+        hideVideo,
+        zoomLink,
+        notes,
+        week,
       }
     );
 

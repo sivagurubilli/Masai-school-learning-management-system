@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import * as yup from "yup";
 import { useFormik } from "formik";
-
 import {
   Button,
   Checkbox,
@@ -14,7 +13,6 @@ import {
 } from "@chakra-ui/react";
 import { Box, Image } from "@chakra-ui/react";
 import { gifloader, masaiimage } from "../../../assets/assets";
-
 import {
   AdminSignupService,
   IAdminAccountCreate,
@@ -102,19 +100,14 @@ const [isLoading,setLoading] = useState(false)
 
 
     AdminSignupService(values).then((res:IAuthsignupResponse)=>{
-       
-      
       if(res.name && res.roles[0].name!=="NORMAL_USER"){
-   navigate("/admin/login")
+   navigate("/login")
         }
-        
-        if(!res.name){
+         if(!res.name){
          setBackendError({...BackendError, errorFromBackend:true});
         }
      })
-   
      }
-    
   };
 
   //destructuring all values from useformik
@@ -127,12 +120,12 @@ const [isLoading,setLoading] = useState(false)
 
   // when clicking login button user goes to login page
   const gotoLogin = () => {
-    navigate("/admin/login");
+    navigate("/login");
   };
 
   return (
     <div className="container">
-      <Container mt="60px" alignItems="center" w="100%" centerContent>
+      <Container h="auto" paddingBottom={"100px"} mt="60px" alignItems="center" w="100%" centerContent>
         <Image
           height="60px"
           objectFit="contain"

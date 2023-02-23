@@ -11,6 +11,8 @@ import {
     Button,
     FormLabel,
     Text,
+    FormControl,
+    Switch,
   } from "@chakra-ui/react";
   import { ICreateLectureValues } from '../../../Services/LectureServices';
 import { Categoery } from "../../../assets/assets";
@@ -27,7 +29,10 @@ const InputTakingSection = ({LectureValues,setLectureValues}:any) => {
           console.log(LectureValues)
               },[startTime,endTime])
 
-  const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+              const handleToggle = () => {
+              setLectureValues({...LectureValues,hideVideo:!LectureValues.hideVideo})
+              };
+                          const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         const { name, value } = event.target;
         setLectureValues({ ...LectureValues, [name]: value });
       };
@@ -161,14 +166,13 @@ const InputTakingSection = ({LectureValues,setLectureValues}:any) => {
             mt={4}
             templateColumns={{
               base: "1fr",
-              md: "1fr 1fr 1fr 1fr",
-              lg: "1fr 1fr 1fr 1fr",
+              md: "1fr 1fr 1fr",
+              lg: "1fr 1fr 1fr",
             }}
             gap={4}
           >
             <Box>
               <FormLabel color="rgb(75 85 99)">Start time</FormLabel>
-              
                {/* <DateTimePicker  value={startTime}
                 onChange={onStartChange} /> */}
             </Box>
@@ -192,6 +196,48 @@ const InputTakingSection = ({LectureValues,setLectureValues}:any) => {
                 <option value="type3">Tag 3</option>
               </Select>
             </Box>
+           
+          </Grid>
+          <Grid templateColumns={{ sm: "repeat(2, 1fr)", md: "repeat(3, 1fr)" }} gap={4}>
+            <Box  gridColumn={{ sm: "span 2", md: "span 2" }} w="100%">
+              <FormLabel color="rgb(75 85 99)">Zoom Link</FormLabel>
+            
+              <Input
+                name="week"
+                width={selectWidth}
+                w="100%"
+                color="rgb(75 85 99)"
+                placeholder="paste Zoom-link"
+                value={LectureValues.zoomLink}
+                onBlur={() => handleInputBlur("zoomLink")}
+                onChange={handleInputChange}
+              />
+              {touched.zoomLink && !isZoomlinkValid ? <span style={{ color: "red" }}>inValid Zoom link</span> : ""}
+            </Box>
+             
+            <Box  gridColumn={{ sm: "span 2", md: "span 1" }} w="100%"> 
+              <FormLabel color="rgb(75 85 99)">
+                Hide video or Show video
+              </FormLabel>
+              <Flex>
+              <FormControl display='flex' alignItems='center'>
+              
+               <Switch w="100px" isChecked={LectureValues.hideVideo} onChange={handleToggle}/>
+              </FormControl>
+              <p>  {LectureValues.hideVideo ? "showing" : "hidden"}</p>
+              </Flex>
+            </Box>
+            </Grid>
+
+            <Grid
+            mt={4}
+            templateColumns={{
+              base: "1fr",
+              md: "1fr 1fr 1fr",
+              lg: "1fr 1fr 1fr",
+            }}
+            gap={4}
+          >
             <Box>
               <FormLabel color="rgb(75 85 99)">Select Tags</FormLabel>
               <Select
@@ -207,55 +253,12 @@ const InputTakingSection = ({LectureValues,setLectureValues}:any) => {
                 <option value="user3">User 3</option>
               </Select>
             </Box>
-          </Grid>
-          <Grid
-            mt={4}
-            templateColumns={{
-              base: "1fr",
-              md: "1fr 1fr 1fr 1fr",
-              lg: "1fr 1fr 1fr 1fr",
-            }}
-            gap={4}
-          >
-            <Box>
-              <FormLabel color="rgb(75 85 99)">
-                Hide video or Show video
-              </FormLabel>
-              <Flex>
-                <Button
-                  color="white"
-                  bg="rgb(31 41 55)"
-                  _hover={{ bg: "rgb(76, 84, 95)" }}
-                  onClick={Hidevideo}
-                >
-                  {LectureValues.hideVideo ? "Show" : "Hide"}
-                </Button>
-
-                <Text ml="10px" fontSize="14px">
-                  {LectureValues.hideVideo
-                    ? "video is not Visible to audience"
-                    : "video is visible to audience"}
-                </Text>
-              </Flex>
-            </Box>
-            <Box>
-              <FormLabel color="rgb(75 85 99)">Zoom Link</FormLabel>
-              <Input
-                name="zoomLink"
-                width={selectWidth}
-                color="rgb(75 85 99)"
-                placeholder="paste Zoom-link"
-                value={LectureValues.zoomLink}
-                onBlur={() => handleInputBlur("zoomLink")}
-                onChange={handleLinkChange}
-              />
-              {touched.zoomLink && !isZoomlinkValid ? <span style={{ color: "red" }}>inValid Zoom link</span> : ""}
-            </Box>
             <Box>
               <FormLabel color="rgb(75 85 99)">Enter week</FormLabel>
               <Input
                 name="week"
                 width={selectWidth}
+                w="100%"
                 placeholder="Select week"
                 color="rgb(75 85 99)"
                 value={LectureValues.week}
@@ -267,6 +270,7 @@ const InputTakingSection = ({LectureValues,setLectureValues}:any) => {
               <Input
                 name="day"
                 width={selectWidth}
+                w="100%"
                 color="rgb(75 85 99)"
                 placeholder="Select week day"
                 value={LectureValues.day}

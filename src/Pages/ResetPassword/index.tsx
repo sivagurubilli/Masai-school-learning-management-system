@@ -140,13 +140,13 @@ const ForgetPassword = () => {
                                 <HStack>
                                     <Button
                                         isLoading={isLoading}
-                                        bg="black"
+                                        bg="rgb(31 41 55)"
+                                        color="white"
+                                        _hover={{ bg: "rgb(55 65 81)" }}
                                         h="40px"
                                         mt="20px"
                                         w="auto"
-                                        color="white"
                                         rounded="10px"
-                                        _hover={{ bg: "rgb(55 65 81)" }}
                                         type="submit"
                                     >
                                         Password Reset
