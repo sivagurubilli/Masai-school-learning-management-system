@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { masaiimage } from "../../assets/assets";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import { ForgotPasswordService, IForgotPassword } from "../../Services/AuthServices";
+import { ForgotPasswordService } from "../../Services/AuthServices";
 import {
     Flex,
     Box,
@@ -33,18 +33,15 @@ const initialValues: IFormData = {
 const ForgetPassword = () => {
     const [isLoading, setLoading] = useState<boolean>(false)
     const [message, setMessage]= useState<string>("")
+    const [message2, setMessage2]= useState<string>("")
+    
     const onSubmit = async (values: IFormData) => {
-        ForgotPasswordService(values).then((res: any) => {
-            setMessage(res)
-        }).catch((err: any) => {
-            setMessage(err)
-        })
+        ForgotPasswordService(values)
         setLoading(true)
         setTimeout(() => {
             setLoading(false)
-        }, 3000)
+        }, 1000)
     };
-
     const { handleSubmit, handleChange, values, errors } = useFormik({
         initialValues,
         validationSchema,
@@ -77,6 +74,7 @@ const ForgetPassword = () => {
                             chooose new one.
                         </Text>
                         {message ? <Box color="#48BB78" >{message}</Box>:<Box></Box>}
+                        {message2 ? <Box color="#E53E3E" >{message2}</Box>:<Box ></Box>}
                         <form onSubmit={handleSubmit}>
                             <div >
                                 <FormLabel

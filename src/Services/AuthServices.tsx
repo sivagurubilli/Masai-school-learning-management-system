@@ -143,33 +143,37 @@ export async function ForgotPasswordService(
   data: IForgotPassword
 ): Promise<any> {
   const { email } = data;
-  const response = await axios.post(
-     "https://75f5-202-142-70-11.in.ngrok.io/forgot-password",
-    {
-      email,
-    },
-    {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    }
-  );
-  return "We have Mailed You  Password Reset Link";
+  console.log(email)
+  try {
+    const response = await axios.post(
+      "/forgot-password",
+     {
+       "email":email
+     }
+   );
+  } catch (error) {
+     return "Something Went Wrong"
+  }
 }
 
 export interface IReset {
   password: string;
   confirmPassword: string;
+  token: string;
 }
 export async function ResetService(data: IReset): Promise<any> {
-  const response = await axios.post<IReset>(
-    "https://75f5-202-142-70-11.in.ngrok.io/reset-password/",
-    data,
-    {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    }
-  );
-  return "Something went wrong";
+  try {
+    const response = await axios.post<IReset>(
+      "/reset-password/",
+      data,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    return "Something Went Wrong"
+  }
 }
