@@ -50,66 +50,42 @@ const AdminLectureDetail = () => {
           <Flex justifyContent={"space-around"}>
             <Box w="50%">
               <Box bg="gray.100" h="60px" p="20px">
-                <Flex>
-                  <Text>Title</Text>
-                </Flex>
+                <Text>Title</Text>
               </Box>
               <Box bg="white" h="60px" p="20px">
-                <Flex flexWrap="wrap">
-                  <Text>Category-Type</Text>
-                </Flex>
+                <Text>Category-Type</Text>
               </Box>
               <Box bg="gray.100" h="60px" p="20px">
-                <Flex>
-                  <Text>Schedule</Text>
-                </Flex>
+                <Text>Schedule</Text>
               </Box>
               <Box bg="white" h="60px" p="20px">
-                <Flex>
-                  <Text>Concludes</Text>
-                </Flex>
+                <Text>Concludes</Text>
               </Box>
               <Box bg="gray.100" h="60px" p="20px">
-                <Flex>
-                  <Text>Schedule</Text>
-                </Flex>
+                <Text>Schedule</Text>
               </Box>
               <Box bg="white" h="60px" p="20px">
-                <Flex>
-                  <Text>User</Text>
-                </Flex>
+                <Text>User</Text>
               </Box>
               <Box bg="gray.100" h="60px" p="20px">
-                <Flex>
-                  <Text>Optional</Text>
-                </Flex>
+                <Text>Optional</Text>
               </Box>
               <Box bg="white" h="60px" p="20px">
-                <Flex>
-                  <Text>Hide Video</Text>
-                </Flex>
+                <Text>Hide Video</Text>
               </Box>
               <Box bg="gray.100" h="60px" p="20px">
-                <Flex>
-                  <Text>Zoom Link</Text>
-                </Flex>
+                <Text>Zoom Link</Text>
               </Box>
               <Box bg="white" h="60px" p="20px">
-                <Flex>
-                  <Text>Conclde At</Text>
-                </Flex>
+                <Text>Conclde At</Text>
               </Box>
               <Box bg="gray.100" h="60px" p="20px">
-                <Flex>
-                  <Text>Updating At</Text>
-                </Flex>
+                <Text>Updating At</Text>
               </Box>
             </Box>
             <Box w="50%">
               <Box bg="gray.100" h="60px" p="20px">
-                <Flex>
-                  <Text>React redux with crud app lecture</Text>
-                </Flex>
+                <Text>React redux with crud app lecture</Text>
               </Box>
               <Box bg="white" h="60px" p="20px">
                 <Flex flexWrap="wrap">
@@ -128,56 +104,33 @@ const AdminLectureDetail = () => {
                 </Flex>
               </Box>
               <Box bg="gray.100" h="60px" p="20px">
-                <Flex>
-                  <Text>1996-33-45 - 12.90pm</Text>
-                </Flex>
+                <Text>1996-33-45 - 12.90pm</Text>
               </Box>
               <Box bg="white" h="60px" p="20px">
-                <Flex>
-                  <Text>1996-33-45 - 12.90pm</Text>
-                </Flex>
+                <Text>1996-33-45 - 12.90pm</Text>
               </Box>
               <Box bg="gray.100" h="60px" p="20px">
-                <Flex>
-                  <Badge
-                    p="6px"
-                    bg="blue.500"
-                    borderRadius="10px"
-                    color="white"
-                  >
-                    CODING
-                  </Badge>
-                </Flex>
+                <Badge p="6px" bg="blue.500" borderRadius="10px" color="white">
+                  CODING
+                </Badge>
               </Box>
               <Box bg="white" h="60px" p="20px">
-                <Flex>
-                  <Text>Kovela</Text>
-                </Flex>
+                <Text>Kovela</Text>
               </Box>
               <Box bg="gray.100" h="60px" p="20px">
-                <Flex>
-                  <Text>Yes</Text>
-                </Flex>
+                <Text>Yes</Text>
               </Box>
               <Box bg="white" h="60px" p="20px">
-                <Flex>
-                  <Text>YES</Text>
-                </Flex>
+                <Text>YES</Text>
               </Box>
               <Box bg="gray.100" h="60px" p="20px">
-                <Flex>
-                  <Text>Zoom Link</Text>
-                </Flex>
+                <Text>Zoom Link</Text>
               </Box>
               <Box bg="white" h="60px" p="20px">
-                <Flex>
-                  <Text>Concluding Date</Text>
-                </Flex>
+                <Text>Concluding Date</Text>
               </Box>
               <Box bg="gray.100" h="60px" p="20px">
-                <Flex>
-                  <Text>Updating At</Text>
-                </Flex>
+                <Text>Updating At</Text>
               </Box>
             </Box>
           </Flex>

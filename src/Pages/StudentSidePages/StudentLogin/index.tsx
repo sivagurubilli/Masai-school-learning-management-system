@@ -14,7 +14,8 @@ import {
 } from "@chakra-ui/react";
 import { Box, Image } from "@chakra-ui/react";
 import { masaiimage } from "../../../assets/assets";
-import { LoginService ,IAuthloginResponse} from "../../../Services/AuthServices";
+import {IAuthloginResponse} from "../../../Services/AuthInterface"
+import { LoginService } from "../../../Services/AuthServices";
 import { Navigate, useNavigate } from "react-router-dom";
 
 //interface for form data
@@ -79,17 +80,6 @@ LoginService(values).then((res:IAuthloginResponse)=>{
       navigate("/admin/dashboard")
       }
    }
-     //setting for remember me in
-   if (values.rememberMe && res.token) {
-    localStorage.setItem("username", values.username);
-    localStorage.setItem("userType",res.user.roles[0].name);
-    localStorage.setItem("password", values.password);
-  }
-  if (!values.rememberMe && res.token) {
-    sessionStorage.setItem("username", values.username);
-    sessionStorage.setItem("userType",res.user.roles[0].name)
-    sessionStorage.setItem("password", values.password);
-  }
      
   if(!res.token){
     setBackendError({ ...BackendError,

@@ -195,13 +195,11 @@ const InputTakingSection = ({LectureValues,setLectureValues}:any) => {
                 <option value="type2">Tag 2</option>
                 <option value="type3">Tag 3</option>
               </Select>
-            </Box>
-           
+            </Box>    
           </Grid>
           <Grid templateColumns={{ sm: "repeat(2, 1fr)", md: "repeat(3, 1fr)" }} gap={4}>
             <Box  gridColumn={{ sm: "span 2", md: "span 2" }} w="100%">
               <FormLabel color="rgb(75 85 99)">Zoom Link</FormLabel>
-            
               <Input
                 name="week"
                 width={selectWidth}

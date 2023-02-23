@@ -109,7 +109,7 @@ const AdminLecture = () => {
               color="rgb(75 85 99)"
               value={filterValues.type}
               placeholder="Select type"
-              onChange={handleChange} >
+              onChange={handleChange}>
               <option value="type1">Type 1</option>
               <option value="type2">Type 2</option>
               <option value="type3">Type 3</option>

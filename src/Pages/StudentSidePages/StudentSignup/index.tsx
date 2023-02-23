@@ -19,13 +19,13 @@ import {
   masaiimage,
   sectionValues,
 } from "../../../assets/assets";
-
+import {IBatchResponse,IbatchObject,
+  ISectionResponse,ISectionObject,  IAuthsignupResponse} from "../../../Services/AuthInterface"
 import {
   StudentSignupService,
   getBatchArrray,
   getSectionArray,
-  IBatchResponse,IbatchObject,
-  ISectionResponse,ISectionObject, IAuthsignupResponse
+ 
 } from "../../../Services/AuthServices";
 import "./index.css";
 import { useNavigate } from "react-router-dom";

@@ -13,11 +13,11 @@ import {
 } from "@chakra-ui/react";
 import { Box, Image } from "@chakra-ui/react";
 import { gifloader, masaiimage } from "../../../assets/assets";
-import {
-  AdminSignupService,
-  IAdminAccountCreate,
+import {  IAdminAccountCreate,
   IAuthsignupResponse,
-
+} from "../../../Services/AuthInterface"
+import {
+  AdminSignupService
 } from "../../../Services/AuthServices";
 import "./index.css";
 import { useNavigate } from "react-router-dom";

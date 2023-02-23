@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import { masaiimage } from "../../assets/assets";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import { ForgotPasswordService, IForgotPassword } from "../../Services/AuthServices";
+import { IForgotPassword} from "../../Services/AuthInterface"
+import { ForgotPasswordService } from "../../Services/AuthServices";
 import {
     Flex,
     Box,

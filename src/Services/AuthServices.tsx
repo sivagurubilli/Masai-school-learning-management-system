@@ -1,68 +1,14 @@
 
 import axios, { AxiosResponse } from "axios";
 import bcrypt from "bcryptjs";
-export interface IAuthlogin {
-  username: string;
-  password: string;
-  rememberMe: boolean;
-}
-
-export interface IAuthloginResponse {
-  token: string;
-  error: string;
-  status: number;
-  user: {
-    id: number;
-    name: string;
-    email: string;
-    roles: Array<IRoles>
-  };
-}
-
-
-interface IRoles{
-  id:number,
-  name:string
-  }
-export interface IAuthsignupResponse {
-  id: number,
-  name: string,
-  email: string,
-  roles:Array<IRoles>
-}
-export interface IStudentAccountCreate {
-  name: string;
-  batch: string;
-  section: string;
-  email: string;
-  password: string;
-}
-export interface IAdminAccountCreate {
-  name: string;
-  email: string;
-  password: string;
-}
-export interface IBatchResponse {
-  IbatchArray: IbatchObject[];
-}
-export interface IbatchObject {
-  id: number;
-  batch_name: string;
-  student: string[];
-}
-export interface ISectionResponse {
-  IsectionArray: ISectionObject[];
-}
-export interface ISectionObject {
-  id: number;
-  batch_name: string;
-  student: string[];
-}
+import { IAuthlogin,IAdminAccountCreate,IAuthloginResponse,IAuthsignupResponse,
+  IBatchObject,IBatchResponse,IForgotPassword,
+  ISectionObject,ISectionResponse,IStudentAccountCreate,IbatchObject } from "./AuthInterface";
 
 export async function LoginService(
   data: IAuthlogin
 ): Promise<IAuthloginResponse> {
-  const { username, password } = data;
+  const { username, password,rememberMe } = data;
 
   const salt = bcrypt.genSaltSync(10);
   const hashedPassword = bcrypt.hashSync(password, salt);
@@ -72,6 +18,17 @@ export async function LoginService(
      "username": username,
       "password": password,
     });
+    //setting for remember me in
+   if (rememberMe && response.data.token) {
+    localStorage.setItem("username", username);
+    localStorage.setItem("userType",response.data.user.roles[0].name);
+    localStorage.setItem("password", password);
+  }
+  if (rememberMe && response.data.token) {
+    sessionStorage.setItem("username", username);
+    sessionStorage.setItem("userType",response.data.user.roles[0].name)
+    sessionStorage.setItem("password", password);
+  }
 
     return response.data;
   } catch (error: any) {
@@ -136,30 +93,6 @@ export async function getSectionArray() {
   }
 }
 
-export interface IBatchResponse {
-  IbatchArray: IbatchObject[]
-}
-
-export interface IBatchObject {
-  id: number;
-  batch_name: string;
-  student: string[];
-}
-
-export interface ISectionResponse {
-  IsectionArray: ISectionObject[]
-}
-
-export interface ISectionObject {
-  id: number;
-  batch_name: string;
-  student: string[];
-}
-
-
-export interface IForgotPassword {
-  email: string;
-}
 
 export async function ForgotPasswordService(
   data: IForgotPassword
