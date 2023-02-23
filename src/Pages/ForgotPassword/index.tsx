@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { masaiimage } from "../../assets/assets";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import { ForgotPasswordService, IForgotPassword } from "../../Services/AuthServices";
+import { ForgotPasswordService } from "../../Services/AuthServices";
 import {
     Flex,
     Box,
@@ -32,22 +32,11 @@ const initialValues: IFormData = {
 
 const ForgetPassword = () => {
     const [isLoading, setLoading] = useState<boolean>(false)
-    const [message, setMessage]= useState<any>("")
-    const [message2, setMessage2]= useState<any>("")
+    const [message, setMessage]= useState<string>("")
+    const [message2, setMessage2]= useState<string>("")
     
     const onSubmit = async (values: IFormData) => {
-        ForgotPasswordService(values).then((res: any) => {
-            
-            // console.log("res",res)  
-            // if(res.id){
-            //     setMessage(res.id)
-            // }else{
-            //     setMessage2(res)
-            // }
-            console.log(res)
-        }).catch((err: any) => {
-            // console.log(err)
-        })
+        ForgotPasswordService(values)
         setLoading(true)
         setTimeout(() => {
             setLoading(false)

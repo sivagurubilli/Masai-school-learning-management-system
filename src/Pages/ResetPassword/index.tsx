@@ -47,18 +47,7 @@ const ForgetPassword = () => {
     const [message, setMessage]= useState<string>("")
     const [message2, setMessage2]= useState<string>("")
     const onSubmit = async (values: IFormData) => {
-        ResetService(values).then((res: any) => {
-            if(res.id){
-                setMessage(res.id)
-            }else{
-                setMessage2(res)
-            }
-            console.log("message",message)
-            console.log("message2",message2)
-            console.log("res",res)
-        }).catch((err: any) => {
-            console.log(err)
-        });
+        ResetService(values)
         setLoading(true)
         setTimeout(() => {
             setLoading(false)

@@ -146,33 +146,25 @@ export async function ForgotPasswordService(
   console.log(email)
   try {
     const response = await axios.post(
-      "https://1181-202-142-81-177.in.ngrok.io/forgot-password",
+      "/forgot-password",
      {
-       email
-     },
-     {
-       headers: {
-         "Content-Type": "headers",
-       },
+       "email":email
      }
    );
-   console.log(response)
-   return response.data;
   } catch (error) {
-    console.log(error)
-    return "Something Went Wrong"
+     return "Something Went Wrong"
   }
 }
 
 export interface IReset {
   password: string;
   confirmPassword: string;
+  token: string;
 }
 export async function ResetService(data: IReset): Promise<any> {
- 
   try {
     const response = await axios.post<IReset>(
-      "https://d6d2-202-142-81-177.in.ngrok.io/forgot-password",
+      "/reset-password/",
       data,
       {
         headers: {
@@ -180,11 +172,8 @@ export async function ResetService(data: IReset): Promise<any> {
         },
       }
     );
-    console.log(response)
     return response.data;
-    
   } catch (error) {
-    console.log(error)
     return "Something Went Wrong"
   }
 }
