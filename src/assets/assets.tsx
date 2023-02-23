@@ -27,3 +27,4 @@ export const sectionValues =[
 { value: "rct211", label: "rct211" },
 ]
 
+export const Categoery = ["General","Coding Platform","CSBT","DA","DSA Coding", "Maths","Logic","Scrum"]

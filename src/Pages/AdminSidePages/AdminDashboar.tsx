@@ -7,9 +7,6 @@ import { Container } from "@chakra-ui/react";
 
 
 const AdminDashboard = () => {
-
-
-  
   return (
     <div className="container">
       <Navbar />

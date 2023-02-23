@@ -12,7 +12,7 @@ import {
 } from "@chakra-ui/react";
 
 // this component is lecture page navbar down below component
-const SecondNavforLectureDetail = ({ id }: { id: string | undefined }) => {
+const SecondNavforLectureCreate = () => {
   const navigate = useNavigate();
   const [isLargerThan900] = useMediaQuery("(min-width: 900px)");
 
@@ -34,47 +34,31 @@ const SecondNavforLectureDetail = ({ id }: { id: string | undefined }) => {
             <Button
               h={isLargerThan900 ? "35px" : "auto"}
               color="white"
-              bg="rgb(31 41 55)"
-              _hover={{ bg: "rgb(76, 84, 95)" }}
-            >
+                bg="rgb(31 41 55)"
+                    _hover={{ bg: "rgb(76, 84, 95)" }}>
               BACK
             </Button>
           </Link>
-          <Link to={`/admin/lectures/edit/${id}`}>
-            <Button
-              h={isLargerThan900 ? "35px" : "auto"}
-              color="white"
-              bg="rgb(31 41 55)"
-              _hover={{ bg: "rgb(76, 84, 95)" }}
-            >
-              EDIT
-            </Button>
-          </Link>
+          
           <Button
-            bg="rgb(31 41 55)"
             h={isLargerThan900 ? "35px" : "auto"}
             color="white"
-            _hover={{ bg: "rgb(76, 84, 95)" }}>
+              bg="rgb(31 41 55)"
+                    _hover={{ bg: "rgb(76, 84, 95)" }}>
             DISCUSSIONS
           </Button>
           <Button
             h={isLargerThan900 ? "35px" : "auto"}
             color="white"
-            bg="rgb(31 41 55)"
-            _hover={{ bg: "rgb(76, 84, 95)" }}>
+              bg="rgb(31 41 55)"
+             _hover={{ bg: "rgb(76, 84, 95)" }}>
             COPY
           </Button>
-          <Button
-            bg="red"
-            h={isLargerThan900 ? "35px" : "auto"}
-            color="white"
-            _hover={{ bg: "red.200" }}>
-            DELETE
-          </Button>
+          
         </ButtonGroup>
       </Flex>
     </Box>
   );
 };
 
-export default SecondNavforLectureDetail;
+export default SecondNavforLectureCreate;
