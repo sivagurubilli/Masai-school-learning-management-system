@@ -10,19 +10,27 @@ import AdminDashboard from "../Pages/AdminSidePages/AdminDashboar";
 import AdminLectureDetail from "../Pages/AdminSidePages/AdminLecturePage/AdminLectureDetail";
 import ForgetPassword from "../Pages/ForgotPassword/index";
 import ResetPassword from "../Pages/ResetPassword/index";
+import StudentLecture from './../Pages/StudentSidePages/StudentLecturePage/index';
 
 const Allroutes = () => {
   return (
     <div>
       <Routes>
         <Route path ="/admin/" element={<AdminDashboard/>}/>
+   
         <Route path="/admin/lectures" element={<AdminLecture />} />
+        <Route path="/student/lectures" element={<StudentLecture />} />
         <Route path="/admin/signup" element={<AdminSignup />} />
         <Route path="/admin/login" element={<Adminlogin />} />
         <Route path="/admin/lectures/:id" element={<AdminLectureDetail />} />
+
+
         <Route path="/student/dashboard" element={<Dashborad />} />
         <Route path="/forgot-password" element={< ForgetPassword/>} />
         <Route path="/reset-password" element={< ResetPassword/>} />
+
+
+        
         <Route path ="/student/signup" element ={<StudentSignup/>}/>
         <Route path ="/student/login" element ={<App/>} />
         <Route path="/user/profile" />
