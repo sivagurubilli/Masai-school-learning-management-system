@@ -13,16 +13,18 @@ import "./index.css";
 import Secondnav from "../../../components/AdminsideComponents/AdminLecture/Secondnav";
 import Navbar from "../../../components/AdminsideComponents/AdminNavbar/index";
 import TableHeading from "./TableHeading";
+import { LectureSearchService } from "../../../Services/LectureServices";
+import { ISearchResponse } from "../../../Services/LectureInterface";
 
 interface IFilteredValues {
-  title: string,
-  batch: string,
-  section:  string,
-  type: string,
-  user:  string,
-  date:  string,
-  week:  string,
-  day:  string,
+  title: string ,
+  batch: string ,
+  section:  string ,
+  type: string ,
+  user:  string ,
+  date:  string ,
+  week:  string ,
+  day:  string ,
 }
 
 
@@ -34,20 +36,41 @@ const AdminLecture = () => {
     type: "",
     user: "",
     date: "",
-    week: "",
+    week: "" ,
     day: "",
   });
+   const [lecturesData,setLecturesData] = useState()
 
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = event.target;
     setFilterValues({ ...filterValues, [name]: value });
+    GetLectures()
   };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setFilterValues({ ...filterValues, [name]: value });
+           GetLectures()
   };
-  const Reset = () => {};
+
+const GetLectures =()=>{
+  LectureSearchService(filterValues).then((res:any)=>{
+    console.log(res)
+    setLecturesData(res)
+  })
+}
+  const Reset = () => {
+    setFilterValues({
+      title: "",
+    batch: "",
+    section: "",
+    type: "",
+    user: "",
+    date: "",
+    week: "",
+    day: "",
+    })
+  };
 
   const gridColumn = useBreakpointValue({
     base: "1 / -1", // Full width on small screens
@@ -176,7 +199,7 @@ const AdminLecture = () => {
         </Box>
       </Box>
       <Box w="80%" ml="10%" bg="white" h="100vh">
-        <TableHeading />
+        <TableHeading LecturesData= {lecturesData} />
       </Box>
     </div>
   );

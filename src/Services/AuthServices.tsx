@@ -1,9 +1,8 @@
 
 import axios, { AxiosResponse } from "axios";
 import bcrypt from "bcryptjs";
-import { IAuthlogin,IAdminAccountCreate,IAuthloginResponse,IAuthsignupResponse,
-  IBatchObject,IBatchResponse,IForgotPassword,
-  ISectionObject,ISectionResponse,IStudentAccountCreate,IbatchObject } from "./AuthInterface";
+import { IAuthlogin,IAdminAccountCreate,IAuthloginResponse,IAuthsignupResponse,IForgotPassword,
+IStudentAccountCreate } from "./AuthInterface";
 
 export async function LoginService(
   data: IAuthlogin
@@ -13,7 +12,7 @@ export async function LoginService(
   const salt = bcrypt.genSaltSync(10);
   const hashedPassword = bcrypt.hashSync(password, salt);
   try {
-    const response = await axios.post(" https://624e-202-142-114-239.in.ngrok.io/api/login", {
+    const response = await axios.post("https://7cbf-202-142-114-239.in.ngrok.io/api/login", {
 
      "username": username,
       "password": password,
@@ -22,12 +21,13 @@ export async function LoginService(
    if (rememberMe && response.data.token) {
     localStorage.setItem("username", username);
     localStorage.setItem("userType",response.data.user.roles[0].name);
-    localStorage.setItem("password", password);
+    localStorage.setItem("token", response.data.token);
   }
   if (rememberMe && response.data.token) {
     sessionStorage.setItem("username", username);
     sessionStorage.setItem("userType",response.data.user.roles[0].name)
-    sessionStorage.setItem("password", password);
+    sessionStorage.setItem("token", response.data.token);
+  
   }
 
     return response.data;
@@ -38,13 +38,14 @@ export async function LoginService(
 }
 
 export async function StudentSignupService(
-  data: IAdminAccountCreate
+  data: IStudentAccountCreate
 ): Promise<IAuthsignupResponse> {
 
-  const { email, name, password } = data;
+  const { email, name, password,sectionId,batchId } = data;
+  console.log(sectionId,batchId)
   try {
     const response = await axios.post(
-      "https://624e-202-142-114-239.in.ngrok.io/api/signup/admin",
+      `https://7cbf-202-142-114-239.in.ngrok.io/api/signup/student/${batchId}/${sectionId}`,
       { name, email ,password }
     );
     return response.data;
@@ -61,7 +62,7 @@ export async function AdminSignupService(
   const { email, name, password } = data;
   try {
     const response = await axios.post(
-      "https://624e-202-142-114-239.in.ngrok.io/api/signup",
+      "https://7cbf-202-142-114-239.in.ngrok.io/api/signup/admin",
       { name, email, password }
     );
     console.log(response);
@@ -70,29 +71,6 @@ export async function AdminSignupService(
     return error.error;
   }
 }
-
-export async function getBatchArrray() {
-  try {
-    const response: AxiosResponse<IBatchResponse[]> = await axios.get(
-      "https://f6fd-202-142-70-11.in.ngrok.io/batch"
-    );
-    return response.data;
-  } catch (error: any) {
-    return error;
-  }
-}
-
-export async function getSectionArray() {
-  try {
-    const response: AxiosResponse<IBatchResponse[]> = await axios.get(
-      "https://f6fd-202-142-70-11.in.ngrok.io/section"
-    );
-    return response.data;
-  } catch (error: any) {
-    return error;
-  }
-}
-
 
 export async function ForgotPasswordService(
   data: IForgotPassword

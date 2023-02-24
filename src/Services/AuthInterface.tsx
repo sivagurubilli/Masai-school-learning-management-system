@@ -1,25 +1,4 @@
 
-export interface IBatchResponse {
-    IbatchArray: IbatchObject[]
-  }
-  
-  export interface IBatchObject {
-    id: number;
-    batch_name: string;
-    student: string[];
-  }
-  
-  export interface ISectionResponse {
-    IsectionArray: ISectionObject[]
-  }
-  
-  export interface ISectionObject {
-    id: number;
-    batch_name: string;
-    student: string[];
-  }
-  
-  
   export interface IForgotPassword {
     email: string;
   }
@@ -55,8 +34,8 @@ export interface IBatchResponse {
   }
   export interface IStudentAccountCreate {
     name: string;
-    batch: string;
-    section: string;
+    batchId: number;
+    sectionId: number;
     email: string;
     password: string;
   }
@@ -64,21 +43,5 @@ export interface IBatchResponse {
     name: string;
     email: string;
     password: string;
+   
   }
-  export interface IBatchResponse {
-    IbatchArray: IbatchObject[];
-  }
-  export interface IbatchObject {
-    id: number;
-    batch_name: string;
-    student: string[];
-  }
-  export interface ISectionResponse {
-    IsectionArray: ISectionObject[];
-  }
-  export interface ISectionObject {
-    id: number;
-    batch_name: string;
-    student: string[];
-  }
-  

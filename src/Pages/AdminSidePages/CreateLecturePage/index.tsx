@@ -10,10 +10,10 @@ import "./index.css";
 import Navbar from "../../../components/AdminsideComponents/AdminNavbar/index";
 import SecondNavforLectureCreate from "./SecondNavforCreateLecture";
 import {
-  ICreateLectureValues,
   ILecturePostResponse,
   LecturePostService,
 } from "../../../Services/LectureServices";
+import {ICreateLectureValues} from "../../../Services/LectureInterface"
 import InputTakingSection from "./InputTakingSection";
 
 const AdminLectureCreate = () => {
@@ -26,8 +26,9 @@ const AdminLectureCreate = () => {
     schedule: "",
     conclude: "",
     user: "",
-    tags: "",
+    tags: [],
     hideVideo: false,
+    optional:false,
     zoomLink: "",
     week: "",
     day: "",
@@ -37,7 +38,8 @@ const AdminLectureCreate = () => {
 
   const CreateLecture = () => {
     console.log(LectureValues)
-    LecturePostService(LectureValues).then((res) => {});
+    LecturePostService(LectureValues).then((res) => {
+    });
   };
 
  return (

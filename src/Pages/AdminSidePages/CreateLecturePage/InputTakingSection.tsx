@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-
+import "./index.css"
 import {
     Container,
     Box,
@@ -13,33 +13,35 @@ import {
     Text,
     FormControl,
     Switch,
+    Textarea,
   } from "@chakra-ui/react";
-  import { ICreateLectureValues } from '../../../Services/LectureServices';
+  import { ICreateLectureValues } from '../../../Services/LectureInterface';
 import { Categoery } from "../../../assets/assets";
+import NoteSection from './NoteSection';
+import TagInput from './TagInput';
 
 const InputTakingSection = ({LectureValues,setLectureValues}:any) => {
 
-    const [isZoomlinkValid,setZoomLinkValid ] = useState(false)
+    const [isZoomlinkValid,setZoomLinkValid ] = useState<boolean>(false)
     const [touched, setTouched] = useState({zoomLink: false });
-  const [startTime,onStartChange] = useState(new Date())
-  const [endTime,onEndChange] = useState(new Date())
+  const [startTime,onStartChange] = useState<Date>(new Date())
+  const [endTime,onEndChange] = useState<Date>(new Date())
  
     useEffect(()=>{
           setLectureValues({ ...LectureValues,schedule:startTime,conclude:endTime });
           console.log(LectureValues)
               },[startTime,endTime])
 
-              const handleToggle = () => {
-              setLectureValues({...LectureValues,hideVideo:!LectureValues.hideVideo})
-              };
-                          const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         const { name, value } = event.target;
         setLectureValues({ ...LectureValues, [name]: value });
       };
 
+    
+
       //input blur is for only when error showing in user inters into input feild
-      function handleInputBlur(inputName: string) {
-        setTouched((prevState) => ({ ...prevState, [inputName]: true }));
+      function handleInputBlur(event:React.FocusEvent<HTMLInputElement>) {
+        setTouched((prevState) => ({ ...prevState, [event?.target.name]: true }));
       }
     
       //handle change event for select tags
@@ -48,11 +50,17 @@ const InputTakingSection = ({LectureValues,setLectureValues}:any) => {
         setLectureValues({ ...LectureValues, [name]: value });
        
       };
+    
     //for hide or show video
-      const Hidevideo = () => {
+      const handleToggleHide = () => {
         setLectureValues({ ...LectureValues, hideVideo: !LectureValues.hideVideo });
         console.log(LectureValues);
       };
+
+      
+      const handleToggleOptional = () => {
+        setLectureValues({...LectureValues,optional:!LectureValues.optional})
+        };
     
       //create Lecture service for create lecture
      const gridColumn = useBreakpointValue({
@@ -77,7 +85,7 @@ const InputTakingSection = ({LectureValues,setLectureValues}:any) => {
     return (
     <div>
      <Grid templateColumns="repeat(4, 1fr)" gap={4}>
-            <FormLabel color="rgb(75 85 99)">Give Title For lecture</FormLabel>
+            <FormLabel color="rgb(75 85 99)">Title</FormLabel>
             <Input
               name="title"
               value={LectureValues.title}
@@ -90,21 +98,21 @@ const InputTakingSection = ({LectureValues,setLectureValues}:any) => {
             mt={4}
             templateColumns={{
               base: "1fr",
-              md: "1fr 1fr 1fr 1fr",
-              lg: "1fr 1fr 1fr 1fr",
+              md: "1fr 1fr 1fr",
+              lg: "1fr 1fr 1fr",
             }}
             gap={4}
           >
             <Box>
               {" "}
-              <FormLabel color="rgb(75 85 99)">Select Categeoty</FormLabel>
+              <FormLabel color="rgb(75 85 99)">Categeoty</FormLabel>
               <Select
                 name="categoery"
                 onChange={handleChange}
                 width={selectWidth}
                 value={LectureValues.categoery}
                 color="rgb(75 85 99)"
-                placeholder="Select branch"
+                placeholder="Select Categeory"
               >
                 {Categoery.map((el) => (
                   <option value="el">{el}</option>
@@ -114,14 +122,14 @@ const InputTakingSection = ({LectureValues,setLectureValues}:any) => {
 
             <Box>
               {" "}
-              <FormLabel color="rgb(75 85 99)">Select Batch</FormLabel>
+              <FormLabel color="rgb(75 85 99)">Batch</FormLabel>
               <Select
                 name="batch"
                 onChange={handleChange}
                 width={selectWidth}
                 value={LectureValues.batch}
                 color="rgb(75 85 99)"
-                placeholder="Select branch"
+                placeholder="Select batch"
               >
                 <option value="batch1">Batch 1</option>
                 <option value="batch2">Batch 2</option>
@@ -130,7 +138,7 @@ const InputTakingSection = ({LectureValues,setLectureValues}:any) => {
             </Box>
             <Box>
               {" "}
-              <FormLabel color="rgb(75 85 99)">Select Section</FormLabel>
+              <FormLabel color="rgb(75 85 99)">Section</FormLabel>
               <Select
                 name="section"
                 width={selectWidth}
@@ -144,9 +152,20 @@ const InputTakingSection = ({LectureValues,setLectureValues}:any) => {
                 <option value="section3">Section 3</option>
               </Select>
             </Box>
-            <Box>
+           
+          </Grid>
+          <Grid
+            mt={4}
+            templateColumns={{
+              base: "1fr",
+              md: "1fr 1fr 1fr",
+              lg: "1fr 1fr 1fr",
+            }}
+            gap={4}
+          >
+             <Box>
               <FormLabel color="rgb(75 85 99)">
-                Select Type of Lecture
+                Type
               </FormLabel>
               <Select
                 name="type"
@@ -161,25 +180,20 @@ const InputTakingSection = ({LectureValues,setLectureValues}:any) => {
                 <option value="type3">Type 3</option>
               </Select>
             </Box>
-          </Grid>
-          <Grid
-            mt={4}
-            templateColumns={{
-              base: "1fr",
-              md: "1fr 1fr 1fr",
-              lg: "1fr 1fr 1fr",
-            }}
-            gap={4}
-          >
             <Box>
-              <FormLabel color="rgb(75 85 99)">Start time</FormLabel>
+              <FormLabel color="rgb(75 85 99)">Schedule</FormLabel>
 
             </Box>
             <Box>
-              <FormLabel  color="rgb(75 85 99)">End time</FormLabel>
+              <FormLabel  color="rgb(75 85 99)">Concludes</FormLabel>
             </Box>
-            <Box>
-              <FormLabel color="rgb(75 85 99)">Select Tags</FormLabel>
+          </Grid>
+
+          <Grid templateColumns={{ sm: "repeat(2, 1fr)", md: "repeat(3, 1fr)" }} gap={4}>
+              <TagInput LectureValues ={LectureValues} setLectureValues={setLectureValues} />
+              
+            <Box mt='10px'>
+              <FormLabel color="rgb(75 85 99)">User</FormLabel>
               <Select
                 name="type"
                 width={selectWidth}
@@ -188,42 +202,30 @@ const InputTakingSection = ({LectureValues,setLectureValues}:any) => {
                 value={LectureValues.tags}
                 onChange={handleChange}
               >
-                <option value="type1">Tag 1</option>
-                <option value="type2">Tag 2</option>
-                <option value="type3">Tag 3</option>
+                <option value="type1">User 1</option>
+                <option value="type2">User 2</option>
+                <option value="type3">User 3</option>
               </Select>
             </Box>    
-          </Grid>
-          <Grid templateColumns={{ sm: "repeat(2, 1fr)", md: "repeat(3, 1fr)" }} gap={4}>
-            <Box  gridColumn={{ sm: "span 2", md: "span 2" }} w="100%">
-              <FormLabel color="rgb(75 85 99)">Zoom Link</FormLabel>
-              <Input
-                name="week"
-                width={selectWidth}
-                w="100%"
-                color="rgb(75 85 99)"
-                placeholder="paste Zoom-link"
-                value={LectureValues.zoomLink}
-                onBlur={() => handleInputBlur("zoomLink")}
-                onChange={handleInputChange}
-              />
-              {touched.zoomLink && !isZoomlinkValid ? <span style={{ color: "red" }}>inValid Zoom link</span> : ""}
-            </Box>
-             
-            <Box  gridColumn={{ sm: "span 2", md: "span 1" }} w="100%"> 
-              <FormLabel color="rgb(75 85 99)">
-                Hide video or Show video
-              </FormLabel>
+            <Box mt='10px' gridColumn={{ sm: "span 2", md: "span 1" }} w="100%"> 
+            <FormLabel color="rgb(75 85 99)">Hide or Show</FormLabel>
               <Flex>
-              <FormControl display='flex' alignItems='center'>
-              
-               <Switch w="100px" isChecked={LectureValues.hideVideo} onChange={handleToggle}/>
-              </FormControl>
-              <p>  {LectureValues.hideVideo ? "showing" : "hidden"}</p>
+              <Box mt="10px">
+              <Flex>
+              <p color="rgb(75 85 99)">Optional</p>
+               <Switch w="100px"  ml="20px"  mt="7px" isChecked={LectureValues.optional} onChange={handleToggleOptional}/>
+                </Flex>
+                </Box>
+              <Box mt="10px">
+              <Flex>
+              <p color="rgb(75 85 99)">Hide</p>
+            <Switch ml="20px" mt="7px" isChecked={LectureValues.hideVideo} onChange={handleToggleHide}/>
+            </Flex>
+              </Box>
               </Flex>
             </Box>
             </Grid>
-
+          
             <Grid
             mt={4}
             templateColumns={{
@@ -231,25 +233,9 @@ const InputTakingSection = ({LectureValues,setLectureValues}:any) => {
               md: "1fr 1fr 1fr",
               lg: "1fr 1fr 1fr",
             }}
-            gap={4}
-          >
+            gap={4} >
             <Box>
-              <FormLabel color="rgb(75 85 99)">Select Tags</FormLabel>
-              <Select
-                name="user"
-                width={selectWidth}
-                color="rgb(75 85 99)"
-                placeholder="Select user"
-                value={LectureValues.user}
-                onChange={handleChange}
-              >
-                <option value="user1">User 1</option>
-                <option value="user2">User 2</option>
-                <option value="user3">User 3</option>
-              </Select>
-            </Box>
-            <Box>
-              <FormLabel color="rgb(75 85 99)">Enter week</FormLabel>
+              <FormLabel color="rgb(75 85 99)">Week</FormLabel>
               <Input
                 name="week"
                 width={selectWidth}
@@ -261,7 +247,7 @@ const InputTakingSection = ({LectureValues,setLectureValues}:any) => {
               />
             </Box>
             <Box>
-              <FormLabel color="rgb(75 85 99)">Enter Day</FormLabel>
+              <FormLabel color="rgb(75 85 99)">Day</FormLabel>
               <Input
                 name="day"
                 width={selectWidth}
@@ -273,20 +259,20 @@ const InputTakingSection = ({LectureValues,setLectureValues}:any) => {
               />
             </Box>
           </Grid>
-
-          <Grid mt="20px" templateColumns="repeat(4, 1fr)" gap={4}>
-            <FormLabel color="rgb(75 85 99)">Give Notes For Lecture</FormLabel>
+          <Grid mt="20px" templateColumns="repeat(3, 1fr)" gap={4}>
+            <FormLabel color="rgb(75 85 99)">ZoomLink</FormLabel>
             <Input
-              name="notes"
-              value={LectureValues.notes}
+              name="zoomLink"
+              value={LectureValues.zoomLink}
               gridColumn={gridColumn}
               color="rgb(75 85 99)"
-              placeholder="Enter text"
-              onChange={handleInputChange}
+              placeholder="Paste zoom link here"
+              onBlur={(event) =>handleInputBlur(event)}
+              onChange={handleLinkChange}
             />
-             
           </Grid>
-
+          {touched.zoomLink && !isZoomlinkValid ? <span style={{ color: "red" }}>inValid Zoom link</span> : ""}
+         <NoteSection LectureValues={LectureValues} setLectureValues={setLectureValues} />
     </div>
   )
 }

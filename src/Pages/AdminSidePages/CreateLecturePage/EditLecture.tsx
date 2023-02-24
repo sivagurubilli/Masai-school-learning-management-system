@@ -13,8 +13,8 @@ import {
   import React, { useState } from "react";
   import "./index.css";
   import Navbar from "../../../components/AdminsideComponents/AdminNavbar/index";
+  import {ICreateLectureValues} from "../../../Services/LectureInterface"
   import {
-    ICreateLectureValues,
     ILecturePostResponse,
     LecturePostService,
     LectureEditService,
@@ -36,8 +36,9 @@ import {
         schedule: "",
         conclude: "",
         user: "",
-        tags: "",
+        tags: [],
         hideVideo: false,
+        optional:false,
         zoomLink: "",
         week: "",
         day: "",

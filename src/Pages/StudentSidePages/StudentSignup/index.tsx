@@ -19,13 +19,13 @@ import {
   masaiimage,
   sectionValues,
 } from "../../../assets/assets";
-import {IBatchResponse,IbatchObject,
-  ISectionResponse,ISectionObject,  IAuthsignupResponse} from "../../../Services/AuthInterface"
+import {IBatchObject,ISectionObject,} from "../../../Services/SelectionInterface"
+import {getBatchArrray,
+  getSectionArray,} from "../../../Services/SelelctionService"
+import {
+   IAuthsignupResponse} from "../../../Services/AuthInterface"
 import {
   StudentSignupService,
-  getBatchArrray,
-  getSectionArray,
- 
 } from "../../../Services/AuthServices";
 import "./index.css";
 import { useNavigate } from "react-router-dom";
@@ -33,8 +33,8 @@ import { useNavigate } from "react-router-dom";
 //interface for form data
 interface IFormData {
   name: string;
-  batch: string;
-  section: string;
+  batchId: number;
+  sectionId: number;
   email: string;
   password: string;
   reEnterPassword: string;
@@ -59,8 +59,8 @@ const validationSchema = yup.object().shape({
 const initialValues: IFormData = {
   name: "",
   email: "",
-  batch: "",
-  section: "",
+  batchId: 1,
+  sectionId: 1,
   password: "",
   reEnterPassword: "",
  
@@ -99,7 +99,7 @@ const [isLoading,setLoading] = useState(false)
 
 
     StudentSignupService(values).then((res:IAuthsignupResponse)=>{
-      console.log(res)
+     
        if(res.name){
         setGotoSignup(false)
        }
@@ -182,14 +182,14 @@ const [isLoading,setLoading] = useState(false)
               </FormLabel>
               <Select
                 className="selectbatch"
-                name="batch"
+                name="batchId"
                 onChange={handleChange}
-                value={values.batch}
+                value={values.batchId}
                 placeholder="Select an option"
               >
-                {/* { batchDetails?.map((option:IbatchObject) => (
-                  <option  value={option.batch_name}>
-                    {option.batch_name}
+                {/* { batchValues?.map((option:IBatchObject) => (
+                  <option  value={option.value}>
+                    {option.label}
                   </option>
                 ))} */}
               </Select>
@@ -203,13 +203,13 @@ const [isLoading,setLoading] = useState(false)
               <Select
                 className="selectbatch"
                 placeholder="Select an option"
-                name="section"
+                name="sectionId"
                 onChange={handleChange}
-                value={values.section}
+                value={values.sectionId}
               >
-                {/* {sectionDetails.map((option:ISectionObject) => (
-                  <option key={option.id} value={option.section_name}>
-                    {option.section_name}
+                {/* {sectionValues?.map((option:ISectionObject) => (
+                  <option  value={option.value}>
+                    {option.label}
                   </option>
                 ))} */}
               </Select>

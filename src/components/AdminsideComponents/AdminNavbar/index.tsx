@@ -61,7 +61,7 @@ const navigate =useNavigate()
 
             {/* navbar part links for each element  */}
 
-            <Hide below="md">
+            <Hide below="1100px">
               <Flex w="70%" justifyContent={"space-around"} align="center">
                 {NavbarAdminArray.map((el) => (
                   <Box className="li">
@@ -71,19 +71,19 @@ const navigate =useNavigate()
               </Flex>
 
               {/*  this part is about display hamburger in menu item for small screeens  */}
-              <Box ml={"100px"} onClick={() => setshow1(!show1)}>
+              <Box ml={"50px"} onClick={() => setshow1(!show1)}>
                 {" "}
                 <Button variant={"link"}  _hover={{"cursor":"pointer"}}>{userName}</Button>
                 <i
-                  style={{ marginLeft: "20px" }}
-                  className="fa-solid fa-circle-chevron-down"
+                  style={{ marginLeft: "10px" }}
+                  className="fa-solid fa-caret-down"
                 ></i>
               </Box>
             </Hide>
           </Flex>
           {/*  this part is about display hamburger  menu item for small screeens  */}
 
-          <Show below="md">
+          <Show below="1050px">
             <Box>
               <i
                 id="bar"

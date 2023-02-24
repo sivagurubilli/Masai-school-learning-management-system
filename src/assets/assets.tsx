@@ -7,24 +7,24 @@ export const sprintplanlink: string = "https://lookerstudio.google.com/embed/rep
 export const gifloader = "https://media.tenor.com/7JONloO2xawAAAAM/loading-screen-loading.gif"
 export const batchValues =[
     
-    { value: "ftweb20", label: "FT_WEB_20" },
-{ value: "ftweb21", label: "FT_WEB_21" },
-{ value: "ftweb22", label: "FT_WEB_22" },
-{ value: "ftweb23", label: "FT_WEB_23" },
-{ value: "ftweb24", label: "FT_WEB_23" },
-{ value: "ftweb25", label: "FT_WEB_23" },
+    { value: "1", label: "FT_WEB_20" },
+{ value: "2", label: "FT_WEB_21" },
+{ value: "3", label: "FT_WEB_22" },
+{ value: "4", label: "FT_WEB_23" },
+{ value: "5", label: "FT_WEB_24" },
+{ value: "6", label: "FT_WEB_25" },
 
 ]
 
 export const sectionValues =[
     
-    { value: "js101", label: "js10" },
-{ value: "js211", label: "js211" },
-{ value: "dsa211", label: "dsa211" },
-{ value: "dsa101", label: "dsa101" },
-{ value: "dsa421", label: "dsa421" },
-{ value: "rct101", label: "rct101" },
-{ value: "rct211", label: "rct211" },
+    { value: "1", label: "js101" },
+{ value: "2", label: "js211" },
+{ value: "3", label: "dsa211" },
+{ value: "4", label: "dsa101" },
+{ value: "5", label: "dsa421" },
+{ value: "6", label: "rct101" },
+
 ]
 
 export const NavbarArray  = ["Lectures","Assignments","Quizzes","Tickets"

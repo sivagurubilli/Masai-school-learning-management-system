@@ -26,7 +26,7 @@ const AdminProfileComponent = ({ setshow1 }: ProfilecomponentProps) => {
   const Logout = () => {
     localStorage.clear();
     setshow1(false);
-    navigate("/admin/login");
+    navigate("/login");
   };
 
   return (
