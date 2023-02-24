@@ -41,18 +41,21 @@ const AdminLecture = () => {
   });
    const [lecturesData,setLecturesData] = useState()
 
+// this is setting values from select tags
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = event.target;
     setFilterValues({ ...filterValues, [name]: value });
     GetLectures()
   };
 
+  //this is setting values from input elements
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setFilterValues({ ...filterValues, [name]: value });
            GetLectures()
   };
 
+  // calling service for getting list for lectures
 const GetLectures =()=>{
   LectureSearchService(filterValues).then((res:any)=>{
     console.log(res)

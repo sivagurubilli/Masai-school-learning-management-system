@@ -91,15 +91,12 @@ const [isLoading,setLoading] = useState(false)
 
 //onsubmitting call services for manage apis
   const onSubmit = async (values: IFormData) => {
-    
     setLoading(true)
     setTimeout(()=>{
       setLoading(false)
     },3000)
 
-
     StudentSignupService(values).then((res:IAuthsignupResponse)=>{
-     
        if(res.name){
         setGotoSignup(false)
        }
@@ -187,11 +184,7 @@ const [isLoading,setLoading] = useState(false)
                 value={values.batchId}
                 placeholder="Select an option"
               >
-                {/* { batchValues?.map((option:IBatchObject) => (
-                  <option  value={option.value}>
-                    {option.label}
-                  </option>
-                ))} */}
+                
               </Select>
               <FormLabel
                 fontWeight="500"
@@ -207,11 +200,7 @@ const [isLoading,setLoading] = useState(false)
                 onChange={handleChange}
                 value={values.sectionId}
               >
-                {/* {sectionValues?.map((option:ISectionObject) => (
-                  <option  value={option.value}>
-                    {option.label}
-                  </option>
-                ))} */}
+              
               </Select>
               <div>
                 <FormLabel

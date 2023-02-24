@@ -35,8 +35,7 @@ const AdminLectureCreate = () => {
     notes: "",
   });
 
-
-  const CreateLecture = () => {
+ const CreateLecture = () => {
     console.log(LectureValues)
     LecturePostService(LectureValues).then((res) => {
     });
