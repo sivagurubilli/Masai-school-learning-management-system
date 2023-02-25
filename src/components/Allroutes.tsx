@@ -11,6 +11,8 @@ import AdminLectureDetail from "../Pages/AdminSidePages/AdminLecturePage/AdminLe
 import ForgetPassword from "../Pages/ForgotPassword/index";
 import ResetPassword from "../Pages/ResetPassword/index";
 import StudentLecture from './../Pages/StudentSidePages/StudentLecturePage/index';
+import StudentLectureDetail from "./../Pages/StudentSidePages/StudentLecturePage/StudentLectureDetail";
+import StudentDiscussions from './../Pages/StudentSidePages/StudentDiscussionPage/index';
 
 const Allroutes = () => {
   return (
@@ -23,6 +25,8 @@ const Allroutes = () => {
         <Route path="/admin/signup" element={<AdminSignup />} />
         <Route path="/admin/login" element={<Adminlogin />} />
         <Route path="/admin/lectures/:id" element={<AdminLectureDetail />} />
+        <Route path="/student/lectures/:id" element={<StudentLectureDetail />} />
+        <Route path="/student/lectures/:id/discussion" element={<StudentDiscussions />} />
 
 
         <Route path="/student/dashboard" element={<Dashborad />} />
