@@ -26,6 +26,8 @@ const Allroutes = () => {
         <Route path="/student/dashboard" element={<Dashborad />} />
         <Route path ="/admin/create-lectures" element ={<AdminLectureCreate/>}/>
         <Route path="/admin/create-bulk-lectures" element ={<CreateBulkLecture/>}/>
+         <Route path ="/student/signup" element ={<StudentSignup/>}/>
+        <Route path ="/student/login" element ={<App/>} />
         <Route path="/user/profile" />
         <Route path="/transcript" />
         <Route path="/admin/signup" element={<AdminSignup />} />

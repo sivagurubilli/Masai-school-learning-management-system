@@ -45,16 +45,13 @@ const initialValues: IFormData = {
 const ForgetPassword = () => {
     const [isLoading, setLoading] = useState<boolean>(false)
     const [message, setMessage]= useState<string>("")
+    const [message2, setMessage2]= useState<string>("")
     const onSubmit = async (values: IFormData) => {
-        ResetService(values).then((res: any) => {
-            setMessage(res)
-        }).catch((err: any) => {
-            setMessage(err)
-        });
+        ResetService(values)
         setLoading(true)
         setTimeout(() => {
             setLoading(false)
-        }, 3000)
+        }, 1000)
     };
 
     const { handleSubmit, handleChange, values, errors } = useFormik({
@@ -86,7 +83,8 @@ const ForgetPassword = () => {
                         <Text fontSize="16px" color="rgb(113, 120, 128)">
                             Reset your password
                         </Text>
-                        {message ? <Box color="#48BB78" >{message}</Box>:<Box></Box>}
+                        {message ? <Box color="#48BB78" >{message}</Box>:<Box color="#E53E3E" >{message2}</Box>}
+                        {message2 ? <Box color="#E53E3E" >{message2}</Box>:<Box ></Box>}
                         <form onSubmit={handleSubmit}>
                             <div >
                                 <FormLabel
