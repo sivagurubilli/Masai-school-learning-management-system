@@ -4,8 +4,6 @@ import {
   Button,
   Flex,
   FormLabel,
-  Input,
-  Text,
   useBreakpointValue,
 } from "@chakra-ui/react";
 import { suggestions } from "./ConstantsforCreateLecture";
@@ -15,67 +13,51 @@ interface TagInputProps {
 }
 
 const TagInput = ({ LectureValues, setLectureValues }: any) => {
-  const [tags, setTags] = useState<string[]>([]);
-  const [inputValue, setInputValue] = useState("");
-  const [showSuggestions, setShowSuggestions] = useState(false);
+  const [showSuggestions, setShowSuggestions] = useState<boolean>(false);
+
   const selectWidth = useBreakpointValue({ base: "100%", md: "auto" });
-
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(event.target.value);
-    setShowSuggestions(!!event.target.value);
-  };
-
-  //based on keyboard keys this function add remove tags from tags list
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === "Enter") {
-      event.preventDefault();
-      if (inputValue && !tags.includes(inputValue)) {
-        setTags([...tags, inputValue]);
-        setInputValue("");
-        setShowSuggestions(false);
-      }
-    } else if (event.key === "Backspace" && !inputValue) {
-      setTags(tags.slice(0, tags.length - 1));
-    }
-  };
 
   //on clicking on tag it added tgs array lecturevalues as well
   const handleTagClick = (tag: string) => {
-    if (!tags.includes(tag)) {
-      setTags([...tags, tag]);
-      setLectureValues({ ...LectureValues, tags: tags });
-      setShowSuggestions(false);
+    if (!LectureValues.tags.includes(tag)) {
+      setLectureValues({
+        ...LectureValues,
+        tags: [...LectureValues.tags, tag],
+      });
     }
   };
   //removing tags from tag list
   const handleRemoveTag = (tag1: any) => {
-    setTags(tags.filter((tag) => tag !== tag1));
+    setLectureValues({
+      ...LectureValues,
+      tags: LectureValues.tags.filter((tag:any) => tag !== tag1),
+    });
   };
-
-  const filteredSuggestions = inputValue
-    ? suggestions.filter((suggestion) =>
-        suggestion.toLowerCase().startsWith(inputValue.toLowerCase())): [];
 
   return (
     <div>
       <FormLabel mt="10px" color="rgb(75 85 99)">
         Tags (comma seperated)
       </FormLabel>
-      <Flex>
-        {tags.map((tag) => (
+      <Flex flexWrap="wrap"  minH="20px"
+            maxH="auto" maxW="100%" border="1px solid rgb(203,213,224)" p="10px" borderRadius="10px"  
+            onClick={()=>setShowSuggestions(!showSuggestions)} >
+        {LectureValues.tags?.map((tag:any) => (
           <Flex
             style={{ borderRadius: "10px" }}
             ml="10px"
             w="auto"
             p="4px"
+            mt="5px"
+            pl="10px"
             pr="10px"
-            color="white"
+            color="blackAlpha.900"
             justify="space-around"
             alignItems="center"
             fontSize="13px"
-            bg="grey"
+            bg="blue.100"
             key={tag}
-            onClick={() => handleTagClick(tag)}
+           
           >
             {tag}{" "}
             <li
@@ -83,8 +65,9 @@ const TagInput = ({ LectureValues, setLectureValues }: any) => {
                 listStyle: "none",
                 marginLeft: "10px",
                 cursor: "pointer",
+                color:"black"
               }}
-              color="black"
+             
               onClick={() => handleRemoveTag(tag)}
             >
               x
@@ -92,36 +75,33 @@ const TagInput = ({ LectureValues, setLectureValues }: any) => {
           </Flex>
         ))}
       </Flex>
-      <Box mt="10px">
-        <Input
-          name="tag"
-          width={selectWidth}
-          w="100%"
-          h="20px"
-          placeholder="Enter tags"
-          color="rgb(75 85 99)"
-          value={LectureValues.tag}
-          onChange={handleInputChange}
-          type="text"
-          onKeyDown={handleKeyDown}
-        />
-      </Box>
+      
       {showSuggestions && (
-        <Box w="50%" bg="white" border="1px soild grey" h="auto">
-          <ul>
-            {filteredSuggestions.map((suggestion) => (
-              <Text
-                p="5px"
+        <Flex flexWrap="wrap" mt="10px" w="100%" bg="white" h="auto" border="1px soild grey" >
+            {suggestions.map((suggestion) => (
+                <Box
+                style={{ borderRadius: "10px" }}
+                ml="10px"
+                h="auto"
+                p="4px"
+                pl="5px"
+                pr="10px"
+                color="blackAlpha.900"
+                mt="5px"
+                alignItems="center"
+                fontSize="13px"
+                bg="blue.100"
+                cursor= "pointer"
                 key={suggestion}
                 onClick={() => handleTagClick(suggestion)}
               >
-                {suggestion}
-              </Text>
-            ))}
-          </ul>
-        </Box>
+                {suggestion}{" "}
+          
+            </Box>
+              ))}
+        </Flex>
       )}
-    </div>
+</div>
   );
 };
 

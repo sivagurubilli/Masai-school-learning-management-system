@@ -4,6 +4,7 @@ import Navbar from "../../../components/AdminsideComponents/AdminNavbar";
 import { useParams } from "react-router-dom";
 import SecondNavforLectureDetail from "./SecondNavforLectureview";
 import { Badge, Box, Flex, Text } from "@chakra-ui/react";
+import { LectureDetailkeys } from "../CreateLecturePage/ConstantsforCreateLecture";
 
 const AdminLectureDetail = () => {
   const { id } = useParams<{ id: string }>();
@@ -49,39 +50,15 @@ const AdminLectureDetail = () => {
           </Box>
           <Flex justifyContent={"space-around"}>
             <Box w="50%">
-              <Box bg="gray.100" h="60px" p="20px">
-                <Text>Title</Text>
-              </Box>
-              <Box bg="white" h="60px" p="20px">
-                <Text>Category-Type</Text>
-              </Box>
-              <Box bg="gray.100" h="60px" p="20px">
-                <Text>Schedule</Text>
-              </Box>
-              <Box bg="white" h="60px" p="20px">
-                <Text>Concludes</Text>
-              </Box>
-              <Box bg="gray.100" h="60px" p="20px">
-                <Text>Schedule</Text>
-              </Box>
-              <Box bg="white" h="60px" p="20px">
-                <Text>User</Text>
-              </Box>
-              <Box bg="gray.100" h="60px" p="20px">
-                <Text>Optional</Text>
-              </Box>
-              <Box bg="white" h="60px" p="20px">
-                <Text>Hide Video</Text>
-              </Box>
-              <Box bg="gray.100" h="60px" p="20px">
-                <Text>Zoom Link</Text>
-              </Box>
-              <Box bg="white" h="60px" p="20px">
-                <Text>Conclde At</Text>
-              </Box>
-              <Box bg="gray.100" h="60px" p="20px">
-                <Text>Updating At</Text>
-              </Box>
+              {LectureDetailkeys.map((el) => (
+                <Box
+                  bg={el.value % 2 == 1 ? "gray.100" : "white"}
+                  h="60px"
+                  p="20px"
+                >
+                  <Text>{el.key}</Text>
+                </Box>
+              ))}
             </Box>
             <Box w="50%">
               <Box bg="gray.100" h="60px" p="20px">
@@ -132,9 +109,25 @@ const AdminLectureDetail = () => {
               <Box bg="gray.100" h="60px" p="20px">
                 <Text>Updating At</Text>
               </Box>
+              <Box bg="white" h="60px" p="20px">
+                <Text></Text>
+              </Box>
+              <Box bg="gray.100" h="60px" p="20px">
+                <Text></Text>
+              </Box>
+
             </Box>
           </Flex>
+
+          <Box w='100%' bg="white" >
+           <Text>Lecture Video</Text>
+            <Flex>
+
+              
+            </Flex>
+          </Box>
         </Box>
+
       </Box>
     </div>
   );

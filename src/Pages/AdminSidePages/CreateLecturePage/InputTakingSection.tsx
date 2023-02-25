@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import "./index.css"
+
 import {
     Container,
     Box,
@@ -36,19 +37,15 @@ const InputTakingSection = ({LectureValues,setLectureValues}:any) => {
         const { name, value } = event.target;
         setLectureValues({ ...LectureValues, [name]: value });
       };
-
-    
-
       //input blur is for only when error showing in user inters into input feild
-      function handleInputBlur(event:React.FocusEvent<HTMLInputElement>) {
+      const handleInputBlur = (event:React.FocusEvent<HTMLInputElement>)=> {
         setTouched((prevState) => ({ ...prevState, [event?.target.name]: true }));
       }
     
       //handle change event for select tags
       const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = event.target;
-        setLectureValues({ ...LectureValues, [name]: value });
-       
+        setLectureValues({ ...LectureValues, [name]: value }); 
       };
     
     //for hide or show video
@@ -81,7 +78,7 @@ const InputTakingSection = ({LectureValues,setLectureValues}:any) => {
         setLectureValues({...LectureValues,zoomLink:newLink})
         setZoomLinkValid(isZoomLink(newLink));
       }
-
+    
     return (
     <div>
      <Grid templateColumns="repeat(4, 1fr)" gap={4}>
@@ -182,7 +179,7 @@ const InputTakingSection = ({LectureValues,setLectureValues}:any) => {
             </Box>
             <Box>
               <FormLabel color="rgb(75 85 99)">Schedule</FormLabel>
-
+           
             </Box>
             <Box>
               <FormLabel  color="rgb(75 85 99)">Concludes</FormLabel>

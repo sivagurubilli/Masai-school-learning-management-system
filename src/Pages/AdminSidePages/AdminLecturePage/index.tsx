@@ -88,7 +88,9 @@ const GetLectures =()=>{
       <Secondnav />
       <Box w="80%" ml="10%" mt="60px" h="auto"    boxShadow="2px 4px 6px rgba(0, 0, 0, 0.1)">
         <Box w="100%" p="2%" bg="white" h="auto">
-          <Grid templateColumns="repeat(4, 1fr)" gap={4}>
+          <Grid templateColumns={{
+              base: "1fr 1fr",
+            }} gap={4}>
             <Input
               name="title"
               value={filterValues.title}
@@ -96,6 +98,18 @@ const GetLectures =()=>{
               placeholder="Enter text"
               onChange={handleInputChange}
             />
+             <Select
+              name="categoery"
+              width={selectWidth}
+              color="rgb(75 85 99)"
+              value={filterValues.type}
+              placeholder="Select type"
+              onChange={handleChange}>
+              <option value="type1">Type 1</option>
+              <option value="type2">Type 2</option>
+              <option value="type3">Type 3</option>
+              <option value="type4">Type 4</option>
+            </Select>
           </Grid>
           <Grid
             mt={4}
