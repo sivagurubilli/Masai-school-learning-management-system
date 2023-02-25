@@ -14,7 +14,8 @@ import {
 } from "@chakra-ui/react";
 import { Box, Image } from "@chakra-ui/react";
 import { masaiimage } from "../../../assets/assets";
-import { LoginService ,IAuthloginResponse} from "../../../Services/AuthServices";
+import {IAuthloginResponse} from "../../../Services/AuthInterface"
+import { LoginService } from "../../../Services/AuthServices";
 import { Navigate, useNavigate } from "react-router-dom";
 
 //interface for form data
@@ -29,7 +30,6 @@ interface IErrorDisplay{
  errorFromBackend:boolean
 }
 
-
 //valiadation schema for yup library
 const validationSchema = yup.object().shape({
   username: yup
@@ -37,7 +37,7 @@ const validationSchema = yup.object().shape({
     .email("Invalid Email address")
     .required("Email is required"),
   password: yup
-    .string().required("password is required")
+    .string().required("Password is required")
     .min(8, "Password must be at least 8 characters")
    
 });
@@ -49,71 +49,45 @@ const initialValues : IFormData={
 }
 
 //student login component
-export default function StudentLogin() {
-
- 
+export default function StudentLogin({setGotoSignup}:any) {
   const [BackendError,setBackendError] = useState({
     backendErrorMessage:"",
     errorFromBackend:false
   })
-
   const [isLoading,setLoading] = useState<boolean>(false)
   const navigate = useNavigate();
  
-
-    useEffect(()=>{
-   const username1=localStorage.getItem("username")
-   const password1=localStorage.getItem("password")
- 
-   if(username1 && password1){
-   
- 
+  // function toggle go to sign up and login components
+   const GotoSignup = ()=>{
+    setGotoSignup(true)
    }
-    },[])
-
-
-
-  const gotoSignup=()=>{
-    navigate("/student/signup")
-  }
 
   //on submitting form it checks the validations using formik and use services here 
   const onSubmit = async (values: IFormData) => {
-   
-   
     setLoading(true)
     setTimeout(()=>{
       setLoading(false)
     },3000)
 
+LoginService(values).then((res:IAuthloginResponse)=>{
 
-    LoginService(values).then((res:IAuthloginResponse)=>{
-
-   if(res.token && res.user.roles[0].name==="NORMAL_USER"){
+   if(res.token){
+    if(res.user.roles[0].name==="STUDENT_USER"){
     navigate("/student/dashboard")
+    }
 
-     //setting for remember me in
-   if (values.rememberMe && res.token) {
-    localStorage.setItem("username", values.username);
-    localStorage.setItem("password", values.password);
-  }
-  if (!values.rememberMe) {
-    sessionStorage.setItem("username", values.username);
-    sessionStorage.setItem("password", values.password);
-  }
-  if(res.token && res.user.roles[0].name!=="NORMAL_USER"){
-    navigate("student/dashboard")
-  }
+    if(res.user.roles[0].name!=="STUDENT_USER"){
+      navigate("/admin/dashboard")
+      }
+   }
      
-   }if(!res.token){
+  if(!res.token){
     setBackendError({ ...BackendError,
     errorFromBackend:true})
-   }
-    
-   
+    }
  });
-}
 
+  }
 //destructuring methods from useFormik
  const { handleSubmit, handleChange,handleBlur, touched, values, errors } = useFormik({
  initialValues,
@@ -141,15 +115,13 @@ export default function StudentLogin() {
             bg="white"
             borderColor={["", "grey.300"]}
             borderRadius={10}
-            boxShadow="2px 4px 6px rgba(0, 0, 0, 0.1)"
-          >
+            boxShadow="2px 4px 6px rgba(0, 0, 0, 0.1)" >
 
             {BackendError.errorFromBackend && 
             <div className="errorlist">
               <ul>
                <p >Whoops! Something went wrong.
                    <li> These credentials do not match our records.</li>
-
                    </p>
                     </ul>
               </div>}
@@ -159,8 +131,7 @@ export default function StudentLogin() {
                   fontSize=".875rem"
                   fontWeight="500"
                   color="rgb(55 65 81)"
-                  mt={4}
-                >
+                  mt={4}>
                   Email
                 </FormLabel>
                 <Input
@@ -179,8 +150,7 @@ export default function StudentLogin() {
                   fontSize=".875rem"
                   fontWeight="500"
                   color="rgb(55 65 81)"
-                  mt={4}
-                >
+                  mt={4}>
                   Password
                 </FormLabel>
                 <Input
@@ -206,7 +176,7 @@ export default function StudentLogin() {
                 </Text>
               </HStack>
 
-              <Flex mt ="10px"  justifyContent="space-between" flexWrap="wrap">
+              <Flex mt ="10px"  justifyContent="space-between" flexWrap="wrap" justifyItems={"flex-end"}>
                 <Box >
                   <Button
                     variant="link"
@@ -217,8 +187,7 @@ export default function StudentLogin() {
                     textDecoration="underline"
                     color="rgb(75 85 99)"
                     ml="50px"
-                    onClick={() => navigate("/forgot-password")}
-                  >
+                    onClick={() => navigate("/forgot-password")}>
                     Forget your password?
                   </Button>
                   </Box>
@@ -227,13 +196,11 @@ export default function StudentLogin() {
                 bg="rgb(31 41 55)"
                 color="white"
                 _hover={{ bg: "rgb(55 65 81)" }}
-                type="submit"
                 w="90px"
                 h="35px"
                 ml="10px"
                 mt="10px"
-                onClick={()=>navigate("/student/signup")}
-              >
+               onClick={GotoSignup} >
               <Text fontSize="14px">SIGN UP</Text>
               </Button>
                   <Button
@@ -241,7 +208,6 @@ export default function StudentLogin() {
                 bg="rgb(31 41 55)"
                 color="white"
                 _hover={{ bg: "rgb(55 65 81)" }}
-                
                 type="submit"
                 w="90px"
                 h="35px"

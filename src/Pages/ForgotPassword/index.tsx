@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { masaiimage } from "../../assets/assets";
 import { useFormik } from "formik";
 import * as yup from "yup";
+
 import { ForgotPasswordService } from "../../Services/AuthServices";
 import {
     Flex,
@@ -100,13 +101,13 @@ const ForgetPassword = () => {
                                 <HStack>
                                     <Button
                                         isLoading={isLoading}
-                                        bg="black"
+                                        bg="rgb(31 41 55)"
+                                        color="white"
+                                        _hover={{ bg: "rgb(55 65 81)" }}
                                         h="40px"
                                         mt="20px"
                                         w="auto"
-                                        color="white"
                                         rounded="10px"
-                                        _hover={{ bg: "rgb(55 65 81)" }}
                                         type="submit"
                                     >
                                         Email Password Reset Link

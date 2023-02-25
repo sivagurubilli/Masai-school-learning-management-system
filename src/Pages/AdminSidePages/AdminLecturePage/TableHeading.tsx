@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { ILectureResponse, ISearchResponse } from "../../../Services/LectureInterface";
 import {
   Table,
   Thead,
@@ -15,32 +16,10 @@ import {
   Box,
 } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
-const TableHeading = () => {
 
-  const ads = [
-    {
-      id: 1,
-      title: "siva wete349995995995",
-      created: "siva",
 
-      batch: "fw121",
-      startTime: "9.30",
-      concludes: "12.30",
-    },
-    {
-      id: 2,
-      title: "siva wete349995995995",
-      created: "siva",
-
-      batch: "fw121",
-      startTime: "9.30",
-      concludes: "12.30",
-    },
-  ];
+const TableHeading = ({LecturesData}:ISearchResponse) => {
 const navigate = useNavigate()
-
-  
-
 
   return (
     <div>
@@ -58,9 +37,9 @@ const navigate = useNavigate()
               </Tr>
             </Thead>
             <Tbody w="100%">
-              {ads.map((ad) => (
-                <Tr key={ad.id}>
-                  <Td w="6%">{ad.id}</Td>
+              {LecturesData && LecturesData?.map((ad:ILectureResponse) => (
+                <Tr key={ad.lectur_id}>
+                  <Td w="6%">{ad.lectur_id}</Td>
                   <Td w="35%">
                     <Text fontSize="20px">
                       {ad.title}{" "}
@@ -69,34 +48,29 @@ const navigate = useNavigate()
                         variant="solid"
                         h="20px"
                         w="40px"
-                        pl="8px"
-                      >
+                        pl="8px" >
                         LIVE
                       </Badge>
                     </Text>
                     <p>
-                      {ad.created}by created at {ad.startTime} date
+                      {ad.schedule}by created at {ad.schedule} date
                     </p>
                   </Td>
                   <Td w="15%">{ad.batch}</Td>
-                  <Td w="15%">{ad.startTime}</Td>
+                  <Td w="15%">{ad.schedule}</Td>
                   <Td w="15%">{ad.concludes}</Td>
                   <Td w="15%">
                     <Flex>
-                    <Link to={`/admin/lectures/${ad.id}`}>  <Button
+                    <Link to={`/admin/lectures/${ad.lectur_id}`}>  <Button
                         variant="link"
                         textDecoration={"none"}
-                        color="blue"
-                        
-                      >
+                        color="blue">
                         View
                       </Button></Link>
-                      <Link to={`/admin/lectures/edit/${ad.id}`}>  <Button
+                      <Link to={`/admin/lectures/edit/${ad.lectur_id}`}>  <Button
                         variant="link"
                         textDecoration={"none"}
-                        color="blue"
-                        
-                      >
+                        color="blue">
                         Edit
                       </Button></Link>
                     </Flex>

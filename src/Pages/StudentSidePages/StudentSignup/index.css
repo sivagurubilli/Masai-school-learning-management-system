@@ -5,8 +5,8 @@ body{
 
 }
 .container{
-  height: auto;
-  
+  height: 100vh;
+  background-color: rgb(243,244,246);
 }
 
 .error-showing-popup{

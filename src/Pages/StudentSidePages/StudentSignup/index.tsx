@@ -19,13 +19,13 @@ import {
   masaiimage,
   sectionValues,
 } from "../../../assets/assets";
-
+import {IBatchObject,ISectionObject,} from "../../../Services/SelectionInterface"
+import {getBatchArrray,
+  getSectionArray,} from "../../../Services/SelelctionService"
+import {
+   IAuthsignupResponse} from "../../../Services/AuthInterface"
 import {
   StudentSignupService,
-  getBatchArrray,
-  getSectionArray,
-  IBatchResponse,IbatchObject,
-  ISectionResponse,ISectionObject, IAuthsignupResponse
 } from "../../../Services/AuthServices";
 import "./index.css";
 import { useNavigate } from "react-router-dom";
@@ -33,12 +33,11 @@ import { useNavigate } from "react-router-dom";
 //interface for form data
 interface IFormData {
   name: string;
-  batch: string;
-  section: string;
+  batchId: number;
+  sectionId: number;
   email: string;
   password: string;
   reEnterPassword: string;
-
 }
 
 //validation schema for validating form values using yup library
@@ -60,20 +59,15 @@ const validationSchema = yup.object().shape({
 const initialValues: IFormData = {
   name: "",
   email: "",
-  batch: "",
-  section: "",
+  batchId: 1,
+  sectionId: 1,
   password: "",
   reEnterPassword: "",
  
 };
 
-
-
-
-
-
 // student Signup component
-export default function StudentSignup() {
+export default function StudentSignup({setGotoSignup}:any) {
  
   const [BackendError,setBackendError] = useState({
     backendErrorMessage:"",
@@ -83,7 +77,8 @@ const [isLoading,setLoading] = useState(false)
   const [batchDetails,setBatchDetails] = useState([])
   const [sectionDetails,setSectionDetails] = useState([])
    
-  
+  const navigate = useNavigate();
+
   useEffect(()=>{
   getBatchArrray().then((res:any)=>{
   setBatchDetails(res)
@@ -96,23 +91,19 @@ const [isLoading,setLoading] = useState(false)
 
 //onsubmitting call services for manage apis
   const onSubmit = async (values: IFormData) => {
-    
     setLoading(true)
     setTimeout(()=>{
       setLoading(false)
     },3000)
 
-
     StudentSignupService(values).then((res:IAuthsignupResponse)=>{
-       if(res.name && res.roles[0].name==="NORMAL_USER"){
-  navigate("/student/login")
+       if(res.name){
+        setGotoSignup(false)
        }
-       
        if(!res.name){
         setBackendError({...BackendError, errorFromBackend:true});
        }
     })
-  
     }
 
 //destructuring methods from useformik library 
@@ -122,19 +113,15 @@ const [isLoading,setLoading] = useState(false)
     onSubmit,
   });
 
-  const navigate = useNavigate();
+    // function toggle go to sign up and login components
   const gotoLogin = () => {
-    navigate("/student/login");
-  };
-
-
-
-
+   setGotoSignup(false)
+  }
 
   return (
     <>
       <div className="container">
-        <Container mt="60px" alignItems="center" w="100%" centerContent>
+        <Container mt="60px" paddingBottom={"100px"} alignItems="center" w="100%" centerContent>
           <Image
             height="60px"
             objectFit="contain"
@@ -156,7 +143,7 @@ const [isLoading,setLoading] = useState(false)
            { BackendError.errorFromBackend && <div className="errorlist">
               <ul>
                <p >Whoops! Something went wrong.
-                   <li> These credentials do not match our records.</li>
+                   <li>User is already registered with theese credintials</li>
 
                    </p>
                     </ul>
@@ -171,7 +158,6 @@ const [isLoading,setLoading] = useState(false)
                 >
                   Name
                 </FormLabel>
-
                 <Input
                   variant="outline"
                   type="name"
@@ -193,38 +179,28 @@ const [isLoading,setLoading] = useState(false)
               </FormLabel>
               <Select
                 className="selectbatch"
-                name="batch"
+                name="batchId"
                 onChange={handleChange}
-                value={values.batch}
+                value={values.batchId}
                 placeholder="Select an option"
               >
-                {/* { batchDetails?.map((option:IbatchObject) => (
-                  <option  value={option.batch_name}>
-                    {option.batch_name}
-                  </option>
-                ))} */}
+                
               </Select>
-
               <FormLabel
                 fontWeight="500"
                 color="rgb(55 65 81)"
                 fontSize=".900rem"
-                mt={4}
-              >
+                mt={4}>
                 Select Section
               </FormLabel>
               <Select
                 className="selectbatch"
                 placeholder="Select an option"
-                name="section"
+                name="sectionId"
                 onChange={handleChange}
-                value={values.section}
+                value={values.sectionId}
               >
-                {/* {sectionDetails.map((option:ISectionObject) => (
-                  <option key={option.id} value={option.section_name}>
-                    {option.section_name}
-                  </option>
-                ))} */}
+              
               </Select>
               <div>
                 <FormLabel
@@ -288,7 +264,7 @@ const [isLoading,setLoading] = useState(false)
               </div>
                  
               <Flex justifyContent="flex-between">
-                <button className="buttonlogin"  onClick={gotoLogin}>
+                <button className="buttonlogin" type="button"  onClick={gotoLogin}>
                   <Text fontSize="14px">
                     If Already Signup? please Log in here
                   </Text>
@@ -299,7 +275,6 @@ const [isLoading,setLoading] = useState(false)
                 bg="rgb(31 41 55)"
                 color="white"
                 _hover={{ bg: "rgb(55 65 81)" }}
-                
                 type="submit"
                 w="90px"
                 h="35px"

@@ -1,12 +1,12 @@
 
 
 body{
-    background-color: rgb(243,244,246);
-  
+ background-color:  rgb(243,244,246);
+   
   }
   .container{
-    height: auto;
-    
+height: 100vh;
+background-color: rgb(243,244,246);
   }
   
   
@@ -56,15 +56,12 @@ body{
   }
 
   .selectbatch{
-    
-             
              color:grey;
              font-size :.900rem;
              font-weight:500
   }
 
   .captchamatched{
-  
     color:green;
     width: auto;
     height: 30px;
@@ -72,7 +69,6 @@ body{
   }
 
   .captchanotmatched{
-
     color:red;
     width: auto;
     height: 30px;
