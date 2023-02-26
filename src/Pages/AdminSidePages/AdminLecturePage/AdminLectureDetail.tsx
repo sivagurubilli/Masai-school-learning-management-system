@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState ,useEffect} from "react";
 import "./index.css";
 import Navbar from "../../../components/AdminsideComponents/AdminNavbar";
 import { useParams } from "react-router-dom";
@@ -14,16 +14,22 @@ import {
 } from "@chakra-ui/react";
 import { LectureDetailkeys } from "../CreateLecturePage/ConstantsforCreateLecture";
 import "./index.css";
+import { LectureSingleService } from "../../../Services/LectureServices";
+import { ILectureResponse, ISingledata } from "../../../Services/LectureInterface";
 
 const AdminLectureDetail = () => {
-  const { id } = useParams<{ id: string }>();
-  const [lectureDetail, setLectureDetail] = useState({});
-  const [isVideoActive, setVideoActive] = useState(false);
+  const { id } = useParams();
+  const [lectureDetail, setLectureDetail] = useState<ILectureResponse | undefined>();
+  const [isVideoActive, setVideoActive] = useState<boolean>(false);
 
   const handeleClick = () => {
     setVideoActive(!isVideoActive);
   };
-
+useEffect(()=>{
+LectureSingleService(id).then((res)=>{
+  setLectureDetail(res)
+})
+},[id])
   return (
     <div>
       <Box

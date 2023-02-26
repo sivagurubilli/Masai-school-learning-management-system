@@ -14,8 +14,9 @@ import Secondnav from "../../../components/AdminsideComponents/AdminLecture/Seco
 import Navbar from "../../../components/AdminsideComponents/AdminNavbar/index";
 import TableHeading from "./TableHeading";
 import { LectureSearchService } from "../../../Services/LectureServices";
-import { ISearchResponse } from "../../../Services/LectureInterface";
+import { ISearchResponse,ILectureResponse } from "../../../Services/LectureInterface";
 import { getBatchArrray, getSectionArray,getUserArray,getTypeArray } from "../../../Services/SelelctionService";
+import { IBatchResponse, ITypeResponse, IUserObject,  IUserResponse } from "../../../Services/SelectionInterface";
 
 interface IFilteredValues {
   title: string ,
@@ -40,11 +41,11 @@ const AdminLecture = () => {
     week: "" ,
     day: "",
   });
-   const [lecturesData,setLecturesData] = useState()
-   const [batchArray,setBatchArray] = useState([])
-   const [sectionArray,setSectionArray] = useState([])
-   const [userArray,setUserArray] = useState([])
-   const [typeArray,setTypeArray] = useState([])
+   const [lecturesData,setLecturesData] = useState<ILectureResponse[]>()
+   const [batchArray,setBatchArray] = useState<IBatchResponse>()
+   const [sectionArray,setSectionArray] = useState<ISearchResponse>()
+   const [userArray,setUserArray] = useState<IUserResponse>()
+   const [typeArray,setTypeArray] = useState<ITypeResponse>()
 // this is setting values from select tags
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = event.target;

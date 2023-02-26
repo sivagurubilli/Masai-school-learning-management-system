@@ -59,5 +59,5 @@ export interface ICreateLectureValues {
   }
   
   export interface ISingledata{
-    id:number
+    id:number | undefined;
   }

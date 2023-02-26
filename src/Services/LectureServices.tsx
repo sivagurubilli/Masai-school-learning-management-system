@@ -1,9 +1,10 @@
 import axios from "axios";
-import { ICreateLectureValues, ISearchResponse,  ISearchValues, ISingledata } from "./LectureInterface";
+import { ICreateLectureValues, ILectureResponse, ISearchResponse,  ISearchValues, ISingledata } from "./LectureInterface";
 
 //interface for creating lectures and editing lectures
 
 export interface ILecturePostResponse {
+
 }
 // Lecture Post service
 export async function LecturePostService(
@@ -75,7 +76,7 @@ export async function LectureEditService(
 // lectures searching service
 export async function LectureSearchService(
   data: ISearchValues,
-): Promise<ISearchResponse> {
+): Promise<ILectureResponse[]> {
   const { title, batch, section, type, user,day, week } = data;
 
   try {
@@ -94,14 +95,27 @@ console.log(response.data)
 }
 
 // getting single lecture details service
-export async function LecturSingleService(
-  data: ISingledata,
- 
-): Promise<ILecturePostResponse> {
-  const { id } = data;
-
+export async function LectureSingleService(
+id :any
+): Promise<ILectureResponse> {
   try {
     const response = await axios.get(
+      `https://505a-202-142-81-191.in.ngrok.io/api/lecture/lectures/${id}`
+    );
+
+    return response.data;
+  } catch (error: any) {
+    return error.response;
+  }
+}
+
+
+export async function LectureDeleteService(
+  id:number
+ 
+): Promise<ILecturePostResponse> {
+  try {
+    const response = await axios.delete(
       `https://505a-202-142-81-191.in.ngrok.io/api/lecture/lectures/${id}`
     );
 
