@@ -138,6 +138,9 @@ export async function getSectionArray() {
 export interface IForgotPassword {
   email: string;
 }
+export interface IForgotPasswordd {
+  mode: string;
+}
 
 export async function ForgotPasswordService(
   data: IForgotPassword
@@ -146,11 +149,12 @@ export async function ForgotPasswordService(
   console.log(email)
   try {
     const response = await axios.post(
-      "/forgot-password",
+      "https://9078-202-142-81-215.in.ngrok.io/forgot-password",
      {
        "email":email
-     }
+     },
    );
+   return response.data
   } catch (error) {
      return "Something Went Wrong"
   }
