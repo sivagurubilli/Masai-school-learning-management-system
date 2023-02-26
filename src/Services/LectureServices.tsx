@@ -18,7 +18,7 @@ export async function LecturePostService(
   zoomLink,
   notes, week } = data;
   try {
-    const response = await axios.post("https://937a-202-142-81-203.in.ngrok.io/api/lecture/addLecture", {
+    const response = await axios.post("https://505a-202-142-81-191.in.ngrok.io/api/lecture/addLecture", {
       title,
       batch,
       section,
@@ -55,7 +55,7 @@ export async function LectureEditService(
 
   try {
     const response = await axios.patch(
-      `https://reqres.in/api/create/lecture/${id}`,
+      `https://505a-202-142-81-191.in.ngrok.io/api/lecture/updateLecture/${id}`,
       {
         title, batch, section, type, user,  categoery,
     schedule,
@@ -80,7 +80,7 @@ export async function LectureSearchService(
 
   try {
     const response = await axios.post(
-      "https://8d47-202-142-81-203.in.ngrok.io/api/lecture/lectures/search",
+      "https://505a-202-142-81-191.in.ngrok.io/api/lecture/lectures/search",
       {
         title , batch, section, type, user,day, week
       }
@@ -102,10 +102,7 @@ export async function LecturSingleService(
 
   try {
     const response = await axios.get(
-      `https://937a-202-142-81-203.in.ngrok.io/api/lecture/lectures/search${id}`,
-      {
-       
-      }
+      `https://505a-202-142-81-191.in.ngrok.io/api/lecture/lectures/${id}`
     );
 
     return response.data;

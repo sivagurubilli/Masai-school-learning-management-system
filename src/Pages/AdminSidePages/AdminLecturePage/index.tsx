@@ -8,13 +8,14 @@ import {
   Flex,
   Button,
 } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./index.css";
 import Secondnav from "../../../components/AdminsideComponents/AdminLecture/Secondnav";
 import Navbar from "../../../components/AdminsideComponents/AdminNavbar/index";
 import TableHeading from "./TableHeading";
 import { LectureSearchService } from "../../../Services/LectureServices";
 import { ISearchResponse } from "../../../Services/LectureInterface";
+import { getBatchArrray, getSectionArray,getUserArray,getTypeArray } from "../../../Services/SelelctionService";
 
 interface IFilteredValues {
   title: string ,
@@ -40,7 +41,10 @@ const AdminLecture = () => {
     day: "",
   });
    const [lecturesData,setLecturesData] = useState()
-
+   const [batchArray,setBatchArray] = useState([])
+   const [sectionArray,setSectionArray] = useState([])
+   const [userArray,setUserArray] = useState([])
+   const [typeArray,setTypeArray] = useState([])
 // this is setting values from select tags
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = event.target;
@@ -62,6 +66,23 @@ const GetLectures =()=>{
     setLecturesData(res)
   })
 }
+
+useEffect(()=>{
+  getBatchArrray().then((res)=>{
+    setBatchArray(res)
+  })
+  
+  getSectionArray().then((res)=>{
+    setSectionArray(res)
+  })
+  getUserArray().then((res)=>{
+    setUserArray(res)
+  })
+  getTypeArray().then((res)=>{
+    setTypeArray(res)
+  })
+},[])
+
   const Reset = () => {
     setFilterValues({
       title: "",
@@ -97,19 +118,7 @@ const GetLectures =()=>{
               gridColumn={gridColumn}
               placeholder="Enter text"
               onChange={handleInputChange}
-            />
-             <Select
-              name="categoery"
-              width={selectWidth}
-              color="rgb(75 85 99)"
-              value={filterValues.type}
-              placeholder="Select type"
-              onChange={handleChange}>
-              <option value="type1">Type 1</option>
-              <option value="type2">Type 2</option>
-              <option value="type3">Type 3</option>
-              <option value="type4">Type 4</option>
-            </Select>
+            />    
           </Grid>
           <Grid
             mt={4}
@@ -125,12 +134,11 @@ const GetLectures =()=>{
               onChange={handleChange}
               width={selectWidth}
               color="rgb(75 85 99)"
-              placeholder="Select branch" >
-              <option value="batch1">Batch 1</option>
-              <option value="batch2">Batch 2</option>
-              <option value="batch3">Batch 3</option>
-            </Select>
-
+              placeholder="Select branch">
+                 {batchArray?.map((el)=>(
+                      <option value={el}>{el}</option>
+                    ))}
+            </Select>     
             <Select
               name="section"
               width={selectWidth}
@@ -138,11 +146,10 @@ const GetLectures =()=>{
               color="rgb(75 85 99)"
               placeholder="Select section"
               onChange={handleChange}>
-              <option value="section1">Section 1</option>
-              <option value="section2">Section 2</option>
-              <option value="section3">Section 3</option>
+                {sectionArray?.map((el)=>(
+                      <option value={el}>{el}</option>
+                    ))}
             </Select>
-
             <Select
               name="type"
               width={selectWidth}
@@ -150,12 +157,10 @@ const GetLectures =()=>{
               value={filterValues.type}
               placeholder="Select type"
               onChange={handleChange}>
-              <option value="type1">Type 1</option>
-              <option value="type2">Type 2</option>
-              <option value="type3">Type 3</option>
-              <option value="type4">Type 4</option>
+             {typeArray?.map((el)=>(
+                      <option value="el">{el}</option>
+                    ))}
             </Select>
-
             <Input
             type ="date"
               name="date"
@@ -188,7 +193,6 @@ const GetLectures =()=>{
               placeholder="Select week day"
               value={filterValues.day}
               onChange={handleInputChange}/>
-            
             <Select
               name="user"
               width={selectWidth}
@@ -197,9 +201,9 @@ const GetLectures =()=>{
               placeholder="Select user"
               onChange={handleChange}
             >
-              <option value="user1">User 1</option>
-              <option value="user2">User 2</option>
-              <option value="user3">User 3</option>
+            {userArray?.map((el)=>(
+                      <option value={el}>{el}</option>
+                    ))}
             </Select>
           </Grid>
           <Flex justifyContent={"flex-end"}>

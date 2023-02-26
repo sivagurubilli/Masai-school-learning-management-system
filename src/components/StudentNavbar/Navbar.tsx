@@ -67,7 +67,7 @@ const Navbar = () => {
               <Flex w="70%" justifyContent={"space-around"} align="center">
                 {NavbarArray.map((el) => (
                   <Box className="li">
-                    <NavLink to={"/admin/" + el}>{el}</NavLink>
+                    <NavLink key={el} to={"/admin/" + el}>{el}</NavLink>
                   </Box>
                 ))}
               </Flex>
@@ -109,7 +109,7 @@ const Navbar = () => {
         >
           {NavbarArray.map((el) => (
             <li>
-              <NavLink to={"/admin/" + el}>{el}</NavLink>
+              <NavLink key={el} to={"/admin/" + el}>{el}</NavLink>
             </li>
           ))}
           <Divider borderColor="gray.300" />

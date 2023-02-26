@@ -11,6 +11,7 @@ import {
   useBreakpointValue,
 } from "@chakra-ui/react";
 import "./index.css";
+import HelpInNoteTakeSection from "./HelpInNoteTakeSection";
 
 interface IActiveButtons {
   write: boolean;
@@ -110,8 +111,8 @@ const NoteSection = ({ LectureValues, setLectureValues }: any) => {
         {activeButtons.preview ? (
           <ReactMarkdown children={LectureValues.notes} />
         ) : null}
-        {activeButtons.help ? <p>Help</p> : null}
       </Grid>
+      {activeButtons.help ? <HelpInNoteTakeSection /> : null}
     </div>
   );
 };

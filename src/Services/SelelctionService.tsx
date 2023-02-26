@@ -11,7 +11,7 @@ import {
 export async function getBatchArrray() {
   try {
     const response: AxiosResponse<IBatchResponse[]> = await axios.get(
-      "https://f6fd-202-142-70-11.in.ngrok.io/batch"
+      "https://505a-202-142-81-191.in.ngrok.io/batchList"
     );
     return response.data;
   } catch (error: any) {
@@ -22,7 +22,7 @@ export async function getBatchArrray() {
 export async function getSectionArray() {
   try {
     const response: AxiosResponse<ISectionResponse[]> = await axios.get(
-      "https://f6fd-202-142-70-11.in.ngrok.io/section"
+      "https://505a-202-142-81-191.in.ngrok.io/sectionList"
     );
     return response.data;
   } catch (error: any) {
@@ -33,7 +33,7 @@ export async function getSectionArray() {
 export async function getTypeArray() {
   try {
     const response: AxiosResponse<ITypeResponse[]> = await axios.get(
-      "https://f6fd-202-142-70-11.in.ngrok.io/section"
+      "https://505a-202-142-81-191.in.ngrok.io/type"
     );
     return response.data;
   } catch (error: any) {
@@ -44,7 +44,7 @@ export async function getTypeArray() {
 export async function getUserArray() {
   try {
     const response: AxiosResponse<IUserResponse[]> = await axios.get(
-      "https://f6fd-202-142-70-11.in.ngrok.io/section"
+      "https://505a-202-142-81-191.in.ngrok.io/user"
     );
     return response.data;
   } catch (error: any) {

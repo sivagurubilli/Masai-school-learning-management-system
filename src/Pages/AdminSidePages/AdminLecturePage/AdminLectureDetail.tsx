@@ -3,12 +3,26 @@ import "./index.css";
 import Navbar from "../../../components/AdminsideComponents/AdminNavbar";
 import { useParams } from "react-router-dom";
 import SecondNavforLectureDetail from "./SecondNavforLectureview";
-import { Badge, Box, Flex, Text } from "@chakra-ui/react";
+import {
+  Badge,
+  Box,
+  Button,
+  Divider,
+  Flex,
+  Input,
+  Text,
+} from "@chakra-ui/react";
 import { LectureDetailkeys } from "../CreateLecturePage/ConstantsforCreateLecture";
+import "./index.css";
 
 const AdminLectureDetail = () => {
   const { id } = useParams<{ id: string }>();
   const [lectureDetail, setLectureDetail] = useState({});
+  const [isVideoActive, setVideoActive] = useState(false);
+
+  const handeleClick = () => {
+    setVideoActive(!isVideoActive);
+  };
 
   return (
     <div>
@@ -115,19 +129,70 @@ const AdminLectureDetail = () => {
               <Box bg="gray.100" h="60px" p="20px">
                 <Text></Text>
               </Box>
-
             </Box>
           </Flex>
 
-          <Box w='100%' bg="white" >
-           <Text>Lecture Video</Text>
-            <Flex>
-
-              
+          <Flex
+            w="100%"
+            bg="white"
+            h="100px"
+            justifyContent="center"
+            alignItems="center"
+          >
+            <Text fontSize="25px" color="blue">
+              Lecture Video
+            </Text>
+          </Flex>
+          <Flex w="100%" h="60px">
+            <Flex
+              h="40px"
+              w="50%"
+              cursor="pointer"
+              className={isVideoActive ? "" : "activeVimeo"}
+              onClick={handeleClick}
+              justifyContent="center"
+            >
+              <Text color="blue">Vimeo Video</Text>
             </Flex>
-          </Box>
+            <Flex
+              h="40px"
+              w="50%"
+              cursor="pointer"
+              className={isVideoActive ? "activeS3" : ""}
+              onClick={handeleClick}
+              justifyContent="center"
+            >
+              <Text color="blue">S3 Video</Text>
+            </Flex>
+          </Flex>
+          <Flex
+            fontSize="20px"
+            color="blue"
+            w="100%"
+            h="60px"
+            justifyContent="center"
+            alignItems="center"
+          >
+            {isVideoActive
+              ? "No S3 video Available"
+              : "No Vimeo Video Availble"}
+          </Flex>
+          <Divider />
+          <Flex mt="30px" p="20px" justifyContent="space-between">
+            <Box>
+              <Text color="blue">Upload Video</Text>
+              <Input type="file" placeholder="choose file" />
+            </Box>
+            <Button
+              mt="20px"
+              bg="rgb(31 41 55)"
+              _hover={{ bg: "rgb(76, 84, 95)" }}
+              color="white"
+            >
+              save video
+            </Button>
+          </Flex>
         </Box>
-
       </Box>
     </div>
   );

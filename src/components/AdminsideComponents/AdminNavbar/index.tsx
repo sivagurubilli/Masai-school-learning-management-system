@@ -65,7 +65,7 @@ const navigate =useNavigate()
               <Flex w="70%" justifyContent={"space-around"} align="center">
                 {NavbarAdminArray.map((el) => (
                   <Box className="li">
-                    <NavLink to={"/admin/" + el}>{el}</NavLink>
+                    <NavLink key={el} to={"/admin/" + el}>{el}</NavLink>
                   </Box>
                 ))}
               </Flex>
@@ -106,7 +106,7 @@ const navigate =useNavigate()
         >
           {NavbarAdminArray.map((el) => (
             <li>
-              <NavLink to={"/admin/" + el}>{el}</NavLink>
+              <NavLink key={el} to={"/admin/" + el}>{el}</NavLink>
             </li>
           ))}
           <Divider borderColor="gray.300" />

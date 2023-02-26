@@ -1,10 +1,4 @@
-
-import {
-  Container,
-  Box,
-  Flex,
-  Button,
-} from "@chakra-ui/react";
+import { Container, Box, Flex, Button } from "@chakra-ui/react";
 import React, { useState } from "react";
 import "./index.css";
 import Navbar from "../../../components/AdminsideComponents/AdminNavbar/index";
@@ -13,7 +7,7 @@ import {
   ILecturePostResponse,
   LecturePostService,
 } from "../../../Services/LectureServices";
-import {ICreateLectureValues} from "../../../Services/LectureInterface"
+import { ICreateLectureValues } from "../../../Services/LectureInterface";
 import InputTakingSection from "./InputTakingSection";
 
 const AdminLectureCreate = () => {
@@ -23,25 +17,24 @@ const AdminLectureCreate = () => {
     categoery: "",
     section: "",
     type: "",
-    schedule: "",
-    conclude: "",
+    schedule: new Date(),
+    conclude: new Date(),
     user: "",
     tags: [],
     hideVideo: false,
-    optional:false,
+    optional: false,
     zoomLink: "",
     week: "",
     day: "",
     notes: "",
   });
 
- const CreateLecture = () => {
-    console.log(LectureValues)
-    LecturePostService(LectureValues).then((res) => {
-    });
+  const CreateLecture = () => {
+    console.log(LectureValues);
+    LecturePostService(LectureValues).then((res) => {});
   };
 
- return (
+  return (
     <div className="container">
       <Navbar />
       <SecondNavforLectureCreate />
@@ -50,10 +43,13 @@ const AdminLectureCreate = () => {
         ml="10%"
         mt="60px"
         h="auto"
-        boxShadow="2px 4px 6px rgba(0, 0, 0, 0.1)">
+        boxShadow="2px 4px 6px rgba(0, 0, 0, 0.1)"
+      >
         <Box w="100%" p="2%" bg="white" h="auto">
-
-     <InputTakingSection LectureValues={LectureValues} setLectureValues ={setLectureValues} />
+          <InputTakingSection
+            LectureValues={LectureValues}
+            setLectureValues={setLectureValues}
+          />
           <Flex justifyContent={"flex-end"}>
             <Button
               w="32%"
