@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Navbar.css";
 import Profilecomponent from "./Profilecomponent";
-import { Link, NavLink, NavLinkProps } from "react-router-dom";
+import { Link, NavLink, NavLinkProps, useNavigate } from "react-router-dom";
 import {
   Divider,
   Text,
@@ -12,148 +12,120 @@ import {
   Hide,
   Show,
   Tooltip,
+  Button,
 } from "@chakra-ui/react";
-import { masaiimage } from "../../assets/assets";
+import { masaiimage, NavbarArray } from "../../assets/assets";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
 
 const Navbar = () => {
   const [clicked, setClicked] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
+  const [userName, setUserName] = useState<any | null>(null);
+  const navigate = useNavigate()
+  const state = useSelector((state: RootState) => state.Authreducer);
 
+  //   this handleclick function for open and closing of side navbar in smaller screens
   const handleclick = () => {
     setClicked(!clicked);
   };
 
+  useEffect(() => {
+    const name = localStorage.getItem("username");
+    if (name) {
+      setUserName(name);
+    }
+  }, [userName]);
+
+
+  const Logout =()=>{
+    localStorage.clear()
+       navigate("/login")
+  }
+
   return (
-    <>
-      <Box position="relative" top="0" bg="whiteAlpha.900" w="100%" zIndex="1">
-        <Box boxShadow="sm">
-          <Flex
-            position={"relative"}
-            w={"97%"}
-            align="center"
-            m="auto"
-            h={{ sm: "40px", md: "60px" }}
-            justifyContent={"space-between"}
-            color={"gray.600"}
-          >
-            <Flex align="center" flex={"2"}>
-              <Link to="/dashboard">
+    <Box position="relative" h="auto" top="0" bg="whiteAlpha.900" w="100%">
+      <Box boxShadow="sm">
+        <Flex
+          position={"relative"}
+          w={"97%"}
+          align="center"
+          m="auto"
+          h={"60px"}
+          justifyContent={"space-between"}
+          color={"gray.600"}
+        >
+          <Flex align="center" flex={"2"}>
+            <Link to="/dashboard">
+              {" "}
+              <Image objectFit="contain" src={masaiimage} alt="Masai logo" />
+            </Link>
+
+            {/* navbar part links for each element  */}
+
+            <Hide below="1100px">
+              <Flex w="70%" justifyContent={"space-around"} align="center">
+                {NavbarArray.map((el) => (
+                  <Box className="li">
+                    <NavLink to={"/admin/" + el}>{el}</NavLink>
+                  </Box>
+                ))}
+              </Flex>
+
+              {/*  this part is about display hamburger in menu item for small screeens  */}
+              <Box ml={"50px"} onClick={() => setShowProfile(!setShowProfile)}>
                 {" "}
-                <Image
-                  objectFit="contain"
-                  minH={"30px"}
-                  minW="80px"
-                  src={masaiimage}
-                  alt="Masai logo"
-                />
-              </Link>
-
-              <Hide below="md">
-                <Flex w="65%" justifyContent={"space-around"} align="center">
-                  <Box className="li">
-                    <NavLink to="/lectures">Lectures</NavLink>
-                  </Box>
-                  <Box className="li">
-                    <NavLink to="/assignments">Assignments</NavLink>
-                  </Box>
-                  <Box className="li">
-                    <NavLink to="/quizzes">Quizzes</NavLink>
-                  </Box>
-                  <Box className="li">
-                    <NavLink to="/tickets">Tickets</NavLink>
-                  </Box>
-                  <Box className="li">
-                    <NavLink to="/discussions">Discussions</NavLink>
-                  </Box>
-                  <Box className="li">
-                    <NavLink to="/notifications">Notifications</NavLink>
-                  </Box>
-                  <Box className="li">
-                    <NavLink to="/messages">Messages</NavLink>
-                  </Box>
-                  <Box className="li">
-                    <NavLink to="/electives">Electives</NavLink>
-                  </Box>
-                  <Box className="li">
-                    <NavLink to="/announcements">Announcements</NavLink>
-                  </Box>
-                  <Box className="li">
-                    <NavLink to="/courses">Courses</NavLink>
-                  </Box>
-                </Flex>
-
-                <Box ml={"100px"} onClick={() => setShowProfile(!showProfile)}>
-                  gurubilli siva (fw15_393)
-                  <i
-                    style={{ marginLeft: "20px" }}
-                    className="fa-solid fa-circle-chevron-down"
-                  ></i>
-                </Box>
-              </Hide>
-            </Flex>
-            <Show below="md">
-              <Box>
+                <Button variant={"link"} _hover={{"cursor":"pointer"}}>{userName}</Button>
                 <i
-                  id="bar"
-                  onClick={handleclick}
-                  className={clicked ? "fas fa-times" : "fas fa-bars"}
+                  style={{ marginLeft: "10px" }}
+                  className="fa-solid fa-caret-down"
                 ></i>
               </Box>
-            </Show>
+            </Hide>
           </Flex>
-        </Box>
+          {/*  this part is about display hamburger  menu item for small screeens  */}
 
+          <Show below="1060px">
+            <Box>
+              <i
+                id="bar"
+                onClick={handleclick}
+                className={clicked ? "fas fa-times" : "fas fa-bars"}
+              ></i>
+            </Box>
+          </Show>
+        </Flex>
+        
+        {/* when click on name of user container box dipaly based click action */}
         {showProfile && <Profilecomponent setshow1={setShowProfile} />}
 
-        {/* this is part is like when user enter into smaller screens the navbar appear on left  side as side bar  */}
+        {/* this is part is like when user enter into smaller screens the navbar appear on left side as side bar  */}
 
-        <div
+        <Box
+          w="100%"
+          position="relative"
           id="navbar-mobile"
           className={clicked ? "navbar-mobile active" : "navbar-mobile"}
         >
-          <li>
-            <NavLink to="/lectures">Lectures</NavLink>
-          </li>
-          <li>
-            <NavLink to="/assignments">Assignments</NavLink>
-          </li>
-          <li>
-            <NavLink to="/admin/signup">Quizzes</NavLink>
-          </li>
-          <li>
-            <NavLink to="/tickets">Tickets</NavLink>
-          </li>
-          <li>
-            <NavLink to="/discussons">Discussons</NavLink>
-          </li>
-          <li>
-            <NavLink to="/notifications">Notifications</NavLink>
-          </li>
-          <li>
-            <NavLink to="/messages">Messages</NavLink>
-          </li>
-          <li>
-            <NavLink to="/electives">Electives</NavLink>
-          </li>
-          <li>
-            <NavLink to="/announcements">Announcements</NavLink>
-          </li>
-          <li>
-            <NavLink to="/courses">Courses</NavLink>
-          </li>
+          {NavbarArray.map((el) => (
+            <li>
+              <NavLink to={"/admin/" + el}>{el}</NavLink>
+            </li>
+          ))}
           <Divider borderColor="gray.300" />
           <Text color="black" padding="10px">
-            <NavLink to="/user/profile">Profile</NavLink>
+            <NavLink to="/admin/profile">Profile</NavLink>
           </Text>
           <Text color="black" padding="10px">
             <NavLink to="/transcript">Transcript </NavLink>
           </Text>
-          <Text color="black" padding="10px">
+          <Text color="black" padding="10px"  _hover={{"cursor":"pointer"}} onClick={Logout}>
             Logout
           </Text>
-        </div>
+          <Divider borderColor="gray.300" />
+        </Box>
       </Box>
-    </>
+    </Box>
   );
 };
 

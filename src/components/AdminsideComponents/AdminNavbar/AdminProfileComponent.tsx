@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Box, Text, Divider } from "@chakra-ui/react";
 
 // this component is for when clicking on user name in navbar this component will display
@@ -9,6 +9,26 @@ interface ProfilecomponentProps {
 }
 
 const AdminProfileComponent = ({ setshow1 }: ProfilecomponentProps) => {
+  const navigate = useNavigate();
+
+  const bodyRef = useRef(document.body);
+
+  useEffect(() => {
+    bodyRef.current.addEventListener("click", handleBodyClick);
+    return () => {
+      bodyRef.current.removeEventListener("click", handleBodyClick);
+    };
+  }, []);
+
+  function handleBodyClick() {
+    setshow1(false);
+  }
+  const Logout = () => {
+    localStorage.clear();
+    setshow1(false);
+    navigate("/login");
+  };
+
   return (
     <Box
       display="flex"
@@ -24,6 +44,7 @@ const AdminProfileComponent = ({ setshow1 }: ProfilecomponentProps) => {
       boxShadow="0 5px 15px rgba(0,0,0,0.06)"
       backgroundColor="white"
       p={3}
+      zIndex="1"
     >
       <Text color="#778087" fontSize="sm" padding="5px">
         Manage Access
@@ -39,7 +60,12 @@ const AdminProfileComponent = ({ setshow1 }: ProfilecomponentProps) => {
         </Link>
       </Text>
       <Divider borderColor="gray.300" />
-      <Text color="black" padding="10px">
+      <Text
+        color="black"
+        padding="10px"
+        _hover={{ cursor: "pointer" }}
+        onClick={Logout}
+      >
         Logout
       </Text>
     </Box>

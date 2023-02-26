@@ -1,99 +1,74 @@
+
 import axios, { AxiosResponse } from "axios";
 import bcrypt from "bcryptjs";
+import { IAuthlogin,IAdminAccountCreate,IAuthloginResponse,IAuthsignupResponse,IForgotPassword,
+IStudentAccountCreate } from "./AuthInterface";
 
-export interface IAuthlogin {
-  username: string;
-  password: string;
-  rememberMe: boolean;
-}
+export async function LoginService(
+  data: IAuthlogin
+): Promise<IAuthloginResponse> {
+  const { username, password,rememberMe } = data;
 
-export interface IAuthloginResponse {
-  token: string;
-  error: string;
-  status: number;
-  user: {
-    id: number,
-    name: string,
-    email: string,
-    roles: [
-      {
-        id: number,
-        name: string
-      }
-    ]
-  }
-}
-
-export interface IAuthsignupResponse {
-  id: number,
-  name: string,
-  email: string,
-  roles: [
-    {
-      id: number,
-      name: string
-    }
-  ]
-}
-
-export interface IStudentAccountCreate {
-  name: string;
-  batch: string;
-  section: string;
-  email: string;
-  password: string;
-
-}
-
-export interface IAdminAccountCreate {
-  name: string;
-  email: string;
-  password: string;
-}
-
-export async function LoginService(data: IAuthlogin): Promise<IAuthloginResponse> {
-  const { username, password } = data;
   const salt = bcrypt.genSaltSync(10);
   const hashedPassword = bcrypt.hashSync(password, salt);
   try {
-    const response = await axios.post("https://reqres.in/api/login", {
-      "username": username,
-      "password": password
+    const response = await axios.post("https://7cbf-202-142-114-239.in.ngrok.io/api/login", {
+
+     "username": username,
+      "password": password,
     });
+    //setting for remember me in
+   if (rememberMe && response.data.token) {
+    localStorage.setItem("username", username);
+    localStorage.setItem("userType",response.data.user.roles[0].name);
+    localStorage.setItem("token", response.data.token);
+  }
+  if (rememberMe && response.data.token) {
+    sessionStorage.setItem("username", username);
+    sessionStorage.setItem("userType",response.data.user.roles[0].name)
+    sessionStorage.setItem("token", response.data.token);
+  
+  }
+
     return response.data;
   } catch (error: any) {
-    console.log(error)
-    return error.response
+    console.log(error);
+    return error.response;
   }
 }
 
 export async function StudentSignupService(
-  data: IAdminAccountCreate
+  data: IStudentAccountCreate
 ): Promise<IAuthsignupResponse> {
-  const { email, name, password } = data
+
+  const { email, name, password,sectionId,batchId } = data;
+  console.log(sectionId,batchId)
   try {
     const response = await axios.post(
-      "https://1dac-202-142-114-239.in.ngrok.io/api/signup",
-      { name, email, password }
+      `https://7cbf-202-142-114-239.in.ngrok.io/api/signup/student/${batchId}/${sectionId}`,
+      { name, email ,password }
     );
     return response.data;
   } catch (error: any) {
-    return error.error
+    return error.response.data;
+
   }
 }
 
 export async function AdminSignupService(
   data: IAdminAccountCreate
 ): Promise<IAuthsignupResponse> {
-  const { email, name, password } = data
+
+  const { email, name, password } = data;
   try {
-    const response = await axios.post("https://1dac-202-142-114-239.in.ngrok.io/api/signup", {
-      email, name, password
-    }
+    const response = await axios.post(
+      "https://7cbf-202-142-114-239.in.ngrok.io/api/signup/admin",
+      { name, email, password }
     );
-    return response.data
+    console.log(response);
+    return response.data;
   } catch (error: any) {
-    return error.error
+    return error.error;
   }
 }
 
@@ -135,12 +110,7 @@ export async function getSectionArray() {
   }
 }
 
-export interface IForgotPassword {
-  email: string;
-}
-export interface IForgotPasswordd {
-  mode: string;
-}
+
 
 export async function ForgotPasswordService(
   data: IForgotPassword
@@ -166,6 +136,7 @@ export interface IReset {
   token: string;
 }
 export async function ResetService(data: IReset): Promise<any> {
+
   try {
     const response = await axios.post<IReset>(
       "/reset-password/",
