@@ -11,19 +11,15 @@ import {
   Text,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
-import "./index.css";
+import "../CreateLecturePage/index.css";
 import Navbar from "../../../components/AdminsideComponents/AdminNavbar/index";
 import {ICreateLectureValues} from "../../../Services/LectureInterface"
 import {
-  ILecturePostResponse,
-  LecturePostService,
   LectureEditService,
 } from "../../../Services/LectureServices";
-import SecondNavforLectureDetail from "../AdminLecturePage/SecondNavforLectureview";
-import SecondNavforLectureCreate from "./SecondNavforCreateLecture";
+import SecondNavforLectureCreate from "../CreateLecturePage/SecondNavforCreateLecture";
 import { useParams } from "react-router-dom";
-import { Categoery } from "../../../assets/assets";
-import InputTakingSection from "./InputTakingSection";
+import InputTakingSection from "../../../components/AdminsideComponents/CreateLecture/InputTakingSection";
 
 const AdminLectureEdit = () => {
   const [LectureEditValues, setLectureEditValues] =
@@ -63,9 +59,7 @@ const AdminLectureEdit = () => {
         h="auto"
         boxShadow="2px 4px 6px rgba(0, 0, 0, 0.1)">
         <Box w="100%" p="2%" bg="white" h="auto">
-
-          <InputTakingSection LectureValues ={LectureEditValues} setLectureValues={setLectureEditValues} />
-           
+          <InputTakingSection LectureValues ={LectureEditValues} setLectureValues={setLectureEditValues} />    
           <Flex justifyContent={"flex-end"}>
             <Button
               w="32%"

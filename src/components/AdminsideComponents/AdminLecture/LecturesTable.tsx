@@ -42,8 +42,8 @@ const TableHeading = ({ LecturesData }: ISearchResponse) => {
             <Tbody w="100%">
               {LecturesData &&
                 LecturesData?.map((ad: ILectureResponse) => (
-                  <Tr key={ad.lectur_id}>
-                    <Td w="6%">{ad.lectur_id}</Td>
+                  <Tr key={ad.lecturid}>
+                    <Td w="6%">{ad.lecturid}</Td>
                     <Td w="35%">
                       <Text fontSize="20px">
                         {ad.title}{" "}
@@ -78,25 +78,26 @@ const TableHeading = ({ LecturesData }: ISearchResponse) => {
                           colorScheme={"green"}
                           variant="solid"
                           h="20px"
-                          w="40px"
+                          w="auto"
                           pl="8px"
                         >
                           {ad.week}
+                          </Badge>
                           <Badge
-                            colorScheme={"blue.100"}
+                            colorScheme={"blue"}
                             variant="solid"
                             h="20px"
-                            w="40px"
-                            pl="8px"
+                            ml="10px"
+                            w="auto"
                           >
                             {ad.day}
                           </Badge>
-                        </Badge>
+                       
                       </Flex>{" "}
                     </Td>
                     <Td w="15%">
                       <Flex>
-                        <Link to={`/admin/lectures/${ad.lectur_id}`}>
+                        <Link to={`/admin/lectures/${ad.lecturid}`}>
                           {" "}
                           <Button
                             variant="link"
@@ -106,7 +107,7 @@ const TableHeading = ({ LecturesData }: ISearchResponse) => {
                             View
                           </Button>
                         </Link>
-                        <Link to={`/admin/lectures/edit/${ad.lectur_id}`}>
+                        <Link to={`/admin/lectures/edit/${ad.lecturid}`}>
                           {" "}
                           <Button
                             variant="link"

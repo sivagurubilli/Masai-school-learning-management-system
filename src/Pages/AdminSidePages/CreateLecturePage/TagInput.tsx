@@ -39,8 +39,8 @@ const TagInput = ({ LectureValues, setLectureValues }: any) => {
       <FormLabel mt="10px" color="rgb(75 85 99)">
         Tags (comma seperated)
       </FormLabel>
-      <Flex flexWrap="wrap"  minH="20px"
-            maxH="auto" maxW="100%" border="1px solid rgb(203,213,224)" p="10px" borderRadius="10px"  
+      <Flex flexWrap="wrap"  minH="40px"
+            maxH="auto"  border="1px solid rgb(203,213,224)" p="10px" borderRadius="10px"  
             onClick={()=>setShowSuggestions(!showSuggestions)} >
         {LectureValues.tags?.map((tag:any) => (
           <Flex

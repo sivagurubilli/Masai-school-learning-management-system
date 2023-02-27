@@ -19,7 +19,7 @@ export async function LecturePostService(
   zoomLink,
   notes, week } = data;
   try {
-    const response = await axios.post("https://505a-202-142-81-191.in.ngrok.io/api/lecture/addLecture", {
+    const response = await axios.post("/api/lecture/addLecture", {
       title,
       batch,
       section,
@@ -56,7 +56,7 @@ export async function LectureEditService(
 
   try {
     const response = await axios.patch(
-      `https://505a-202-142-81-191.in.ngrok.io/api/lecture/updateLecture/${id}`,
+      `/api/lecture/updateLecture/${id}`,
       {
         title, batch, section, type, user,  categoery,
     schedule,
@@ -78,13 +78,10 @@ export async function LectureSearchService(
   data: ISearchValues,
 ): Promise<ILectureResponse[]> {
   const { title, batch, section, type, user,day, week } = data;
-
   try {
     const response = await axios.post(
-      "https://505a-202-142-81-191.in.ngrok.io/api/lecture/lectures/search",
-      {
-        title , batch, section, type, user,day, week
-      }
+      "/api/lecture/lectures/search",
+      {title, batch, section, type, user,day, week}
     );
 console.log(response.data)
     return response.data;
@@ -100,7 +97,12 @@ id :any
 ): Promise<ILectureResponse> {
   try {
     const response = await axios.get(
-      `https://505a-202-142-81-191.in.ngrok.io/api/lecture/lectures/${id}`
+      `/api/lecture/lectures/${id}`,
+      {
+        headers: {
+        "ngrok-skip-browser-warning": "1",
+      },
+    }
     );
 
     return response.data;
@@ -109,16 +111,48 @@ id :any
   }
 }
 
-
+// deleting for Lecture Service
 export async function LectureDeleteService(
-  id:number
+  id: string| undefined
  
 ): Promise<ILecturePostResponse> {
   try {
     const response = await axios.delete(
-      `https://505a-202-142-81-191.in.ngrok.io/api/lecture/lectures/${id}`
+      `/api/lecture/lectures/${id}`
     );
 
+    return response.data;
+  } catch (error: any) {
+    return error.response;
+  }
+}
+
+// lectures copy service function
+export async function LectureCopyService(
+  data: ICreateLectureValues,
+  id: string | undefined
+): Promise<ILecturePostResponse> {
+  const { title, batch, section, type, user,  categoery,
+    schedule,
+    conclude,
+    tags,
+    hideVideo,
+    zoomLink,
+    notes, week } = data;
+
+  try {
+    const response = await axios.post(
+      `/api/lecture/copyLecture/`,
+      {
+        title, batch, section, type, user,  categoery,
+    schedule,
+    conclude,
+    tags,
+    hideVideo,
+    zoomLink,
+    notes, week 
+      }
+    );
     return response.data;
   } catch (error: any) {
     return error.response;

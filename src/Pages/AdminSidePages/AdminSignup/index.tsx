@@ -12,7 +12,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { Box, Image } from "@chakra-ui/react";
-import { gifloader, masaiimage } from "../../../assets/assets";
+import { gifloader, masaiimage } from "../../../Assets/Assets";
 import {  IAdminAccountCreate,
   IAuthsignupResponse,
 } from "../../../Services/AuthInterface"

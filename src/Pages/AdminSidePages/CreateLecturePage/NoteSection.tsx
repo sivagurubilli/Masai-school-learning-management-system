@@ -57,7 +57,8 @@ const NoteSection = ({ LectureValues, setLectureValues }: any) => {
       <FormLabel mt="30px" color="rgb(75 85 99)">
         Give Notes For Lecture
       </FormLabel>
-      <Box w="400px">
+      <Box w="100%" >
+      <Box w="50%">
         <Flex justifyContent={"space-between"}>
           <div
             className={activeText === "write" ? "activeText" : "default"}
@@ -113,6 +114,8 @@ const NoteSection = ({ LectureValues, setLectureValues }: any) => {
         ) : null}
       </Grid>
       {activeButtons.help ? <HelpInNoteTakeSection /> : null}
+      
+</Box>
     </div>
   );
 };

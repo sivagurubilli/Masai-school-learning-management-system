@@ -7,16 +7,17 @@ import {
   useBreakpointValue,
   Flex,
   Button,
+  useMediaQuery,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import "./index.css";
 import Secondnav from "../../../components/AdminsideComponents/AdminLecture/Secondnav";
 import Navbar from "../../../components/AdminsideComponents/AdminNavbar/index";
-import TableHeading from "./TableHeading";
+import TableHeading from "../../../components/AdminsideComponents/AdminLecture/LecturesTable";
 import { LectureSearchService } from "../../../Services/LectureServices";
 import { ISearchResponse,ILectureResponse } from "../../../Services/LectureInterface";
 import { getBatchArrray, getSectionArray,getUserArray,getTypeArray } from "../../../Services/SelelctionService";
-import { IBatchResponse, ITypeResponse, IUserObject,  IUserResponse } from "../../../Services/SelectionInterface";
+import { IBatchObject, IBatchResponse, ISectionObject, ITypeObject, ITypeResponse, IUserObject,  IUserResponse } from "../../../Services/SelectionInterface";
 
 interface IFilteredValues {
   title: string ,
@@ -42,28 +43,26 @@ const AdminLecture = () => {
     day: "",
   });
    const [lecturesData,setLecturesData] = useState<ILectureResponse[]>()
-   const [batchArray,setBatchArray] = useState<IBatchResponse>()
-   const [sectionArray,setSectionArray] = useState<ISearchResponse>()
-   const [userArray,setUserArray] = useState<IUserResponse>()
-   const [typeArray,setTypeArray] = useState<ITypeResponse>()
+   const [batchArray,setBatchArray] = useState<IBatchObject[]>()
+   const [sectionArray,setSectionArray] = useState<ISectionObject[]>()
+   const [userArray,setUserArray] = useState<IUserObject[]>()
+   const [typeArray,setTypeArray] = useState<ITypeObject[]>()
+
 // this is setting values from select tags
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = event.target;
     setFilterValues({ ...filterValues, [name]: value });
-    GetLectures()
   };
 
   //this is setting values from input elements
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
-    setFilterValues({ ...filterValues, [name]: value });
-           GetLectures()
+    setFilterValues({ ...filterValues, [name]: value });      
   };
 
   // calling service for getting list for lectures
 const GetLectures =()=>{
   LectureSearchService(filterValues).then((res:any)=>{
-    console.log(res)
     setLecturesData(res)
   })
 }
@@ -103,7 +102,7 @@ useEffect(()=>{
     lg: "1 / 5", // Span two columns starting from the second column on large screens
   });
   const selectWidth = useBreakpointValue({ base: "100%", md: "auto" });
-
+  const [isLargerThan900] = useMediaQuery("(min-width: 900px)");
   return (
     <div className="container">
       <Navbar />
@@ -137,7 +136,7 @@ useEffect(()=>{
               color="rgb(75 85 99)"
               placeholder="Select branch">
                  {batchArray?.map((el)=>(
-                      <option value={el}>{el}</option>
+                      <option value={el.batch_id}>{el.batch_name}</option>
                     ))}
             </Select>     
             <Select
@@ -148,7 +147,7 @@ useEffect(()=>{
               placeholder="Select section"
               onChange={handleChange}>
                 {sectionArray?.map((el)=>(
-                      <option value={el}>{el}</option>
+                      <option value={el.section_id}>{el.section_name}</option>
                     ))}
             </Select>
             <Select
@@ -159,7 +158,7 @@ useEffect(()=>{
               placeholder="Select type"
               onChange={handleChange}>
              {typeArray?.map((el)=>(
-                      <option value="el">{el}</option>
+                      <option value={el.id}>{el.typeName}</option>
                     ))}
             </Select>
             <Input
@@ -203,17 +202,29 @@ useEffect(()=>{
               onChange={handleChange}
             >
             {userArray?.map((el)=>(
-                      <option value={el}>{el}</option>
+            <option value={el.id}>{el.userName}</option>
                     ))}
             </Select>
           </Grid>
           <Flex justifyContent={"flex-end"}>
-            <Button
-              w="32%"
+          <Button
+              w="20%"
               mt="20px"
+              fontSize={isLargerThan900 ? "16px" :"12px"}
               color="white"
               bg="rgb(31 41 55)"
               _hover={{ bg: "rgb(76, 84, 95)" }}
+              onClick={GetLectures}>
+             Filter
+            </Button>
+            <Button
+              w="20%"
+              mt="20px"
+              color="white"
+              ml="20px"
+              bg="rgb(31 41 55)"
+              _hover={{ bg: "rgb(76, 84, 95)" }}
+              fontSize={isLargerThan900 ? "16px" :"12px"}
               onClick={Reset}>
               Reset
             </Button>

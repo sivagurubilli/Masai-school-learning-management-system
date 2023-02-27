@@ -1,8 +1,8 @@
-import React, { useState ,useEffect} from "react";
-import "./index.css";
+import React, { useState, useEffect } from "react";
+import "../AdminLecturePage/index.css";
 import Navbar from "../../../components/AdminsideComponents/AdminNavbar";
 import { useParams } from "react-router-dom";
-import SecondNavforLectureDetail from "./SecondNavforLectureview";
+import SecondNavforLectureDetail from "../AdminLecturePage/SecondNavforLectureview";
 import {
   Badge,
   Box,
@@ -11,25 +11,37 @@ import {
   Flex,
   Input,
   Text,
+  useMediaQuery,
 } from "@chakra-ui/react";
 import { LectureDetailkeys } from "../CreateLecturePage/ConstantsforCreateLecture";
-import "./index.css";
+import "../AdminLecturePage/index.css";
 import { LectureSingleService } from "../../../Services/LectureServices";
-import { ILectureResponse, ISingledata } from "../../../Services/LectureInterface";
+import {
+  ILectureResponse,
+  ISingledata,
+} from "../../../Services/LectureInterface";
 
 const AdminLectureDetail = () => {
   const { id } = useParams();
-  const [lectureDetail, setLectureDetail] = useState<ILectureResponse | undefined>();
+  const [lectureDetail, setLectureDetail] = useState<
+    ILectureResponse | undefined
+  >();
   const [isVideoActive, setVideoActive] = useState<boolean>(false);
 
   const handeleClick = () => {
     setVideoActive(!isVideoActive);
   };
-useEffect(()=>{
-LectureSingleService(id).then((res)=>{
-  setLectureDetail(res)
-})
-},[id])
+
+  const keyValueArray = Object.entries(LectureDetailkeys);
+  const [isLargerThan900] = useMediaQuery("(min-width: 900px)");
+
+  useEffect(() => {
+    LectureSingleService(id).then((res) => {
+      console.log(res)
+      setLectureDetail(res);
+    });
+  }, [id]);
+
   return (
     <div>
       <Box
@@ -52,7 +64,6 @@ LectureSingleService(id).then((res)=>{
         >
           <Box p="3%" h="120px">
             <Text>React redux with crud app lecture</Text>
-
             <Flex alignItems="center" flexWrap="wrap">
               <Text>fw1233 |</Text>
               <Text ml="10px">rct 201 |</Text>
@@ -68,76 +79,25 @@ LectureSingleService(id).then((res)=>{
             </Flex>
             <Text>Siva Gurubilli </Text>
           </Box>
-          <Flex justifyContent={"space-around"}>
-            <Box w="50%">
-              {LectureDetailkeys.map((el) => (
-                <Box
-                  bg={el.value % 2 == 1 ? "gray.100" : "white"}
-                  h="60px"
-                  p="20px"
-                >
-                  <Text>{el.key}</Text>
+          <Divider />
+          <Box w="100%">
+            {keyValueArray.map(([key, value], index) => (
+              <Flex
+                h="auto"
+                p="20px"
+                bg={index % 2 == 1 ? "gray.100" : "white"}
+              >
+                <Box display={index==0?"none":"block"} w="50%">
+                  <Text>{key}</Text>
                 </Box>
-              ))}
-            </Box>
-            <Box w="50%">
-              <Box bg="gray.100" h="60px" p="20px">
-                <Text>React redux with crud app lecture</Text>
-              </Box>
-              <Box bg="white" h="60px" p="20px">
-                <Flex flexWrap="wrap">
-                  <Badge p="6px" bg="orange" borderRadius="10px" color="white">
-                    CODING
-                  </Badge>
-                  <Badge
-                    ml="10px"
-                    p="6px"
-                    borderRadius="10px"
-                    bg="blue.500"
-                    color="white"
-                  >
-                    VIDEO
-                  </Badge>
-                </Flex>
-              </Box>
-              <Box bg="gray.100" h="60px" p="20px">
-                <Text>1996-33-45 - 12.90pm</Text>
-              </Box>
-              <Box bg="white" h="60px" p="20px">
-                <Text>1996-33-45 - 12.90pm</Text>
-              </Box>
-              <Box bg="gray.100" h="60px" p="20px">
-                <Badge p="6px" bg="blue.500" borderRadius="10px" color="white">
-                  CODING
-                </Badge>
-              </Box>
-              <Box bg="white" h="60px" p="20px">
-                <Text>Kovela</Text>
-              </Box>
-              <Box bg="gray.100" h="60px" p="20px">
-                <Text>Yes</Text>
-              </Box>
-              <Box bg="white" h="60px" p="20px">
-                <Text>YES</Text>
-              </Box>
-              <Box bg="gray.100" h="60px" p="20px">
-                <Text>Zoom Link</Text>
-              </Box>
-              <Box bg="white" h="60px" p="20px">
-                <Text>Concluding Date</Text>
-              </Box>
-              <Box bg="gray.100" h="60px" p="20px">
-                <Text>Updating At</Text>
-              </Box>
-              <Box bg="white" h="60px" p="20px">
-                <Text></Text>
-              </Box>
-              <Box bg="gray.100" h="60px" p="20px">
-                <Text></Text>
-              </Box>
-            </Box>
-          </Flex>
+                <Box  display={index==0?"none":"block"} w="50%">
+                  <Text>{value}</Text>
+                </Box>
+              </Flex>
+            ))}
+          </Box>
 
+          <Divider />
           <Flex
             w="100%"
             bg="white"
@@ -195,7 +155,7 @@ LectureSingleService(id).then((res)=>{
               _hover={{ bg: "rgb(76, 84, 95)" }}
               color="white"
             >
-              save video
+              Save Video
             </Button>
           </Flex>
         </Box>

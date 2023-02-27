@@ -1,4 +1,4 @@
-import { Container, Box, Flex, Button } from "@chakra-ui/react";
+import { Container, Box, Flex, Button, useMediaQuery } from "@chakra-ui/react";
 import React, { useState } from "react";
 import "./index.css";
 import Navbar from "../../../components/AdminsideComponents/AdminNavbar/index";
@@ -8,7 +8,7 @@ import {
   LecturePostService,
 } from "../../../Services/LectureServices";
 import { ICreateLectureValues } from "../../../Services/LectureInterface";
-import InputTakingSection from "./InputTakingSection";
+import InputTakingSection from "../../../components/AdminsideComponents/CreateLecture/InputTakingSection";
 
 const AdminLectureCreate = () => {
   const [LectureValues, setLectureValues] = useState<ICreateLectureValues>({
@@ -33,6 +33,8 @@ const AdminLectureCreate = () => {
     console.log(LectureValues);
     LecturePostService(LectureValues).then((res) => {});
   };
+  const [isLargerThan900] = useMediaQuery("(min-width: 900px)");
+
 
   return (
     <div className="container">
@@ -52,11 +54,11 @@ const AdminLectureCreate = () => {
           />
           <Flex justifyContent={"flex-end"}>
             <Button
-              w="32%"
+             fontSize={isLargerThan900 ? "16px":"12px"}
               mt="20px"
               color="white"
               bg="rgb(31 41 55)"
-              _hover={{ bg: "rgb(76, 84, 95)" }}
+                _hover={{ bg: "rgb(76, 84, 95)" }}
               onClick={CreateLecture}
             >
               CREATE LECTURE

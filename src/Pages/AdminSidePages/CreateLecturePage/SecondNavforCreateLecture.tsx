@@ -35,8 +35,8 @@ const SecondNavforLectureCreate = () => {
           <Link to={"/admin/"+el.tag}>
            <Button
               h={isLargerThan900 ? "35px" :"30px"}
-              fontSize='14px'
-              w="120px"
+              w={isLargerThan900 ? "120px" :"80px"}
+              fontSize={isLargerThan900 ? "16px" :"12px"}
               color="white"
             bg="rgb(31 41 55)"
             _hover={{ bg: "rgb(76, 84, 95)"}}>

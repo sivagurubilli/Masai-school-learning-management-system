@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./index.css";
+import "../../../Pages/AdminSidePages/CreateLecturePage/index.css";
 import Datetime from "react-datetime";
 import "react-datetime/css/react-datetime.css";
 
@@ -18,24 +18,24 @@ import {
   Switch,
   Textarea,
 } from "@chakra-ui/react";
-import { ICreateLectureValues } from "../../../Services/LectureInterface";
-import { Categoery } from "../../../assets/assets";
-import NoteSection from "./NoteSection";
-import TagInput from "./TagInput";
+import { Categoery } from "../../../Assets/Assets";
+import NoteSection from "../../../Pages/AdminSidePages/CreateLecturePage/NoteSection";
+import TagInput from "../../../Pages/AdminSidePages/CreateLecturePage/TagInput";
 import {
   getBatchArrray,
   getSectionArray,
   getUserArray,
   getTypeArray,
 } from "../../../Services/SelelctionService";
+import { IBatchObject, ISectionObject, ITypeObject, IUserObject } from "../../../Services/SelectionInterface";
 
 const InputTakingSection = ({ LectureValues, setLectureValues }: any) => {
   const [isZoomlinkValid, setZoomLinkValid] = useState<boolean>(false);
   const [touched, setTouched] = useState({ zoomLink: false });
-  const [batchArray, setBatchArray] = useState(["siva", "ravi"]);
-  const [sectionArray, setSectionArray] = useState(["siva", "ravi"]);
-  const [userArray, setUserArray] = useState(["siva", "ravi"]);
-  const [typeArray, setTypeArray] = useState(["siva", "ravi"]);
+  const [batchArray, setBatchArray] = useState<IBatchObject[]>();
+  const [sectionArray, setSectionArray] = useState<ISectionObject[]>();
+  const [userArray, setUserArray] = useState<IUserObject[]>();
+  const [typeArray, setTypeArray] = useState<ITypeObject[]>();
 
   useEffect(() => {
     getBatchArrray().then((res) => {
@@ -126,8 +126,7 @@ const InputTakingSection = ({ LectureValues, setLectureValues }: any) => {
           md: "1fr 1fr 1fr",
           lg: "1fr 1fr 1fr",
         }}
-        gap={4}
-      >
+        gap={4} >
         <Box>
           {" "}
           <FormLabel color="rgb(75 85 99)">Categeoty</FormLabel>
@@ -144,7 +143,6 @@ const InputTakingSection = ({ LectureValues, setLectureValues }: any) => {
             ))}
           </Select>
         </Box>
-
         <Box>
           {" "}
           <FormLabel color="rgb(75 85 99)">Batch</FormLabel>
@@ -157,7 +155,7 @@ const InputTakingSection = ({ LectureValues, setLectureValues }: any) => {
             placeholder="Select batch"
           >
             {batchArray?.map((el) => (
-              <option value="el">{el}</option>
+              <option value={el.batch_id}>{el.batch_name}</option>
             ))}
           </Select>
         </Box>
@@ -173,7 +171,7 @@ const InputTakingSection = ({ LectureValues, setLectureValues }: any) => {
             onChange={handleChange}
           >
             {sectionArray?.map((el) => (
-              <option value="el">{el}</option>
+              <option value={el.section_id}>{el.section_name}</option>
             ))}
           </Select>
         </Box>
@@ -185,8 +183,7 @@ const InputTakingSection = ({ LectureValues, setLectureValues }: any) => {
           md: "1fr 1fr 1fr",
           lg: "1fr 1fr 1fr",
         }}
-        gap={4}
-      >
+        gap={4}>
         <Box>
           <FormLabel color="rgb(75 85 99)">Type</FormLabel>
           <Select
@@ -198,7 +195,7 @@ const InputTakingSection = ({ LectureValues, setLectureValues }: any) => {
             onChange={handleChange}
           >
             {typeArray?.map((el) => (
-              <option value="el">{el}</option>
+              <option value={el.id}>{el.typeName}</option>
             ))}
           </Select>
         </Box>
@@ -221,17 +218,21 @@ const InputTakingSection = ({ LectureValues, setLectureValues }: any) => {
           </Box>
         </Box>
       </Grid>
-
       <Grid
-        templateColumns={{ sm: "repeat(2, 1fr)", md: "repeat(3, 1fr)" }}
-        gap={4}
-      >
-        <TagInput
+        mt={4}
+        templateColumns={{
+          base: "1fr",
+          md: "1fr 1fr 1fr",
+          lg: "1fr 1fr 1fr",
+        }}
+        gap={4}>
+         <Box>
+       <TagInput
           LectureValues={LectureValues}
           setLectureValues={setLectureValues}
         />
-
-        <Box mt="10px">
+        </Box>
+        <Box mt="10px" minWidth="0">
           <FormLabel color="rgb(75 85 99)">User</FormLabel>
           <Select
             name="type"
@@ -242,30 +243,27 @@ const InputTakingSection = ({ LectureValues, setLectureValues }: any) => {
             onChange={handleChange}
           >
             {userArray?.map((el) => (
-              <option value="el">{el}</option>
+              <option value={el.id}>{el.userName}</option>
             ))}
           </Select>
         </Box>
-        <Box mt="10px" gridColumn={{ sm: "span 2", md: "span 1" }} w="100%">
-          <FormLabel color="rgb(75 85 99)">Hide or Show</FormLabel>
+
+        <Box mt="10px" ml="20px" >
           <Flex>
             <Box mt="10px">
+            <FormLabel color="rgb(75 85 99)">Optional</FormLabel>
               <Flex>
-                <p color="rgb(75 85 99)">Optional</p>
                 <Switch
-                  w="100px"
-                  ml="20px"
-                  mt="7px"
+                   mt="7px"
                   isChecked={LectureValues.optional}
                   onChange={handleToggleOptional}
                 />
               </Flex>
             </Box>
             <Box mt="10px">
+            <FormLabel color="rgb(75 85 99)">Hide</FormLabel>
               <Flex>
-                <p color="rgb(75 85 99)">Hide</p>
                 <Switch
-                  ml="20px"
                   mt="7px"
                   isChecked={LectureValues.hideVideo}
                   onChange={handleToggleHide}
@@ -275,7 +273,14 @@ const InputTakingSection = ({ LectureValues, setLectureValues }: any) => {
           </Flex>
         </Box>
       </Grid>
-
+      <Grid 
+        templateColumns={{
+          base: "1fr",
+          md: "1fr 1fr 1fr",
+          lg: "1fr 1fr 1fr",
+        }}
+        gap={4} >
+      </Grid>
       <Grid
         mt={4}
         templateColumns={{

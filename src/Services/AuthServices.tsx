@@ -12,7 +12,7 @@ export async function LoginService(
   const salt = bcrypt.genSaltSync(10);
   const hashedPassword = bcrypt.hashSync(password, salt);
   try {
-    const response = await axios.post("https://7cbf-202-142-114-239.in.ngrok.io/api/login", {
+    const response = await axios.post("/api/login", {
 
      "username": username,
       "password": password,
@@ -45,7 +45,7 @@ export async function StudentSignupService(
   console.log(sectionId,batchId)
   try {
     const response = await axios.post(
-      `https://7cbf-202-142-114-239.in.ngrok.io/api/signup/student/${batchId}/${sectionId}`,
+      `/api/signup/student/${batchId}/${sectionId}`,
       { name, email ,password }
     );
     return response.data;
@@ -62,7 +62,7 @@ export async function AdminSignupService(
   const { email, name, password } = data;
   try {
     const response = await axios.post(
-      "https://7cbf-202-142-114-239.in.ngrok.io/api/signup/admin",
+      "/api/signup/admin",
       { name, email, password }
     );
     console.log(response);

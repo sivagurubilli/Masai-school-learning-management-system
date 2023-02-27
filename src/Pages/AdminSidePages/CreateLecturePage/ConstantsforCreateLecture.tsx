@@ -10,22 +10,32 @@ export const suggestions = [
   "Es6",
 ];
 
-export const LectureDetailkeys = [
-  { key: "Title", value: 1 },
-  { key: "Category-Type", value: 2 },
 
-  { key: "Schedule", value: 3 },
-  { key: "Concludes", value: 4 },
-  { key: "Schedule", value: 5 },
-  { key: "User", value: 6 },
-  { key: "Optional", value: 7 },
-  { key: "Hide Video", value: 8 },
-  { key: "Zoom Link", value: 9 },
-  { key: "Conclde At", value: 10 },
-  { key: "Updating At", value: 11 },
-  { key: "Notes", value: 12 },
-  { key: "video", value: 13 },
-];
+
+export const LectureDetailkeys=
+{
+  "lectur_id": 3,
+  "title": "Introduction to react",
+  "category": "Coding Platform",
+  "batch": "fw19",
+  "section": "jso101",
+  "type": "Video",
+  "schedule": "25-02-2023 10:00:00",
+  "concludes": "25-02-2023 12:00:00",
+  "tags": [
+      "Spring Boot",
+      "Java"
+  ],
+  "user": "Tridip",
+  "hideVideo": false,
+  "zoomLink": "https://zoom.us/j/1234567890?pwd=xxxxxxxxxxxx",
+  "day": "Monday",
+  "week": "Week 1",
+  "notes": "This lecture will cover the basics of Spring Boot and how to get started with building web applications using this framework."
+}
+
+
+
 
 export const HelperSectionValues = [
   {

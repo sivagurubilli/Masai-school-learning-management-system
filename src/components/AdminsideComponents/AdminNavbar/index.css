@@ -55,30 +55,17 @@
   }
 
   /*  navbar while small screens display like side bar styling */
-  #navbar-mobile {
-    display: flex;
-    position: relative;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
-    width: 100%;
-    right: -800px;
-    height:10px;
-    background-color: white;
-    color: rgb(14, 13, 13);
-    transition: 0.3s ease-in-out;
-  }
+
   #navbar-mobile li {
     margin-bottom: 15px;
     list-style: none;
-    padding-left: 20px;
     font-size: 18px;
     font-weight: 500px;
     width: 100%;
-    padding-left: 20px;
     margin-top: 10px;
     height: 10px;
     text-align: start;
+    margin-left: -10px;
     font-size: small;
     color: rgb(119, 128, 139);
     font-family: Arial, Helvetica, sans-serif;
@@ -90,8 +77,6 @@
     width: 100%;
     padding: 10px;
     position: absolute;
-    margin-left: -20px;
-    margin-top: -10px;
     background-color: skyblue;
     color: blue;
     border-left: 2px solid tomato;
@@ -111,8 +96,7 @@
     justify-content: flex-start;
     width: 100%;
     height: auto;
-    margin-top: 30px;
-    padding-left: 1%;
+    margin-top: 40px;
     background-color: white;
     color: rgb(14, 13, 13);
     transition: 0.3s ease-in-out;

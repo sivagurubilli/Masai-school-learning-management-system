@@ -15,7 +15,7 @@ tag:string
 }
 //iinteface for lecture response
 export interface ILectureResponse{
-    lectur_id:number
+    lecturid:number
     title: string;
     batch: string;
     categoery:string,

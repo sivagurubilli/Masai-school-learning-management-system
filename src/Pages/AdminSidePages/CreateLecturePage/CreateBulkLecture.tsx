@@ -1,4 +1,4 @@
-import Navbar from "../../../components/StudentNavbar/Navbar";
+import Navbar from "../../../components/StudentSideComponents/StudentNavbar/Navbar";
 import { Box, Button, Input, Text } from "@chakra-ui/react";
 import React from "react";
 import "./index.css";

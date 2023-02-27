@@ -10,40 +10,27 @@ import {
   Spacer,
   useMediaQuery,
 } from "@chakra-ui/react";
-import {  Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalFooter } from "@chakra-ui/react";
+import { LectureDeleteService } from "../../../Services/LectureServices";
+import ModalComponent from "../../../components/Modal/ModalComponent";
 
 
 // this component is lecture page navbar down below component
-const SecondNavforLectureDetail = ({ id }: { id: string | undefined }) => {
+const SecondNavforLectureDetail = ({ id }: { id: string | undefined  }) => {
   const navigate = useNavigate();
   const [isLargerThan900] = useMediaQuery("(min-width: 900px)");
-  const [isOpen, setIsOpen] = useState(false);
-  const handleOpen = () => setIsOpen(true);
-  const handleClose = () => setIsOpen(false);
+
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+const handleOpen=()=>setIsOpen(true)
+
+
   const DeleteLecture =()=>{
-   
+   LectureDeleteService(id).then((res)=>{
+       setIsOpen(false)
+   })
   }
   return (
     <Box bg="white" pt="20px" pb="20px">
-
-<Modal isOpen={isOpen} onClose={handleClose}>
-        <ModalOverlay />
-        <ModalContent>
-        
-          <ModalBody>
-            <p>Do you want to delete this Lecture</p>
-          </ModalBody>
-          <ModalFooter>
-          <Button variant="ghost" onClick={DeleteLecture}>
-             Confirm Delete
-            </Button>
-            <Button variant="ghost" onClick={handleClose}>
-              Close
-            </Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
-
+    <ModalComponent DeleteLecture={DeleteLecture} isOpen={isOpen} setIsOpen={setIsOpen} /> 
       <Flex
         direction={isLargerThan900 ? "row" : "column"}
         alignItems="center"
@@ -56,9 +43,12 @@ const SecondNavforLectureDetail = ({ id }: { id: string | undefined }) => {
           <Heading size="md">Lectures</Heading>
         </Box>
         <ButtonGroup spacing={2}>
+          <Flex flexWrap="wrap">
           <Link to={`/admin/lectures`}>
             <Button
-              h={isLargerThan900 ? "35px" : "auto"}
+              h={isLargerThan900 ? "35px" : "30px"}
+              mt="10px"
+              ml="10px"
               color="white"
               bg="rgb(31 41 55)"
               _hover={{ bg: "rgb(76, 84, 95)" }}
@@ -68,7 +58,9 @@ const SecondNavforLectureDetail = ({ id }: { id: string | undefined }) => {
           </Link>
           <Link to={`/admin/lectures/edit/${id}`}>
             <Button
-              h={isLargerThan900 ? "35px" : "auto"}
+               mt="10px"
+               ml="10px"
+              h={isLargerThan900 ? "35px" : "30px"}
               color="white"
               bg="rgb(31 41 55)"
               _hover={{ bg: "rgb(76, 84, 95)" }}
@@ -77,32 +69,38 @@ const SecondNavforLectureDetail = ({ id }: { id: string | undefined }) => {
             </Button>
           </Link>
           <Button
+             mt="10px"
+             ml="10px"
             bg="rgb(31 41 55)"
-            h={isLargerThan900 ? "35px" : "auto"}
+            h={isLargerThan900 ? "35px" : "30px"}
             color="white"
             _hover={{ bg: "rgb(76, 84, 95)" }}>
             DISCUSSIONS
           </Button>
           <Link to={`/admin/lectures/copy/${id}`}>
           <Button
-            h={isLargerThan900 ? "35px" : "auto"}
+             mt="10px"
+             ml="10px"
+            h={isLargerThan900 ? "35px" : "30px"}
             color="white"
             bg="rgb(31 41 55)"
             _hover={{ bg: "rgb(76, 84, 95)" }}
-            
             >
             COPY
           </Button>
           </Link>
           <Button
+             mt="10px"
+             ml="10px"
             bg="red"
-            h={isLargerThan900 ? "35px" : "auto"}
+            h={isLargerThan900 ? "35px" : "30px"}
             color="white"
             _hover={{ bg: "red.200" }}
-            onClick={ handleOpen}
+            onClick={handleOpen}
             >
             DELETE
           </Button>
+          </Flex>
         </ButtonGroup>
       </Flex>
     </Box>
