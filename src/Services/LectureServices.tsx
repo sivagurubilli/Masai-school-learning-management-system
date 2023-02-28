@@ -10,9 +10,9 @@ export interface ILecturePostResponse {
 export async function LecturePostService(
   data: ICreateLectureValues
 ): Promise<ILecturePostResponse> {
-  const { title, batch, section, type, user,  categoery,
+  const { title, batch, section, type, user,  category,
   schedule,
-  conclude,
+  concludes,
   tags,
   hideVideo,
   optional,
@@ -25,9 +25,9 @@ export async function LecturePostService(
       section,
       type,
       user,
-      categoery,
+      category,
       schedule,
-      conclude,
+      concludes,
       tags,
       hideVideo,
       zoomLink,
@@ -46,9 +46,9 @@ export async function LectureEditService(
   data: ICreateLectureValues,
   id: string | undefined
 ): Promise<ILecturePostResponse> {
-  const { title, batch, section, type, user,  categoery,
+  const { title, batch, section, type, user,  category,
     schedule,
-    conclude,
+    concludes,
     tags,
     hideVideo,
     zoomLink,
@@ -58,9 +58,9 @@ export async function LectureEditService(
     const response = await axios.patch(
       `/api/lecture/updateLecture/${id}`,
       {
-        title, batch, section, type, user,  categoery,
+        title, batch, section, type, user,  category,
     schedule,
-    conclude,
+    concludes,
     tags,
     hideVideo,
     zoomLink,
@@ -83,6 +83,21 @@ export async function LectureSearchService(
       "/api/lecture/lectures/search",
       {title, batch, section, type, user,day, week}
     );
+    return response.data;
+  } catch (error: any) {
+    return error.response;
+  }
+}
+
+// for getting all lectures when user enters to the lectures page
+export async function GetAllLectureService(
+): Promise<ILectureResponse[]> {
+ 
+  try {
+    const response = await axios.get(
+      "/api/lecture/lectures/lectureList",
+      
+    );
 console.log(response.data)
     return response.data;
   } catch (error: any) {
@@ -90,6 +105,7 @@ console.log(response.data)
     return error.response;
   }
 }
+
 
 // getting single lecture details service
 export async function LectureSingleService(
@@ -118,7 +134,7 @@ export async function LectureDeleteService(
 ): Promise<ILecturePostResponse> {
   try {
     const response = await axios.delete(
-      `/api/lecture/lectures/${id}`
+      `/api/lecture/lectures/${id}`,
     );
 
     return response.data;
@@ -132,9 +148,9 @@ export async function LectureCopyService(
   data: ICreateLectureValues,
   id: string | undefined
 ): Promise<ILecturePostResponse> {
-  const { title, batch, section, type, user,  categoery,
+  const { title, batch, section, type, user,  category,
     schedule,
-    conclude,
+    concludes,
     tags,
     hideVideo,
     zoomLink,
@@ -144,9 +160,9 @@ export async function LectureCopyService(
     const response = await axios.post(
       `/api/lecture/copyLecture/`,
       {
-        title, batch, section, type, user,  categoery,
+        title, batch, section, type, user,  category,
     schedule,
-    conclude,
+    concludes,
     tags,
     hideVideo,
     zoomLink,

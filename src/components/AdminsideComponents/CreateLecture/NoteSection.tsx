@@ -18,7 +18,6 @@ interface IActiveButtons {
   preview: boolean;
   help: boolean;
 }
-
 const NoteSection = ({ LectureValues, setLectureValues }: any) => {
   const [activeButtons, setActiveButtons] = useState<IActiveButtons>({
     write: true,
@@ -26,7 +25,6 @@ const NoteSection = ({ LectureValues, setLectureValues }: any) => {
     help: false,
   });
   const [activeText, setActiveText] = useState<string>("write");
-
   const gridColumn = useBreakpointValue({
     base: "1 / -1", // Full width on small screens
     md: "1 / 4", // Span two columns on medium screens
@@ -97,8 +95,8 @@ const NoteSection = ({ LectureValues, setLectureValues }: any) => {
             value={LectureValues.notes}
             size="lg"
             resize="vertical"
-            minH="600px"
-            maxH="600px"
+            minH="400px"
+            maxH="auto"
             lineHeight="tall"
             borderRadius="md"
             boxShadow="md"
@@ -108,13 +106,11 @@ const NoteSection = ({ LectureValues, setLectureValues }: any) => {
             onChange={handleTextChange}
           />
         ) : null}
-
         {activeButtons.preview ? (
           <ReactMarkdown children={LectureValues.notes} />
         ) : null}
       </Grid>
-      {activeButtons.help ? <HelpInNoteTakeSection /> : null}
-      
+      {activeButtons.help ? <HelpInNoteTakeSection /> : null}     
 </Box>
     </div>
   );

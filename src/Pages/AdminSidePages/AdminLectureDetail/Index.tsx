@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "../AdminLecturePage/index.css";
 import Navbar from "../../../components/AdminsideComponents/AdminNavbar";
 import { useParams } from "react-router-dom";
-import SecondNavforLectureDetail from "../AdminLecturePage/SecondNavforLectureview";
+import SecondNavforLectureDetail from "./SecondNavforLectureview";
 import {
   Badge,
   Box,
@@ -27,17 +27,15 @@ const AdminLectureDetail = () => {
     ILectureResponse | undefined
   >();
   const [isVideoActive, setVideoActive] = useState<boolean>(false);
+  const keyValueArray = Object.entries(LectureDetailkeys);
+  const [isLargerThan900] = useMediaQuery("(min-width: 900px)");
 
   const handeleClick = () => {
     setVideoActive(!isVideoActive);
   };
 
-  const keyValueArray = Object.entries(LectureDetailkeys);
-  const [isLargerThan900] = useMediaQuery("(min-width: 900px)");
-
   useEffect(() => {
     LectureSingleService(id).then((res) => {
-      console.log(res)
       setLectureDetail(res);
     });
   }, [id]);

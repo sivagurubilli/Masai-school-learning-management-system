@@ -15,10 +15,10 @@ tag:string
 }
 //iinteface for lecture response
 export interface ILectureResponse{
-    lecturid:number
+    lectureid:number
     title: string;
     batch: string;
-    categoery:string,
+    category:string,
     section: string,
     type: string,
     schedule:Date,
@@ -43,11 +43,11 @@ export interface ITags{
 export interface ICreateLectureValues {
     title: string;
     batch: string;
-    categoery:string,
+    category:string,
     section: string,
     type: string,
     schedule:Date,
-    conclude:Date,
+    concludes:Date,
     user: string,
     tags:ITags[],
     hideVideo:boolean,

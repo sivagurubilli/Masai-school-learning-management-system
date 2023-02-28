@@ -42,8 +42,8 @@ const TableHeading = ({ LecturesData }: ISearchResponse) => {
             <Tbody w="100%">
               {LecturesData &&
                 LecturesData?.map((ad: ILectureResponse) => (
-                  <Tr key={ad.lecturid}>
-                    <Td w="6%">{ad.lecturid}</Td>
+                  <Tr key={ad.lectureid}>
+                    <Td w="6%">{ad.lectureid}</Td>
                     <Td w="35%">
                       <Text fontSize="20px">
                         {ad.title}{" "}
@@ -51,26 +51,27 @@ const TableHeading = ({ LecturesData }: ISearchResponse) => {
                           colorScheme={"green"}
                           variant="solid"
                           h="20px"
-                          w="40px"
-                          pl="8px"
+                          w="auto"
+                          pl="8px" 
                         >
-                          LIVE
+                          {ad.type}
                         </Badge>
                       </Text>
                       <Text>
                         <>
-                          {moment(ad.schedule).format("MMM DD, YYYY h:mm A")}
-                          <br />
-                          by created at date
-                          <br />
-                          {moment(ad.concludes).format("MMM DD, YYYY h:mm A")}
+                         Created by {ad.user} ({ad.category}) at {ad.schedule}  
                         </>
                       </Text>
                     </Td>
                     <Td w="15%">{ad.batch}</Td>
                     <Td w="15%">
-                      {moment(ad.schedule).format("MMM DD, YYYY h:mm A")}
-                      {moment(ad.concludes).format("MMM DD, YYYY h:mm A")}
+                      <Text>
+                        <>
+                     Start At   {ad.schedule}
+                        <br/>
+                    Conclude At {ad.concludes}
+                     </>
+                     </Text>
                     </Td>
                     <Td w="15%">
                       <Flex>
@@ -91,13 +92,12 @@ const TableHeading = ({ LecturesData }: ISearchResponse) => {
                             w="auto"
                           >
                             {ad.day}
-                          </Badge>
-                       
+                          </Badge>   
                       </Flex>{" "}
                     </Td>
                     <Td w="15%">
                       <Flex>
-                        <Link to={`/admin/lectures/${ad.lecturid}`}>
+                        <Link to={`/admin/lectures/${ad.lectureid}`}>
                           {" "}
                           <Button
                             variant="link"
@@ -107,7 +107,7 @@ const TableHeading = ({ LecturesData }: ISearchResponse) => {
                             View
                           </Button>
                         </Link>
-                        <Link to={`/admin/lectures/edit/${ad.lecturid}`}>
+                        <Link to={`/admin/lectures/edit/${ad.lectureid}`}>
                           {" "}
                           <Button
                             variant="link"

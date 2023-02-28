@@ -19,8 +19,8 @@ import {
   Textarea,
 } from "@chakra-ui/react";
 import { Categoery } from "../../../Assets/Assets";
-import NoteSection from "../../../Pages/AdminSidePages/CreateLecturePage/NoteSection";
-import TagInput from "../../../Pages/AdminSidePages/CreateLecturePage/TagInput";
+import NoteSection from "./NoteSection";
+import TagInput from "./TagInput";
 import {
   getBatchArrray,
   getSectionArray,
@@ -59,11 +59,11 @@ const InputTakingSection = ({ LectureValues, setLectureValues }: any) => {
   };
 
   const handleDateChange = (date: any) => {
-    setLectureValues({ ...LectureValues, schedule: date });
+    setLectureValues({ ...LectureValues, schedule: date._d });
   };
 
   const handleDateConcludeChange = (date: any) => {
-    setLectureValues({ ...LectureValues, conclude: date });
+    setLectureValues({ ...LectureValues, conclude: date._d });
   };
   //input blur is for only when error showing in user inters into input feild
   const handleInputBlur = (event: React.FocusEvent<HTMLInputElement>) => {
@@ -96,14 +96,15 @@ const InputTakingSection = ({ LectureValues, setLectureValues }: any) => {
 
   //Zoom Link validation
   function isZoomLink(link: string): boolean {
-    const zoomLinkRegex =
-      /^https?:\/\/(?:www\.)?zoom.us\/(?:j\/)?(?:[0-9]{9,15})(?:\?pwd=[a-zA-Z0-9_-]+)?$/;
+    const zoomLinkRegex = /^https?:\/\/?zoom\.us\/(?:j\/\d{9,10}|[s,a]\/\w+)$/i
+
     return zoomLinkRegex.test(link);
   }
   //checking for zoomlink is valid or not
   function handleLinkChange(event: React.ChangeEvent<HTMLInputElement>) {
     const newLink = event.target.value;
     setLectureValues({ ...LectureValues, zoomLink: newLink });
+    console.log(isZoomLink(newLink))
     setZoomLinkValid(isZoomLink(newLink));
   }
 
@@ -272,14 +273,6 @@ const InputTakingSection = ({ LectureValues, setLectureValues }: any) => {
             </Box>
           </Flex>
         </Box>
-      </Grid>
-      <Grid 
-        templateColumns={{
-          base: "1fr",
-          md: "1fr 1fr 1fr",
-          lg: "1fr 1fr 1fr",
-        }}
-        gap={4} >
       </Grid>
       <Grid
         mt={4}

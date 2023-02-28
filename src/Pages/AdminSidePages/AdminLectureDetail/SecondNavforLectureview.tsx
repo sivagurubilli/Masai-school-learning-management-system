@@ -22,7 +22,6 @@ const SecondNavforLectureDetail = ({ id }: { id: string | undefined  }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 const handleOpen=()=>setIsOpen(true)
 
-
   const DeleteLecture =()=>{
    LectureDeleteService(id).then((res)=>{
        setIsOpen(false)
@@ -53,7 +52,7 @@ const handleOpen=()=>setIsOpen(true)
               bg="rgb(31 41 55)"
               _hover={{ bg: "rgb(76, 84, 95)" }}
             >
-              BACK
+              Back
             </Button>
           </Link>
           <Link to={`/admin/lectures/edit/${id}`}>
@@ -65,7 +64,7 @@ const handleOpen=()=>setIsOpen(true)
               bg="rgb(31 41 55)"
               _hover={{ bg: "rgb(76, 84, 95)" }}
             >
-              EDIT
+              Edit
             </Button>
           </Link>
           <Button
@@ -75,7 +74,7 @@ const handleOpen=()=>setIsOpen(true)
             h={isLargerThan900 ? "35px" : "30px"}
             color="white"
             _hover={{ bg: "rgb(76, 84, 95)" }}>
-            DISCUSSIONS
+            Discussions
           </Button>
           <Link to={`/admin/lectures/copy/${id}`}>
           <Button
@@ -86,7 +85,7 @@ const handleOpen=()=>setIsOpen(true)
             bg="rgb(31 41 55)"
             _hover={{ bg: "rgb(76, 84, 95)" }}
             >
-            COPY
+            Copy
           </Button>
           </Link>
           <Button
@@ -98,7 +97,7 @@ const handleOpen=()=>setIsOpen(true)
             _hover={{ bg: "red.200" }}
             onClick={handleOpen}
             >
-            DELETE
+            Delete
           </Button>
           </Flex>
         </ButtonGroup>

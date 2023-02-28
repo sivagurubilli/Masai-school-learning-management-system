@@ -6,7 +6,7 @@ import {
   FormLabel,
   useBreakpointValue,
 } from "@chakra-ui/react";
-import { suggestions } from "./ConstantsforCreateLecture";
+import { suggestions } from "../../../Pages/AdminSidePages/CreateLecturePage/ConstantsforCreateLecture";
 
 interface TagInputProps {
   suggestions: string[];
@@ -14,7 +14,6 @@ interface TagInputProps {
 
 const TagInput = ({ LectureValues, setLectureValues }: any) => {
   const [showSuggestions, setShowSuggestions] = useState<boolean>(false);
-
   const selectWidth = useBreakpointValue({ base: "100%", md: "auto" });
 
   //on clicking on tag it added tgs array lecturevalues as well
@@ -56,8 +55,7 @@ const TagInput = ({ LectureValues, setLectureValues }: any) => {
             alignItems="center"
             fontSize="13px"
             bg="blue.100"
-            key={tag}
-           
+            key={tag}  
           >
             {tag}{" "}
             <li
@@ -67,15 +65,13 @@ const TagInput = ({ LectureValues, setLectureValues }: any) => {
                 cursor: "pointer",
                 color:"black"
               }}
-             
               onClick={() => handleRemoveTag(tag)}
             >
               x
             </li>
           </Flex>
         ))}
-      </Flex>
-      
+      </Flex>  
       {showSuggestions && (
         <Flex flexWrap="wrap" mt="10px" w="100%" bg="white" h="auto" border="1px soild grey" >
             {suggestions.map((suggestion) => (
@@ -96,7 +92,6 @@ const TagInput = ({ LectureValues, setLectureValues }: any) => {
                 onClick={() => handleTagClick(suggestion)}
               >
                 {suggestion}{" "}
-          
             </Box>
               ))}
         </Flex>

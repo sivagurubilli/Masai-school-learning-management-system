@@ -10,9 +10,10 @@ import LandingPage from "../Pages/AdminSidePages/LandingPage";
 import PrivateRoute from "./PrivateRoutes";
 import AdminLectureCreate from "../Pages/AdminSidePages/CreateLecturePage/Index";
 import AdminLectureEdit from "../Pages/AdminSidePages/EditLecturePage/Index";
-import CreateBulkLecture from "../Pages/AdminSidePages/CreateLecturePage/CreateBulkLecture";
+import CreateBulkLecture from "../Pages/AdminSidePages/CreateBulkLecture/Index";
 import ResetPassword from "../Pages/ResetPassword/index"
 import Login from "../Pages/StudentSidePages/Login";
+import CopyLecture from "../Pages/AdminSidePages/CopyLecture/Index";
 
 const Allroutes = () => {
   return (
@@ -25,6 +26,8 @@ const Allroutes = () => {
         <Route path="/admin/lectures/edit/:id" element={<AdminLectureEdit />} />
         <Route path="/student/dashboard" element={<Dashborad />} />
         <Route path ="/admin/create-lectures" element ={<AdminLectureCreate/>}/>
+        <Route path ="/admin/dashboard" element ={<AdminDashboard />}/>
+        <Route path ="/admin/lectures/copy/:id" element ={<CopyLecture />}/>
         <Route path="/admin/create-bulk-lectures" element ={<CreateBulkLecture/>}/>
         <Route path="/user/profile" />
         <Route path="/transcript" />
@@ -32,7 +35,7 @@ const Allroutes = () => {
         <Route path="/admin/lectures/:id" element={<AdminLectureDetail />} />
         <Route path="/student/dashboard" element={<Dashborad />} />
         <Route path="/forgot-password" element={<ForgetPassword />} />
-        <Route path ="/admin/dashboard" element ={<AdminDashboard />}/>
+      
         <Route path ="/login" element ={<Login/>} />
         <Route path="/reset-password" element={< ResetPassword/>} />
       </Routes>

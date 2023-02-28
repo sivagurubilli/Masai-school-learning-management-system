@@ -1,6 +1,6 @@
 import { Box, Flex, Heading, Spacer, Text } from "@chakra-ui/react";
 import React from "react";
-import { HelperSectionValues } from "./ConstantsforCreateLecture";
+import { HelperSectionValues } from "../../../Pages/AdminSidePages/CreateLecturePage/ConstantsforCreateLecture";
 
 const HelpInNoteTakeSection = () => {
 
@@ -31,7 +31,7 @@ const HelpInNoteTakeSection = () => {
         <Text pl="10px" bg="blue.100">
           ```
           <br />
-          Three backticks and ener your code blocks handleRemoveTag
+          Three backticks and enter your code blocks handleRemoveTag
           <br />
           ```
         </Text>
@@ -46,8 +46,7 @@ const HelpInNoteTakeSection = () => {
         <Text fontSize="20px" mt="30px">
           Quotes
         </Text>
-        <Text> type greater than simble and write your quote here</Text>
-       
+        <Text> type greater than simble and write your quote here</Text> 
         {HelperSectionValues.map((el) => (
           <div>
             <Text fontSize="20px" mt="30px">

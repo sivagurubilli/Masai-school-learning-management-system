@@ -13,10 +13,11 @@ import {
 
 // this component is lecture page navbar down below component
 const SecondNavforLectureCreate = () => {
-  const buttons =[{label:"Back",tag:"lectures"},{label:"Discussions",tag:"discussions"},{label:"Copy",tag:"copy"}]
   const navigate = useNavigate();
   const [isLargerThan900] = useMediaQuery("(min-width: 900px)");
-
+  const goBack = () => {
+    navigate(-1);
+  };
   return (
     <Box bg="white" pt="20px" pb="20px">
       <Flex
@@ -26,25 +27,35 @@ const SecondNavforLectureCreate = () => {
         borderRadius="5px"
         maxW="1200px"
         mx="auto"
-        flexWrap="wrap">
+        flexWrap="wrap"
+      >
         <Box mb={isLargerThan900 ? 0 : 2}>
           <Heading size="md">Lectures</Heading>
         </Box>
         <ButtonGroup spacing={2}>
-          {buttons.map((el)=>(
-          <Link to={"/admin/"+el.tag}>
-           <Button
-              h={isLargerThan900 ? "35px" :"30px"}
-              w={isLargerThan900 ? "120px" :"80px"}
-              fontSize={isLargerThan900 ? "16px" :"12px"}
-              color="white"
+          <Button
+            h={isLargerThan900 ? "35px" : "30px"}
+            w={isLargerThan900 ? "120px" : "80px"}
+            fontSize={isLargerThan900 ? "16px" : "12px"}
+            color="white"
             bg="rgb(31 41 55)"
-            _hover={{ bg: "rgb(76, 84, 95)"}}>
-             { el.label}
+            _hover={{ bg: "rgb(76, 84, 95)" }}
+            onClick={goBack}
+          >
+            Back
+          </Button>
+          <Link to={"/admin/descussions"}>
+            <Button
+              h={isLargerThan900 ? "35px" : "30px"}
+              w={isLargerThan900 ? "120px" : "80px"}
+              fontSize={isLargerThan900 ? "16px" : "12px"}
+              color="white"
+              bg="rgb(31 41 55)"
+              _hover={{ bg: "rgb(76, 84, 95)" }}
+            >
+              Discussions
             </Button>
           </Link>
-          ))
-        }
         </ButtonGroup>
       </Flex>
     </Box>

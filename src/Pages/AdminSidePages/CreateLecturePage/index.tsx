@@ -1,24 +1,27 @@
-import { Container, Box, Flex, Button, useMediaQuery } from "@chakra-ui/react";
+import {  Box, Flex, Button, useMediaQuery } from "@chakra-ui/react";
 import React, { useState } from "react";
 import "./index.css";
 import Navbar from "../../../components/AdminsideComponents/AdminNavbar/index";
-import SecondNavforLectureCreate from "./SecondNavforCreateLecture";
+import SecondNavforLectureCreate from "../../../components/AdminsideComponents/CreateLecture/SecondNavforCreateLecture";
 import {
-  ILecturePostResponse,
   LecturePostService,
 } from "../../../Services/LectureServices";
 import { ICreateLectureValues } from "../../../Services/LectureInterface";
 import InputTakingSection from "../../../components/AdminsideComponents/CreateLecture/InputTakingSection";
+import CommonModalComponent from "../../../components/Modal/commonModal";
 
 const AdminLectureCreate = () => {
+  const [isLargerThan900] = useMediaQuery("(min-width: 900px)");
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+const [body,setBody] = useState<string>("")
   const [LectureValues, setLectureValues] = useState<ICreateLectureValues>({
     title: "",
     batch: "",
-    categoery: "",
+    category: "",
     section: "",
     type: "",
     schedule: new Date(),
-    conclude: new Date(),
+    concludes: new Date(),
     user: "",
     tags: [],
     hideVideo: false,
@@ -30,16 +33,26 @@ const AdminLectureCreate = () => {
   });
 
   const CreateLecture = () => {
-    console.log(LectureValues);
-    LecturePostService(LectureValues).then((res) => {});
-  };
-  const [isLargerThan900] = useMediaQuery("(min-width: 900px)");
-
-
+    const hasEmptyString = Object.values(LectureValues).some(value => value === '')
+    if(LectureValues.schedule < new Date()){
+      setBody("Schedule time should not be Before than Current time")
+     setIsOpen(true)
+    }
+   else if(LectureValues.concludes <= LectureValues.schedule){
+      setBody("Conculde time should not be Before than Schedule time")
+      setIsOpen(true)
+    }else if(hasEmptyString){
+      setBody("All feilds are mandatory please fill all fields")
+      setIsOpen(true)
+    }  
+   LecturePostService(LectureValues).then((res) => {});
+  }
+  
   return (
     <div className="container">
       <Navbar />
-      <SecondNavforLectureCreate />
+      <SecondNavforLectureCreate  />
+      <CommonModalComponent isOpen={isOpen} setIsOpen={setIsOpen} body={body} />
       <Box
         w="80%"
         ml="10%"
@@ -57,6 +70,7 @@ const AdminLectureCreate = () => {
              fontSize={isLargerThan900 ? "16px":"12px"}
               mt="20px"
               color="white"
+              w="auto"
               bg="rgb(31 41 55)"
                 _hover={{ bg: "rgb(76, 84, 95)" }}
               onClick={CreateLecture}
