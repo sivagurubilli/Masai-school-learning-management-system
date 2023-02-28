@@ -10,7 +10,7 @@ import {
   Textarea,
   useBreakpointValue,
 } from "@chakra-ui/react";
-import "./index.css";
+import "../../../Pages/AdminSidePages/AdminLecturePage/index.css";
 import HelpInNoteTakeSection from "./HelpInNoteTakeSection";
 
 interface IActiveButtons {
