@@ -31,7 +31,6 @@ const Secondnav = () => {
         <Box mb={isLargerThan900 ? 0 : 2}>
           <Heading size="md" >Lectures</Heading>
         </Box>
-
         <ButtonGroup spacing={2} >
           <Button
           w={isLargerThan900 ? "" : "120px"}

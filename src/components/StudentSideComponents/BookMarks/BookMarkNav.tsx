@@ -12,7 +12,7 @@ import {
 import { referAndEarnLink, sprintplanlink } from "../../../Assets/Assets";
 
 // this component is navbar below component in dash board page
-const SecondNavbar = () => {
+const BookMarkNav = () => {
   const navigate = useNavigate();
   const [isLargerThan900] = useMediaQuery("(min-width: 900px)");
 
@@ -28,33 +28,14 @@ const SecondNavbar = () => {
         mx="auto"
       >
         <Box mb={isLargerThan900 ? 0 : 2}>
-          <Heading size="md">Todays Schedule</Heading>
+          <Heading size="md">BookMarks</Heading>
         </Box>
-
-        <ButtonGroup spacing={2}>
+        <ButtonGroup spacing={2}> 
           <Button
-            bg="rgb(51, 61, 76)"
+             bg="rgb(31 41 55)"
+             _hover={{ bg: "rgb(76, 84, 95)" }}
             h="35px"
-            color="white"
-            _hover={{ bg: "rgb(41, 51, 66)" }}
-            onClick={() => navigate("/bookmarks")}
-          >
-            Bookmarks
-          </Button>
-          <Button
-            bg="rgb(51, 61, 76)"
-            h="35px"
-            color="white"
-            _hover={{ bg: "rgb(41, 51, 66)" }}
-          >
-            <Link to={sprintplanlink}>Sprint Plan</Link>
-          </Button>
-          <Button
-            bg="rgb(51, 61, 76)"
-            h="35px"
-            color="white"
-            _hover={{ bg: "rgb(41, 51, 66)" }}
-          >
+            color="white">
             <Link to={referAndEarnLink}>Refer &amp; Earn</Link>
           </Button>
         </ButtonGroup>
@@ -63,4 +44,4 @@ const SecondNavbar = () => {
   );
 };
 
-export default SecondNavbar;
+export default BookMarkNav;

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Box,
   Button,
@@ -6,17 +6,19 @@ import {
   FormLabel,
   useBreakpointValue,
 } from "@chakra-ui/react";
-import { suggestions } from "../../../Pages/AdminSidePages/CreateLecturePage/ConstantsforCreateLecture";
+import { Categoery } from "../../../Assets/Assets";
 
 interface TagInputProps {
-  suggestions: string[];
+  tag: string;
 }
 
 const TagInput = ({ LectureValues, setLectureValues }: any) => {
   const [showSuggestions, setShowSuggestions] = useState<boolean>(false);
+  const [suggestion, setSuggestions] = useState<string[]>([]);
   const selectWidth = useBreakpointValue({ base: "100%", md: "auto" });
 
   //on clicking on tag it added tgs array lecturevalues as well
+
   const handleTagClick = (tag: string) => {
     if (!LectureValues.tags.includes(tag)) {
       setLectureValues({
@@ -29,19 +31,32 @@ const TagInput = ({ LectureValues, setLectureValues }: any) => {
   const handleRemoveTag = (tag1: any) => {
     setLectureValues({
       ...LectureValues,
-      tags: LectureValues.tags.filter((tag:any) => tag !== tag1),
+      tags: LectureValues.tags.filter((tag: any) => tag !== tag1),
     });
   };
 
+  useEffect(() => {
+    Categoery.map((el) => {
+      if (el.key == LectureValues.category) {
+        setSuggestions(el.tags);
+      }
+    });
+  }, [LectureValues.category]);
   return (
     <div>
       <FormLabel mt="10px" color="rgb(75 85 99)">
         Tags (comma seperated)
       </FormLabel>
-      <Flex flexWrap="wrap"  minH="40px"
-            maxH="auto"  border="1px solid rgb(203,213,224)" p="10px" borderRadius="10px"  
-            onClick={()=>setShowSuggestions(!showSuggestions)} >
-        {LectureValues.tags?.map((tag:any) => (
+      <Flex
+        flexWrap="wrap"
+        minH="40px"
+        maxH="auto"
+        border="1px solid rgb(203,213,224)"
+        p="10px"
+        borderRadius="10px"
+        onClick={() => setShowSuggestions(!showSuggestions)}
+      >
+        {LectureValues.tags?.map((tag: any) => (
           <Flex
             style={{ borderRadius: "10px" }}
             ml="10px"
@@ -55,7 +70,7 @@ const TagInput = ({ LectureValues, setLectureValues }: any) => {
             alignItems="center"
             fontSize="13px"
             bg="blue.100"
-            key={tag}  
+            key={tag}
           >
             {tag}{" "}
             <li
@@ -63,7 +78,7 @@ const TagInput = ({ LectureValues, setLectureValues }: any) => {
                 listStyle: "none",
                 marginLeft: "10px",
                 cursor: "pointer",
-                color:"black"
+                color: "black",
               }}
               onClick={() => handleRemoveTag(tag)}
             >
@@ -71,32 +86,39 @@ const TagInput = ({ LectureValues, setLectureValues }: any) => {
             </li>
           </Flex>
         ))}
-      </Flex>  
+      </Flex>
       {showSuggestions && (
-        <Flex flexWrap="wrap" mt="10px" w="100%" bg="white" h="auto" border="1px soild grey" >
-            {suggestions.map((suggestion) => (
-                <Box
-                style={{ borderRadius: "10px" }}
-                ml="10px"
-                h="auto"
-                p="4px"
-                pl="5px"
-                pr="10px"
-                color="blackAlpha.900"
-                mt="5px"
-                alignItems="center"
-                fontSize="13px"
-                bg="blue.100"
-                cursor= "pointer"
-                key={suggestion}
-                onClick={() => handleTagClick(suggestion)}
-              >
-                {suggestion}{" "}
+        <Flex
+          flexWrap="wrap"
+          mt="10px"
+          w="100%"
+          bg="white"
+          h="auto"
+          border="1px soild grey"
+        >
+          {suggestion.map((suggestion) => (
+            <Box
+              style={{ borderRadius: "10px" }}
+              ml="10px"
+              h="auto"
+              p="4px"
+              pl="5px"
+              pr="10px"
+              color="blackAlpha.900"
+              mt="5px"
+              alignItems="center"
+              fontSize="13px"
+              bg="blue.100"
+              cursor="pointer"
+              key={suggestion}
+              onClick={() => handleTagClick(suggestion)}
+            >
+              {suggestion}{" "}
             </Box>
-              ))}
+          ))}
         </Flex>
       )}
-</div>
+    </div>
   );
 };
 

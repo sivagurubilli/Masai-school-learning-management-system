@@ -1,10 +1,10 @@
 import axios from "axios";
-import { ICreateLectureValues, ILectureResponse, ISearchResponse,  ISearchValues, ISingledata } from "./LectureInterface";
+import { IBookMarkObject, ICreateLectureValues, ILectureResponse, ISearchResponse,  ISearchValues, ISingledata } from "./LectureInterface";
 
 //interface for creating lectures and editing lectures
 
 export interface ILecturePostResponse {
-
+message:string
 }
 // Lecture Post service
 export async function LecturePostService(
@@ -95,10 +95,9 @@ export async function GetAllLectureService(
  
   try {
     const response = await axios.get(
-      "/api/lecture/lectures/lectureList",
-      
+      "/api/lecture/lectures/lectureList",  
     );
-console.log(response.data)
+
     return response.data;
   } catch (error: any) {
     console.log(error)
@@ -120,7 +119,6 @@ id :any
       },
     }
     );
-
     return response.data;
   } catch (error: any) {
     return error.response;
@@ -174,3 +172,50 @@ export async function LectureCopyService(
     return error.response;
   }
 }
+
+
+// for getting all bookmarks
+export async function GetAllBookMarksService(
+  ): Promise<IBookMarkObject[]> {  
+    try {
+      const response = await axios.get(
+        "/api/bookmark/getList",  
+      );
+        return response.data;
+    } catch (error: any) {
+      console.log(error)
+      return error.response;
+    }
+  }
+  
+//add bookmark service
+  export async function AddBookMarksService(
+    {id}:any
+    ): Promise<IBookMarkObject[]> {
+     
+      try {
+        const response = await axios.get(
+          "/api/bookmark/getList",  
+        );
+          return response.data;
+      } catch (error: any) {
+        console.log(error)
+        return error.response;
+      }
+    }
+    
+//Remove BookMarks service
+    export async function RemoveBookMarksService(
+      {id}:any
+      ): Promise<IBookMarkObject[]> {
+       
+        try {
+          const response = await axios.get(
+            "/api/bookmark/getList",
+          );
+            return response.data;
+        } catch (error: any) {
+          console.log(error)
+          return error.response;
+        }
+      }

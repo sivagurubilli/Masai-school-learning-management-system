@@ -3,7 +3,7 @@ import AdminSignup from "../Pages/AdminSidePages/AdminSignup/index";
 import React ,{useEffect,useState} from "react";
 import { Route, Routes } from "react-router-dom";
 import ForgetPassword from "../Pages/ForgotPassword/index";
-import Dashborad from "../Pages/StudentSidePages/StudentDashboard/Dashborad";
+import Dashborad from "../Pages/StudentSidePages/StudentDashboard/Index";
 import AdminDashboard from "../Pages/AdminSidePages/AdminDashboard";
 import AdminLectureDetail from "../Pages/AdminSidePages/AdminLectureDetail/Index"
 import LandingPage from "../Pages/AdminSidePages/LandingPage";
@@ -14,6 +14,8 @@ import CreateBulkLecture from "../Pages/AdminSidePages/CreateBulkLecture/Index";
 import ResetPassword from "../Pages/ResetPassword/index"
 import Login from "../Pages/StudentSidePages/Login";
 import CopyLecture from "../Pages/AdminSidePages/CopyLecture/Index";
+import BookMarks from "../Pages/StudentSidePages/BookMarks/Index";
+import BookMarkDetails from "../Pages/StudentSidePages/BookMarkDetails/Index";
 
 const Allroutes = () => {
   return (
@@ -35,7 +37,8 @@ const Allroutes = () => {
         <Route path="/admin/lectures/:id" element={<AdminLectureDetail />} />
         <Route path="/student/dashboard" element={<Dashborad />} />
         <Route path="/forgot-password" element={<ForgetPassword />} />
-      
+        <Route path="/student/bookmarks" element={<BookMarks/>} />
+        <Route path="/student/bookmarks/:id" element={<BookMarkDetails />} />
         <Route path ="/login" element ={<Login/>} />
         <Route path="/reset-password" element={< ResetPassword/>} />
       </Routes>

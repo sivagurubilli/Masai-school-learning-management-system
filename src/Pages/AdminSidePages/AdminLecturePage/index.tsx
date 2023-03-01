@@ -6,7 +6,7 @@ import {
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import "./index.css";
-import Secondnav from "../../../components/AdminsideComponents/AdminLecture/Secondnav";
+import Secondnav from "../../../components/AdminsideComponents/AdminLecture/LectureSearchNavbar";
 import Navbar from "../../../components/AdminsideComponents/AdminNavbar/index";
 import TableHeading from "../../../components/AdminsideComponents/AdminLecture/LecturesTable";
 import {

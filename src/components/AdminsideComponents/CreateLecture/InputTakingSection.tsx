@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import "../../../Pages/AdminSidePages/CreateLecturePage/index.css";
 import Datetime from "react-datetime";
 import "react-datetime/css/react-datetime.css";
-
 import {
   Container,
   Box,
@@ -130,17 +129,17 @@ const InputTakingSection = ({ LectureValues, setLectureValues }: any) => {
         gap={4} >
         <Box>
           {" "}
-          <FormLabel color="rgb(75 85 99)">Categeoty</FormLabel>
+          <FormLabel color="rgb(75 85 99)">Categoery</FormLabel>
           <Select
-            name="categoery"
+            name="category"
             onChange={handleChange}
             width={selectWidth}
-            value={LectureValues.categoery}
+            value={LectureValues.category}
             color="rgb(75 85 99)"
-            placeholder="Select Categeory"
+            placeholder="Select Categoery"
           >
             {Categoery.map((el) => (
-              <option value="el">{el}</option>
+              <option value={el.key}>{el.key}</option>
             ))}
           </Select>
         </Box>

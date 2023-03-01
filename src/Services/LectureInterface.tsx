@@ -61,3 +61,9 @@ export interface ICreateLectureValues {
   export interface ISingledata{
     id:number | undefined;
   }
+
+  export interface IBookMarkObject{
+    id:number,
+    tilte:string,
+    date:string
+  }
