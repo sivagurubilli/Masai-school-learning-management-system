@@ -8,7 +8,7 @@ import {
 } from "../../../Services/LectureServices";
 import { ICreateLectureValues } from "../../../Services/LectureInterface";
 import InputTakingSection from "../../../components/AdminsideComponents/CreateLecture/InputTakingSection";
-import CommonModalComponent from "../../../components/Modal/commonModal";
+import CommonModalComponent from "../../../components/Modal/CommonModal";
 
 const AdminLectureCreate = () => {
   const [isLargerThan900] = useMediaQuery("(min-width: 900px)");

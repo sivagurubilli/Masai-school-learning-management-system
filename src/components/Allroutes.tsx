@@ -3,7 +3,7 @@ import AdminSignup from "../Pages/AdminSidePages/AdminSignup/index";
 import React ,{useEffect,useState} from "react";
 import { Route, Routes } from "react-router-dom";
 import ForgetPassword from "../Pages/ForgotPassword/index";
-import Dashborad from "../Pages/StudentSidePages/StudentDashboard/Index";
+import Dashborad from "../Pages/StudentSidePages/StudentDashboard";
 import AdminDashboard from "../Pages/AdminSidePages/AdminDashboard";
 import AdminLectureDetail from "../Pages/AdminSidePages/AdminLectureDetail/Index"
 import LandingPage from "../Pages/AdminSidePages/LandingPage";

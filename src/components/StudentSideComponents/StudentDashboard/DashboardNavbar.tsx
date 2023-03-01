@@ -36,7 +36,7 @@ const DashboardNavbar= () => {
             color="white"
             bg="rgb(31 41 55)"
             _hover={{ bg: "rgb(76, 84, 95)" }}
-            onClick={() => navigate("student/bookmarks")}
+            onClick={() => navigate("/student/bookmarks")}
           >
             Bookmarks
           </Button>

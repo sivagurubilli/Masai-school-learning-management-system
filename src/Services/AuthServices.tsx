@@ -18,15 +18,18 @@ export async function LoginService(
       "password": password,
     });
     //setting for remember me in
+ 
    if (rememberMe && response.data.token) {
     localStorage.setItem("username", username);
     localStorage.setItem("userType",response.data.user.roles[0].name);
     localStorage.setItem("token", response.data.token);
+    localStorage.setItem("userId", response.data.user.id);
   }
-  if (rememberMe && response.data.token) {
+  if (!rememberMe && response.data.token) {
     sessionStorage.setItem("username", username);
     sessionStorage.setItem("userType",response.data.user.roles[0].name)
     sessionStorage.setItem("token", response.data.token);
+    localStorage.setItem("userId", response.data.user.id);
   
   }
 

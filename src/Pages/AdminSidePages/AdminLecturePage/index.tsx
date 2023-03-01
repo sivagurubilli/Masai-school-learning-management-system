@@ -17,8 +17,11 @@ import {
   ISearchResponse,
   ILectureResponse,
 } from "../../../Services/LectureInterface";
-import CommonModalComponent from "../../../components/Modal/commonModal";
+import CommonModalComponent from "../../../components/Modal/CommonModal";
 import LectureSearchInput from "../../../components/AdminsideComponents/AdminLecture/LectureSearchInput";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
+import { getBatchArrray } from "../../../Services/SelelctionService";
 
 interface IFilteredValues {
   title: string;
@@ -46,6 +49,7 @@ const AdminLecture = () => {
   const [lecturesData, setLecturesData] = useState<ILectureResponse[]>();
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [body, setBody] = useState<string>("");
+const store = useSelector((state:RootState)=>state.Authreducer)
 
   // calling service for getting list for lectures
   const GetLectures = () => {
@@ -63,11 +67,11 @@ const AdminLecture = () => {
       }
     });
   };
-
+console.log(filterValues)
   useEffect(() => {
-    GetAllLectureService().then((res) => {
-      setLecturesData(res);
-    });
+    // GetAllLectureService().then((res) => {
+    //   setLecturesData(res);
+    // });
   }, []);
 
   const Reset = () => {

@@ -4,12 +4,14 @@ import { ActionTypes } from "./actionTypes";
 export interface IisAuthstate {
   isAuth: boolean;
   username: string;
+  userId:string | null;
   isAdmin: boolean;
 }
 const initialAuthState = {
   isAuth: false,
   username: "",
   isAdmin: false,
+  userId:"",
 };
 
 export const reducer = (

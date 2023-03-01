@@ -13,7 +13,7 @@ import {
 export async function getBatchArrray(): Promise<IBatchObject[]>{
   try {
     const response = await axios.get(
-      "https://17df-202-142-81-172.in.ngrok.io/api/batchList",
+      "/api/batchList",
       {
         headers: {
         "ngrok-skip-browser-warning": "1",

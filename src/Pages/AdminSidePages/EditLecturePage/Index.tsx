@@ -14,7 +14,7 @@ import {
 import SecondNavforLectureCreate from "../../../components/AdminsideComponents/CreateLecture/SecondNavforCreateLecture";
 import { useParams } from "react-router-dom";
 import InputTakingSection from "../../../components/AdminsideComponents/CreateLecture/InputTakingSection";
-import CommonModalComponent from "../../../components/Modal/commonModal";
+import CommonModalComponent from "../../../components/Modal/CommonModal";
 
 const AdminLectureEdit = () => {
 

@@ -11,7 +11,7 @@ const Dashborad = () => {
     <>
       <div className="container">
         <Navbar />
-        < DashboardNavbar/>
+        <DashboardNavbar/>
         <Box
           w="80%"
           borderRadius="10px"

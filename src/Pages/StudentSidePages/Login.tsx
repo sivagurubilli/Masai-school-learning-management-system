@@ -7,14 +7,18 @@ const Login = () => {
   const [goToSignup, setGotoSignup] = useState(false);
   const navigate = useNavigate();
 
+  //when entering into login it checks for username is available in localstorage if not available checks in session storage
   useEffect(() => {
-    const userType = localStorage.getItem("userType");
-    const username = localStorage.getItem("username");
-    if (username && userType == "STUDENT_USER") {
-      navigate("/student/dashboard");
+    let username;
+    let userType;
+     userType = localStorage.getItem("userType");
+    username = localStorage.getItem("username");
+    if (!username) {
+      userType = sessionStorage.getItem("userType");
+      username = sessionStorage.getItem("username");
     }
-    if (username && userType !== "STUDENT_USER") {
-      navigate("/admin/dashboard");
+    if (username) {
+      navigate("/");
     }
   }, []);
 
