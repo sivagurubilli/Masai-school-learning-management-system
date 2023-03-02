@@ -1,14 +1,15 @@
-import AdminLecture from "../Pages/AdminSidePages/AdminLecturePage/Index";
+import AdminLecture from "../Pages/AdminSidePages/AdminLecturePage/index";
+import StudentLecture from "../Pages/StudentSidePages/StudentLecturePage/index";
 import AdminSignup from "../Pages/AdminSidePages/AdminSignup/index";
 import React ,{useEffect,useState} from "react";
 import { Route, Routes } from "react-router-dom";
 import ForgetPassword from "../Pages/ForgotPassword/index";
 import Dashborad from "../Pages/StudentSidePages/StudentDashboard/Index";
 import AdminDashboard from "../Pages/AdminSidePages/AdminDashboard";
-import AdminLectureDetail from "../Pages/AdminSidePages/AdminLectureDetail/Index"
+import AdminLectureDetail from "../Pages/AdminSidePages/CreateLecturePage/index"
 import LandingPage from "../Pages/AdminSidePages/LandingPage";
 import PrivateRoute from "./PrivateRoutes";
-import AdminLectureCreate from "../Pages/AdminSidePages/CreateLecturePage/Index";
+// import AdminLectureCreate from "../Pages/AdminSidePages/CreateLecturePage/Index";
 import AdminLectureEdit from "../Pages/AdminSidePages/EditLecturePage/Index";
 import CreateBulkLecture from "../Pages/AdminSidePages/CreateBulkLecture/Index";
 import ResetPassword from "../Pages/ResetPassword/index"
@@ -24,10 +25,11 @@ const Allroutes = () => {
         <Route path ="/" element ={<LandingPage />}/>
        <Route path ="/admin/" element={<AdminDashboard/>}/>
         <Route path="/admin/lectures"  element= { <AdminLecture />}/>
+        <Route path="/student/lectures"  element= { <StudentLecture />}/>
         <Route path="/admin/lectures/:id" element={<AdminLectureDetail />} />
         <Route path="/admin/lectures/edit/:id" element={<AdminLectureEdit />} />
         <Route path="/student/dashboard" element={<Dashborad />} />
-        <Route path ="/admin/create-lectures" element ={<AdminLectureCreate/>}/>
+        {/* <Route path ="/admin/create-lectures" element ={<AdminLectureCreate/>}/> */}
         <Route path ="/admin/dashboard" element ={<AdminDashboard />}/>
         <Route path ="/admin/lectures/copy/:id" element ={<CopyLecture />}/>
         <Route path="/admin/create-bulk-lectures" element ={<CreateBulkLecture/>}/>

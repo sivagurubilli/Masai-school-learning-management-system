@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './Adminlogin.css';
-import { masaiimage } from '../../assets/assets';
+import { masaiimage } from '../../Assets/Assets';
 import Tooltip from '../../components/Tooltip/Tooltip';
 import { Flex, Text, Box, Input, FormControl, FormLabel, Image, Checkbox, Button, Container, HStack, } from '@chakra-ui/react';
 import { validatePassword, validateEmail } from '../../components/Emailvalidator';
