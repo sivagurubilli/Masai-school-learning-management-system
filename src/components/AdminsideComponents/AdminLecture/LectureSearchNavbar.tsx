@@ -31,9 +31,10 @@ const Secondnav = () => {
         <Box mb={isLargerThan900 ? 0 : 2}>
           <Heading size="md" >Lectures</Heading>
         </Box>
-
         <ButtonGroup spacing={2} >
           <Button
+          w={isLargerThan900 ? "" : "120px"}
+          fontSize={isLargerThan900 ? "16px" : "12px"}
             h="35px"
             color="white"
             bg="rgb(31 41 55)"
@@ -44,10 +45,12 @@ const Secondnav = () => {
             Create Lectures
           </Button>
           <Button
+          fontSize={isLargerThan900 ? "16px" : "12px"}
+            w={isLargerThan900 ? "" : "120px"}
             h="35px"
             color="white"
             bg="rgb(31 41 55)"
-                    _hover={{ bg: "rgb(76, 84, 95)" }}
+           _hover={{ bg: "rgb(76, 84, 95)" }}
             onClick={() => navigate("/admin/create-bulk-lectures")}
           >
             {" "}

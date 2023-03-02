@@ -34,7 +34,7 @@ export interface ISectionResponse {
   
   export interface IUserObject {
     id:number
- typeName:string
+ userName:string
     lectures: string;   
   }
 

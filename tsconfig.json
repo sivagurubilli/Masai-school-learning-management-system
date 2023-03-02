@@ -6,6 +6,7 @@
     "moduleResolution": "node",
     "jsx": "react",
     "outDir": "./dist",
+    "allowSyntheticDefaultImports": true,
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"],
@@ -13,5 +14,7 @@
     },
     "strict": true,
     "esModuleInterop": true
-  }
+  },
+  "exclude": ["**/node_modules/!(@mui)/**", "**/build/**/*", "docs/export/**/*"]
 }
+

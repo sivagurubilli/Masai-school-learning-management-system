@@ -15,14 +15,14 @@ tag:string
 }
 //iinteface for lecture response
 export interface ILectureResponse{
-    lectur_id:number
+    lectureid:number
     title: string;
     batch: string;
-    categoery:string,
+    category:string,
     section: string,
     type: string,
-    schedule:string,
-    concludes:string,
+    schedule:Date,
+    concludes:Date,
     user: string,
     tags:ITags[],
     hideVideo:boolean,
@@ -43,11 +43,11 @@ export interface ITags{
 export interface ICreateLectureValues {
     title: string;
     batch: string;
-    categoery:string,
+    category:string,
     section: string,
     type: string,
-    schedule:string,
-    conclude:string,
+    schedule:Date,
+    concludes:Date,
     user: string,
     tags:ITags[],
     hideVideo:boolean,
@@ -59,5 +59,11 @@ export interface ICreateLectureValues {
   }
   
   export interface ISingledata{
-    id:number
+    id:number | undefined;
+  }
+
+  export interface IBookMarkObject{
+    id:number,
+    tilte:string,
+    date:string
   }

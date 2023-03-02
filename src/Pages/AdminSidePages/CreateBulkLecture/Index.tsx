@@ -1,8 +1,8 @@
-import Navbar from "../../../components/StudentNavbar/Navbar";
 import { Box, Button, Input, Text } from "@chakra-ui/react";
 import React from "react";
-import "./index.css";
-import SecondNavforLectureCreate from "./SecondNavforCreateLecture";
+import "../AdminLecturePage/index.css";
+import Navbar from "../../../components/StudentSideComponents/StudentNavbar/Navbar";
+import SecondNavforLectureCreate from "../../../components/AdminsideComponents/CreateLecture/SecondNavforCreateLecture";
 
 const CreateBulkLecture = () => {
   const handlefileChange = (event: React.ChangeEvent<HTMLInputElement>) => {

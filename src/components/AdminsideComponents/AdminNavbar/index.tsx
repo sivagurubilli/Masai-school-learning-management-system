@@ -1,5 +1,14 @@
 import React, { useState, useEffect } from "react";
 import "./index.css";
+import {
+  Button,
+  Drawer,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerCloseButton,
+  DrawerHeader,
+  DrawerBody,
+} from "@chakra-ui/react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import {
   Divider,
@@ -11,9 +20,8 @@ import {
   Hide,
   Show,
   Tooltip,
-  Button,
 } from "@chakra-ui/react";
-import { masaiimage, NavbarAdminArray } from "../../../assets/assets";
+import { masaiimage, NavbarAdminArray } from "../../../Assets/Assets";
 import AdminProfileComponent from "./AdminProfileComponent";
 
 interface INavbarname {
@@ -24,7 +32,7 @@ const Navbar = () => {
   const [clicked, setcliked] = useState(false);
   const [show1, setshow1] = useState(false);
   const [userName, setUserName] = useState<any | null>(null);
-const navigate =useNavigate()
+  const navigate = useNavigate();
   //   this handleclick function for open and closing of side navbar in smaller screens
   const handleclick = () => {
     setcliked(!clicked);
@@ -38,7 +46,7 @@ const navigate =useNavigate()
   }, []);
   const Logout = () => {
     localStorage.clear();
-    navigate("/login")
+    navigate("/login");
   };
 
   return (
@@ -65,7 +73,9 @@ const navigate =useNavigate()
               <Flex w="70%" justifyContent={"space-around"} align="center">
                 {NavbarAdminArray.map((el) => (
                   <Box className="li">
-                    <NavLink to={"/admin/" + el}>{el}</NavLink>
+                    <NavLink key={el} to={"/admin/" + el}>
+                      {el}
+                    </NavLink>
                   </Box>
                 ))}
               </Flex>
@@ -73,7 +83,9 @@ const navigate =useNavigate()
               {/*  this part is about display hamburger in menu item for small screeens  */}
               <Box ml={"50px"} onClick={() => setshow1(!show1)}>
                 {" "}
-                <Button variant={"link"}  _hover={{"cursor":"pointer"}}>{userName}</Button>
+                <Button variant={"link"} _hover={{ cursor: "pointer" }}>
+                  {userName}
+                </Button>
                 <i
                   style={{ marginLeft: "10px" }}
                   className="fa-solid fa-caret-down"
@@ -97,30 +109,52 @@ const navigate =useNavigate()
         {show1 && <AdminProfileComponent setshow1={setshow1} />}
 
         {/* this is part is like when user enter into smaller screens the navbar appear on left side as side bar  */}
+        <Show below="1050px">
+          <Drawer
+            isOpen={clicked}
+            onClose={() => setcliked(!clicked)}
+            size={"full"}
+            
+          >
+            <DrawerOverlay />
+            <DrawerContent>
+              <DrawerCloseButton />
 
-        <Box
-          w="100%"
-          position="relative"
-          id="navbar-mobile"
-          className={clicked ? "navbar-mobile active" : "navbar-mobile"}
-        >
-          {NavbarAdminArray.map((el) => (
-            <li>
-              <NavLink to={"/admin/" + el}>{el}</NavLink>
-            </li>
-          ))}
-          <Divider borderColor="gray.300" />
-          <Text color="black" padding="10px">
-            <NavLink to="/admin/profile">Profile</NavLink>
-          </Text>
-          <Text color="black" padding="10px">
-            <NavLink to="/transcript">Transcript </NavLink>
-          </Text>
-          <Text color="black" padding="10px"  _hover={{"cursor":"pointer"}} onClick={Logout}>
-            Logout
-          </Text>
-          <Divider borderColor="gray.300" />
-        </Box>
+              <DrawerBody>
+                <Box
+                  w="100%"
+                  position="relative"
+                  id="navbar-mobile"
+                  className={clicked ? "navbar-mobile active" : "navbar-mobile"}
+                >
+                  {NavbarAdminArray.map((el) => (
+                    <li>
+                      <NavLink key={el} to={"/admin/" + el}>
+                        {el}
+                      </NavLink>
+                    </li>
+                  ))}
+                  <Divider borderColor="gray.300" />
+                  <Text color="black" padding="5px">
+                    <NavLink to="/admin/profile">Profile</NavLink>
+                  </Text>
+                  <Text color="black" padding="5px">
+                    <NavLink to="/transcript">Transcript </NavLink>
+                  </Text>
+                  <Text
+                    color="black"
+                    padding="5px"
+                    _hover={{ cursor: "pointer" }}
+                    onClick={Logout}
+                  >
+                    Logout
+                  </Text>
+                  <Divider borderColor="gray.300" />
+                </Box>
+              </DrawerBody>
+            </DrawerContent>
+          </Drawer>
+        </Show>
       </Box>
     </Box>
   );

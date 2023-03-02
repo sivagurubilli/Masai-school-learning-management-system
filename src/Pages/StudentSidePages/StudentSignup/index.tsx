@@ -18,7 +18,7 @@ import {
   batchValues,
   masaiimage,
   sectionValues,
-} from "../../../assets/assets";
+} from "../../../Assets/Assets";
 import {IBatchObject,ISectionObject,} from "../../../Services/SelectionInterface"
 import {getBatchArrray,
   getSectionArray,} from "../../../Services/SelelctionService"

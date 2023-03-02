@@ -1,6 +1,6 @@
 import React from "react";
 import "../../App.css";
-import Secondnav from "../../components/AdminsideComponents/AdminLecture/Secondnav";
+import Secondnav from "../../components/AdminsideComponents/AdminLecture/LectureSearchNavbar";
 import Navbar from "../../components/AdminsideComponents/AdminNavbar";
 import { Container } from "@chakra-ui/react";
 

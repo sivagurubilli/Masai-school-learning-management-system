@@ -3,7 +3,7 @@ import Allroutes from './components/Allroutes';
 import React from 'react';
 import axios from "axios"
 
-//axios.defaults.baseURL = "http://localhost:8080"
+axios.defaults.baseURL ="https://bed8-202-142-70-52.in.ngrok.io"
 function App(){
   return (
     <div className="App">
@@ -13,4 +13,3 @@ function App(){
 }
 
 export default App;
-

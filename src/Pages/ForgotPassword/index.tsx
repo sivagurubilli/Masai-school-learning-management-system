@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { masaiimage } from "../../assets/assets";
+import { masaiimage } from "../../Assets/Assets";
 import { useFormik } from "formik";
 import * as yup from "yup";
 

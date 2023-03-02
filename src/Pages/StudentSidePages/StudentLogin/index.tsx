@@ -13,7 +13,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { Box, Image } from "@chakra-ui/react";
-import { masaiimage } from "../../../assets/assets";
+import { masaiimage } from "../../../Assets/Assets";
 import {IAuthloginResponse} from "../../../Services/AuthInterface"
 import { LoginService } from "../../../Services/AuthServices";
 import { Navigate, useNavigate } from "react-router-dom";

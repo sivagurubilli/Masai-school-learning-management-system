@@ -39,4 +39,12 @@ export const NavbarAdminArray  = ["Lectures","Assignments","Quizzes","Tickets"
 "Questions",
 "problems"]
 
-export const Categoery = ["General","Coding Platform","CSBT","DA","DSA Coding", "Maths","Logic","Scrum"]
+export const Categoery = [{ key:"General",tags:["dsa","coding","ecConnect","csbt"]},
+{key:"Coding Platform",tags:["javascript","java","html","css","react","redux"]},
+
+{key:"CSBT",tags:["english","communication","mockInterview","Mac","speaking"]},
+{key:"DA",tags:["sql","data-analysis","machineLearning","python"]},
+{key:"DSA Coding",tags:["recursion","two-pointers","linked-List","sorting","binary-search"]},
+ {key:"Maths",tags:["graphs","number-system","time-distance","integration"]},{key:"Scrum",tags:["scrum","stand-up"]}]
+
+export const ButtonValues =["BACK","EDIT","DISCUSSIONS","COPY"]

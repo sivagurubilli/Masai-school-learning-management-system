@@ -2,13 +2,9 @@ import React from 'react'
 
 const DashboardLectureCard = () => {
 
-
-
   return (
     <div>
 DashboardLectureCard
-
-
     </div>
   )
 }
