@@ -1,21 +1,21 @@
-import AdminLecture from "../Pages/AdminSidePages/AdminLecturePage/Index";
+import AdminLecture from "../Pages/AdminSidePages/AdminLecturePage";
 import AdminSignup from "../Pages/AdminSidePages/AdminSignup/index";
 import React ,{useEffect,useState} from "react";
 import { Route, Routes } from "react-router-dom";
 import ForgetPassword from "../Pages/ForgotPassword/index";
-import Dashborad from "../Pages/StudentSidePages/StudentDashboard/Index";
+import Dashborad from "../Pages/StudentSidePages/StudentDashboard";
 import AdminDashboard from "../Pages/AdminSidePages/AdminDashboard";
-import AdminLectureDetail from "../Pages/AdminSidePages/AdminLectureDetail/Index"
+import AdminLectureDetail from "../Pages/AdminSidePages/AdminLectureDetail"
 import LandingPage from "../Pages/AdminSidePages/LandingPage";
 import PrivateRoute from "./PrivateRoutes";
-import AdminLectureCreate from "../Pages/AdminSidePages/CreateLecturePage/Index";
-import AdminLectureEdit from "../Pages/AdminSidePages/EditLecturePage/Index";
-import CreateBulkLecture from "../Pages/AdminSidePages/CreateBulkLecture/Index";
+import AdminLectureCreate from "../Pages/AdminSidePages/CreateLecturePage";
+import AdminLectureEdit from "../Pages/AdminSidePages/EditLecturePage";
+import CreateBulkLecture from "../Pages/AdminSidePages/CreateBulkLecture";
 import ResetPassword from "../Pages/ResetPassword/index"
 import Login from "../Pages/StudentSidePages/Login";
-import CopyLecture from "../Pages/AdminSidePages/CopyLecture/Index";
-import BookMarks from "../Pages/StudentSidePages/BookMarks/Index";
-import BookMarkDetails from "../Pages/StudentSidePages/BookMarkDetails/Index";
+import CopyLecture from "../Pages/AdminSidePages/CopyLecture";
+import BookMarks from "../Pages/StudentSidePages/BookMarks";
+import BookMarkDetails from "../Pages/StudentSidePages/BookMarkDetails";
 
 const Allroutes = () => {
   return (
