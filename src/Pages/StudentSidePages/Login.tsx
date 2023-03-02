@@ -10,7 +10,7 @@ const Login = () => {
   useEffect(() => {
     const userType = localStorage.getItem("userType");
     const username = localStorage.getItem("username");
-    if (username && userType == "STUDENT_USER") {
+    if (username && userType === "STUDENT_USER") {
       navigate("/student/dashboard");
     }
     if (username && userType !== "STUDENT_USER") {

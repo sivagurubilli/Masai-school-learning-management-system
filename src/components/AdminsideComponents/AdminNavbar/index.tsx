@@ -6,7 +6,6 @@ import {
   DrawerOverlay,
   DrawerContent,
   DrawerCloseButton,
-  DrawerHeader,
   DrawerBody,
 } from "@chakra-ui/react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
@@ -15,18 +14,13 @@ import {
   Text,
   Flex,
   Image,
-  Box,
-  Heading,
+Box,
   Hide,
   Show,
-  Tooltip,
 } from "@chakra-ui/react";
-import { masaiimage, NavbarAdminArray } from "../../../Assets/Assets";
+import { masaiimage, NavbarAdminArray } from "../../../assets/assets";
 import AdminProfileComponent from "./AdminProfileComponent";
 
-interface INavbarname {
-  username: string | null;
-}
 //admin side navbar
 const Navbar = () => {
   const [clicked, setcliked] = useState(false);

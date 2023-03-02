@@ -1,13 +1,12 @@
 import AdminLecture from "../Pages/AdminSidePages/AdminLecturePage";
 import AdminSignup from "../Pages/AdminSidePages/AdminSignup/index";
-import React ,{useEffect,useState} from "react";
+import React  from "react";
 import { Route, Routes } from "react-router-dom";
 import ForgetPassword from "../Pages/ForgotPassword/index";
 import Dashborad from "../Pages/StudentSidePages/StudentDashboard";
 import AdminDashboard from "../Pages/AdminSidePages/AdminDashboard";
 import AdminLectureDetail from "../Pages/AdminSidePages/AdminLectureDetail"
 import LandingPage from "../Pages/AdminSidePages/LandingPage";
-import PrivateRoute from "./PrivateRoutes";
 import AdminLectureCreate from "../Pages/AdminSidePages/CreateLecturePage";
 import AdminLectureEdit from "../Pages/AdminSidePages/EditLecturePage";
 import CreateBulkLecture from "../Pages/AdminSidePages/CreateBulkLecture";

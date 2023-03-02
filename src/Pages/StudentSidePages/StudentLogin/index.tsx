@@ -1,6 +1,6 @@
 import * as yup from "yup";
 import { useFormik } from "formik";
-import React,{useState,useEffect} from "react";
+import React,{useState} from "react";
 import "./index.css";
 import {
   Button,
@@ -13,10 +13,10 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { Box, Image } from "@chakra-ui/react";
-import { masaiimage } from "../../../Assets/Assets";
+import { masaiimage } from "../../../assets/assets";
 import {IAuthloginResponse} from "../../../Services/AuthInterface"
 import { LoginService } from "../../../Services/AuthServices";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 //interface for form data
 interface IFormData {

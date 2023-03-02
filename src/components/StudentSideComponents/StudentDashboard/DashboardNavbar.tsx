@@ -6,10 +6,9 @@ import {
   Heading,
   ButtonGroup,
   Button,
-  Spacer,
   useMediaQuery,
 } from "@chakra-ui/react";
-import { referAndEarnLink, sprintplanlink } from "../../../Assets/Assets";
+import { referAndEarnLink, sprintplanlink } from "../../../assets/assets";
 
 // this component is navbar below component in dash board page
 const DashboardNavbar= () => {
@@ -36,7 +35,7 @@ const DashboardNavbar= () => {
             color="white"
             bg="rgb(31 41 55)"
             _hover={{ bg: "rgb(76, 84, 95)" }}
-            onClick={() => navigate("student/bookmarks")}
+            onClick={() => navigate("/student/bookmarks")}
           >
             Bookmarks
           </Button>

@@ -3,17 +3,15 @@ import * as yup from "yup";
 import { useFormik } from "formik";
 import {
   Button,
-  Checkbox,
   Container,
   Flex,
   FormLabel,
-  HStack,
   Input,
   Text,
 } from "@chakra-ui/react";
 import { Box, Image } from "@chakra-ui/react";
-import { gifloader, masaiimage } from "../../../Assets/Assets";
-import {  IAdminAccountCreate,
+import { masaiimage } from "../../../assets/assets";
+import {  
   IAuthsignupResponse,
 } from "../../../Services/AuthInterface"
 import {

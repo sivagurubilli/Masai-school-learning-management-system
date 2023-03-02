@@ -2,11 +2,9 @@ import ReactMarkdown from "react-markdown";
 import React, { useState } from "react";
 import {
   Box,
-  Button,
   Flex,
   FormLabel,
   Grid,
-  Text,
   Textarea,
   useBreakpointValue,
 } from "@chakra-ui/react";
@@ -41,9 +39,9 @@ const NoteSection = ({ LectureValues, setLectureValues }: any) => {
 
   const handleClick = (text: string) => {
     setActiveText(text);
-    if (text == "write") {
+    if (text === "write") {
       setActiveButtons({ write: true, help: false, preview: false });
-    } else if (text == "preview") {
+    } else if (text === "preview") {
       setActiveButtons({ write: false, help: false, preview: true });
     } else {
       setActiveButtons({ write: false, help: true, preview: false });

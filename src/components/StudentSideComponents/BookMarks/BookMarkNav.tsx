@@ -6,10 +6,9 @@ import {
   Heading,
   ButtonGroup,
   Button,
-  Spacer,
   useMediaQuery,
 } from "@chakra-ui/react";
-import { referAndEarnLink, sprintplanlink } from "../../../Assets/Assets";
+import { referAndEarnLink, } from "../../../assets/assets";
 
 // this component is navbar below component in dash board page
 const BookMarkNav = () => {

@@ -6,23 +6,20 @@ import {
   DrawerOverlay,
   DrawerContent,
   DrawerCloseButton,
-  DrawerHeader,
   DrawerBody,
 } from "@chakra-ui/react";
-import { Link, NavLink, NavLinkProps, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import {
   Divider,
   Text,
   Flex,
   Image,
   Box,
-  Heading,
   Hide,
   Show,
-  Tooltip,
   Button,
 } from "@chakra-ui/react";
-import { masaiimage, NavbarArray } from "../../../Assets/Assets";
+import { masaiimage, NavbarArray } from "../../../assets/assets";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 
