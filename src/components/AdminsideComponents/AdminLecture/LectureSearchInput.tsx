@@ -18,19 +18,20 @@ const LectureSearchInput = ({filterValues,setFilterValues}:any) => {
     const [sectionArray,setSectionArray] = useState<ISectionObject[]>()
     const [userArray,setUserArray] = useState<IUserObject[]>()
     const [typeArray,setTypeArray] = useState<ITypeObject[]>()
+
     useEffect(()=>{   
-        getBatchArrray().then((res)=>{
-          setBatchArray(res)
-        })
-        getSectionArray().then((res)=>{
-          setSectionArray(res)
-        })
-        getUserArray().then((res)=>{
-          setUserArray(res)
-        })
-        getTypeArray().then((res)=>{
-          setTypeArray(res)
-        })
+        // getBatchArrray().then((res)=>{
+        //   setBatchArray(res)
+        // })
+        // getSectionArray().then((res)=>{
+        //   setSectionArray(res)
+        // })
+        // getUserArray().then((res)=>{
+        //   setUserArray(res)
+        // })
+        // getTypeArray().then((res)=>{
+        //   setTypeArray(res)
+        // })
       },[])
 // this is setting values from select tags
 const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -77,9 +78,9 @@ const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
               onChange={handleChange}
               width={selectWidth}
               color="rgb(75 85 99)"
-              placeholder="Select branch">
+              placeholder="Select batch">
                  {batchArray?.map((el)=>(
-                      <option value={el.batch_id}>{el.batch_name}</option>
+                      <option  value={el.batch_id}>{el.batch_name}</option>
                     ))}
             </Select>     
             <Select

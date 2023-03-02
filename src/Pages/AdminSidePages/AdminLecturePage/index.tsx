@@ -57,17 +57,19 @@ const store = useSelector((state:RootState)=>state.Authreducer)
     setTimeout(() => {
       setLoading(false);
     }, 1000);
-
-    LectureSearchService(filterValues).then((res: any) => {
-      if (res.length > 1) {
-        setLecturesData(res);
-      } else if (res.data.success == false) {
-        setIsOpen(true);
-        setBody("These values did not match the lecture data!");
-      }
-    });
+    getBatchArrray().then((res)=>{
+        console.log("batch",res)
+      })
+    // LectureSearchService(filterValues).then((res: any) => {
+    //   if (res.length > 1) {
+    //     setLecturesData(res);
+    //   } else if (res.data.success == false) {
+    //     setIsOpen(true);
+    //     setBody("These values did not match the lecture data!");
+    //   }
+    // });
   };
-console.log(filterValues)
+
   useEffect(() => {
     // GetAllLectureService().then((res) => {
     //   setLecturesData(res);
@@ -107,7 +109,7 @@ console.log(filterValues)
           />
           <Flex justifyContent={"flex-end"}>
             <Button
-              w="20%"
+              w="15%"
               mt="20px"
               fontSize={isLargerThan900 ? "16px" : "12px"}
               color="white"
@@ -119,7 +121,7 @@ console.log(filterValues)
               Filter
             </Button>
             <Button
-              w="20%"
+              w="15%"
               mt="20px"
               color="white"
               ml="20px"

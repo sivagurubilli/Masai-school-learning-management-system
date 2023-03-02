@@ -38,7 +38,6 @@ const NoteSection = ({ LectureValues, setLectureValues }: any) => {
 
   // this function is for when i click on notes it display
   // notes section and if i click on preview it should shows preview section
-
   const handleClick = (text: string) => {
     setActiveText(text);
     if (text == "write") {
