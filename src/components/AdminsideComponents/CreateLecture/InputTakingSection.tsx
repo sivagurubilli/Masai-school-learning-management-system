@@ -32,19 +32,19 @@ const InputTakingSection = ({ LectureValues, setLectureValues }: any) => {
   const [typeArray, setTypeArray] = useState<ITypeObject[]>();
 
   useEffect(() => {
-    // getBatchArrray().then((res) => {
-    //   setBatchArray(res);
-    // });
+    getBatchArrray().then((res) => {
+      setBatchArray(res);
+    });
 
-    // getSectionArray().then((res) => {
-    //   setSectionArray(res);
-    // });
-    // getUserArray().then((res) => {
-    //   setUserArray(res);
-    // });
-    // getTypeArray().then((res) => {
-    //   setTypeArray(res);
-    // });
+    getSectionArray().then((res) => {
+      setSectionArray(res);
+    });
+    getUserArray().then((res) => {
+      setUserArray(res);
+    });
+    getTypeArray().then((res) => {
+      setTypeArray(res);
+    });
   }, []);
 
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -65,7 +65,7 @@ const InputTakingSection = ({ LectureValues, setLectureValues }: any) => {
   };
   const formattedDate = Ndate.toLocaleString('en-IN', options).replace(/,/g, '');
     setLectureValues({ ...LectureValues, schedule: formattedDate});
-  console.log(LectureValues)
+  
   };
 
   const handleDateConcludeChange = (date: any) => {

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { IBookMarkObject, ICreateLectureValues, ILectureResponse, ISearchResponse,  ISearchValues, ISingledata } from "./LectureInterface";
+import { IBookMarkObject, ICreateLectureValues, ILectureResponse,  ISearchValues, ISingledata } from "./LectureInterface";
 
 //interface for creating lectures and editing lectures
 

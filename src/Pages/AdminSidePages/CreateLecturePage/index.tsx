@@ -33,7 +33,9 @@ const [body,setBody] = useState<string>("")
   });
 
   const CreateLecture = () => {
+    console.log(LectureValues)
     const hasEmptyString = Object.values(LectureValues).some(value => value === '')
+  
     if(LectureValues.schedule < new Date()){
       setBody("Schedule time should not be Before than Current time")
      setIsOpen(true)
