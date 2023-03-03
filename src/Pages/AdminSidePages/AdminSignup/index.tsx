@@ -98,7 +98,7 @@ const [isLoading,setLoading] = useState(false)
 
 
     AdminSignupService(values).then((res:IAuthsignupResponse)=>{
-      if(res.name && res.roles[0].name!=="NORMAL_USER"){
+      if(res.name){
    navigate("/login")
         }
          if(!res.name){

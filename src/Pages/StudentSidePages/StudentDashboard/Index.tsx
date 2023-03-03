@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import { Box } from "@chakra-ui/react";
 // import "../../App.css";
@@ -7,6 +7,8 @@ import DashboardNavbar from "../../../components/StudentSideComponents/StudentDa
 
 // this component displays student side dashboard
 const Dashborad = () => {
+  const [dashboardLectures,setDashboardLectures] = useState()
+
   return (
     <>
       <div className="container">
@@ -20,7 +22,11 @@ const Dashborad = () => {
           bg="white"
           ml="10%"
           mt="70px"
-        ></Box>
+        >   
+
+
+
+        </Box>
       </div>
     </>
   );

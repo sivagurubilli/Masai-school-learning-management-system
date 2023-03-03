@@ -3,7 +3,7 @@ import Allroutes from './components/Allroutes';
 import React from 'react';
 import axios from "axios"
 
-axios.defaults.baseURL ="https://bed8-202-142-70-52.in.ngrok.io"
+axios.defaults.baseURL ="http://54.253.97.185/"
 function App(){
   return (
     <div className="App">

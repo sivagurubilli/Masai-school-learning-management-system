@@ -32,19 +32,19 @@ const InputTakingSection = ({ LectureValues, setLectureValues }: any) => {
   const [typeArray, setTypeArray] = useState<ITypeObject[]>();
 
   useEffect(() => {
-    getBatchArrray().then((res) => {
-      setBatchArray(res);
-    });
+    // getBatchArrray().then((res) => {
+    //   setBatchArray(res);
+    // });
 
-    getSectionArray().then((res) => {
-      setSectionArray(res);
-    });
-    getUserArray().then((res) => {
-      setUserArray(res);
-    });
-    getTypeArray().then((res) => {
-      setTypeArray(res);
-    });
+    // getSectionArray().then((res) => {
+    //   setSectionArray(res);
+    // });
+    // getUserArray().then((res) => {
+    //   setUserArray(res);
+    // });
+    // getTypeArray().then((res) => {
+    //   setTypeArray(res);
+    // });
   }, []);
 
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -53,11 +53,23 @@ const InputTakingSection = ({ LectureValues, setLectureValues }: any) => {
   };
 
   const handleDateChange = (date: any) => {
-    setLectureValues({ ...LectureValues, schedule: date._d });
+    const Ndate = new Date(date);
+    const options: Intl.DateTimeFormatOptions = {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      hour12: false
+  };
+  const formattedDate = Ndate.toLocaleString('en-IN', options).replace(/,/g, '');
+    setLectureValues({ ...LectureValues, schedule: formattedDate});
+  console.log(LectureValues)
   };
 
   const handleDateConcludeChange = (date: any) => {
-    setLectureValues({ ...LectureValues, conclude: date._d });
+    setLectureValues({ ...LectureValues, concludes: date._d });
   };
   //input blur is for only when error showing in user inters into input feild
   const handleInputBlur = (event: React.FocusEvent<HTMLInputElement>) => {
@@ -150,7 +162,7 @@ const InputTakingSection = ({ LectureValues, setLectureValues }: any) => {
             placeholder="Select batch"
           >
             {batchArray?.map((el) => (
-              <option value={el.batch_id}>{el.batch_name}</option>
+              <option value={el.batchId}>{el.batchName}</option>
             ))}
           </Select>
         </Box>
@@ -166,7 +178,7 @@ const InputTakingSection = ({ LectureValues, setLectureValues }: any) => {
             onChange={handleChange}
           >
             {sectionArray?.map((el) => (
-              <option value={el.section_id}>{el.section_name}</option>
+              <option value={el.sectionId}>{el.sectionName}</option>
             ))}
           </Select>
         </Box>
@@ -207,7 +219,7 @@ const InputTakingSection = ({ LectureValues, setLectureValues }: any) => {
           <FormLabel color="rgb(75 85 99)">Concludes</FormLabel>
           <Box p="5px" border="1px solid rgb(226,232,240)" w="auto">
             <Datetime
-              value={LectureValues.conclude}
+              value={LectureValues.concludes}
               onChange={handleDateConcludeChange}
             />
           </Box>

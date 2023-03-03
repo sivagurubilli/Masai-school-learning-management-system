@@ -53,7 +53,7 @@ const AdminLecture = () => {
     setTimeout(() => {
       setLoading(false);
     }, 1000);
-
+console.log(filterValues)
     LectureSearchService(filterValues).then((res: any) => {
       if (res.length > 1) {
         setLecturesData(res);
@@ -103,7 +103,7 @@ const AdminLecture = () => {
           />
           <Flex justifyContent={"flex-end"}>
             <Button
-              w="20%"
+              w="15%"
               mt="20px"
               fontSize={isLargerThan900 ? "16px" : "12px"}
               color="white"
@@ -115,7 +115,7 @@ const AdminLecture = () => {
               Filter
             </Button>
             <Button
-              w="20%"
+              w="15%"
               mt="20px"
               color="white"
               ml="20px"
