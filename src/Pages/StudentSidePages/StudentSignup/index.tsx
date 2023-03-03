@@ -15,11 +15,8 @@ import {
 
 import { Box, Image } from "@chakra-ui/react";
 import {
-  batchValues,
   masaiimage,
-  sectionValues,
-} from "../../../Assets/Assets";
-import {IBatchObject,ISectionObject,} from "../../../Services/SelectionInterface"
+} from "../../../assets/assets";
 import {getBatchArrray,
   getSectionArray,} from "../../../Services/SelelctionService"
 import {
@@ -40,7 +37,7 @@ interface IFormData {
   reEnterPassword: string;
 }
 
-//validation schema for validating form values using yup library
+//validation schema for validating form values using yup third party library
 const validationSchema = yup.object().shape({
   name: yup.string().required("This feild is required").min(3, "Name must be 3 character"),
   email: yup.string().email("Email is invalid").required("Email is required"),

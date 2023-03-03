@@ -1,21 +1,16 @@
 import React, { useState, useEffect } from "react";
 import {
   Box,
-  Button,
   Flex,
   FormLabel,
-  useBreakpointValue,
 } from "@chakra-ui/react";
-import { Categoery } from "../../../Assets/Assets";
+import { Categoery } from "../../../assets/assets";
 
-interface TagInputProps {
-  tag: string;
-}
 
 const TagInput = ({ LectureValues, setLectureValues }: any) => {
   const [showSuggestions, setShowSuggestions] = useState<boolean>(false);
   const [suggestion, setSuggestions] = useState<string[]>([]);
-  const selectWidth = useBreakpointValue({ base: "100%", md: "auto" });
+
 
   //on clicking on tag it added tgs array lecturevalues as well
 
@@ -37,11 +32,12 @@ const TagInput = ({ LectureValues, setLectureValues }: any) => {
 
   useEffect(() => {
     Categoery.map((el) => {
-      if (el.key == LectureValues.category) {
+      if (el.key === LectureValues.category) {
         setSuggestions(el.tags);
       }
     });
   }, [LectureValues.category]);
+
   return (
     <div>
       <FormLabel mt="10px" color="rgb(75 85 99)">

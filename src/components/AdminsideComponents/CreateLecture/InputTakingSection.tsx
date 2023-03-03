@@ -3,21 +3,16 @@ import "../../../Pages/AdminSidePages/CreateLecturePage/index.css";
 import Datetime from "react-datetime";
 import "react-datetime/css/react-datetime.css";
 import {
-  Container,
   Box,
   Grid,
   Input,
   Select,
   useBreakpointValue,
   Flex,
-  Button,
   FormLabel,
-  Text,
-  FormControl,
   Switch,
-  Textarea,
 } from "@chakra-ui/react";
-import { Categoery } from "../../../Assets/Assets";
+import { Categoery } from "../../../assets/assets";
 import NoteSection from "./NoteSection";
 import TagInput from "./TagInput";
 import {
@@ -91,7 +86,7 @@ const InputTakingSection = ({ LectureValues, setLectureValues }: any) => {
     md: "1 / 4", // Span two columns on medium screens
     lg: "1 / 5", // Span two columns starting from the second column on large screens
   });
-  const selectWidth = useBreakpointValue({ base: "100%", md: "auto" });
+  const selectWidth = useBreakpointValue({ base: "100%", md: "100%",sm:"100%" });
 
   //Zoom Link validation
   function isZoomLink(link: string): boolean {

@@ -1,17 +1,12 @@
 import React,{useState,useEffect} from 'react'
 import {
-    Container,
-    Box,
     Grid,
     Input,
     Select,
     useBreakpointValue,
-    Flex,
-    Button,
-    useMediaQuery,
   } from "@chakra-ui/react";
 import { getBatchArrray, getSectionArray,getUserArray,getTypeArray } from "../../../Services/SelelctionService";
-import { IBatchObject, IBatchResponse, ISectionObject, ITypeObject, ITypeResponse, IUserObject,  IUserResponse } from "../../../Services/SelectionInterface";
+import { IBatchObject, ISectionObject, ITypeObject, IUserObject,  } from "../../../Services/SelectionInterface";
 
 const LectureSearchInput = ({filterValues,setFilterValues}:any) => {
     const [batchArray,setBatchArray] = useState<IBatchObject[]>()
@@ -19,7 +14,7 @@ const LectureSearchInput = ({filterValues,setFilterValues}:any) => {
     const [userArray,setUserArray] = useState<IUserObject[]>()
     const [typeArray,setTypeArray] = useState<ITypeObject[]>()
     useEffect(()=>{   
-        getBatchArrray().then((res)=>{
+       getBatchArrray().then((res)=>{
           setBatchArray(res)
         })
         getSectionArray().then((res)=>{
@@ -30,7 +25,7 @@ const LectureSearchInput = ({filterValues,setFilterValues}:any) => {
         })
         getTypeArray().then((res)=>{
           setTypeArray(res)
-        })
+        }) 
       },[])
 // this is setting values from select tags
 const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -48,7 +43,7 @@ const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         md: "1 / 4", // Span two columns on medium screens
         lg: "1 / 5", // Span two columns starting from the second column on large screens
       });
-      const selectWidth = useBreakpointValue({ base: "100%", md: "auto" });
+      const selectWidth = useBreakpointValue({ base: "100%", md: "100%",sm:"100%" });
 
   return (
     <div>

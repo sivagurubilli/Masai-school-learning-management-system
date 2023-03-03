@@ -4,11 +4,13 @@ import { ActionTypes } from "./actionTypes";
 export interface IisAuthstate {
   isAuth: boolean;
   username: string;
+  userId:number
   isAdmin: boolean;
 }
 const initialAuthState = {
   isAuth: false,
   username: "",
+  userId:1,
   isAdmin: false,
 };
 

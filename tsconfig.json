@@ -9,12 +9,10 @@
     "allowSyntheticDefaultImports": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"],
-      "include": ["src", "react-recaptcha-v3.d.ts"]
+      "@/*": ["src/*"]
     },
     "strict": true,
     "esModuleInterop": true
   },
   "exclude": ["**/node_modules/!(@mui)/**", "**/build/**/*", "docs/export/**/*"]
 }
-
