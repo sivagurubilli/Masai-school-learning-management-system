@@ -85,10 +85,10 @@ const AdminLectureDetail = () => {
                 p="20px"
                 bg={index % 2 == 1 ? "gray.100" : "white"}
               >
-                <Box display={index==0?"none":"block"} w="50%">
+                <Box display={index == 0 ? "none" : "block"} w="50%">
                   <Text>{key}</Text>
                 </Box>
-                <Box  display={index==0?"none":"block"} w="50%">
+                <Box display={index == 0 ? "none" : "block"} w="50%">
                   <Text>{value}</Text>
                 </Box>
               </Flex>

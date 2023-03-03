@@ -1,4 +1,5 @@
-import AdminLecture from "../Pages/AdminSidePages/AdminLecturePage";
+import AdminLecture from "../Pages/AdminSidePages/AdminLecturePage/index";
+import StudentLecture from "../Pages/StudentSidePages/StudentLecturePage/index";
 import AdminSignup from "../Pages/AdminSidePages/AdminSignup/index";
 import React  from "react";
 import { Route, Routes } from "react-router-dom";
@@ -23,6 +24,7 @@ const Allroutes = () => {
         <Route path ="/" element ={<LandingPage />}/>
        <Route path ="/admin/" element={<AdminDashboard/>}/>
         <Route path="/admin/lectures"  element= { <AdminLecture />}/>
+        <Route path="/student/lectures"  element= { <StudentLecture />}/>
         <Route path="/admin/lectures/:id" element={<AdminLectureDetail />} />
         <Route path="/admin/lectures/edit/:id" element={<AdminLectureEdit />} />
         <Route path="/student/dashboard" element={<Dashborad />} />
