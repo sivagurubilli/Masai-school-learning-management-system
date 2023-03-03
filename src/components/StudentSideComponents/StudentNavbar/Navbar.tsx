@@ -72,13 +72,13 @@ const Navbar = () => {
               <Flex w="70%" justifyContent={"space-around"} align="center">
                 {NavbarArray.map((el) => (
                   <Box className="li">
-                    <NavLink key={el} to={"/admin/" + el}>{el}</NavLink>
+                    <NavLink key={el} to={"/admin/" + el.toLowerCase()}>{el}</NavLink>
                   </Box>
                 ))}
               </Flex>
 
               {/*  this part is about display hamburger in menu item for small screeens  */}
-              <Box ml={"50px"} onClick={() => setShowProfile(!setShowProfile)}>
+              <Box ml={"50px"} onClick={() => setShowProfile(!showProfile)}>
                 {" "}
                 <Button variant={"link"} _hover={{"cursor":"pointer"}}>{userName}</Button>
                 <i
@@ -124,7 +124,7 @@ const Navbar = () => {
                 >
                   {NavbarArray.map((el) => (
                     <li>
-                      <NavLink key={el} to={"/admin/" + el}>
+                      <NavLink key={el} to={"/admin/" + el.toLowerCase()}>
                         {el}
                       </NavLink>
                     </li>

@@ -11,14 +11,14 @@ import {
 import "./index.css";
 import { setLocale } from "yup";
 interface User {
-  username: string[];
+  username: string;
   captchaMatch: boolean;
 }
 
 //captcha function goes here
 const Captcha = ({ setCaptcha1 }: any) => {
   const [user, setUser] = useState<User>({
-    username: [],
+    username: "",
     captchaMatch: false,
   });
 
@@ -40,7 +40,7 @@ const Captcha = ({ setCaptcha1 }: any) => {
     return mappedStr;
   };
 
-  const [captcha, setCaptcha] = useState(generateString(6));
+  const [captcha, setCaptcha] = useState<string[]>(generateString(6));
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const { name, value } = e.target;
@@ -54,13 +54,19 @@ const Captcha = ({ setCaptcha1 }: any) => {
   const onSubmit = () => {
     setIsLoading(true);
     setTimeout(() => {
-      if (captcha === user.username) {
+      var captcha1 = captcha.join("");
+
+      if (captcha1 === user.username) {
         setCaptcha1(true);
         setIsCaptchaVerified(true);
       } else {
         setCaptcha(generateString(6));
       }
       setIsLoading(false);
+      setUser({
+        username: "",
+        captchaMatch: false,
+      });
     }, 3000);
     return user.captchaMatch;
   };
@@ -68,7 +74,7 @@ const Captcha = ({ setCaptcha1 }: any) => {
   // when click on handle retry button this function again genearate recaptcha
   const handleRetry = () => {
     setCaptcha(generateString(6));
-    setUser({ username: [], captchaMatch: false });
+    setUser({ username: "", captchaMatch: false });
     setIsCaptchaVerified(false);
   };
 
@@ -147,6 +153,7 @@ const Captcha = ({ setCaptcha1 }: any) => {
                 id="inputType"
                 placeholder="Enter Captcha"
                 name="username"
+                value={user.username}
                 onChange={handleChange}
                 autoComplete="off"
                 w="60%"

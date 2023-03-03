@@ -1,4 +1,4 @@
-import ReactMarkdown from "react-markdown";
+
 import React, { useState } from "react";
 import {
   Box,
@@ -10,6 +10,7 @@ import {
 } from "@chakra-ui/react";
 import "../../../Pages/AdminSidePages/AdminLecturePage/index.css";
 import HelpInNoteTakeSection from "./HelpInNoteTakeSection";
+import Markdown from "./MarkDown";
 
 interface IActiveButtons {
   write: boolean;
@@ -105,7 +106,8 @@ const NoteSection = ({ LectureValues, setLectureValues }: any) => {
           />
         ) : null}
         {activeButtons.preview ? (
-          <ReactMarkdown children={LectureValues.notes} />
+       <Markdown content={LectureValues.notes}  />
+      
         ) : null}
       </Grid>
       {activeButtons.help ? <HelpInNoteTakeSection /> : null}     

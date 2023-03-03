@@ -98,19 +98,19 @@ const InputTakingSection = ({ LectureValues, setLectureValues }: any) => {
     md: "1 / 4", // Span two columns on medium screens
     lg: "1 / 5", // Span two columns starting from the second column on large screens
   });
-  const selectWidth = useBreakpointValue({ base: "100%", md: "100%",sm:"100%" });
+  const selectWidth = useBreakpointValue({ base: "100%", md: "auto",sm:"auto" });
 
   //Zoom Link validation
   function isZoomLink(link: string): boolean {
-    const zoomLinkRegex = /^https?:\/\/?zoom\.us\/(?:j\/\d{9,10}|[s,a]\/\w+)$/i
+    const zoomLinkRegex = /https:\/\/[\w-]*\.?zoom.us\/(j|my)\/[\d\w?=-]+/g
 
     return zoomLinkRegex.test(link);
   }
+
   //checking for zoomlink is valid or not
   function handleLinkChange(event: React.ChangeEvent<HTMLInputElement>) {
     const newLink = event.target.value;
-    setLectureValues({ ...LectureValues, zoomLink: newLink });
-    console.log(isZoomLink(newLink))
+    setLectureValues({ ...LectureValues, zoomLink: newLink })
     setZoomLinkValid(isZoomLink(newLink));
   }
 
