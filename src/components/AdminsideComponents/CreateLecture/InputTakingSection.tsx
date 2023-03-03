@@ -65,7 +65,7 @@ const InputTakingSection = ({ LectureValues, setLectureValues }: any) => {
   };
   const formattedDate = Ndate.toLocaleString('en-IN', options).replace(/,/g, '');
     setLectureValues({ ...LectureValues, schedule: formattedDate});
-  console.log(LectureValues)
+  
   };
 
   const handleDateConcludeChange = (date: any) => {
