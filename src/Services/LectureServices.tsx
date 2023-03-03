@@ -41,7 +41,7 @@ export async function LecturePostService(
   }
 }
 
-// lectures edit service function
+// lectures edit service functio
 export async function LectureEditService(
   data: ICreateLectureValues,
   id: string | undefined
