@@ -13,7 +13,7 @@ const Dashborad = () => {
    const [apiError,setApiError] =  useState<boolean>(false)
 
     useEffect(()=>{
-      async function fetchData() {
+      const fetchData = async() =>{
         try{
         const response = await GetDashboardLecturesService();
         setDashboardLectures(response);
