@@ -95,7 +95,8 @@ export async function GetAllLectureService(
  
   try {
     const response = await axios.get(
-       "/api/lecture/lectures/lectureList",  
+      //  "/api/lecture/lectures/lectureList",  
+      "http://localhost:8070/posts"
     );
 
     return response.data;

@@ -73,9 +73,9 @@ const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
               width={selectWidth}
               color="rgb(75 85 99)"
               placeholder="Select branch">
-                 {batchArray?.map((el)=>(
+                 {/* {batchArray?.map((el)=>(
                       <option value={el.batch_id}>{el.batch_name}</option>
-                    ))}
+                    ))} */}
             </Select>     
             <Select
               name="section"
@@ -84,9 +84,9 @@ const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
               color="rgb(75 85 99)"
               placeholder="Select section"
               onChange={handleChange}>
-                {sectionArray?.map((el)=>(
+                {/* {sectionArray?.map((el)=>(
                       <option value={el.section_id}>{el.section_name}</option>
-                    ))}
+                    ))} */}
             </Select>
             <Select
               name="type"
@@ -95,9 +95,9 @@ const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
               value={filterValues.type}
               placeholder="Select type"
               onChange={handleChange}>
-             {typeArray?.map((el)=>(
+             {/* {typeArray?.map((el)=>(
                       <option value={el.id}>{el.typeName}</option>
-                    ))}
+                    ))} */}
             </Select>
             <Input
             type ="date"
@@ -139,9 +139,9 @@ const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
               placeholder="Select user"
               onChange={handleChange}
             >
-            {userArray?.map((el)=>(
+            {/* {userArray?.map((el)=>(
             <option value={el.id}>{el.userName}</option>
-                    ))}
+                    ))} */}
             </Select>
           </Grid>
     </div>
