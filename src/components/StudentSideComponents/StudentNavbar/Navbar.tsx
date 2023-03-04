@@ -61,7 +61,7 @@ const Navbar = () => {
           color={"gray.600"}
         >
           <Flex align="center" flex={"2"}>
-            <Link to="/dashboard">
+            <Link to="/student/dashboard">
               {" "}
               <Image objectFit="contain" src={masaiimage} alt="Masai logo" />
             </Link>
@@ -72,7 +72,7 @@ const Navbar = () => {
               <Flex w="70%" justifyContent={"space-around"} align="center">
                 {NavbarArray.map((el) => (
                   <Box className="li">
-                    <NavLink key={el} to={"/admin/" + el.toLowerCase()}>{el}</NavLink>
+                    <NavLink key={el} to={"/student/" + el.toLowerCase()}>{el}</NavLink>
                   </Box>
                 ))}
               </Flex>
@@ -124,14 +124,14 @@ const Navbar = () => {
                 >
                   {NavbarArray.map((el) => (
                     <li>
-                      <NavLink key={el} to={"/admin/" + el.toLowerCase()}>
+                      <NavLink key={el} to={"/student/" + el.toLowerCase()}>
                         {el}
                       </NavLink>
                     </li>
                   ))}
                   <Divider borderColor="gray.300" />
                   <Text color="black" padding="10px">
-                    <NavLink to="/admin/profile">Profile</NavLink>
+                    <NavLink to="/student/profile">Profile</NavLink>
                   </Text>
                   <Text color="black" padding="10px">
                     <NavLink to="/transcript">Transcript </NavLink>

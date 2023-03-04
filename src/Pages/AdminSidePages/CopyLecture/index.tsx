@@ -24,7 +24,7 @@ import CommonModalComponent from "../../../components/Modal/commonModal";
 const CopyLecture = () => {
   const [isLargerThan900] = useMediaQuery("(min-width: 900px)");
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [body, setBody] = useState<string>("");
+  const [modalBody, setModalErrorBody] = useState<string>("");
   const [LectureCopyValues, setLectureCopyValues] =
     useState<ICreateLectureValues>({
       title: "",
@@ -47,27 +47,50 @@ const CopyLecture = () => {
   // get id from params using useparams
   const { id } = useParams();
   //copy lecture service call
-  const CopyLecture = () => {
+  const CopyLecture = async () => {
     const hasEmptyString = Object.values(LectureCopyValues).some(
-      (value) => value === "");
+      (value) => value === ""
+    );
     if (LectureCopyValues.schedule < new Date()) {
-      setBody("Schedule time should not be Before than Current time");
+      setModalErrorBody(
+        "The schedule time should not be earlier than the current time"
+      );
       setIsOpen(true);
     } else if (LectureCopyValues.concludes <= LectureCopyValues.schedule) {
-      setBody("Conculde time should not be Before than Schedule time");
+      setModalErrorBody(
+        "The combined time should not be earlier than the scheduled time"
+      );
       setIsOpen(true);
     } else if (hasEmptyString) {
-      setBody("All feilds are mandatory please fill all fields");
+      setModalErrorBody(
+        "The following fields are mandatory, so please fill them out all"
+      );
       setIsOpen(true);
+    } else {
+      try {
+        const response = await LectureCopyService(LectureCopyValues, id);
+        if (response.message) {
+          setIsOpen(true);
+          setModalErrorBody("The lecture was created with success fully added");
+        }
+      } catch (error) {
+        setIsOpen(true);
+        setModalErrorBody(
+          "There was a discrepancy between these values and the lecture data!"
+        );
+      }
     }
-     LectureCopyService(LectureCopyValues, id).then((res) => {});
   };
 
   return (
     <div className="container">
       <Navbar />
       <SecondNavforLectureCreate />
-      <CommonModalComponent isOpen={isOpen} setIsOpen={setIsOpen} body={body} />
+      <CommonModalComponent
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        modlBody={modalBody}
+      />
       <Box
         w="80%"
         ml="10%"

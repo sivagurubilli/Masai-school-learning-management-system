@@ -47,7 +47,7 @@ const Profilecomponent = ({ setshow1 }: ProfilecomponentProps) => {
         Manage Access
       </Text>
       <Text color="black" padding="5px">
-        <Link to="/user/profile" onClick={() => setshow1(false)}>
+        <Link to="/student/profile" onClick={() => setshow1(false)}>
           Profile
         </Link>
       </Text>

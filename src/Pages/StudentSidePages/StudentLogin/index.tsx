@@ -76,7 +76,7 @@ LoginService(values).then((res:IAuthloginResponse)=>{
     navigate("/student/dashboard")
     }
 
-    if(res.user.roles[0].name !=="STUDENT_USER"){
+    if(res.user.roles[0].name !== "STUDENT_USER"){
       navigate("/admin/dashboard")
       }
    }

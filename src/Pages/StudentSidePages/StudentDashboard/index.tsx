@@ -6,42 +6,43 @@ import Navbar from "../../../components/StudentSideComponents/StudentNavbar/Navb
 import DashboardNavbar from "../../../components/StudentSideComponents/StudentDashboard/DashboardNavbar";
 import { GetDashboardLecturesService } from "../../../Services/LectureServices";
 import { ILectureResponse } from "../../../Services/LectureInterface";
+import DashboardLectureCard from "../../../components/StudentSideComponents/StudentDashboard/DashboardLectureCard";
 
 // this component displays student side dashboard
 const Dashborad = () => {
-  const [dashboardLectures,setDashboardLectures] = useState<ILectureResponse[]>()
-   const [apiError,setApiError] =  useState<boolean>(false)
+  const [dashboardLectures, setDashboardLectures] =
+    useState<ILectureResponse[]>();
+  const [apiError, setApiError] = useState<boolean>(false);
 
-    useEffect(()=>{
-      async function fetchData() {
-        try{
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
         const response = await GetDashboardLecturesService();
         setDashboardLectures(response);
-      }catch(error){
- setApiError(true)
+      } catch (error) {
+        setApiError(true);
       }
-    }
-      fetchData();
-      },[])
+    };
+    fetchData();
+  }, []);
 
   return (
     <>
       <div className="container">
         <Navbar />
-        < DashboardNavbar/>
+        <DashboardNavbar />
 
         <Box
           w="80%"
+          p="20px"
           borderRadius="10px"
           minHeight="40px"
           maxHeight="auto"
           bg="white"
           ml="10%"
           mt="70px"
-        >   
-
-
-
+        >
+          <DashboardLectureCard />
         </Box>
       </div>
     </>

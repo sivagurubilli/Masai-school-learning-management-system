@@ -26,6 +26,7 @@ const AdminLectureDetail = () => {
   const [lectureDetail, setLectureDetail] = useState<
     ILectureResponse | undefined
   >();
+  const [lectureDetailError,setLectureDetailError] = useState<boolean>(false)
   const [isVideoActive, setVideoActive] = useState<boolean>(false);
   const keyValueArray = Object.entries(LectureDetailkeys);
   const [isLargerThan900] = useMediaQuery("(min-width: 900px)");
@@ -35,9 +36,17 @@ const AdminLectureDetail = () => {
   };
 
   useEffect(() => {
-    LectureSingleService(id).then((res) => {
-      setLectureDetail(res);
-    });
+    const fetchData = async ()=> {
+      try{
+    const response = await LectureSingleService(id)
+    if(response.lectureid){
+      setLectureDetail(response);
+    }
+      }catch(error){
+       setLectureDetailError(true)
+      }
+    }
+    fetchData()
   }, [id]);
 
   return (
@@ -83,12 +92,12 @@ const AdminLectureDetail = () => {
               <Flex
                 h="auto"
                 p="20px"
-                bg={index % 2 == 1 ? "gray.100" : "white"}
+                bg={index % 2 === 1 ? "gray.100" : "white"}
               >
-                <Box display={index == 0 ? "none" : "block"} w="50%">
+                <Box display={index === 0 ? "none" : "block"} w="50%">
                   <Text>{key}</Text>
                 </Box>
-                <Box display={index == 0 ? "none" : "block"} w="50%">
+                <Box display={index === 0 ? "none" : "block"} w="50%">
                   <Text>{value}</Text>
                 </Box>
               </Flex>

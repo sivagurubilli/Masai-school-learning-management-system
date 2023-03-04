@@ -1,9 +1,4 @@
-import {
-  Box,
-  Flex,
-  Button,
-  useMediaQuery,
-} from "@chakra-ui/react";
+import { Box, Flex, Button, useMediaQuery } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import "./index.css";
 import Secondnav from "../../../components/AdminsideComponents/AdminLecture/LectureSearchNavbar";
@@ -45,29 +40,46 @@ const AdminLecture = () => {
   const [isLoading, setLoading] = useState<boolean>(false);
   const [lecturesData, setLecturesData] = useState<ILectureResponse[]>();
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [body, setBody] = useState<string>("");
+  const [modalErrorBody, setModalErrorBody] = useState<string>("");
 
   // calling service for getting list for lectures
-  const GetLectures = () => {
+  const GetLectures = async () => {
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
     }, 1000);
-console.log(filterValues)
-    LectureSearchService(filterValues).then((res: any) => {
-      if (res.length > 1) {
-        setLecturesData(res);
-      } else if (res.data.success === false) {
+
+    try {
+      const response = await LectureSearchService(filterValues);
+      if (response.length > 1) {
+        setLecturesData(response);
+      } else if (response.length < 1) {
         setIsOpen(true);
-        setBody("These values did not match the lecture data!");
+        setModalErrorBody(
+          "There was a discrepancy between these values and the lecture data!"
+        );
       }
-    });
+    } catch (error) {
+      setIsOpen(true);
+      setModalErrorBody(
+        "There was a discrepancy between these values and the lecture data!"
+      );
+    }
   };
 
   useEffect(() => {
-    GetAllLectureService().then((res) => {
-      setLecturesData(res);
-    });
+    const fetchData = async () => {
+      try {
+        const response = await GetAllLectureService();
+        setLecturesData(response);
+      } catch (error) {
+        setIsOpen(true);
+        setModalErrorBody(
+          "We were unable to find any data. It seems that something has gone wrong!"
+        );
+      }
+    };
+    fetchData();
   }, []);
 
   const Reset = () => {
@@ -88,7 +100,11 @@ console.log(filterValues)
     <div className="container">
       <Navbar />
       <Secondnav />
-      <CommonModalComponent isOpen={isOpen} setIsOpen={setIsOpen} body={body} />
+      <CommonModalComponent
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        modalBody={modalErrorBody}
+      />
       <Box
         w="90%"
         ml="5%"

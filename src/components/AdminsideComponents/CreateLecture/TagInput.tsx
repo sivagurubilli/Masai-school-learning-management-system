@@ -48,8 +48,8 @@ const TagInput = ({ LectureValues, setLectureValues }: any) => {
         minH="40px"
         maxH="auto"
         border="1px solid rgb(203,213,224)"
-        p="10px"
-        borderRadius="10px"
+        p="7px"
+        borderRadius="7px"
         onClick={() => setShowSuggestions(!showSuggestions)}
       >
         {LectureValues.tags?.map((tag: any) => (

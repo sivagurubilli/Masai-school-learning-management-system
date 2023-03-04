@@ -21,7 +21,12 @@ import {
   getUserArray,
   getTypeArray,
 } from "../../../Services/SelelctionService";
-import { IBatchObject, ISectionObject, ITypeObject, IUserObject } from "../../../Services/SelectionInterface";
+import {
+  IBatchObject,
+  ISectionObject,
+  ITypeObject,
+  IUserObject,
+} from "../../../Services/SelectionInterface";
 
 const InputTakingSection = ({ LectureValues, setLectureValues }: any) => {
   const [isZoomlinkValid, setZoomLinkValid] = useState<boolean>(false);
@@ -32,20 +37,44 @@ const InputTakingSection = ({ LectureValues, setLectureValues }: any) => {
   const [typeArray, setTypeArray] = useState<ITypeObject[]>();
 
   useEffect(() => {
-    getBatchArrray().then((res) => {
-      setBatchArray(res);
-    });
+    gettingBatchArrray();
+    gettingSectionArray();
+    gettingTypeArray();
+    gettingUserArray();
+  },[]);
 
-    getSectionArray().then((res) => {
-      setSectionArray(res);
-    });
-    getUserArray().then((res) => {
-      setUserArray(res);
-    });
-    getTypeArray().then((res) => {
-      setTypeArray(res);
-    });
-  }, []);
+  const gettingBatchArrray = async () => {
+    try {
+      const response = await getBatchArrray();
+      if(response.length){
+      setBatchArray(response);
+      }
+    } catch (error) {}
+  };
+  const gettingSectionArray = async () => {
+    try {
+      const response = await getSectionArray();
+      if(response.length){
+      setSectionArray(response);
+      }
+    } catch (error) {}
+  };
+  const gettingTypeArray = async () => {
+    try {
+      const response = await getTypeArray();
+      if(response.length){
+      setTypeArray(response);
+      }
+    } catch (error) {}
+  };
+  const gettingUserArray = async () => {
+    try {
+      const response = await getUserArray();
+      if(response.length){
+      setUserArray(response);
+      }
+    } catch (error) {}
+  };
 
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = event.target;
@@ -55,17 +84,19 @@ const InputTakingSection = ({ LectureValues, setLectureValues }: any) => {
   const handleDateChange = (date: any) => {
     const Ndate = new Date(date);
     const options: Intl.DateTimeFormatOptions = {
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit',
-      hour: '2-digit',
-      minute: '2-digit',
-      second: '2-digit',
-      hour12: false
-  };
-  const formattedDate = Ndate.toLocaleString('en-IN', options).replace(/,/g, '');
-    setLectureValues({ ...LectureValues, schedule: formattedDate});
-  
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+      hour12: false,
+    };
+    const formattedDate = Ndate.toLocaleString("en-IN", options).replace(
+      /,/g,
+      ""
+    );
+    setLectureValues({ ...LectureValues, schedule: formattedDate });
   };
 
   const handleDateConcludeChange = (date: any) => {
@@ -98,11 +129,15 @@ const InputTakingSection = ({ LectureValues, setLectureValues }: any) => {
     md: "1 / 4", // Span two columns on medium screens
     lg: "1 / 5", // Span two columns starting from the second column on large screens
   });
-  const selectWidth = useBreakpointValue({ base: "100%", md: "auto",sm:"auto" });
+  const selectWidth = useBreakpointValue({
+    base: "100%",
+    md: "auto",
+    sm: "auto",
+  });
 
   //Zoom Link validation
   function isZoomLink(link: string): boolean {
-    const zoomLinkRegex = /https:\/\/[\w-]*\.?zoom.us\/(j|my)\/[\d\w?=-]+/g
+    const zoomLinkRegex = /https:\/\/[\w-]*\.?zoom.us\/(j|my)\/[\d\w?=-]+/g;
 
     return zoomLinkRegex.test(link);
   }
@@ -110,7 +145,7 @@ const InputTakingSection = ({ LectureValues, setLectureValues }: any) => {
   //checking for zoomlink is valid or not
   function handleLinkChange(event: React.ChangeEvent<HTMLInputElement>) {
     const newLink = event.target.value;
-    setLectureValues({ ...LectureValues, zoomLink: newLink })
+    setLectureValues({ ...LectureValues, zoomLink: newLink });
     setZoomLinkValid(isZoomLink(newLink));
   }
 
@@ -133,7 +168,8 @@ const InputTakingSection = ({ LectureValues, setLectureValues }: any) => {
           md: "1fr 1fr 1fr",
           lg: "1fr 1fr 1fr",
         }}
-        gap={4} >
+        gap={4}
+      >
         <Box>
           {" "}
           <FormLabel color="rgb(75 85 99)">Categoery</FormLabel>
@@ -190,7 +226,8 @@ const InputTakingSection = ({ LectureValues, setLectureValues }: any) => {
           md: "1fr 1fr 1fr",
           lg: "1fr 1fr 1fr",
         }}
-        gap={4}>
+        gap={4}
+      >
         <Box>
           <FormLabel color="rgb(75 85 99)">Type</FormLabel>
           <Select
@@ -208,7 +245,12 @@ const InputTakingSection = ({ LectureValues, setLectureValues }: any) => {
         </Box>
         <Box>
           <FormLabel color="rgb(75 85 99)">Schedule</FormLabel>
-          <Box p="5px" border="1px solid rgb(226,232,240)" w="auto">
+          <Box
+            p="7px"
+            border="1px solid rgb(226,232,240)"
+            w="auto"
+            borderRadius="10px"
+          >
             <Datetime
               value={LectureValues.schedule}
               onChange={handleDateChange}
@@ -217,7 +259,12 @@ const InputTakingSection = ({ LectureValues, setLectureValues }: any) => {
         </Box>
         <Box>
           <FormLabel color="rgb(75 85 99)">Concludes</FormLabel>
-          <Box p="5px" border="1px solid rgb(226,232,240)" w="auto">
+          <Box
+            p="7px"
+            border="1px solid rgb(226,232,240)"
+            w="auto"
+            borderRadius="10px"
+          >
             <Datetime
               value={LectureValues.concludes}
               onChange={handleDateConcludeChange}
@@ -232,12 +279,13 @@ const InputTakingSection = ({ LectureValues, setLectureValues }: any) => {
           md: "1fr 1fr 1fr",
           lg: "1fr 1fr 1fr",
         }}
-        gap={4}>
-         <Box>
-       <TagInput
-          LectureValues={LectureValues}
-          setLectureValues={setLectureValues}
-        />
+        gap={4}
+      >
+        <Box>
+          <TagInput
+            LectureValues={LectureValues}
+            setLectureValues={setLectureValues}
+          />
         </Box>
         <Box mt="10px" minWidth="0">
           <FormLabel color="rgb(75 85 99)">User</FormLabel>
@@ -255,20 +303,20 @@ const InputTakingSection = ({ LectureValues, setLectureValues }: any) => {
           </Select>
         </Box>
 
-        <Box mt="10px" ml="20px" >
+        <Box mt="10px" ml="20px">
           <Flex>
             <Box mt="10px">
-            <FormLabel color="rgb(75 85 99)">Optional</FormLabel>
+              <FormLabel color="rgb(75 85 99)">Optional</FormLabel>
               <Flex>
                 <Switch
-                   mt="7px"
+                  mt="7px"
                   isChecked={LectureValues.optional}
                   onChange={handleToggleOptional}
                 />
               </Flex>
             </Box>
             <Box mt="10px">
-            <FormLabel color="rgb(75 85 99)">Hide</FormLabel>
+              <FormLabel color="rgb(75 85 99)">Hide</FormLabel>
               <Flex>
                 <Switch
                   mt="7px"

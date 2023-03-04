@@ -1,11 +1,9 @@
-import {  Box, Flex, Button, useMediaQuery } from "@chakra-ui/react";
+import { Box, Flex, Button, useMediaQuery } from "@chakra-ui/react";
 import React, { useState } from "react";
 import "./index.css";
 import Navbar from "../../../components/AdminsideComponents/AdminNavbar/index";
 import SecondNavforLectureCreate from "../../../components/AdminsideComponents/CreateLecture/SecondNavforCreateLecture";
-import {
-  LecturePostService,
-} from "../../../Services/LectureServices";
+import { LecturePostService } from "../../../Services/LectureServices";
 import { ICreateLectureValues } from "../../../Services/LectureInterface";
 import InputTakingSection from "../../../components/AdminsideComponents/CreateLecture/InputTakingSection";
 import CommonModalComponent from "../../../components/Modal/commonModal";
@@ -13,7 +11,7 @@ import CommonModalComponent from "../../../components/Modal/commonModal";
 const AdminLectureCreate = () => {
   const [isLargerThan900] = useMediaQuery("(min-width: 900px)");
   const [isOpen, setIsOpen] = useState<boolean>(false);
-const [body,setBody] = useState<string>("")
+  const [modalErrorBody, setModalErrorBody] = useState<string>("");
   const [LectureValues, setLectureValues] = useState<ICreateLectureValues>({
     title: "",
     batch: "",
@@ -32,34 +30,56 @@ const [body,setBody] = useState<string>("")
     notes: "",
   });
 
-  const CreateLecture = () => {
-    console.log(LectureValues)
-    const hasEmptyString = Object.values(LectureValues).some(value => value === '')
-  
-    if(LectureValues.schedule < new Date()){
-      setBody("Schedule time should not be Before than Current time")
-     setIsOpen(true)
+  const CreateLecture = async () => {
+    const hasEmptyString = Object.values(LectureValues).some(
+      (value) => value === ""
+    );
+
+    if (LectureValues.schedule < new Date()) {
+      setModalErrorBody(
+        "The schedule time should not be earlier than the current time"
+      );
+      setIsOpen(true);
+    } else if (LectureValues.concludes <= LectureValues.schedule) {
+      setModalErrorBody(
+        "The combined time should not be earlier than the scheduled time"
+      );
+      setIsOpen(true);
+    } else if (hasEmptyString) {
+      setModalErrorBody(
+        "The following fields are mandatory, so please fill them out all"
+      );
+      setIsOpen(true);
+    } else {
+      try {
+        const response = await LecturePostService(LectureValues);
+        if (response.message) {
+          setIsOpen(true);
+          setModalErrorBody("The lecture was created with success fully added");
+        }
+      } catch (error) {
+        setIsOpen(true);
+        setModalErrorBody(
+          "There was a discrepancy between these values and the lecture data!"
+        );
+      }
     }
-   else if(LectureValues.concludes <= LectureValues.schedule){
-      setBody("Conculde time should not be Before than Schedule time")
-      setIsOpen(true)
-    }else if(hasEmptyString){
-      setBody("All feilds are mandatory please fill all fields")
-      setIsOpen(true)
-    }  
-   LecturePostService(LectureValues).then((res) => {});
-  }
-  
+  };
+
   return (
     <div className="container">
       <Navbar />
-      <SecondNavforLectureCreate  />
-      <CommonModalComponent isOpen={isOpen} setIsOpen={setIsOpen} body={body} />
+      <SecondNavforLectureCreate />
+      <CommonModalComponent
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        modalBody={modalErrorBody}
+      />
       <Box
         w="80%"
         ml="10%"
         mt="60px"
-        h="auto"
+        h="100vh"
         boxShadow="2px 4px 6px rgba(0, 0, 0, 0.1)"
       >
         <Box w="100%" p="2%" bg="white" h="auto">
@@ -69,12 +89,12 @@ const [body,setBody] = useState<string>("")
           />
           <Flex justifyContent={"flex-end"}>
             <Button
-             fontSize={isLargerThan900 ? "16px":"12px"}
+              fontSize={isLargerThan900 ? "16px" : "12px"}
               mt="20px"
               color="white"
               w="auto"
               bg="rgb(31 41 55)"
-                _hover={{ bg: "rgb(76, 84, 95)" }}
+              _hover={{ bg: "rgb(76, 84, 95)" }}
               onClick={CreateLecture}
             >
               CREATE LECTURE

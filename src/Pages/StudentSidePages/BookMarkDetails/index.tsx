@@ -12,6 +12,8 @@ const {id} = useParams()
     <div className="container">
        <Navbar />
        <BookMarkDetailsNavbar id={id}/>
+
+       
     </div>
   )
 }
