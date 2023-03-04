@@ -5,23 +5,31 @@ import { Box } from "@chakra-ui/react";
 import Navbar from "../../../components/StudentSideComponents/StudentNavbar/Navbar";
 import DashboardNavbar from "../../../components/StudentSideComponents/StudentDashboard/DashboardNavbar";
 import { GetDashboardLecturesService } from "../../../Services/LectureServices";
-import { ILectureResponse } from "@/Services/LectureInterface";
+import { ILectureResponse } from "../../../Services/LectureInterface";
 
 // this component displays student side dashboard
 const Dashborad = () => {
   const [dashboardLectures,setDashboardLectures] = useState<ILectureResponse[]>()
+   const [apiError,setApiError] =  useState<boolean>(false)
 
-  useEffect(()=>{
-    GetDashboardLecturesService().then((res)=>{
-      setDashboardLectures(res)
-    })
-  },[])
+    useEffect(()=>{
+      async function fetchData() {
+        try{
+        const response = await GetDashboardLecturesService();
+        setDashboardLectures(response);
+      }catch(error){
+ setApiError(true)
+      }
+    }
+      fetchData();
+      },[])
 
   return (
     <>
       <div className="container">
         <Navbar />
         < DashboardNavbar/>
+
         <Box
           w="80%"
           borderRadius="10px"

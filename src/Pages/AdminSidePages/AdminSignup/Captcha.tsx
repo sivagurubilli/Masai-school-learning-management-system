@@ -9,16 +9,16 @@ import {
   Text,
 } from "@chakra-ui/react";
 import "./index.css";
-import { setLocale } from "yup";
-interface User {
-  username: string;
+
+interface IcaptchaValues {
+  captchaValue: string;
   captchaMatch: boolean;
 }
 
 //captcha function goes here
 const Captcha = ({ setCaptcha1 }: any) => {
-  const [user, setUser] = useState<User>({
-    username: "",
+  const [captchaValues, setCaptchaValues] = useState<IcaptchaValues>({
+    captchaValue: "",
     captchaMatch: false,
   });
 
@@ -44,7 +44,7 @@ const Captcha = ({ setCaptcha1 }: any) => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const { name, value } = e.target;
-    setUser((prevState) => ({ ...prevState, [name]: value }));
+    setCaptchaValues((prevState) => ({ ...prevState, [name]: value }));
   };
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -55,26 +55,25 @@ const Captcha = ({ setCaptcha1 }: any) => {
     setIsLoading(true);
     setTimeout(() => {
       var captcha1 = captcha.join("");
-
-      if (captcha1 === user.username) {
+      if (captcha1 === captchaValues.captchaValue) {
         setCaptcha1(true);
         setIsCaptchaVerified(true);
       } else {
         setCaptcha(generateString(6));
       }
       setIsLoading(false);
-      setUser({
-        username: "",
+    setCaptchaValues({
+       captchaValue: "",
         captchaMatch: false,
       });
     }, 3000);
-    return user.captchaMatch;
+    return captchaValues.captchaMatch;
   };
 
   // when click on handle retry button this function again genearate recaptcha
   const handleRetry = () => {
     setCaptcha(generateString(6));
-    setUser({ username: "", captchaMatch: false });
+    setCaptchaValues({ captchaValue: "", captchaMatch: false });
     setIsCaptchaVerified(false);
   };
 
@@ -153,7 +152,7 @@ const Captcha = ({ setCaptcha1 }: any) => {
                 id="inputType"
                 placeholder="Enter Captcha"
                 name="username"
-                value={user.username}
+                value={captchaValues.captchaValue}
                 onChange={handleChange}
                 autoComplete="off"
                 w="60%"

@@ -75,7 +75,7 @@ const initialCaptcha: Icaptchamatched = {
 export default function AdminSignup() {
   const [signupState, setSignupState] = useState(initialValues);
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [body, setBody] = useState<string>("");
+  const [errorBody, setErrorBody] = useState<string>("");
   const [BackendError,setBackendError] = useState({
     backendErrorMessage:"",
     errorFromBackend:false
@@ -92,7 +92,7 @@ const [isLoading,setLoading] = useState(false)
   const onSubmit = async (values: IFormData) => {
     if(!CaptchaMatched.captchaMatch){
       setIsOpen(true)
-      setBody("Capatcha does not match. Please enter the correct captcha.")
+      setErrorBody("Capatcha does not match. Please enter the correct captcha.")
      }
     if (CaptchaMatched.captchaMatch) {
     setLoading(true)
@@ -240,7 +240,7 @@ const [isLoading,setLoading] = useState(false)
 
             <Box w="100%" mt="20px">
               <Captcha setCaptcha1={setCaptcha1} />
-              <CommonModalComponent isOpen={isOpen} setIsOpen={setIsOpen} body={body} />
+              <CommonModalComponent isOpen={isOpen} setIsOpen={setIsOpen} modalBody={errorBody} />
             </Box>
             <Flex justifyContent="center">
               <button className="buttonlogin" onClick={gotoLogin}>
