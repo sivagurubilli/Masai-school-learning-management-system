@@ -95,8 +95,7 @@ export async function GetAllLectureService(
  
   try {
     const response = await axios.get(
-      //  "/api/lecture/lectures/lectureList",  
-      "http://localhost:8070/posts"
+        "/api/lecture/lectures/lectureList",  
     );
 
     return response.data;
@@ -113,13 +112,12 @@ id :any
 ): Promise<ILectureResponse> {
   try {
     const response = await axios.get(
-    //   `/api/lecture/lectures/${id}`,
-    //   {
-    //     headers: {
-    //     "ngrok-skip-browser-warning": "1",
-    //   },
-    // }
-    `http://localhost:8070/posts/${id}`
+      `/api/lecture/lectures/${id}`,
+      {
+        headers: {
+        "ngrok-skip-browser-warning": "1",
+      },
+    } 
     );
     return response.data;
   } catch (error: any) {

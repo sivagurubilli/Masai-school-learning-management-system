@@ -20,6 +20,8 @@ import {
 import { useNavigate } from "react-router-dom";
 import { boolean } from "yup";
 
+
+
 const TableHeading = ({ LecturesData }: ISearchResponse) => {
     const navigate = useNavigate(); 
 
@@ -27,10 +29,7 @@ const TableHeading = ({ LecturesData }: ISearchResponse) => {
     const previousTime=moment(ad.concludes, 'DD-MM-YYYY HH:mm:ss')
     const currentTime = moment();
     const differenceInSeconds = currentTime.diff(previousTime, 'seconds');
-    if(ad.type==="Video"){
-        navigate(`/student/lectures/${ad.lectureid}`)
-    }
-    else if (differenceInSeconds < 0) {
+     if (differenceInSeconds < 0) {
         window.open(ad.zoomLink, "_blank");
       } else {
         navigate(`/student/lectures/${ad.lectureid}`);

@@ -53,7 +53,6 @@ const StudentLectureDetail = () => {
     a.click();
     document.body.removeChild(a);
   };
-  console.log("I get the data",lectureDetail)
   return (
     <div>
       <Navbar />
