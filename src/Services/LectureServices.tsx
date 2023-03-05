@@ -113,12 +113,13 @@ id :any
 ): Promise<ILectureResponse> {
   try {
     const response = await axios.get(
-      `/api/lecture/lectures/${id}`,
-      {
-        headers: {
-        "ngrok-skip-browser-warning": "1",
-      },
-    }
+    //   `/api/lecture/lectures/${id}`,
+    //   {
+    //     headers: {
+    //     "ngrok-skip-browser-warning": "1",
+    //   },
+    // }
+    `http://localhost:8070/posts/${id}`
     );
     return response.data;
   } catch (error: any) {

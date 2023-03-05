@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import Navbar from "../../../components/StudentSideComponents/StudentNavbar/Navbar";
 import {
   Box,
@@ -15,12 +15,27 @@ import {
 } from "@chakra-ui/react";
 import { Link,useParams } from "react-router-dom";
 import { AiOutlineDownload } from "react-icons/ai";
+import { LectureSingleService } from "../../../Services/LectureServices";
 import Video from "./../../../components/StudentSideComponents/StudentLectureComponents/Video";
 import "./index.css";
+import {
+  ILectureResponse,
+  ISingledata,
+} from "../../../Services/LectureInterface";
+import DetailTab from "./../../../components/StudentSideComponents/StudentLectureComponents/Tabs/DetailTab";
 
 const StudentLectureDetail = () => {
-  const { id } = useParams<{ id: string }>();
+  const { id = "" } = useParams<{ id: string }>();
+  const [lectureDetail, setLectureDetail] = useState<
+  ILectureResponse | undefined
+>();
   const [downloadLink, setDownloadLink] = useState<string>("");
+
+  useEffect(() => {
+    LectureSingleService(id).then((res) => {
+      setLectureDetail(res);
+    });
+  }, []);
 
   const handleDownload = async () => {
     const videoUrl =
@@ -38,9 +53,11 @@ const StudentLectureDetail = () => {
     a.click();
     document.body.removeChild(a);
   };
+  console.log("I get the data",lectureDetail)
   return (
     <div>
       <Navbar />
+      {lectureDetail && <Box>
       <Flex
         justify="space-between"
         align="center"
@@ -59,16 +76,16 @@ const StudentLectureDetail = () => {
               fontWeight="medium"
               _hover={{ textDecoration: "underline" }}
             >
-              CSBT Intervantion || Weekly Connect
+              {lectureDetail.title}
             </Box>
 
-            <span className="live2">Logic</span>
-            <span className="live">live</span>
+            <span className="live2">{lectureDetail.category}</span>
+            <span className="live">{lectureDetail.type}</span>
           </Flex>
           <Text>
             {" "}
-            <span className="nameSpan"> Shubham Singh</span>{" "}
-            <span>( 14 Feb, 23 - 4:30 pm)</span>
+            <span className="nameSpan">{ lectureDetail.user}</span>{" "}
+            <span>{lectureDetail.schedule.toLocaleString()}</span>
           </Text>
         </Box>
         <Box>
@@ -90,39 +107,9 @@ const StudentLectureDetail = () => {
       </Flex>
 
       <Box m="40px" boxShadow="md" p="6" rounded="base" bg="white">
-        <Tabs isFitted variant="enclosed">
-          <TabList mb="1em" h="80px">
-            <Tab
-              _selected={{
-                borderBottomWidth: "5px",
-                borderBottomColor: "#504de6",
-              }}
-              _hover={{ bg: "#f9fafb" }}
-            >
-              <Link className="link" to={`/student/lectures/${id}`}>
-                Details
-              </Link>
-            </Tab>
-            <Tab
-              _selected={{
-                borderBottomWidth: "5px",
-                borderBottomColor: "#504de6",
-              }}
-              _hover={{ bg: "#f9fafb" }}
-            >
-              <Link className="link" to={`/student/lectures/${id}/discussion`}>
-                Discussions
-              </Link>
-            </Tab>
-          </TabList>
-          <TabPanels>
-            <TabPanel>
-              <Video />
-            </TabPanel>
-            <TabPanel></TabPanel>
-          </TabPanels>
-        </Tabs>
+        <DetailTab lectureDetail={lectureDetail} lectureId={id}/>
       </Box>
+      </Box>}
 
       {downloadLink && (
         <a href={downloadLink}>Click here to download the video</a>

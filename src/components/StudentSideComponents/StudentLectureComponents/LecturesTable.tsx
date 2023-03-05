@@ -14,8 +14,6 @@ import {
     Td,
     Badge,
     Text,
-    Button,
-    Flex,
     TableContainer,
     Box,
 } from "@chakra-ui/react";
@@ -29,7 +27,7 @@ const TableHeading = ({ LecturesData }: ISearchResponse) => {
     const previousTime=moment(ad.concludes, 'DD-MM-YYYY HH:mm:ss')
     const currentTime = moment();
     const differenceInSeconds = currentTime.diff(previousTime, 'seconds');
-    if(ad.type=="Video"){
+    if(ad.type==="Video"){
         navigate(`/student/lectures/${ad.lectureid}`)
     }
     else if (differenceInSeconds < 0) {

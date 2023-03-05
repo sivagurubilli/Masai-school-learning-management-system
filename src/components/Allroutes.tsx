@@ -17,6 +17,7 @@ import CopyLecture from "../Pages/AdminSidePages/CopyLecture/Index";
 import BookMarks from "../Pages/StudentSidePages/BookMarks/Index";
 import BookMarkDetails from "../Pages/StudentSidePages/BookMarkDetails/Index";
 import StudentLectureDetail from "../Pages/StudentSidePages/LectureDetailPage/index";
+import StudentLectureDiscussion from './../Pages/StudentSidePages/LectureDiscussionPage/index';
 
 const Allroutes = () => {
   return (
@@ -27,6 +28,7 @@ const Allroutes = () => {
         <Route path="/admin/lectures"  element= { <AdminLecture />}/>
         <Route path="/student/lectures"  element= { <StudentLecture />}/>
         <Route path="/student/lectures/:id"  element= { <StudentLectureDetail />}/>
+        <Route path="/student/lectures/:id/discussion"  element= { <StudentLectureDiscussion />}/>
         <Route path="/admin/lectures/:id" element={<AdminLectureDetail />} />
         <Route path="/admin/lectures/edit/:id" element={<AdminLectureEdit />} />
         <Route path="/student/dashboard" element={<Dashborad />} />

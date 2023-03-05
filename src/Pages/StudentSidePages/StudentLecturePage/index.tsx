@@ -78,12 +78,11 @@ const StudentLecture = () => {
       day: "",
     });
   };
-
+  console.log("pintuuuu",lecturesData)
   const [isLargerThan900] = useMediaQuery("(min-width: 900px)");
   return (
     <div className="container">
       <Navbar />
-      {/* <Secondnav /> */}
       <SecondNavbar />
       <CommonModalComponent isOpen={isOpen} setIsOpen={setIsOpen} body={body} />
       <Box
