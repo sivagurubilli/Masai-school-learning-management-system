@@ -9,36 +9,42 @@ import {
   Text,
 } from "@chakra-ui/react";
 import "./index.css";
-import { setLocale } from "yup";
-interface User {
-  username: string;
+
+interface IcaptchaValues {
+  captchaValue: string;
   captchaMatch: boolean;
 }
 
 //captcha function goes here
 const Captcha = ({ setCaptcha1 }: any) => {
-  const [user, setUser] = useState<User>({
-    username: "",
+  const [captchaValues, setCaptchaValues] = useState<IcaptchaValues>({
+    captchaValue: "",
     captchaMatch: false,
   });
 
-  const characters = "K3+fMabcZ?#9123GTrsd@SO";
+  const characters =
+    "K3+fMabcZ?#9123GTrsd@@@$28SOGtJio3#@88dDQWyepzxxsaAsS&&%%";
 
   //this function  is for generating random captcha
-  const generateString = (length: number): string => {
+  const generateString = (length: number) => {
     let result = "";
     const charactersLength = characters.length;
     for (let i = 0; i < length; i++) {
       result += characters.charAt(Math.floor(Math.random() * charactersLength));
     }
-    return result;
+
+    const mappedStr = result
+      .split("")
+      .map((char: any, index: number) => `${char}`);
+
+    return mappedStr;
   };
 
-  const [captcha, setCaptcha] = useState<string>(generateString(6));
+  const [captcha, setCaptcha] = useState<string[]>(generateString(6));
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const { name, value } = e.target;
-    setUser((prevState) => ({ ...prevState, [name]: value }));
+    setCaptchaValues((prevState) => ({ ...prevState, [name]: value }));
   };
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -48,21 +54,26 @@ const Captcha = ({ setCaptcha1 }: any) => {
   const onSubmit = () => {
     setIsLoading(true);
     setTimeout(() => {
-      if (captcha === user.username) {
+      var captcha1 = captcha.join("");
+      if (captcha1 === captchaValues.captchaValue) {
         setCaptcha1(true);
         setIsCaptchaVerified(true);
       } else {
         setCaptcha(generateString(6));
       }
       setIsLoading(false);
+    setCaptchaValues({
+       captchaValue: "",
+        captchaMatch: false,
+      });
     }, 3000);
-    return user.captchaMatch;
+    return captchaValues.captchaMatch;
   };
 
   // when click on handle retry button this function again genearate recaptcha
   const handleRetry = () => {
     setCaptcha(generateString(6));
-    setUser({ username: "", captchaMatch: false });
+    setCaptchaValues({ captchaValue: "", captchaMatch: false });
     setIsCaptchaVerified(false);
   };
 
@@ -90,19 +101,42 @@ const Captcha = ({ setCaptcha1 }: any) => {
           </Flex>
         ) : (
           <>
-            <h4
-              id="captcha"
-              style={{
-                marginTop: "16px",
-                marginLeft: "10px",
-                position: "relative",
-                fontStyle: "italic",
-                color: "blue",
-                fontWeight: "bold",
-              }}
-            >
-              {captcha}
-            </h4>
+            <div>
+              <Flex
+                borderRadius="4PX"
+                boxShadow="2px 4px 6px rgba(0, 0, 0, 0.1)"
+                pl="10px"
+                bg="#bfbfbf"
+                maxW="50%"
+                alignItems="center"
+              >
+                {captcha.map((el, index: number) => {
+                  if (index % 2 == 0) {
+                    return (
+                      <Text
+                        fontStyle="italic"
+                        color="blue.600"
+                        marginLeft="10px"
+                        fontSize="15px"
+                      >
+                        {el}
+                      </Text>
+                    );
+                  } else {
+                    return (
+                      <Text
+                        fontStyle="italic"
+                        color="green.700"
+                        marginLeft="10px"
+                        fontSize="25px"
+                      >
+                        {el}
+                      </Text>
+                    );
+                  }
+                })}
+              </Flex>
+            </div>
             <div className="form-group row"></div>
 
             <FormLabel
@@ -118,6 +152,7 @@ const Captcha = ({ setCaptcha1 }: any) => {
                 id="inputType"
                 placeholder="Enter Captcha"
                 name="username"
+                value={captchaValues.captchaValue}
                 onChange={handleChange}
                 autoComplete="off"
                 w="60%"
@@ -129,7 +164,7 @@ const Captcha = ({ setCaptcha1 }: any) => {
                 bg="rgb(31 41 55)"
                 color="white"
                 _hover={{ bg: "rgb(55 65 81)" }}
-                width="auto"
+                fontSize="14px"
                 onClick={onSubmit}
                 w="auto"
                 ml="5px"

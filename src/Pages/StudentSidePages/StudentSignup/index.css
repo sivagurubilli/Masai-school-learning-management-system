@@ -12,7 +12,6 @@ body{
   width: auto;
   height: auto;
  background-color: white;
- border: 1px solid rgb(41, 40, 40);
  border-radius: 10px;
  color: red;
  margin-top: 6px;
@@ -22,21 +21,6 @@ justify-content: center;
  align-items: center;
  display: flex;
 
-}
-.error-showing-pop-up{
-  width: auto;
-  height: auto;
- background-color: white;
- border: 1px solid rgb(41, 40, 40);
- border-radius: 10px;
- color: red;
- padding: 20px;
- margin-top: 6px;
- padding-top: 5px;
- padding-bottom: 5px;
-justify-content: center;
- align-items: center;
- display: flex;
 }
 .button{
   background-color: rgb(31 41 55);

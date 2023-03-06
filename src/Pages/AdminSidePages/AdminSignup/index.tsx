@@ -21,6 +21,7 @@ import "./index.css";
 import { useNavigate } from "react-router-dom";
 
 import Captcha from "./Captcha";
+import CommonModalComponent from "../../../components/Modal/commonModal";
 
 //interface for form data
 interface IFormData {
@@ -73,6 +74,8 @@ const initialCaptcha: Icaptchamatched = {
 //signup for admin component start here
 export default function AdminSignup() {
   const [signupState, setSignupState] = useState(initialValues);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [errorBody, setErrorBody] = useState<string>("");
   const [BackendError,setBackendError] = useState({
     backendErrorMessage:"",
     errorFromBackend:false
@@ -87,18 +90,18 @@ const [isLoading,setLoading] = useState(false)
   // using formik and yup library just checking validations using useformik
   //onSubmitting value call the services for api call
   const onSubmit = async (values: IFormData) => {
-   
+    if(!CaptchaMatched.captchaMatch){
+      setIsOpen(true)
+      setErrorBody("Capatcha does not match. Please enter the correct captcha.")
+     }
     if (CaptchaMatched.captchaMatch) {
-
-       
     setLoading(true)
     setTimeout(()=>{
       setLoading(false)
     },3000)
 
-
     AdminSignupService(values).then((res:IAuthsignupResponse)=>{
-      if(res.name && res.roles[0].name!=="NORMAL_USER"){
+      if(res.name){
    navigate("/login")
         }
          if(!res.name){
@@ -237,6 +240,7 @@ const [isLoading,setLoading] = useState(false)
 
             <Box w="100%" mt="20px">
               <Captcha setCaptcha1={setCaptcha1} />
+              <CommonModalComponent isOpen={isOpen} setIsOpen={setIsOpen} modalBody={errorBody} />
             </Box>
             <Flex justifyContent="center">
               <button className="buttonlogin" onClick={gotoLogin}>

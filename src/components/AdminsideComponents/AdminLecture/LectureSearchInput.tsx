@@ -33,6 +33,7 @@ const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setFilterValues({ ...filterValues, [name]: value });
   };
 
+
   //this is setting values from input elements
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -72,9 +73,9 @@ const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
               onChange={handleChange}
               width={selectWidth}
               color="rgb(75 85 99)"
-              placeholder="Select branch">
+              placeholder="Select batch">
                  {batchArray?.map((el)=>(
-                      <option value={el.batch_id}>{el.batch_name}</option>
+                      <option value={el.batchId}>{el.batchName}</option>
                     ))}
             </Select>     
             <Select
@@ -85,7 +86,7 @@ const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
               placeholder="Select section"
               onChange={handleChange}>
                 {sectionArray?.map((el)=>(
-                      <option value={el.section_id}>{el.section_name}</option>
+                      <option value={el.sectionId}>{el.sectionName}</option>
                     ))}
             </Select>
             <Select

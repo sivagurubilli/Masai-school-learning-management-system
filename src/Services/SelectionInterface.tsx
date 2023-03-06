@@ -1,7 +1,7 @@
 
 export interface ISectionObject {
-    section_id:number
-      section_name: string;
+    sectionId:number
+      sectionName: string;
   }
 
   //interface for secction
@@ -10,8 +10,8 @@ export interface ISectionResponse {
   }
   
   export interface IBatchObject {
- batch_id:number
-   batch_name: string;
+ batchId:number
+   batchName: string;
   }
 
   export interface IBatchResponse {

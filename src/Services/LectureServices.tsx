@@ -1,5 +1,5 @@
 import axios from "axios";
-import { IBookMarkObject, ICreateLectureValues, ILectureResponse, ISearchResponse,  ISearchValues, ISingledata } from "./LectureInterface";
+import { IBookMarkObject, ICreateLectureValues, ILectureResponse,  ISearchValues, ISingledata } from "./LectureInterface";
 
 //interface for creating lectures and editing lectures
 
@@ -41,7 +41,7 @@ export async function LecturePostService(
   }
 }
 
-// lectures edit service function
+// lectures edit service functio
 export async function LectureEditService(
   data: ICreateLectureValues,
   id: string | undefined
@@ -179,11 +179,10 @@ export async function GetAllBookMarksService(
   ): Promise<IBookMarkObject[]> {  
     try {
       const response = await axios.get(
-        "/api/bookmark/getList",  
+        "/api/bookmarks/getList",  
       );
         return response.data;
     } catch (error: any) {
-      console.log(error)
       return error.response;
     }
   }
@@ -194,15 +193,33 @@ export async function GetAllBookMarksService(
     ): Promise<IBookMarkObject[]> {
      
       try {
-        const response = await axios.get(
+        const response = await axios.post(
           "/api/bookmark/getList",  
+          {
+            "userId": "105",
+            "lectureid": "205"
+        }
+        
         );
           return response.data;
       } catch (error: any) {
-        console.log(error)
         return error.response;
       }
     }
+
+    export async function SingleBookMarksService(
+      {id}:any
+      ): Promise<IBookMarkObject[]> {
+       
+        try {
+          const response = await axios.get(
+            `/api/bookmarks/getList/${id}` 
+          );
+            return response.data;
+        } catch (error: any) {
+          return error.response;
+        }
+      }
     
 //Remove BookMarks service
     export async function RemoveBookMarksService(
@@ -210,12 +227,40 @@ export async function GetAllBookMarksService(
       ): Promise<IBookMarkObject[]> {
        
         try {
-          const response = await axios.get(
-            "/api/bookmark/getList",
+          const response = await axios.delete(
+            `/api/bookmark/${id}`,
           );
             return response.data;
         } catch (error: any) {
-          console.log(error)
           return error.response;
         }
       }
+
+      //get all dashboard  services
+  export async function GetDashboardLecturesService(
+    ): Promise<ILectureResponse[]> {  
+      try {
+        const response = await axios.get(
+          "/api/dashboard",  
+        );
+          return response.data;
+      } catch (error: any) {
+        return error.response;
+      }
+    }
+
+         //add bookmark service
+  export async function SingleDashboardLecturesService(
+    {id}:any
+    ): Promise<IBookMarkObject[]> {  
+      try {
+        const response = await axios.get(
+          `/api/dashboard/${id}`,  
+        );
+          return response.data;
+      } catch (error: any) {
+        return error.response;
+      }
+    }
+    
+    

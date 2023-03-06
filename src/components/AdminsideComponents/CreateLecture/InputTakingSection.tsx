@@ -53,11 +53,23 @@ const InputTakingSection = ({ LectureValues, setLectureValues }: any) => {
   };
 
   const handleDateChange = (date: any) => {
-    setLectureValues({ ...LectureValues, schedule: date._d });
+    const Ndate = new Date(date);
+    const options: Intl.DateTimeFormatOptions = {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      hour12: false
+  };
+  const formattedDate = Ndate.toLocaleString('en-IN', options).replace(/,/g, '');
+    setLectureValues({ ...LectureValues, schedule: formattedDate});
+  
   };
 
   const handleDateConcludeChange = (date: any) => {
-    setLectureValues({ ...LectureValues, conclude: date._d });
+    setLectureValues({ ...LectureValues, concludes: date._d });
   };
   //input blur is for only when error showing in user inters into input feild
   const handleInputBlur = (event: React.FocusEvent<HTMLInputElement>) => {
@@ -86,19 +98,19 @@ const InputTakingSection = ({ LectureValues, setLectureValues }: any) => {
     md: "1 / 4", // Span two columns on medium screens
     lg: "1 / 5", // Span two columns starting from the second column on large screens
   });
-  const selectWidth = useBreakpointValue({ base: "100%", md: "100%",sm:"100%" });
+  const selectWidth = useBreakpointValue({ base: "100%", md: "auto",sm:"auto" });
 
   //Zoom Link validation
   function isZoomLink(link: string): boolean {
-    const zoomLinkRegex = /^https?:\/\/?zoom\.us\/(?:j\/\d{9,10}|[s,a]\/\w+)$/i
+    const zoomLinkRegex = /https:\/\/[\w-]*\.?zoom.us\/(j|my)\/[\d\w?=-]+/g
 
     return zoomLinkRegex.test(link);
   }
+
   //checking for zoomlink is valid or not
   function handleLinkChange(event: React.ChangeEvent<HTMLInputElement>) {
     const newLink = event.target.value;
-    setLectureValues({ ...LectureValues, zoomLink: newLink });
-    console.log(isZoomLink(newLink))
+    setLectureValues({ ...LectureValues, zoomLink: newLink })
     setZoomLinkValid(isZoomLink(newLink));
   }
 
@@ -150,7 +162,7 @@ const InputTakingSection = ({ LectureValues, setLectureValues }: any) => {
             placeholder="Select batch"
           >
             {batchArray?.map((el) => (
-              <option value={el.batch_id}>{el.batch_name}</option>
+              <option value={el.batchId}>{el.batchName}</option>
             ))}
           </Select>
         </Box>
@@ -166,7 +178,7 @@ const InputTakingSection = ({ LectureValues, setLectureValues }: any) => {
             onChange={handleChange}
           >
             {sectionArray?.map((el) => (
-              <option value={el.section_id}>{el.section_name}</option>
+              <option value={el.sectionId}>{el.sectionName}</option>
             ))}
           </Select>
         </Box>
@@ -207,7 +219,7 @@ const InputTakingSection = ({ LectureValues, setLectureValues }: any) => {
           <FormLabel color="rgb(75 85 99)">Concludes</FormLabel>
           <Box p="5px" border="1px solid rgb(226,232,240)" w="auto">
             <Datetime
-              value={LectureValues.conclude}
+              value={LectureValues.concludes}
               onChange={handleDateConcludeChange}
             />
           </Box>

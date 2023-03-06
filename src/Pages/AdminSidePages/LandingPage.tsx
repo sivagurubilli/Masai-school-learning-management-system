@@ -12,7 +12,7 @@ const LandingPage = () => {
   
    // when user enters to landing page it checks for username in localstorage and in session storage 
    // if find username find update state in redux based on values 
-   // if not find values in local storage  navigate to login 
+   // if not find values in local storage  navigate to login
   useEffect(() => {
     let usertype;
     let username;

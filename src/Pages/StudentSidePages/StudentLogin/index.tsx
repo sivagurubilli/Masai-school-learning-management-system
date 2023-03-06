@@ -76,7 +76,7 @@ LoginService(values).then((res:IAuthloginResponse)=>{
     navigate("/student/dashboard")
     }
 
-    if(res.user.roles[0].name!=="STUDENT_USER"){
+    if(res.user.roles[0].name !=="STUDENT_USER"){
       navigate("/admin/dashboard")
       }
    }
@@ -89,7 +89,7 @@ LoginService(values).then((res:IAuthloginResponse)=>{
 
   }
 //destructuring methods from useFormik
- const { handleSubmit, handleChange,handleBlur, touched, values, errors } = useFormik({
+ const { handleSubmit, handleChange, touched, values, errors } = useFormik({
  initialValues,
   validationSchema,
   onSubmit,
@@ -140,7 +140,6 @@ LoginService(values).then((res:IAuthloginResponse)=>{
                   placeholder="Email"
                   name="username"
                   onChange={handleChange}
-                  onBlur ={handleBlur}
                   value={values.username}
                 />
                 {touched.username && errors.username && <div className="error-showing-popup">{errors.username}</div>}
@@ -159,7 +158,6 @@ LoginService(values).then((res:IAuthloginResponse)=>{
                   placeholder="Password"
                   name="password"
                   onChange={handleChange}
-                  onBlur={handleBlur}
                   value={values.password}
                 />
                 {touched.password && errors.password && <div className="error-showing-popup">{errors.password}</div>}
