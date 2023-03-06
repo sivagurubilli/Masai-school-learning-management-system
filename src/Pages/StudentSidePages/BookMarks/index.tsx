@@ -29,8 +29,7 @@ const BookMarks = () => {
         w="90%"
         ml="5%"
         mt="60px"
-        h="auto" 
-      >
+        h="auto">
           <Text fontSize="20px">Lectures</Text>
         <Box w="100%" bg="white" h="100%" borderRadius="10px"  boxShadow="2px 4px 6px rgba(0, 0, 0, 0.1)">
           <Flex
@@ -44,7 +43,6 @@ const BookMarks = () => {
             <Text mr="70px"></Text>
           </Flex>
           <Divider />
-
           {ele.map((el) => (
             <div>
               <Flex padding="10px" justifyContent="space-between">

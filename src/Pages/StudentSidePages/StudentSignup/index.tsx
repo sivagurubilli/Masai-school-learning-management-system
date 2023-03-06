@@ -257,7 +257,7 @@ const [isLoading,setLoading] = useState(false)
                   onBlur={handleBlur}
                   value={values.reEnterPassword}
                 />
-                {touched.reEnterPassword && errors.reEnterPassword && <div className="error-showing-pop-up">{errors.reEnterPassword}</div>}
+                {touched.reEnterPassword && errors.reEnterPassword && <div className="error-showing-popup">{errors.reEnterPassword}</div>}
               </div>
                  
               <Flex justifyContent="flex-between">

@@ -37,6 +37,7 @@ const Profilecomponent = ({ setshow1 }: ProfilecomponentProps) => {
       height="auto"
       marginLeft="82%"
       mt="-10px"
+      zIndex="1"
       borderRadius="5px"
       boxShadow="0 5px 15px rgba(0,0,0,0.06)"
       backgroundColor="white"

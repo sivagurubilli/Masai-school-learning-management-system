@@ -52,7 +52,7 @@ export const HelperSectionValues = [
   {
     heading: "Images",
     data: "You can add images by selecting the image icon, which will upload and add image to the editor, or you can manually add the image by adding !exclamation , followed by alt text inside [] and and image url inside() , like so",
-    example: "![alt text for image ] (uel_to_image.png)",
+    example: "![alt text for image ] (url_to_image.png)",
   },
 
   {

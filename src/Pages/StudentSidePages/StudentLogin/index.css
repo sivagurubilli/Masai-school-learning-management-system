@@ -1,16 +1,16 @@
 
 body{
   background-color: rgb(243,244,246);
-
 }
+
 .container{
   height: auto;
-  
 }
-.email-error-showing-popup{
+.error-showing-popup{
   width: auto;
   height: auto;
  background-color: white;
+ border-radius: 10px;
  color: red;
  margin-top: 6px;
  padding-top: 5px;
@@ -20,6 +20,7 @@ justify-content: center;
  display: flex;
 
 }
+
 .button{
   background-color: rgb(31 41 55);
   margin-right: 10px;

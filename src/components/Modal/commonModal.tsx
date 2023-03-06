@@ -11,7 +11,7 @@ import {
   useMediaQuery,
 } from "@chakra-ui/react";
 
-const CommonModalComponent = ({ isOpen, setIsOpen, body }: any) => {
+const CommonModalComponent = ({ isOpen, setIsOpen, modalBody }: any) => {
   const handleClose = () => setIsOpen(false);
   const [isLargerThan900] = useMediaQuery("(min-width: 900px)");
 
@@ -21,7 +21,7 @@ const CommonModalComponent = ({ isOpen, setIsOpen, body }: any) => {
         <ModalOverlay />
         <ModalContent>
           <ModalBody>
-            <Text p="30px">{body}</Text>
+            <Text p="30px">{modalBody}</Text>
           </ModalBody>
           <ModalFooter>
             <Button
