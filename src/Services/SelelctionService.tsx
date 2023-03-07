@@ -1,11 +1,8 @@
 import axios, { AxiosResponse } from "axios";
 import {
   IBatchObject,
-  IBatchResponse,
-  ISectionResponse,
+  ICategoryObject,
   ISectionObject,
-  ITypeResponse,
-  IUserResponse,
   ITypeObject,
   IUserObject,
 } from "./SelectionInterface";
@@ -13,21 +10,15 @@ import {
 export async function getBatchArrray(): Promise<IBatchObject[]>{
   try {
     const response = await axios.get(
-      "https://17df-202-142-81-172.in.ngrok.io/api/batchList",
-      {
-        headers: {
-        "ngrok-skip-browser-warning": "1",
-      },}
+      "/api/batchList",
     );
-   console.log(response)
-
     return response.data;
   } catch (error: any) {
     return error;
   }
 }
 
-export async function getSectionArray() {
+export async function getSectionArray() : Promise<ISectionObject[]>{
   try {
     const response= await axios.get(
       "/api/sectionList"
@@ -38,7 +29,7 @@ export async function getSectionArray() {
   }
 }
 
-export async function getTypeArray() {
+export async function getTypeArray(): Promise<ITypeObject[]> {
   try {
     const response = await axios.get(
       "lectureType/getLectureTypeList"
@@ -49,11 +40,25 @@ export async function getTypeArray() {
   }
 }
 
-export async function getUserArray() {
+export async function getUserArray(): Promise<IUserObject[]> {
   try {
     const response = await axios.get(
-      "/user"
+      "/api/user"
     );
+    return response.data;
+  } catch (error: any) {
+    return error;
+  }
+}
+
+
+
+export async function getCategoryArrray(): Promise<ICategoryObject[]>{
+  try {
+    const response = await axios.get(
+      "/category/getCategoryList"
+          );
+
     return response.data;
   } catch (error: any) {
     return error;

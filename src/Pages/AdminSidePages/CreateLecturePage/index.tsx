@@ -13,7 +13,7 @@ import CommonModalComponent from "../../../components/Modal/commonModal";
 const AdminLectureCreate = () => {
   const [isLargerThan900] = useMediaQuery("(min-width: 900px)");
   const [isOpen, setIsOpen] = useState<boolean>(false);
-const [body,setBody] = useState<string>("")
+const [modalBody,setModalErrorBody] = useState<string>("")
   const [LectureValues, setLectureValues] = useState<ICreateLectureValues>({
     title: "",
     batch: "",
@@ -22,7 +22,7 @@ const [body,setBody] = useState<string>("")
     type: "",
     schedule: new Date(),
     concludes: new Date(),
-    user: "",
+    createdBy: "",
     tags: [],
     hideVideo: false,
     optional: false,
@@ -32,37 +32,37 @@ const [body,setBody] = useState<string>("")
     notes: "",
   });
 
-  const CreateLecture = () => {
-    console.log(LectureValues)
-    const hasEmptyString = Object.values(LectureValues).some(value => value === '')
-  
-    if(LectureValues.schedule < new Date()){
-      setBody("Schedule time should not be Before than Current time")
-     setIsOpen(true)
+
+ 
+  const CreateLecture = async () => {
+      try {
+        const response = await LecturePostService(LectureValues);
+        if (response.message) {
+          setIsOpen(true);
+          setModalErrorBody("The lecture was created with success fully added");
+        }
+      } catch (error) {
+        setIsOpen(true);
+        setModalErrorBody(
+          "Sorry about that! There is a scheduled downtime on your servers, so please check them"
+        );
+      }
     }
-   else if(LectureValues.concludes <= LectureValues.schedule){
-      setBody("Conculde time should not be Before than Schedule time")
-      setIsOpen(true)
-    }else if(hasEmptyString){
-      setBody("All feilds are mandatory please fill all fields")
-      setIsOpen(true)
-    }  
-   LecturePostService(LectureValues).then((res) => {});
-  }
   
   return (
     <div className="container">
       <Navbar />
       <SecondNavforLectureCreate  />
-      <CommonModalComponent isOpen={isOpen} setIsOpen={setIsOpen} body={body} />
+      <CommonModalComponent isOpen={isOpen} setIsOpen={setIsOpen} modalBody={modalBody} />
       <Box
         w="80%"
         ml="10%"
         mt="60px"
         h="auto"
         boxShadow="2px 4px 6px rgba(0, 0, 0, 0.1)"
+        bg="white"
       >
-        <Box w="100%" p="2%" bg="white" h="auto">
+        <Box w="100%" p="2%"  h="auto">
           <InputTakingSection
             LectureValues={LectureValues}
             setLectureValues={setLectureValues}
@@ -82,7 +82,7 @@ const [body,setBody] = useState<string>("")
           </Flex>
         </Box>
       </Box>
-      <Box w="80%" ml="10%" bg="white" h="100vh"></Box>
+      
     </div>
   );
 };

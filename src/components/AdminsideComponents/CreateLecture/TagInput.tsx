@@ -1,42 +1,51 @@
 import React, { useState, useEffect } from "react";
-import {
-  Box,
-  Flex,
-  FormLabel,
-} from "@chakra-ui/react";
+import { Box, Flex, FormLabel, Text } from "@chakra-ui/react";
 import { Categoery } from "../../../assets/assets";
 
 
-const TagInput = ({ LectureValues, setLectureValues }: any) => {
+const TagInput = ({ values, LectureValues, setLectureValues }: any) => {
   const [showSuggestions, setShowSuggestions] = useState<boolean>(false);
-  const [suggestion, setSuggestions] = useState<string[]>([]);
-
+  const [suggestionTags, setSuggestionsTags] = useState<string[]>([]);
+  const [tags, setTags] = useState<string[]>(values.tags);
 
   //on clicking on tag it added tgs array lecturevalues as well
-
   const handleTagClick = (tag: string) => {
     if (!LectureValues.tags.includes(tag)) {
+      setTags([...tags, tag]);
       setLectureValues({
         ...LectureValues,
         tags: [...LectureValues.tags, tag],
       });
     }
   };
+
   //removing tags from tag list
-  const handleRemoveTag = (tag1: any) => {
+  const handleRemoveTag = (tag1: string) => {
+    const Filtertag: any = tags.filter((tag: any) => tag !== tag1);
     setLectureValues({
       ...LectureValues,
       tags: LectureValues.tags.filter((tag: any) => tag !== tag1),
     });
+    setTags(Filtertag);
+  };
+
+  const ShowSuggetion = () => {
+    setShowSuggestions(!showSuggestions);
+  
   };
 
   useEffect(() => {
+    setLectureValues({ ...values, tags: tags });
+  }, [values]);
+
+  console.log(values);
+  useEffect(() => {
     Categoery.map((el) => {
-      if (el.key === LectureValues.category) {
-        setSuggestions(el.tags);
+      if (el.key === values.category) {
+        setSuggestionsTags(el.tags);
       }
     });
-  }, [LectureValues.category]);
+  }, [values.category]);
 
   return (
     <div>
@@ -48,9 +57,9 @@ const TagInput = ({ LectureValues, setLectureValues }: any) => {
         minH="40px"
         maxH="auto"
         border="1px solid rgb(203,213,224)"
-        p="10px"
-        borderRadius="10px"
-        onClick={() => setShowSuggestions(!showSuggestions)}
+        p="7px"
+        borderRadius="7px"
+        onClick={ShowSuggetion}
       >
         {LectureValues.tags?.map((tag: any) => (
           <Flex
@@ -83,7 +92,7 @@ const TagInput = ({ LectureValues, setLectureValues }: any) => {
           </Flex>
         ))}
       </Flex>
-      {showSuggestions && (
+      {values.category && (
         <Flex
           flexWrap="wrap"
           mt="10px"
@@ -92,7 +101,7 @@ const TagInput = ({ LectureValues, setLectureValues }: any) => {
           h="auto"
           border="1px soild grey"
         >
-          {suggestion.map((suggestion) => (
+          {suggestionTags.map((suggestionTag: any) => (
             <Box
               style={{ borderRadius: "10px" }}
               ml="10px"
@@ -106,13 +115,18 @@ const TagInput = ({ LectureValues, setLectureValues }: any) => {
               fontSize="13px"
               bg="blue.100"
               cursor="pointer"
-              key={suggestion}
-              onClick={() => handleTagClick(suggestion)}
+              key={suggestionTag}
+              onClick={() => handleTagClick(suggestionTag)}
             >
-              {suggestion}{" "}
+              {suggestionTag}{" "}
             </Box>
           ))}
         </Flex>
+      )}
+      {!values.category && (
+        <Text color="orange" fontSize="14PX">
+          Select Categoery to get the relevent tags
+        </Text>
       )}
     </div>
   );

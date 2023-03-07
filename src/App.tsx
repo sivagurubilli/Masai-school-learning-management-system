@@ -3,7 +3,7 @@ import Allroutes from './components/Allroutes';
 import React from 'react';
 import axios from "axios"
 
-axios.defaults.baseURL ="http://54.253.97.185/"
+axios.defaults.baseURL ="http://3.27.61.194:8080/"
 function App(){
   return (
     <div className="App">

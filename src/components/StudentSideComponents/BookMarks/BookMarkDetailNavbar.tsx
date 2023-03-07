@@ -10,6 +10,8 @@ import {
 } from "@chakra-ui/react";
 import { LectureSingleService } from "../../../Services/LectureServices";
 import { ILectureResponse } from "../../../Services/LectureInterface";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../redux/store";
 
 // this component is navbar below component in dash board page
 const BookMarkDetailsNavbar = ({ id }: any) => {
@@ -17,10 +19,23 @@ const BookMarkDetailsNavbar = ({ id }: any) => {
   const [isLargerThan900] = useMediaQuery("(min-width: 900px)");
   const [lectureDetail, setLectureDetails] = useState<ILectureResponse>();
   const [isBookmark, setBookmark] = useState<Boolean>(true);
+  
+
+  const state = useSelector((state: RootState) => state.Authreducer);
+
+
   useEffect(() => {
-    LectureSingleService(id).then((res) => {
-      setLectureDetails(res);
-    });
+    const fetchData = async ()=> {
+      try{
+    const response = await LectureSingleService(id);
+    if(response.lectureid){
+      setLectureDetails(response);
+    }
+      }catch(error){
+       
+      }
+    }
+    fetchData()
   }, [id]);
 
   const addBookmark = () => {

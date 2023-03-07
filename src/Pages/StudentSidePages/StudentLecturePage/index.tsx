@@ -9,7 +9,6 @@ import {
   LectureSearchService,
 } from "../../../Services/LectureServices";
 import {
-  ISearchResponse,
   ILectureResponse,
 } from "../../../Services/LectureInterface";
 import CommonModalComponent from "../../../components/Modal/commonModal";
@@ -21,8 +20,8 @@ interface IFilteredValues {
   batch: string;
   section: string;
   type: string;
-  user: string;
-  date: string;
+  createdBy: string;
+  startTime: string;
   week: string;
   day: string;
 }
@@ -33,8 +32,8 @@ const StudentLecture = () => {
     batch: "",
     section: "",
     type: "",
-    user: "",
-    date: "",
+    createdBy: "",
+    startTime: "",
     week: "",
     day: "",
   });
@@ -72,8 +71,8 @@ const StudentLecture = () => {
       batch: "",
       section: "",
       type: "",
-      user: "",
-      date: "",
+      createdBy: "",
+      startTime: "",
       week: "",
       day: "",
     });

@@ -15,10 +15,18 @@ const BookMarks = () => {
     { tile: "siva", author: "ravi", schedule: "1234njdjjdjd", id: 3 },
   ];
 
+  //getting all bookmarks when user enters into page by using useEffect
+
   useEffect(() => {
-    GetAllBookMarksService().then((res) => {
-      setBookMarks(res);
-    });
+    const fetchData = async () => {
+      try {
+        const response = await  GetAllBookMarksService();
+        setBookMarks(response);
+      } catch (error) {
+        
+      }
+    };
+    fetchData(); 
   }, []);
 
   return (

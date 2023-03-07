@@ -3,11 +3,9 @@ import * as yup from "yup";
 import { useFormik } from "formik";
 import {
   Button,
-  Checkbox,
   Container,
   Flex,
   FormLabel,
-  HStack,
   Input,
   Select,
   Text,
@@ -15,6 +13,7 @@ import {
 
 import { Box, Image } from "@chakra-ui/react";
 import {
+
   masaiimage,
 } from "../../../assets/assets";
 import {getBatchArrray,
@@ -25,7 +24,7 @@ import {
   StudentSignupService,
 } from "../../../Services/AuthServices";
 import "./index.css";
-import { useNavigate } from "react-router-dom";
+import { IBatchObject, ISectionObject } from "../../../Services/SelectionInterface";
 
 //interface for form data
 interface IFormData {
@@ -64,27 +63,36 @@ const initialValues: IFormData = {
 };
 
 // student Signup component
-export default function StudentSignup({setGotoSignup}:any) {
- 
-  const [BackendError,setBackendError] = useState({
-    backendErrorMessage:"",
-    errorFromBackend:false
-  })
-const [isLoading,setLoading] = useState(false)
-  const [batchDetails,setBatchDetails] = useState([])
-  const [sectionDetails,setSectionDetails] = useState([])
-   
-  const navigate = useNavigate();
+export default function StudentSignup({ setGotoSignup }: any) {
+  const [BackendError, setBackendError] = useState({
+    backendErrorMessage: "",
+    errorFromBackend: false,
+  });
+  const [isLoading, setLoading] = useState(false);
+  const [batchArray, setBatchArray] = useState<IBatchObject[]>();
+  const [sectionArray, setSectionArray] = useState<ISectionObject[]>();
 
-  useEffect(()=>{
-  getBatchArrray().then((res:any)=>{
-  setBatchDetails(res)
-  })
-  getSectionArray().then((res:any)=>{
-    setSectionDetails(res)
-    })
-   },[])
+  useEffect(() => {
+    gettingBatchArrray();
+    gettingSectionArray();
+  }, []);
 
+  const gettingBatchArrray = async () => {
+    try {
+      const response = await getBatchArrray();
+      if(response.length){
+      setBatchArray(response);
+      }
+    } catch (error) {}
+  };
+  const gettingSectionArray = async () => {
+    try {
+      const response = await getSectionArray();
+      if(response.length){
+      setSectionArray(response);
+      }
+    } catch (error) {}
+  };
 
 //onsubmitting call services for manage apis
   const onSubmit = async (values: IFormData) => {

@@ -3,6 +3,10 @@ export interface ISectionObject {
     sectionId:number
       sectionName: string;
   }
+  export interface ICategoryObject {
+  id:number
+      categoryName: string;
+  }
 
   //interface for secction
 export interface ISectionResponse {

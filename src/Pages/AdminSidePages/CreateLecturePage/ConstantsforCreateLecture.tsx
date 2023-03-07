@@ -68,6 +68,6 @@ export const HelperSectionValues = [
   {
     heading: "Embedding google slides",
     data: "You can also Embed your buy me coffe button by writing following ",
-    example: "% google slides SLIDES_URL_HERE",
+    example: "% google slides SLIDES_URL_HERE %",
   },
 ];

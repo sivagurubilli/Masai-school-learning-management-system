@@ -6,9 +6,12 @@
   .activeText{
    padding-bottom: 20px;
 border-bottom: 2px solid blue;
+color: blue;
+font-size:17px;
+    cursor: pointer
   }
   .default{
-    font-size: 18px;
+    font-size: 17px;
     cursor: pointer
   }
   .default:hover{

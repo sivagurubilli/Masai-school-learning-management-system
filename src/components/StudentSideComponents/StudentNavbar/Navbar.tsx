@@ -71,8 +71,8 @@ const Navbar = () => {
             <Hide below="1100px">
               <Flex w="70%" justifyContent={"space-around"} align="center">
                 {NavbarArray.map((el) => (
-                  <Box className="li">
-                    <NavLink key={el} to={"/admin/" + el.toLowerCase()}>{el}</NavLink>
+                  <Box key={el}  className="li">
+                    <NavLink key={el} to={"/student/" + el.toLowerCase()}>{el}</NavLink>
                   </Box>
                 ))}
               </Flex>
@@ -123,8 +123,8 @@ const Navbar = () => {
                   className={clicked ? "navbar-mobile active" : "navbar-mobile"}
                 >
                   {NavbarArray.map((el) => (
-                    <li>
-                      <NavLink key={el} to={"/admin/" + el.toLowerCase()}>
+                    <li key={el} >
+                      <NavLink key={el} to={"/student/" + el.toLowerCase()}>
                         {el}
                       </NavLink>
                     </li>

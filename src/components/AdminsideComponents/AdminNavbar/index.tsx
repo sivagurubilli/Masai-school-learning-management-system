@@ -66,7 +66,7 @@ const Navbar = () => {
             <Hide below="1100px">
               <Flex w="70%" justifyContent={"space-around"} align="center">
                 {NavbarAdminArray.map((el) => (
-                  <Box className="li">
+                  <Box  key={el}  className="li">
                     <NavLink key={el} to={"/admin/" + el.toLowerCase()}>
                       {el}
                     </NavLink>
@@ -122,7 +122,7 @@ const Navbar = () => {
                   className={clicked ? "navbar-mobile active" : "navbar-mobile"}
                 >
                   {NavbarAdminArray.map((el) => (
-                    <li>
+                    <li key={el} >
                       <NavLink key={el} to={"/admin/" + el.toLowerCase()}>
                         {el}
                       </NavLink>

@@ -16,6 +16,7 @@ const Dashborad = () => {
       const fetchData = async() =>{
         try{
         const response = await GetDashboardLecturesService();
+        
         setDashboardLectures(response);
       }catch(error){
  setApiError(true)

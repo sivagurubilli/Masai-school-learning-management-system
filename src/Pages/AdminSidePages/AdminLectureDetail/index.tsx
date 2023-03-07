@@ -13,7 +13,6 @@ import {
   Text,
   useMediaQuery,
 } from "@chakra-ui/react";
-import { LectureDetailkeys } from "../CreateLecturePage/ConstantsforCreateLecture";
 import "../AdminLecturePage/index.css";
 import { LectureSingleService } from "../../../Services/LectureServices";
 import {
@@ -22,22 +21,32 @@ import {
 } from "../../../Services/LectureInterface";
 
 const AdminLectureDetail = () => {
-  const { id } = useParams();
+  
   const [lectureDetail, setLectureDetail] = useState<
-    ILectureResponse | undefined
+    ILectureResponse 
   >();
+  const [lectureDetailError,setLectureDetailError] = useState<boolean>(false)
   const [isVideoActive, setVideoActive] = useState<boolean>(false);
-  const keyValueArray = Object.entries(LectureDetailkeys);
+  const keyValueArray = lectureDetail ? Object.entries(lectureDetail) : [];
   const [isLargerThan900] = useMediaQuery("(min-width: 900px)");
-
+  const { id } = useParams();
   const handeleClick = () => {
     setVideoActive(!isVideoActive);
   };
 
+
   useEffect(() => {
-    LectureSingleService(id).then((res) => {
-      setLectureDetail(res);
-    });
+    const fetchData = async ()=> {
+      try{
+    const response = await LectureSingleService(id);
+    if(response.lectureid){
+      setLectureDetail(response);
+    }
+      }catch(error){
+       setLectureDetailError(true)
+      }
+    }
+    fetchData()
   }, [id]);
 
   return (
@@ -61,10 +70,10 @@ const AdminLectureDetail = () => {
           h="auto"
         >
           <Box p="3%" h="120px">
-            <Text>React redux with crud app lecture</Text>
+            <Text>{lectureDetail?.title}</Text>
             <Flex alignItems="center" flexWrap="wrap">
-              <Text>fw1233 |</Text>
-              <Text ml="10px">rct 201 |</Text>
+              <Text>{lectureDetail?.batch} |</Text>
+              <Text ml="10px">{lectureDetail?.section} |</Text>
               <Badge
                 bg="orange"
                 size="sm"
@@ -75,7 +84,7 @@ const AdminLectureDetail = () => {
                 Check Attendance
               </Badge>
             </Flex>
-            <Text>Siva Gurubilli </Text>
+            <Text>{lectureDetail?.createdBy}</Text>
           </Box>
           <Divider />
           <Box w="100%">
@@ -83,12 +92,12 @@ const AdminLectureDetail = () => {
               <Flex
                 h="auto"
                 p="20px"
-                bg={index % 2 == 1 ? "gray.100" : "white"}
+                bg={index % 2 === 1 ? "gray.100" : "white"}
               >
-                <Box display={index == 0 ? "none" : "block"} w="50%">
+                <Box display={index === 0 ? "none" : "block"} w="50%">
                   <Text>{key}</Text>
                 </Box>
-                <Box display={index == 0 ? "none" : "block"} w="50%">
+                <Box display={index === 0 ? "none" : "block"} w="50%">
                   <Text>{value}</Text>
                 </Box>
               </Flex>

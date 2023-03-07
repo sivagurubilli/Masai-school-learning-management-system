@@ -14,7 +14,6 @@ import {
   LectureSearchService,
 } from "../../../Services/LectureServices";
 import {
-  ISearchResponse,
   ILectureResponse,
 } from "../../../Services/LectureInterface";
 import CommonModalComponent from "../../../components/Modal/commonModal";
@@ -25,8 +24,8 @@ interface IFilteredValues {
   batch: string;
   section: string;
   type: string;
-  user: string;
-  date: string;
+  createdBy: string;
+  startTime: string;
   week: string;
   day: string;
 }
@@ -37,37 +36,50 @@ const AdminLecture = () => {
     batch: "",
     section: "",
     type: "",
-    user: "",
-    date: "",
+    createdBy: "",
+    startTime: "",
     week: "",
     day: "",
   });
   const [isLoading, setLoading] = useState<boolean>(false);
   const [lecturesData, setLecturesData] = useState<ILectureResponse[]>();
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [body, setBody] = useState<string>("");
+  const [modalBody, setModalErrorBody] = useState<string>("");
 
   // calling service for getting list for lectures
-  const GetLectures = () => {
+  const GetLectures = async () => {
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
     }, 1000);
-console.log(filterValues)
-    LectureSearchService(filterValues).then((res: any) => {
-      if (res.length > 1) {
-        setLecturesData(res);
-      } else if (res.data.success === false) {
+
+    try {
+      const response = await LectureSearchService(filterValues);
+      if (response.length > 1) {
+        setLecturesData(response);
+      } else if (!response.length) {    
         setIsOpen(true);
-        setBody("These values did not match the lecture data!");
+        setModalErrorBody("These values did not match the lecture data!");
       }
-    });
-  };
+  }catch(error){
+
+  }
 
   useEffect(() => {
-    GetAllLectureService().then((res) => {
-      setLecturesData(res);
-    });
+    const fetchData = async () => {
+      try {
+        const response = await GetAllLectureService();
+        if(response.length){
+        setLecturesData(response);
+        }
+      } catch (error) {
+        setIsOpen(true);
+        setModalErrorBody(
+          "We were unable to find any data. It seems that something has gone wrong!"
+        );
+      }
+    };
+    fetchData();
   }, []);
 
   const Reset = () => {
@@ -76,8 +88,8 @@ console.log(filterValues)
       batch: "",
       section: "",
       type: "",
-      user: "",
-      date: "",
+      createdBy: "",
+      startTime: "",
       week: "",
       day: "",
     });
@@ -88,13 +100,14 @@ console.log(filterValues)
     <div className="container">
       <Navbar />
       <Secondnav />
-      <CommonModalComponent isOpen={isOpen} setIsOpen={setIsOpen} body={body} />
+      <CommonModalComponent isOpen={isOpen} setIsOpen={setIsOpen} modalBody={modalBody} />
       <Box
         w="90%"
         ml="5%"
         mt="60px"
         h="auto"
         boxShadow="2px 4px 6px rgba(0, 0, 0, 0.1)"
+        
       >
         <Box w="100%" p="2%" bg="white" h="auto">
           <LectureSearchInput
@@ -129,11 +142,11 @@ console.log(filterValues)
           </Flex>
         </Box>
       </Box>
-      <Box w="90%" ml="5%" bg="white" h="100vh">
+      <Box w="90%" ml="5%" bg="white" h="auto">
         {lecturesData && <TableHeading LecturesData={lecturesData} />}
       </Box>
     </div>
   );
 };
-
+}
 export default AdminLecture;

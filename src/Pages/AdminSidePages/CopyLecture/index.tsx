@@ -1,14 +1,7 @@
 import {
-  Container,
   Box,
-  Grid,
-  Input,
-  Select,
-  useBreakpointValue,
   Flex,
   Button,
-  FormLabel,
-  Text,
   useMediaQuery,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
@@ -24,7 +17,7 @@ import CommonModalComponent from "../../../components/Modal/commonModal";
 const CopyLecture = () => {
   const [isLargerThan900] = useMediaQuery("(min-width: 900px)");
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [body, setBody] = useState<string>("");
+  const [modalBody, setModalErrorBody] = useState<string>("");
   const [LectureCopyValues, setLectureCopyValues] =
     useState<ICreateLectureValues>({
       title: "",
@@ -34,7 +27,7 @@ const CopyLecture = () => {
       type: "",
       schedule: new Date(),
       concludes: new Date(),
-      user: "",
+      createdBy: "",
       tags: [],
       hideVideo: false,
       optional: false,
@@ -47,27 +40,30 @@ const CopyLecture = () => {
   // get id from params using useparams
   const { id } = useParams();
   //copy lecture service call
-  const CopyLecture = () => {
-    const hasEmptyString = Object.values(LectureCopyValues).some(
-      (value) => value === "");
-    if (LectureCopyValues.schedule < new Date()) {
-      setBody("Schedule time should not be Before than Current time");
-      setIsOpen(true);
-    } else if (LectureCopyValues.concludes <= LectureCopyValues.schedule) {
-      setBody("Conculde time should not be Before than Schedule time");
-      setIsOpen(true);
-    } else if (hasEmptyString) {
-      setBody("All feilds are mandatory please fill all fields");
-      setIsOpen(true);
+  const CopyLecture = async () => {
+      try {
+        const response = await LectureCopyService(LectureCopyValues, id);
+        if (response.message) {
+          setIsOpen(true);
+          setModalErrorBody("With success, the lecture was copied and fully added");
+        }
+      } catch (error) {
+        setIsOpen(true);
+        setModalErrorBody(
+          "Sorry about that! There is a scheduled downtime on your servers, so please check them"
+        );
+      }
     }
-     LectureCopyService(LectureCopyValues, id).then((res) => {});
-  };
 
   return (
     <div className="container">
       <Navbar />
       <SecondNavforLectureCreate />
-      <CommonModalComponent isOpen={isOpen} setIsOpen={setIsOpen} body={body} />
+      <CommonModalComponent
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        modlBody={modalBody}
+      />
       <Box
         w="80%"
         ml="10%"
