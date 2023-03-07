@@ -50,7 +50,7 @@ export interface ICreateLectureValues {
     schedule:Date,
     concludes:Date,
     createdBy: string,
-    tags:string[] | null,
+    tags:string[],
     hideVideo:boolean,
     optional:boolean,
     zoomLink:string,
@@ -65,6 +65,6 @@ export interface ICreateLectureValues {
 
   export interface IBookMarkObject{
     id:number,
-    tilte:string,
+    title:string,
     date:string
   }

@@ -11,29 +11,29 @@ import {
   Flex,
   Input,
   Text,
-  useMediaQuery,
 } from "@chakra-ui/react";
 import "../AdminLecturePage/index.css";
-import { LectureSingleService } from "../../../Services/LectureServices";
+import { AddVideoFileService, LectureSingleService } from "../../../Services/LectureServices";
 import {
   ILectureResponse,
-  ISingledata,
 } from "../../../Services/LectureInterface";
+import CommonModalComponent from "../../../components/Modal/commonModal";
+import Loading from "../../../components/Modal/Loader";
 
 const AdminLectureDetail = () => {
   
   const [lectureDetail, setLectureDetail] = useState<
     ILectureResponse 
   >();
-  const [lectureDetailError,setLectureDetailError] = useState<boolean>(false)
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [modalBody, setModalErrorBody] = useState<string>("");
+  const [videoFile,setVideoFile ]= useState<File | null>(null);
   const [isVideoActive, setVideoActive] = useState<boolean>(false);
   const keyValueArray = lectureDetail ? Object.entries(lectureDetail) : [];
-  const [isLargerThan900] = useMediaQuery("(min-width: 900px)");
   const { id } = useParams();
   const handeleClick = () => {
     setVideoActive(!isVideoActive);
   };
-
 
   useEffect(() => {
     const fetchData = async ()=> {
@@ -43,12 +43,36 @@ const AdminLectureDetail = () => {
       setLectureDetail(response);
     }
       }catch(error){
-       setLectureDetailError(true)
+        setIsOpen(true);
+        setModalErrorBody(
+          "Sorry about that! There is a scheduled downtime on your servers, so please check them"
+        );
       }
     }
     fetchData()
   }, [id]);
 
+  // get the video file by onChange 
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target?.files?.[0];
+    if (file) {
+      setVideoFile(prevFile => file);
+    }
+  };
+  
+  // uploading video file 
+  const uploadFile =async()=>{ 
+    try{
+      const response = await AddVideoFileService(id)
+      if(response.message){
+        setIsOpen(true)
+        setModalErrorBody("Video added to the lecture successfully")
+      }
+    }catch(error){
+      setIsOpen(true)
+      setModalErrorBody("Video not added to the lecture please try again!")
+    }
+  }
   return (
     <div>
       <Box
@@ -59,7 +83,15 @@ const AdminLectureDetail = () => {
         pb="20%"
       >
         <Navbar />
+        {!lectureDetail?.title ? (<Box mt="10%" ml="50%"><Loading /></Box>):
+
+        ( <div>
         <SecondNavforLectureDetail id={id} />
+        <CommonModalComponent
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        modalBody={modalBody}
+      />
         <Box
           flex="1"
           mx={{ base: "10%", md: "20%" }}
@@ -98,7 +130,7 @@ const AdminLectureDetail = () => {
                   <Text>{key}</Text>
                 </Box>
                 <Box display={index === 0 ? "none" : "block"} w="50%">
-                  <Text>{value}</Text>
+                  <Text>{value ? value+"  ":""}</Text>
                 </Box>
               </Flex>
             ))}
@@ -154,18 +186,22 @@ const AdminLectureDetail = () => {
           <Flex mt="30px" p="20px" justifyContent="space-between">
             <Box>
               <Text color="blue">Upload Video</Text>
-              <Input type="file" placeholder="choose file" />
+              <Input type="file" placeholder="choose file" onChange={handleFileChange} />
             </Box>
             <Button
               mt="20px"
               bg="rgb(31 41 55)"
               _hover={{ bg: "rgb(76, 84, 95)" }}
               color="white"
+              onClick={uploadFile}
             >
               Save Video
             </Button>
           </Flex>
         </Box>
+        
+        </div>)
+}
       </Box>
     </div>
   );

@@ -1,9 +1,4 @@
-import {
-  Box,
-  Flex,
-  Button,
-  useMediaQuery,
-} from "@chakra-ui/react";
+import { Box, Flex, Button, useMediaQuery, Divider } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import "./index.css";
 import Secondnav from "../../../components/AdminsideComponents/AdminLecture/LectureSearchNavbar";
@@ -13,11 +8,11 @@ import {
   GetAllLectureService,
   LectureSearchService,
 } from "../../../Services/LectureServices";
-import {
-  ILectureResponse,
-} from "../../../Services/LectureInterface";
+import { ILectureResponse } from "../../../Services/LectureInterface";
 import CommonModalComponent from "../../../components/Modal/commonModal";
 import LectureSearchInput from "../../../components/AdminsideComponents/AdminLecture/LectureSearchInput";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../redux/store";
 
 interface IFilteredValues {
   title: string;
@@ -46,6 +41,8 @@ const AdminLecture = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [modalBody, setModalErrorBody] = useState<string>("");
 
+  const state = useSelector((state: RootState) => state.Authreducer);
+
   // calling service for getting list for lectures
   const GetLectures = async () => {
     setLoading(true);
@@ -57,20 +54,24 @@ const AdminLecture = () => {
       const response = await LectureSearchService(filterValues);
       if (response.length > 1) {
         setLecturesData(response);
-      } else if (!response.length) {    
+      } else if (!response.length) {
         setIsOpen(true);
         setModalErrorBody("These values did not match the lecture data!");
       }
-  }catch(error){
-
-  }
+    } catch (error) {
+      setIsOpen(true);
+      setModalErrorBody(
+        "Sorry about that! There is a scheduled downtime on your servers, so please check them"
+      );
+    }
+  };
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await GetAllLectureService();
-        if(response.length){
-        setLecturesData(response);
+        if (response.length) {
+          setLecturesData(response);
         }
       } catch (error) {
         setIsOpen(true);
@@ -96,18 +97,22 @@ const AdminLecture = () => {
   };
 
   const [isLargerThan900] = useMediaQuery("(min-width: 900px)");
+
   return (
     <div className="container">
       <Navbar />
       <Secondnav />
-      <CommonModalComponent isOpen={isOpen} setIsOpen={setIsOpen} modalBody={modalBody} />
+      <CommonModalComponent
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        modalBody={modalBody}
+      />
       <Box
         w="90%"
         ml="5%"
         mt="60px"
         h="auto"
         boxShadow="2px 4px 6px rgba(0, 0, 0, 0.1)"
-        
       >
         <Box w="100%" p="2%" bg="white" h="auto">
           <LectureSearchInput
@@ -117,7 +122,7 @@ const AdminLecture = () => {
           <Flex justifyContent={"flex-end"}>
             <Button
               w="15%"
-              mt="20px"
+              mt="10px"
               fontSize={isLargerThan900 ? "16px" : "12px"}
               color="white"
               bg="rgb(31 41 55)"
@@ -129,7 +134,7 @@ const AdminLecture = () => {
             </Button>
             <Button
               w="15%"
-              mt="20px"
+              mt="10px"
               color="white"
               ml="20px"
               bg="rgb(31 41 55)"
@@ -140,13 +145,14 @@ const AdminLecture = () => {
               Reset
             </Button>
           </Flex>
+          <Divider mt="10px" />
         </Box>
       </Box>
-      <Box w="90%" ml="5%" bg="white" h="auto">
+      <Box w="90%" ml="5%" bg="white" h="auto" mt="20px">
         {lecturesData && <TableHeading LecturesData={lecturesData} />}
       </Box>
     </div>
   );
 };
-}
+
 export default AdminLecture;

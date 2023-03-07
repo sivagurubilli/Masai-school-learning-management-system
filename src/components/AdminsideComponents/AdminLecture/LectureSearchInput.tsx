@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Grid, Input, Select, useBreakpointValue } from "@chakra-ui/react";
+import { Divider, Grid, Input, Select, useBreakpointValue } from "@chakra-ui/react";
 import {
   getBatchArrray,
   getSectionArray,
@@ -129,7 +129,7 @@ const LectureSearchInput = ({ filterValues, setFilterValues }: any) => {
           placeholder="Select batch"
         >
           {batchArray?.map((el) => (
-            <option value={el.batchId}>{el.batchName}</option>
+            <option key={el.batchId} value={el.batchId}>{el.batch}</option>
           ))}
         </Select>
         <Select
@@ -141,7 +141,7 @@ const LectureSearchInput = ({ filterValues, setFilterValues }: any) => {
           onChange={handleChange}
         >
           {sectionArray?.map((el) => (
-            <option value={el.sectionId}>{el.sectionName}</option>
+            <option key={el.sectionId} value={el.sectionId}>{el.section}</option>
           ))}
         </Select>
         <Select
@@ -153,7 +153,7 @@ const LectureSearchInput = ({ filterValues, setFilterValues }: any) => {
           onChange={handleChange}
         >
           {typeArray?.map((el) => (
-            <option value={el.id}>{el.typeName}</option>
+            <option key={el.id} value={el.id}>{el.type}</option>
           ))}
         </Select>
         <Input
@@ -198,10 +198,11 @@ const LectureSearchInput = ({ filterValues, setFilterValues }: any) => {
           onChange={handleChange}
         >
           {userArray?.map((el) => (
-            <option value={el.id}>{el.userName}</option>
+            <option key={el.id} value={el.id}>{el.user}</option>
           ))}
         </Select>
       </Grid>
+      <Divider mt="20px" />
     </div>
   );
 };

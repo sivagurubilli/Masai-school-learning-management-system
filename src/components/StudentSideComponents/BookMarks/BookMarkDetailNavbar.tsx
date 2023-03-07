@@ -31,8 +31,7 @@ const BookMarkDetailsNavbar = ({ id }: any) => {
     if(response.lectureid){
       setLectureDetails(response);
     }
-      }catch(error){
-       
+      }catch(error){   
       }
     }
     fetchData()

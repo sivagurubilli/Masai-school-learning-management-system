@@ -1,6 +1,6 @@
 import * as yup from "yup";
 import { useFormik } from "formik";
-import React,{useState} from "react";
+import React, { useState } from "react";
 import "./index.css";
 import {
   Button,
@@ -12,9 +12,12 @@ import {
   Input,
   Text,
 } from "@chakra-ui/react";
+import { useDispatch } from "react-redux";
+import { bindActionCreators } from "redux";
+import { actionCreators } from "../../../redux/Authreducer/index";
 import { Box, Image } from "@chakra-ui/react";
 import { masaiimage } from "../../../assets/assets";
-import {IAuthloginResponse} from "../../../Services/AuthInterface"
+import { IAuthloginResponse } from "../../../Services/AuthInterface";
 import { LoginService } from "../../../Services/AuthServices";
 import { useNavigate } from "react-router-dom";
 
@@ -23,11 +26,10 @@ interface IFormData {
   username: string;
   password: string;
   rememberMe: boolean;
- 
 }
-interface IErrorDisplay{
-  backendErrorMessage:string
- errorFromBackend:boolean
+interface IErrorDisplay {
+  backendErrorMessage: string;
+  errorFromBackend: boolean;
 }
 
 //valiadation schema for yup library
@@ -37,63 +39,75 @@ const validationSchema = yup.object().shape({
     .email("Invalid Email address")
     .required("Email is required"),
   password: yup
-    .string().required("Password is required")
-    .min(8, "Password must be at least 8 characters")
-   
+    .string()
+    .required("Password is required")
+    .min(8, "Password must be at least 8 characters"),
 });
 
-const initialValues : IFormData={
+const initialValues: IFormData = {
   username: "",
   password: "",
   rememberMe: false,
-}
+};
 
 //student login component
-export default function StudentLogin({setGotoSignup}:any) {
-  const [BackendError,setBackendError] = useState({
-    backendErrorMessage:"",
-    errorFromBackend:false
-  })
-  const [isLoading,setLoading] = useState<boolean>(false)
+export default function StudentLogin({ setGotoSignup }: any) {
+  const [BackendError, setBackendError] = useState({
+    backendErrorMessage: "",
+    errorFromBackend: false,
+  });
+  const [isLoading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
- 
+  const dispatch = useDispatch();
+  const { IsAuthenticated } = bindActionCreators(actionCreators, dispatch);
   // function toggle go to sign up and login components
-   const GotoSignup = ()=>{
-    setGotoSignup(true)
-   }
+  const GotoSignup = () => {
+    setGotoSignup(true);
+  };
 
-  //on submitting form it checks the validations using formik and use services here 
+  //on submitting form it checks the validations using formik and use services here
   const onSubmit = async (values: IFormData) => {
-    setLoading(true)
-    setTimeout(()=>{
-      setLoading(false)
-    },3000)
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 3000);
+    try {
+      const response = await LoginService(values);
+      if (response.token) {
+        if (response.user.roles[0].name === "STUDENT_USER") {
+          IsAuthenticated({
+            isAuth: true,
+            username: response.user.name,
+            userId: response.user.id,
+            isAdmin: false,
+          });
+          navigate("/student/dashboard");
+        }
 
-LoginService(values).then((res:IAuthloginResponse)=>{
-
-   if(res.token){
-    if(res.user.roles[0].name==="STUDENT_USER"){
-    navigate("/student/dashboard")
-    }
-
-    if(res.user.roles[0].name !=="STUDENT_USER"){
-      navigate("/admin/dashboard")
+        if (response.user.roles[0].name !== "STUDENT_USER") {
+          IsAuthenticated({
+            isAuth: true,
+            username: response.user.name,
+            userId: response.user.id,
+            isAdmin: true,
+          });
+          navigate("/admin/dashboard");
+        }
       }
-   }
-     
-  if(!res.token){
-    setBackendError({ ...BackendError,
-    errorFromBackend:true})
-    }
- });
 
-  }
-//destructuring methods from useFormik
- const { handleSubmit, handleChange, touched, values, errors } = useFormik({
- initialValues,
-  validationSchema,
-  onSubmit,
-});
+      if (!response.token) {
+        setBackendError({ ...BackendError, errorFromBackend: true });
+      }
+    } catch (error) {
+      setBackendError({ ...BackendError, errorFromBackend: true });
+    }
+  };
+  //destructuring methods from useFormik
+  const { handleSubmit, handleChange, touched, values, errors } = useFormik({
+    initialValues,
+    validationSchema,
+    onSubmit,
+  });
 
   return (
     <>
@@ -115,23 +129,26 @@ LoginService(values).then((res:IAuthloginResponse)=>{
             bg="white"
             borderColor={["", "grey.300"]}
             borderRadius={10}
-            boxShadow="2px 4px 6px rgba(0, 0, 0, 0.1)" >
-
-            {BackendError.errorFromBackend && 
-            <div className="errorlist">
-              <ul>
-               <p >Whoops! Something went wrong.
-                   <li> These credentials do not match our records.</li>
-                   </p>
-                    </ul>
-              </div>}
+            boxShadow="2px 4px 6px rgba(0, 0, 0, 0.1)"
+          >
+            {BackendError.errorFromBackend && (
+              <div className="errorlist">
+                <ul>
+                  <p>
+                    Whoops! Something went wrong.
+                    <li> These credentials do not match our records.</li>
+                  </p>
+                </ul>
+              </div>
+            )}
             <form onSubmit={handleSubmit}>
               <div>
                 <FormLabel
                   fontSize=".875rem"
                   fontWeight="500"
                   color="rgb(55 65 81)"
-                  mt={4}>
+                  mt={4}
+                >
                   Email
                 </FormLabel>
                 <Input
@@ -142,14 +159,17 @@ LoginService(values).then((res:IAuthloginResponse)=>{
                   onChange={handleChange}
                   value={values.username}
                 />
-                {touched.username && errors.username && <div className="error-showing-popup">{errors.username}</div>}
+                {touched.username && errors.username && (
+                  <div className="error-showing-popup">{errors.username}</div>
+                )}
               </div>
               <div>
                 <FormLabel
                   fontSize=".875rem"
                   fontWeight="500"
                   color="rgb(55 65 81)"
-                  mt={4}>
+                  mt={4}
+                >
                   Password
                 </FormLabel>
                 <Input
@@ -160,7 +180,9 @@ LoginService(values).then((res:IAuthloginResponse)=>{
                   onChange={handleChange}
                   value={values.password}
                 />
-                {touched.password && errors.password && <div className="error-showing-popup">{errors.password}</div>}
+                {touched.password && errors.password && (
+                  <div className="error-showing-popup">{errors.password}</div>
+                )}
               </div>
               <HStack mt="10px" w="full">
                 <Checkbox
@@ -174,47 +196,54 @@ LoginService(values).then((res:IAuthloginResponse)=>{
                 </Text>
               </HStack>
 
-              <Flex mt ="10px"  justifyContent="space-between" flexWrap="wrap" justifyItems={"flex-end"}>
-                <Box >
+              <Flex
+                mt="10px"
+                justifyContent="space-between"
+                flexWrap="wrap"
+                justifyItems={"flex-end"}
+              >
+                <Box>
                   <Button
                     variant="link"
-                   h="auto"
-                   mt="20px"
+                    h="auto"
+                    mt="20px"
                     _hover={{ color: "black" }}
                     fontSize={".850rem"}
                     textDecoration="underline"
                     color="rgb(75 85 99)"
-                    ml="50px"
-                    onClick={() => navigate("/forgot-password")}>
+                    ml="20px"
+                    onClick={() => navigate("/forgot-password")}
+                  >
                     Forget your password?
                   </Button>
-                  </Box>
-                  <Box>
+                </Box>
+                <Box>
                   <Button
-                bg="rgb(31 41 55)"
-                color="white"
-                _hover={{ bg: "rgb(55 65 81)" }}
-                w="90px"
-                h="35px"
-                ml="10px"
-                mt="10px"
-               onClick={GotoSignup} >
-              <Text fontSize="14px">SIGN UP</Text>
-              </Button>
+                    bg="rgb(31 41 55)"
+                    color="white"
+                    _hover={{ bg: "rgb(55 65 81)" }}
+                    w="90px"
+                    h="35px"
+                    ml="10px"
+                    mt="10px"
+                    onClick={GotoSignup}
+                  >
+                    <Text fontSize="14px">SIGN UP</Text>
+                  </Button>
                   <Button
-                isLoading={isLoading}
-                bg="rgb(31 41 55)"
-                color="white"
-                _hover={{ bg: "rgb(55 65 81)" }}
-                type="submit"
-                w="90px"
-                h="35px"
-                ml="10px"
-                mt="10px"
-              >
-              <Text fontSize="14px">LOG IN</Text>
-              </Button>
-                  </Box>
+                    isLoading={isLoading}
+                    bg="rgb(31 41 55)"
+                    color="white"
+                    _hover={{ bg: "rgb(55 65 81)" }}
+                    type="submit"
+                    w="90px"
+                    h="35px"
+                    ml="10px"
+                    mt="10px"
+                  >
+                    <Text fontSize="14px">LOG IN</Text>
+                  </Button>
+                </Box>
               </Flex>
             </form>
           </Box>

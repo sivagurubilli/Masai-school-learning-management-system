@@ -28,8 +28,7 @@ const Navbar = () => {
   const [showProfile, setShowProfile] = useState(false);
   const [userName, setUserName] = useState<any | null>(null);
   const navigate = useNavigate()
-  const state = useSelector((state: RootState) => state.Authreducer);
-
+ 
   //   this handleclick function for open and closing of side navbar in smaller screens
   const handleclick = () => {
     setClicked(!clicked);

@@ -1,11 +1,11 @@
 
 export interface ISectionObject {
     sectionId:number
-      sectionName: string;
+      section: string;
   }
   export interface ICategoryObject {
   id:number
-      categoryName: string;
+      category: string;
   }
 
   //interface for secction
@@ -15,7 +15,7 @@ export interface ISectionResponse {
   
   export interface IBatchObject {
  batchId:number
-   batchName: string;
+   batch: string;
   }
 
   export interface IBatchResponse {
@@ -24,7 +24,7 @@ export interface ISectionResponse {
   
   export interface ITypeObject {
     id:number
- typeName:string
+ type:string
     lectures: string; 
   }
   export interface ITypeResponse {
@@ -38,7 +38,7 @@ export interface ISectionResponse {
   
   export interface IUserObject {
     id:number
- userName:string
+ user:string
     lectures: string;   
   }
 

@@ -6,20 +6,28 @@ import Navbar from "../../../components/StudentSideComponents/StudentNavbar/Navb
 import DashboardNavbar from "../../../components/StudentSideComponents/StudentDashboard/DashboardNavbar";
 import { GetDashboardLecturesService } from "../../../Services/LectureServices";
 import { ILectureResponse } from "../../../Services/LectureInterface";
+import DashboardLectureCard from "../../../components/StudentSideComponents/StudentDashboard/DashboardLectureCard";
+import CommonModalComponent from "../../../components/Modal/commonModal";
 
 // this component displays student side dashboard
 const Dashborad = () => {
   const [dashboardLectures,setDashboardLectures] = useState<ILectureResponse[]>()
-   const [apiError,setApiError] =  useState<boolean>(false)
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [modalBody, setModalErrorBody] = useState<string>("");
+
 
     useEffect(()=>{
       const fetchData = async() =>{
         try{
         const response = await GetDashboardLecturesService();
-        
+        if(response.length){
         setDashboardLectures(response);
+        }
       }catch(error){
- setApiError(true)
+        setIsOpen(true);
+        setModalErrorBody(
+          "Sorry about that! There is a scheduled downtime on your servers, so please check them"
+        );
       }
     }
       fetchData();
@@ -30,7 +38,11 @@ const Dashborad = () => {
       <div className="container">
         <Navbar />
         < DashboardNavbar/>
-
+        <CommonModalComponent
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        modalBody={modalBody}
+      />
         <Box
           w="80%"
           borderRadius="10px"
@@ -40,7 +52,7 @@ const Dashborad = () => {
           ml="10%"
           mt="70px"
         >   
-
+        <DashboardLectureCard />
 
 
         </Box>

@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, {   useState } from "react";
 import "../../../Pages/AdminSidePages/CreateLecturePage/index.css";
-import * as yup from "yup";
+import validationSchema from "./FormikYupValidation"
 import { useFormik } from "formik";
 import "react-datetime/css/react-datetime.css";
 import {
@@ -12,16 +12,12 @@ import {
   Flex,
   FormLabel,
   Switch,
+  Button,
+  useMediaQuery,
+  Divider,
 } from "@chakra-ui/react";
 import NoteSection from "./NoteSection";
 import TagInput from "./TagInput";
-import {
-  getBatchArrray,
-  getSectionArray,
-  getUserArray,
-  getTypeArray,
-  getCategoryArrray,
-} from "../../../Services/SelelctionService";
 import {
   IBatchObject,
   ICategoryObject,
@@ -29,48 +25,27 @@ import {
   ITypeObject,
   IUserObject,
 } from "../../../Services/SelectionInterface";
-import { Categoery } from "../../../assets/assets";
+import CommonModalComponent from "../../../components/Modal/commonModal";
+import GetSelectedTags from "./GetSelectTags"
 
-const validationSchema = yup.object().shape({
-  title: yup
-    .string()
-    .required("This feild is required")
-    .min(3, "Name must be 3 character"),
-  batch: yup.string().required("This feild is required"),
-  section: yup.string().required("This feild is required"),
-  category: yup.string().required("This feild is required"),
-  type: yup.string().required("This feild is required"),
-  createdBy: yup.string().required("This feild is required"),
-  week: yup.string().required("This feild is required"),
-  day: yup.string().required("This feild is required"),
-  tags: yup.string().required("This feild is required"),
-  zoomLink: yup
-    .string()
-    .matches(
-      /^https:\/\/((www\.)?|us02web\.)zoom\.us\/(j|my)\/\w{10}\?*\S*$/,
-      "Please enter a valid Zoom meeting link"
-    )
-    .required("Zoom meeting link is required"),
-  schedule: yup
-    .date()
-    .min(new Date(), "Selected date nd time cannot be before current date and time.")
-    .required("Please select a date and time."),
-  concludes: yup
-    .date()
-    .min(
-      yup.ref("schedule"),
-      "Selected date and time cannot be earlier than scheduled date and time."
-    )
-    .required("Please select a date and time."),
-});
 
-const InputTakingSection = ({ LectureValues, setLectureValues }: any) => {
+const InputTakingSection = ({buttonName, LectureValues, setLectureValues,LectureSendService ,id}: any) => {
+  const [isLargerThan900] = useMediaQuery("(min-width: 900px)");
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [modalBody, setModalErrorBody] = useState<string>("");
+  const [isLoading,setLoading] = useState<boolean>(false)
   const [batchArray, setBatchArray] = useState<IBatchObject[]>();
   const [sectionArray, setSectionArray] = useState<ISectionObject[]>();
   const [userArray, setUserArray] = useState<IUserObject[]>();
   const [typeArray, setTypeArray] = useState<ITypeObject[]>();
   const [categoryArray, setCategoryArray] = useState<ICategoryObject[]>();
 
+  // getSelected array to get all selected tags values from backend
+
+    GetSelectedTags({setBatchArray,setSectionArray,setCategoryArray,setUserArray,setTypeArray})
+
+
+//initial values for formik
   const initialValues = {
     title: LectureValues.title,
     batch: LectureValues.batch,
@@ -89,65 +64,51 @@ const InputTakingSection = ({ LectureValues, setLectureValues }: any) => {
     notes: LectureValues.notes,
   };
 
-  useEffect(() => {
-    gettingBatchArrray();
-    gettingSectionArray();
-    gettingTypeArray();
-    gettingUserArray();
-    gettingCategoryArrray();
-  }, []);
 
-  const gettingBatchArrray = async () => {
-    try {
-      const response = await getBatchArrray();
-      if (response.length) {
-        setBatchArray(response);
-      }
-    } catch (error) {}
-  };
+  // onSubmitting it calls the services based on type of action like addlecture and edit lecture and copy lecture
+  const onSubmit = async () => {
+    setLoading(true)
+    setTimeout(()=>{
+      setLoading(false)
+    },2000)
 
-  const gettingCategoryArrray = async () => {
+    if(buttonName === "Copy Lecture" || buttonName ==="Edit Lecture"){
+      console.log(LectureValues)
     try {
-      const response = await getCategoryArrray();
-      if (response.length) {
-        setCategoryArray(response);
+      const response = await LectureSendService(LectureValues,id);
+      if (response.message) {
+        setIsOpen(true);
+        setModalErrorBody("The lecture was Success fully added with Changes");
       }
-    } catch (error) {}
-  };
-  const gettingSectionArray = async () => {
+    } catch (error) {
+      setIsOpen(true);
+      setModalErrorBody(
+        "Sorry about that! There is a scheduled downtime on your servers, so please check them"
+      );
+    }
+  }else{
     try {
-      const response = await getSectionArray();
-      if (response.length) {
-        setSectionArray(response);
+      const response = await LectureSendService(LectureValues);
+      if (response.message) {
+        setIsOpen(true);
+        setModalErrorBody("The lecture was Success fully added");
       }
-    } catch (error) {}
-  };
-  const gettingTypeArray = async () => {
-    try {
-      const response = await getTypeArray();
-      if (response.length) {
-        setTypeArray(response);
-      }
-    } catch (error) {}
-  };
-  const gettingUserArray = async () => {
-    try {
-      const response = await getUserArray();
-      if (response.length) {
-        setUserArray(response);
-      }
-    } catch (error) {}
-  };
+    } catch (error) {
+      setIsOpen(true);
+      setModalErrorBody(
+        "Sorry about that! There is a scheduled downtime on your servers, so please check them"
+      );
+    }
+  }
+}
   
-   
-
+//using useFormik get the methods for handlesubmit and hadlechange and values
   const { handleSubmit, handleBlur, touched, actions,handleChange, values, errors } =
     useFormik({
+      onSubmit,
       initialValues,
-      validationSchema,
+   
     });
-
-
 
   //create Lecture service for create lecture
   const gridColumn = useBreakpointValue({
@@ -163,6 +124,11 @@ const InputTakingSection = ({ LectureValues, setLectureValues }: any) => {
 
   return (
     <div>
+       <CommonModalComponent
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        modalBody={modalBody}
+      />
       <Box
         w="96%"
         ml="2%"
@@ -207,8 +173,8 @@ const InputTakingSection = ({ LectureValues, setLectureValues }: any) => {
                 color="rgb(75 85 99)"
                 placeholder="Select Categoery"
               >
-                {Categoery?.map((el) => (
-                  <option value={el.key}>{el.key}</option>
+                {categoryArray?.map((el) => (
+                  <option value={el.id}>{el.category}</option>
                 ))}
               </Select>
               {touched.category && errors.category && (
@@ -228,7 +194,7 @@ const InputTakingSection = ({ LectureValues, setLectureValues }: any) => {
                 placeholder="Select batch"
               >
                 {batchArray?.map((el) => (
-                  <option value={el.batchId}>{el.batchName}</option>
+                  <option value={el.batch}>{el.batch}</option>
                 ))}
               </Select>
               {touched.batch && errors.batch && (
@@ -248,7 +214,7 @@ const InputTakingSection = ({ LectureValues, setLectureValues }: any) => {
                 onChange={handleChange}
               >
                 {sectionArray?.map((el) => (
-                  <option value={el.sectionId}>{el.sectionName}</option>
+                  <option value={el.section}>{el.section}</option>
                 ))}
               </Select>
               {touched.section && errors.section && (
@@ -277,7 +243,7 @@ const InputTakingSection = ({ LectureValues, setLectureValues }: any) => {
                 onChange={handleChange}
               >
                 {typeArray?.map((el) => (
-                  <option value={el.id}>{el.typeName}</option>
+                  <option value={el.type}>{el.type}</option>
                 ))}
               </Select>
               {touched.type && errors.type && (
@@ -342,7 +308,7 @@ const InputTakingSection = ({ LectureValues, setLectureValues }: any) => {
                 onChange={handleChange}
               >
                 {userArray?.map((el) => (
-                  <option value={el.id}>{el.userName}</option>
+                  <option value={el.user}>{el.user}</option>
                 ))}
               </Select>
               {touched.createdBy && errors.createdBy && (
@@ -446,6 +412,21 @@ const InputTakingSection = ({ LectureValues, setLectureValues }: any) => {
               setLectureValues={setLectureValues}
             />
           </Box>
+          <Divider mt="10px" />
+           <Flex justifyContent={"flex-end"}>
+            <Button
+              fontSize={isLargerThan900 ? "16px" : "12px"}
+              mt="20px"
+              color="white"
+              w="auto"
+              bg="rgb(31 41 55)"
+              _hover={{ bg: "rgb(76, 84, 95)" }}
+              type="submit"
+              isLoading={isLoading}
+            >
+              {buttonName}
+            </Button>
+          </Flex>
         </form>
       </Box>
     </div>

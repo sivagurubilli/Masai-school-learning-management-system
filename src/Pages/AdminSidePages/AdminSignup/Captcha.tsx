@@ -82,7 +82,7 @@ const Captcha = ({ setCaptcha1 }: any) => {
       <Container w="100%">
         {isCaptchaVerified ? (
           <Flex justifyContent="space-between" flexWrap="wrap">
-            <Text mt="8" fontSize="xl" color="green.500">
+            <Text mt="8" fontSize="20px" color="green.500">
               Captcha Verified
             </Text>
             <Button
@@ -151,10 +151,13 @@ const Captcha = ({ setCaptcha1 }: any) => {
               <Input
                 id="inputType"
                 placeholder="Enter Captcha"
-                name="username"
+                name="captchaValue"
                 value={captchaValues.captchaValue}
                 onChange={handleChange}
                 autoComplete="off"
+                fontSize="18px"
+                fontFamily="itallic"
+                fontWeight="700"
                 w="60%"
                 mt="10px"
               />

@@ -1,8 +1,8 @@
+import React  from "react";
+import { Route, Routes } from "react-router-dom";
 import AdminLecture from "../Pages/AdminSidePages/AdminLecturePage/index";
 import StudentLecture from "../Pages/StudentSidePages/StudentLecturePage/index";
 import AdminSignup from "../Pages/AdminSidePages/AdminSignup/index";
-import React  from "react";
-import { Route, Routes } from "react-router-dom";
 import ForgetPassword from "../Pages/ForgotPassword/index";
 import Dashborad from "../Pages/StudentSidePages/StudentDashboard";
 import AdminDashboard from "../Pages/AdminSidePages/AdminDashboard";

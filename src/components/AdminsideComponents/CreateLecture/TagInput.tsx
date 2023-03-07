@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Box, Flex, FormLabel, Text } from "@chakra-ui/react";
 import { Categoery } from "../../../assets/assets";
 
-
 const TagInput = ({ values, LectureValues, setLectureValues }: any) => {
   const [showSuggestions, setShowSuggestions] = useState<boolean>(false);
   const [suggestionTags, setSuggestionsTags] = useState<string[]>([]);
@@ -31,14 +30,12 @@ const TagInput = ({ values, LectureValues, setLectureValues }: any) => {
 
   const ShowSuggetion = () => {
     setShowSuggestions(!showSuggestions);
-  
   };
 
   useEffect(() => {
     setLectureValues({ ...values, tags: tags });
-  }, [values]);
+  }, [values,setLectureValues,tags]);
 
-  console.log(values);
   useEffect(() => {
     Categoery.map((el) => {
       if (el.key === values.category) {

@@ -5,10 +5,12 @@ import Navbar from '../../../components/AdminsideComponents/AdminNavbar'
 import BookMarkDetailsNavbar from '../../../components/StudentSideComponents/BookMarks/BookMarkDetailNavbar'
 import "../BookMarks/index.css"
 import { ILectureResponse } from '../../../Services/LectureInterface'
+import CommonModalComponent from '../../../components/Modal/commonModal'
 
 const BookMarkDetails = () => {
 const [lectureDetail,setLectureDetail] = useState<ILectureResponse>()
-const [Error,setError] = useState<boolean>(false)
+const [isOpen, setIsOpen] = useState<boolean>(false);
+const [modalBody, setModalErrorBody] = useState<string>("");
 
 
 const {id} = useParams()
@@ -20,7 +22,10 @@ useEffect(() => {
     setLectureDetail(response);
   }
     }catch(error){
-     setError(true)
+      setIsOpen(true);
+        setModalErrorBody(
+          "Sorry about that! There is a scheduled downtime on your servers, so please check them"
+        );
     }
   }
   fetchData()
@@ -29,6 +34,11 @@ useEffect(() => {
     <div className="container">
        <Navbar />
        <BookMarkDetailsNavbar id={id}/>
+       <CommonModalComponent
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        modalBody={modalBody}
+      />
     </div>
   )
 }

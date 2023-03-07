@@ -11,12 +11,8 @@ import {
 } from "@chakra-ui/react";
 import { Box, Image } from "@chakra-ui/react";
 import { masaiimage } from "../../../assets/assets";
-import {  
-  IAuthsignupResponse,
-} from "../../../Services/AuthInterface"
-import {
-  AdminSignupService
-} from "../../../Services/AuthServices";
+import { IAuthsignupResponse } from "../../../Services/AuthInterface";
+import { AdminSignupService } from "../../../Services/AuthServices";
 import "./index.css";
 import { useNavigate } from "react-router-dom";
 
@@ -76,11 +72,11 @@ export default function AdminSignup() {
   const [signupState, setSignupState] = useState(initialValues);
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [errorBody, setErrorBody] = useState<string>("");
-  const [BackendError,setBackendError] = useState({
-    backendErrorMessage:"",
-    errorFromBackend:false
-  })
-const [isLoading,setLoading] = useState(false)
+  const [BackendError, setBackendError] = useState({
+    backendErrorMessage: "",
+    errorFromBackend: false,
+  });
+  const [isLoading, setLoading] = useState(false);
   const [CaptchaMatched, setCaptchaMatched] = useState(initialCaptcha);
   const navigate = useNavigate();
 
@@ -90,25 +86,29 @@ const [isLoading,setLoading] = useState(false)
   // using formik and yup library just checking validations using useformik
   //onSubmitting value call the services for api call
   const onSubmit = async (values: IFormData) => {
-    if(!CaptchaMatched.captchaMatch){
-      setIsOpen(true)
-      setErrorBody("Capatcha does not match. Please enter the correct captcha.")
-     }
+    if (!CaptchaMatched.captchaMatch) {
+      setIsOpen(true);
+      setErrorBody(
+        "Capatcha does not match. Please enter the correct captcha."
+      );
+    }
     if (CaptchaMatched.captchaMatch) {
-    setLoading(true)
-    setTimeout(()=>{
-      setLoading(false)
-    },3000)
-
-    AdminSignupService(values).then((res:IAuthsignupResponse)=>{
-      if(res.name){
-   navigate("/login")
+      setLoading(true);
+      setTimeout(() => {
+        setLoading(false);
+      }, 3000);
+      try {
+        const response = await AdminSignupService(values);
+        if (response.name) {
+          navigate("/login");
         }
-         if(!res.name){
-         setBackendError({...BackendError, errorFromBackend:true});
+        if (!response.name) {
+          setBackendError({ ...BackendError, errorFromBackend: true });
         }
-     })
-     }
+      } catch (error) {
+        setBackendError({ ...BackendError, errorFromBackend: true });
+      }
+    }
   };
 
   //destructuring all values from useformik
@@ -126,7 +126,14 @@ const [isLoading,setLoading] = useState(false)
 
   return (
     <div className="container">
-      <Container h="auto" paddingBottom={"100px"} mt="60px" alignItems="center" w="100%" centerContent>
+      <Container
+        h="auto"
+        paddingBottom={"100px"}
+        mt="60px"
+        alignItems="center"
+        w="100%"
+        centerContent
+      >
         <Image
           height="60px"
           objectFit="contain"
@@ -240,7 +247,11 @@ const [isLoading,setLoading] = useState(false)
 
             <Box w="100%" mt="20px">
               <Captcha setCaptcha1={setCaptcha1} />
-              <CommonModalComponent isOpen={isOpen} setIsOpen={setIsOpen} modalBody={errorBody} />
+              <CommonModalComponent
+                isOpen={isOpen}
+                setIsOpen={setIsOpen}
+                modalBody={errorBody}
+              />
             </Box>
             <Flex justifyContent="center">
               <button className="buttonlogin" onClick={gotoLogin}>
@@ -253,14 +264,13 @@ const [isLoading,setLoading] = useState(false)
                 bg="rgb(31 41 55)"
                 color="white"
                 _hover={{ bg: "rgb(55 65 81)" }}
-                
                 type="submit"
                 w="90px"
                 h="35px"
                 ml="10px"
                 mt="20px"
               >
-              <Text fontSize="14px">SIGN UP</Text>
+                <Text fontSize="14px">SIGN UP</Text>
               </Button>
             </Flex>
           </form>

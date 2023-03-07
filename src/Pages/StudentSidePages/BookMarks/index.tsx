@@ -6,11 +6,13 @@ import { Box, Divider, Flex, Text } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import { IBookMarkObject } from "../../../Services/LectureInterface";
 import { GetAllBookMarksService } from "../../../Services/LectureServices";
+import CommonModalComponent from "../../../components/Modal/commonModal";
 
 
 const BookMarks = () => {
  const [bookMarks,setBookMarks] = useState<IBookMarkObject[]>()
-
+ const [isOpen, setIsOpen] = useState<boolean>(false);
+ const [modalBody, setModalErrorBody] = useState<string>("");
   const ele = [
     { tile: "siva", author: "ravi", schedule: "1234njdjjdjd", id: 3 },
   ];
@@ -19,11 +21,17 @@ const BookMarks = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      const id = Number(localStorage.getItem("uerId"))
       try {
-        const response = await  GetAllBookMarksService();
+        const response = await  GetAllBookMarksService(id);
+        if(response.length){
         setBookMarks(response);
+        }
       } catch (error) {
-        
+        setIsOpen(true);
+        setModalErrorBody(
+          "Sorry about that! There is a scheduled downtime on your servers, so please check them"
+        );
       }
     };
     fetchData(); 
@@ -33,6 +41,11 @@ const BookMarks = () => {
     <div className="container">
       <Navbar />
       <BookMarkNav />
+      <CommonModalComponent
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        modalBody={modalBody}
+      />
       <Box
         w="90%"
         ml="5%"
@@ -51,12 +64,12 @@ const BookMarks = () => {
             <Text mr="70px"></Text>
           </Flex>
           <Divider />
-          {ele.map((el) => (
+          {bookMarks && bookMarks.map((el) => (
             <div>
               <Flex padding="10px" justifyContent="space-between">
-                <Text pl="20px">{el.tile}</Text>
-                <Text ml="20px">{el.author}</Text>
-                <Text ml="30px">{el.schedule}</Text>
+                <Text pl="20px">{el.title}</Text>
+                {/* <Text ml="20px">{el.author}</Text>
+                <Text ml="30px">{el.schedule}</Text> */}
                 <Link to={"/student/bookmarks/" + el.id}>
                   {" "}
                   <Text pr="20px" color="blue">
