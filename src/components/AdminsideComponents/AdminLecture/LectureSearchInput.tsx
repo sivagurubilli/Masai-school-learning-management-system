@@ -22,51 +22,37 @@ const LectureSearchInput = ({ filterValues, setFilterValues }: any) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [modalBody, setModalErrorBody] = useState<string>("");
 
-
   useEffect(() => {
-    gettingBatchArrray();
-    gettingSectionArray();
-    gettingTypeArray();
-    gettingUserArray();
+    const getArrays = async () => {
+      try {
+        const [batchArray,  sectionArray, typeArray, userArray] = await Promise.all([
+          getBatchArrray(),
+          getSectionArray(),
+          getTypeArray(),
+          getUserArray()
+        ]);
+        if (batchArray.length) {
+          setBatchArray(batchArray);
+        }
+        
+        if (sectionArray.length) {
+          setSectionArray(sectionArray);
+        }
+        if (typeArray.length) {
+          setTypeArray(typeArray);
+        }
+        if (userArray.length) {
+          setUserArray(userArray);
+        }
+      } catch (error) {
+        setIsOpen(true);
+        setModalErrorBody("Oh no! There was a problem with getting the items from the selecting list"); 
+      }
+    };
+  
+    getArrays();
   }, []);
-
-  const gettingBatchArrray = async () => {
-    try {
-      const response = await getBatchArrray();
-      if(response.length){
-        setBatchArray(response);
-      }
-    } catch (error) {
-      setIsOpen(true);
-      setModalErrorBody("We were unable to find batch data. It seems that something has gone wrong!");
-    }
-  };
-  const gettingSectionArray = async () => {
-    try {
-      const response = await getSectionArray();
-      if(response.length){
-      setSectionArray(response);
-      }
-    } catch (error) {
-    
-    }
-  };
-  const gettingTypeArray = async () => {
-    try {
-      const response = await getTypeArray();
-      if(response.length){
-      setTypeArray(response);
-      }
-    } catch (error) {}
-  };
-  const gettingUserArray = async () => {
-    try {
-      const response = await getUserArray();
-      if(response.length){
-      setUserArray(response);
-      }
-    } catch (error) {}
-  };
+  
 
   // this is setting values from select tags
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {

@@ -44,59 +44,39 @@ const InputTakingSection = ({buttonName, LectureValues, setLectureValues,Lecture
   // getSelected array to get all selected tags values from backend
 
   useEffect(() => {
-    const getArrays = () => {
-      gettingBatchArrray();
-      gettingSectionArray();
-      gettingTypeArray();
-      gettingUserArray();
-      gettingCategoryArrray();
+    const getArrays = async () => {
+      try {
+        const [batchArray, categoryArray, sectionArray, typeArray, userArray] = await Promise.all([
+          getBatchArrray(),
+          getCategoryArrray(),
+          getSectionArray(),
+          getTypeArray(),
+          getUserArray()
+        ]);
+        if (batchArray.length) {
+          setBatchArray(batchArray);
+        }
+        if (categoryArray.length) {
+          setCategoryArray(categoryArray);
+        }
+        if (sectionArray.length) {
+          setSectionArray(sectionArray);
+        }
+        if (typeArray.length) {
+          setTypeArray(typeArray);
+        }
+        if (userArray.length) {
+          setUserArray(userArray);
+        }
+      } catch (error) {
+        setIsOpen(true);
+        setModalErrorBody("Oh no! There was a problem with getting the items from the selecting list"); 
+      }
     };
   
     getArrays();
   }, []);
-
-
-  const gettingBatchArrray = async () => {
-    try {
-      const response = await getBatchArrray();
-      if (response.length) {
-        setBatchArray(response);
-      }
-    } catch (error) {}
-  };
-
-  const gettingCategoryArrray = async () => {
-    try {
-      const response = await getCategoryArrray();
-      if (response.length) {
-        setCategoryArray(response);
-      }
-    } catch (error) {}
-  };
-  const gettingSectionArray = async () => {
-    try {
-      const response = await getSectionArray();
-      if (response.length) {
-        setSectionArray(response);
-      }
-    } catch (error) {}
-  };
-  const gettingTypeArray = async () => {
-    try {
-      const response = await getTypeArray();
-      if (response.length) {
-        setTypeArray(response);
-      }
-    } catch (error) {}
-  };
-  const gettingUserArray = async () => {
-    try {
-      const response = await getUserArray();
-      if (response.length) {
-        setUserArray(response);
-      }
-    } catch (error) {}
-  };
+  
 
 //initial values for formik
   const initialValues = {
@@ -227,7 +207,7 @@ console.log(LectureValues)
                 placeholder="Select Categoery"
               >
                 {categoryArray?.map((el) => (
-                  <option value={el.id}>{el.category}</option>
+                  <option key={el.id} value={el.id}>{el.category}</option>
                 ))}
               </Select>
               {touched.category && errors.category && (
@@ -247,7 +227,7 @@ console.log(LectureValues)
                 placeholder="Select batch"
               >
                 {batchArray?.map((el) => (
-                  <option value={el.batch}>{el.batch}</option>
+                  <option key={el.batchId}  value={el.batch}>{el.batch}</option>
                 ))}
               </Select>
               {touched.batch && errors.batch && (
@@ -267,7 +247,7 @@ console.log(LectureValues)
                 onChange={handleChange}
               >
                 {sectionArray?.map((el) => (
-                  <option value={el.section}>{el.section}</option>
+                  <option key={el.sectionId} value={el.section}>{el.section}</option>
                 ))}
               </Select>
               {touched.section && errors.section && (
@@ -296,7 +276,7 @@ console.log(LectureValues)
                 onChange={handleChange}
               >
                 {typeArray?.map((el) => (
-                  <option value={el.type}>{el.type}</option>
+                  <option key={el.id} value={el.type}>{el.type}</option>
                 ))}
               </Select>
               {touched.type && errors.type && (
@@ -361,7 +341,7 @@ console.log(LectureValues)
                 onChange={handleChange}
               >
                 {userArray?.map((el) => (
-                  <option value={el.user}>{el.user}</option>
+                  <option key={el.id} value={el.user}>{el.user}</option>
                 ))}
               </Select>
               {touched.createdBy && errors.createdBy && (
