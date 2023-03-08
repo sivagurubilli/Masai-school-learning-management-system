@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 
 import { Link, useNavigate } from "react-router-dom";
 import { Box, Text, Divider } from "@chakra-ui/react";
@@ -10,15 +10,6 @@ interface ProfilecomponentProps {
 const Profilecomponent = ({ setshow1 }: ProfilecomponentProps) => {
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const handleBodyClick =()=> {
-      setshow1(false);
-    }
-    document.body.addEventListener('click', handleBodyClick);
-    return () => {
-      document.body.removeEventListener('click', handleBodyClick);
-    };
-  }, [setshow1]);
 
   const Logout = () => {
     localStorage.clear();

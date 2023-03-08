@@ -62,6 +62,11 @@ const initialValues: IFormData = {
   reEnterPassword: "",
 };
 
+interface IErrorDisplay {
+  backendErrorMessage: any;
+  errorFromBackend: boolean;
+}
+
 const initialCaptcha: Icaptchamatched = {
   captchaMatch: false,
 };
@@ -70,7 +75,7 @@ const initialCaptcha: Icaptchamatched = {
 export default function AdminSignup() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [errorBody, setErrorBody] = useState<string>("");
-  const [BackendError, setBackendError] = useState({
+  const [BackendError, setBackendError] = useState<IErrorDisplay>({
     backendErrorMessage: "",
     errorFromBackend: false,
   });
@@ -104,7 +109,7 @@ export default function AdminSignup() {
           setBackendError({ ...BackendError, errorFromBackend: true });
         }
       } catch (error) {
-        setBackendError({ ...BackendError, errorFromBackend: true });
+        setBackendError({ ...BackendError, errorFromBackend: true,backendErrorMessage:error });
       }
     }
   };
@@ -149,7 +154,15 @@ export default function AdminSignup() {
           borderColor={["", "grey.300"]}
           borderRadius={10}
           boxShadow="2px 4px 6px rgba(0, 0, 0, 0.1)"
-        >
+        >{BackendError.errorFromBackend && (
+          <div className="errorlist">
+            <ul>
+              <p>
+                Whoops! Something went wrong.      
+              </p>
+            </ul>
+          </div>
+        )}
           <form onSubmit={handleSubmit}>
             <div>
               <FormLabel
@@ -267,8 +280,9 @@ export default function AdminSignup() {
                 h="35px"
                 ml="10px"
                 mt="20px"
+                fontSize="14px"
               >
-                <Text fontSize="14px">SIGN UP</Text>
+                SIGN UP
               </Button>
             </Flex>
           </form>

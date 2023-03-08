@@ -175,7 +175,7 @@ export async function GetAllBookMarksService(
   ): Promise<IBookMarkObject[]> {  
     try {
       const response = await axios.get(
-        `/api/bookmark/getList/${id}`,  
+        `/api/getList/${id}`,  
       );
         return response.data;
     } catch (error: any) {

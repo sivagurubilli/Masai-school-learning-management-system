@@ -19,6 +19,7 @@ import { Box, Image } from "@chakra-ui/react";
 import { masaiimage } from "../../../assets/assets";
 import { LoginService } from "../../../Services/AuthServices";
 import { useNavigate } from "react-router-dom";
+import { ErrorMessage } from "formik";
 
 //interface for form data
 interface IFormData {
@@ -27,7 +28,7 @@ interface IFormData {
   rememberMe: boolean;
 }
 interface IErrorDisplay {
-  backendErrorMessage: string;
+  backendErrorMessage: any;
   errorFromBackend: boolean;
 }
 
@@ -98,7 +99,7 @@ export default function StudentLogin({ setGotoSignup }: any) {
         setBackendError({ ...BackendError, errorFromBackend: true });
       }
     } catch (error) {
-      setBackendError({ ...BackendError, errorFromBackend: true });
+      setBackendError({ ...BackendError, errorFromBackend: true,backendErrorMessage:error });
     }
   };
   //destructuring methods from useFormik
@@ -135,7 +136,7 @@ export default function StudentLogin({ setGotoSignup }: any) {
                 <ul>
                   <p>
                     Whoops! Something went wrong.
-                    <li> These credentials do not match our records.</li>
+                    <li> {ErrorMessage.backendErrorMessage}</li>
                   </p>
                 </ul>
               </div>

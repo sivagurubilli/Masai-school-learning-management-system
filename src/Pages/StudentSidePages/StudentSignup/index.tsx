@@ -34,6 +34,12 @@ interface IFormData {
   reEnterPassword: string;
 }
 
+
+interface IErrorDisplay {
+  backendErrorMessage: any;
+  errorFromBackend: boolean;
+}
+
 //validation schema for validating form values using yup third party library
 const validationSchema = yup.object().shape({
   name: yup
@@ -69,7 +75,7 @@ const initialValues: IFormData = {
 
 // student Signup component
 export default function StudentSignup({ setGotoSignup }: any) {
-  const [BackendError, setBackendError] = useState({
+  const [BackendError, setBackendError] = useState<IErrorDisplay>({
     backendErrorMessage: "",
     errorFromBackend: false,
   });
@@ -320,8 +326,9 @@ export default function StudentSignup({ setGotoSignup }: any) {
                   h="35px"
                   ml="10px"
                   mt="20px"
+                  fontSize="14px"
                 >
-                  <Text fontSize="14px">SIGN UP</Text>
+                 SIGN UP
                 </Button>
               </Flex>
             </form>
