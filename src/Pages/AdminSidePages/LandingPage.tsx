@@ -44,7 +44,7 @@ const LandingPage = () => {
     if (!usertype) {
       navigate("/login");
     }
-  }, [IsAuthenticated,navigate]);
+  }, []);
 
   return <div></div>;
 };

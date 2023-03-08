@@ -17,7 +17,7 @@ const Login = () => {
     if (username) {
       navigate("/");
     }
-  }, [navigate]);
+  }, []);
 
   return (
     <div>
