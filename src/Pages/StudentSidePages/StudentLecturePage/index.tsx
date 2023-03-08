@@ -54,7 +54,7 @@ const StudentLecture = () => {
     LectureSearchService(filterValues).then((res: any) => {
       if (res.length > 1) {
         setLecturesData(res);
-      } else if (res.data.success == false) {
+      } else if (res.data.success === false) {
         setIsOpen(true);
         setBody("These values did not match the lecture data!");
       }

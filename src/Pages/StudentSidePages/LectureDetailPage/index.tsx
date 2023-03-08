@@ -43,15 +43,6 @@ const StudentLectureDetail = () => {
         setEndTime(formattedEndDate)
 
 
-      // const formattedStartDate = moment(res.schedule).format('D MMM YY h:mm ');
-        // const formattedEndDate = moment(res.concludes).format('h:mm A');
-        // setStartTime(formattedStartDate)
-        // setEndTime(formattedEndDate)
-        // setLoading(false)
-
-        // Require moment.js library
-
-
 // Get current time
 const currentTime = moment();
 
@@ -131,16 +122,6 @@ const handleZoomSettingsClick = () => {
     <div>
       <Navbar />
       {loading && <Skeleton/>}
-
-
-
-
-   
-
-      
-
-
-
       {lectureDetail && <Box>
       <Flex
         justify="space-between"
@@ -197,7 +178,7 @@ const handleZoomSettingsClick = () => {
         </Box>
       </Flex>
 
-      {lectureDetail && zoomLinkActive && lectureDetail.type=="Live" && <Box m='auto' bg='blue'>
+      {lectureDetail && zoomLinkActive && lectureDetail.type==="Live" && <Box m='auto' bg='blue'>
             <Box  p='50px'>
                 <Flex
                     align="center"
