@@ -9,9 +9,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { useParams } from "react-router-dom";
-import { AiOutlineDownload } from "react-icons/ai";
 import { LectureSingleService } from "../../../Services/LectureServices";
-import Video from "./../../../components/StudentSideComponents/StudentLectureComponents/Video";
 import "./index.css";
 import {
   ILectureResponse,
@@ -29,7 +27,7 @@ const StudentLectureDiscussion = () => {
     LectureSingleService(id).then((res) => {
       setLectureDetail(res);
     });
-  }, []);
+  }, [id]);
 
   const handleDownload = async () => {
     const videoUrl =
@@ -98,8 +96,10 @@ const StudentLectureDiscussion = () => {
         </Box>
       )}
       {downloadLink && (
+       
         <a href={downloadLink}>Click here to download the video</a>
       )}
+       <Button onClick={handleDownload}></Button>
     </div>
   );
 };

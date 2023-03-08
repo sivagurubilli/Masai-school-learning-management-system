@@ -1,4 +1,4 @@
-import React, {   useState } from "react";
+import React, {   useState,useEffect } from "react";
 import "../../../Pages/AdminSidePages/CreateLecturePage/index.css";
 import validationSchema from "./FormikYupValidation"
 import { useFormik } from "formik";
@@ -26,7 +26,8 @@ import {
   IUserObject,
 } from "../../../Services/SelectionInterface";
 import CommonModalComponent from "../../../components/Modal/commonModal";
-import GetSelectedTags from "./GetSelectTags"
+import { getBatchArrray, getCategoryArrray, getSectionArray, getTypeArray, getUserArray } from "../../../Services/SelelctionService";
+
 
 
 const InputTakingSection = ({buttonName, LectureValues, setLectureValues,LectureSendService ,id}: any) => {
@@ -42,8 +43,60 @@ const InputTakingSection = ({buttonName, LectureValues, setLectureValues,Lecture
 
   // getSelected array to get all selected tags values from backend
 
-    GetSelectedTags({setBatchArray,setSectionArray,setCategoryArray,setUserArray,setTypeArray})
+  useEffect(() => {
+    const getArrays = () => {
+      gettingBatchArrray();
+      gettingSectionArray();
+      gettingTypeArray();
+      gettingUserArray();
+      gettingCategoryArrray();
+    };
+  
+    getArrays();
+  }, []);
 
+
+  const gettingBatchArrray = async () => {
+    try {
+      const response = await getBatchArrray();
+      if (response.length) {
+        setBatchArray(response);
+      }
+    } catch (error) {}
+  };
+
+  const gettingCategoryArrray = async () => {
+    try {
+      const response = await getCategoryArrray();
+      if (response.length) {
+        setCategoryArray(response);
+      }
+    } catch (error) {}
+  };
+  const gettingSectionArray = async () => {
+    try {
+      const response = await getSectionArray();
+      if (response.length) {
+        setSectionArray(response);
+      }
+    } catch (error) {}
+  };
+  const gettingTypeArray = async () => {
+    try {
+      const response = await getTypeArray();
+      if (response.length) {
+        setTypeArray(response);
+      }
+    } catch (error) {}
+  };
+  const gettingUserArray = async () => {
+    try {
+      const response = await getUserArray();
+      if (response.length) {
+        setUserArray(response);
+      }
+    } catch (error) {}
+  };
 
 //initial values for formik
   const initialValues = {

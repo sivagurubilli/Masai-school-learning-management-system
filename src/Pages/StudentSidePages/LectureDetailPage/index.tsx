@@ -11,7 +11,6 @@ import {
 import { useParams } from "react-router-dom";
 import { AiOutlineDownload } from "react-icons/ai";
 import { LectureSingleService } from "../../../Services/LectureServices";
-import Video from "./../../../components/StudentSideComponents/StudentLectureComponents/Video";
 import "./index.css";
 import {
   ILectureResponse,
@@ -29,7 +28,7 @@ const StudentLectureDetail = () => {
     LectureSingleService(id).then((res) => {
       setLectureDetail(res);
     });
-  }, []);
+  }, [id]);
 
   const handleDownload = async () => {
     const videoUrl =
