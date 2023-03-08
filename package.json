@@ -17,6 +17,7 @@
     "bcrypt": "^5.1.0",
     "bcryptjs": "^2.4.3",
     "buffer": "^6.0.3",
+    "crypto-browserify": "^3.12.0",
     "dayjs": "^1.11.7",
     "email-validator": "^2.0.4",
     "formik": "^2.2.9",
@@ -34,11 +35,7 @@
     "react-scripts": "5.0.1",
     "redux": "^4.2.1",
     "redux-thunk": "^2.4.2",
-<<<<<<< HEAD
     "video-metadata-thumbnails": "^1.0.22",
-=======
-    "remark-gfm": "^3.0.1",
->>>>>>> 076fe7ceaca379a2e742bf2458fb1bcb37ebd5c9
     "web-vitals": "^2.1.4",
     "yup": "^1.0.0"
   },

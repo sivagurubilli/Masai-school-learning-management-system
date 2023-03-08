@@ -10,10 +10,8 @@ import {
     Input,
     Select,
     Button,
-    Center
 } from "@chakra-ui/react";
-import { Link, useParams } from "react-router-dom";
-import Video from "../Video";
+import { Link } from "react-router-dom";
 import { ILectureResponse } from "./../../../../Services/LectureInterface";
 import EmptyTab from "./EmptyTab";
 

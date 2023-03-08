@@ -1,18 +1,12 @@
 import React from 'react'
 import {
-    Box,
     Tabs,
     TabList,
     Tab,
     TabPanels,
     TabPanel,
-    Flex,
-    WrapItem,
-    Button,
-    Wrap,
-    Text,
 } from "@chakra-ui/react";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Video from '../Video';
 import {
     ILectureResponse,

@@ -10,17 +10,14 @@ const Login = () => {
   //when entering into login it checks for username is available in localstorage if not available checks in session storage
   useEffect(() => {
     let username;
-    let userType;
-     userType = localStorage.getItem("userType");
     username = localStorage.getItem("username");
     if (!username) {
-      userType = sessionStorage.getItem("userType");
       username = sessionStorage.getItem("username");
     }
     if (username) {
       navigate("/");
     }
-  }, []);
+  }, [navigate]);
 
   return (
     <div>

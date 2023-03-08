@@ -1,5 +1,4 @@
 import React from "react";
-import moment from "moment";
 import { Link } from "react-router-dom";
 import {
   ILectureResponse,
@@ -19,10 +18,7 @@ import {
   TableContainer,
   Box,
 } from "@chakra-ui/react";
-import { useNavigate } from "react-router-dom";
-
 const TableHeading = ({ LecturesData }: ISearchResponse) => {
-  const navigate = useNavigate();
 
   return (
     <div>
@@ -59,7 +55,7 @@ const TableHeading = ({ LecturesData }: ISearchResponse) => {
                       </Text>
                       <Text>
                         <>
-                         Created by {ad.user} ({ad.category}) at {ad.schedule}  
+                         Created by {ad.createdBy} ({ad.category}) at {ad.schedule}  
                         </>
                       </Text>
                     </Td>

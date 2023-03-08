@@ -1,6 +1,7 @@
 
-import axios, { AxiosResponse } from "axios";
-import bcrypt from "bcryptjs";
+import axios from "axios";
+
+
 import { IAuthlogin,IAdminAccountCreate,IAuthloginResponse,IAuthsignupResponse,IForgotPassword,
 IStudentAccountCreate } from "./AuthInterface";
 
@@ -9,27 +10,27 @@ export async function LoginService(
 ): Promise<IAuthloginResponse> {
   const { username, password,rememberMe } = data;
 
-  const salt = bcrypt.genSaltSync(10);
-  const hashedPassword = bcrypt.hashSync(password, salt);
   try {
     const response = await axios.post("/api/login", {
-
      "username": username,
       "password": password,
     });
+   
+ if(response.data.token){
     //setting for remember me in
-   if (rememberMe && response.data.token) {
+   if (rememberMe ) {
     localStorage.setItem("username", username);
+    localStorage.setItem("userId", response.data.user.id);
     localStorage.setItem("userType",response.data.user.roles[0].name);
     localStorage.setItem("token", response.data.token);
   }
-  if (rememberMe && response.data.token) {
+  if (!rememberMe) {
     sessionStorage.setItem("username", username);
+    sessionStorage.setItem("userId", response.data.user.id);
     sessionStorage.setItem("userType",response.data.user.roles[0].name)
     sessionStorage.setItem("token", response.data.token);
-  
   }
-
+}
     return response.data;
   } catch (error: any) {
     console.log(error);
@@ -84,6 +85,7 @@ export async function ForgotPasswordService(
        "email":email
      }
    );
+   return response
   } catch (error) {
      return "Something Went Wrong"
   }

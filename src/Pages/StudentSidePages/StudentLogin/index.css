@@ -40,4 +40,5 @@ justify-content: center;
 
 .errorlist li{
   margin-left: 50px;
+  list-style: none;
 }

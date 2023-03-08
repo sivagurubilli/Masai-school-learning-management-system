@@ -1,14 +1,17 @@
 .container{
-    height: 100vh;
+    height: auto;
     padding-bottom: 10%;
     background-color: rgb(243,244,246);
   }
   .activeText{
    padding-bottom: 20px;
 border-bottom: 2px solid blue;
+color: blue;
+font-size:17px;
+    cursor: pointer
   }
   .default{
-    font-size: 18px;
+    font-size: 17px;
     cursor: pointer
   }
   .default:hover{

@@ -1,14 +1,20 @@
-import { Box, Button, Input, Text } from "@chakra-ui/react";
-import React from "react";
+import React from 'react';
+import {
+  Box,
+  Button,
+  Input,
+  Text
+} from '@chakra-ui/react';
 import "../AdminLecturePage/index.css";
 import Navbar from "../../../components/StudentSideComponents/StudentNavbar/Navbar";
 import SecondNavforLectureCreate from "../../../components/AdminsideComponents/CreateLecture/SecondNavforCreateLecture";
 
 const CreateBulkLecture = () => {
-  const handlefileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const selectedFile = event.target.files?.[0];
-    console.log(selectedFile);
-  };
+
+const handleFileUpload=()=>{
+
+}
+
 
   return (
     <div className="container">
@@ -27,11 +33,9 @@ const CreateBulkLecture = () => {
         boxShadow="2px 4px 6px rgba(0, 0, 0, 0.1)"
       >
         <Text>Upload csv file to create bulk lectures</Text>
-        <Input
-          type="file"
-          placeholder="Choose csv file lecture uploading"
-          onChange={handlefileChange}
-        />
+        <Input type="file" id="csvFile" placeholder="Choose csv file lecture uploading" accept=".csv"
+        onChange={handleFileUpload} />
+        
         <Button
           w="50%"
           mt="20px"
@@ -42,7 +46,8 @@ const CreateBulkLecture = () => {
           {" "}
           create bulk Lectures
         </Button>
-      </Box>
+        </Box>
+     
     </div>
   );
 };

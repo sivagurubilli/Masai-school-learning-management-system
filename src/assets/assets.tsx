@@ -44,7 +44,11 @@ export const Categoery = [{ key:"General",tags:["dsa","coding","ecConnect","csbt
 
 {key:"CSBT",tags:["english","communication","mockInterview","Mac","speaking"]},
 {key:"DA",tags:["sql","data-analysis","machineLearning","python"]},
-{key:"DSA Coding",tags:["recursion","two-pointers","linked-List","sorting","binary-search"]},
- {key:"Maths",tags:["graphs","number-system","time-distance","integration"]},{key:"Scrum",tags:["scrum","stand-up"]}]
+{key:"DSA",tags:["recursion","two-pointers","linked-List","sorting","binary-search"]},
+{key:"Coding",tags:["javascript","java","html","css","react","redux"]},
+ {key:"Maths",tags:["graphs","number-system","time-distance","integration"]},
+ {key:"Logic",tags:["aptitude","number-system","time-distance","reasoning"]},
+ {key:"Scrum",tags:["scrum","stand-up"]}]
 
 export const ButtonValues =["BACK","EDIT","DISCUSSIONS","COPY"]
+export const repeactIcon = "https://cdn-icons-png.flaticon.com/512/148/148752.png"

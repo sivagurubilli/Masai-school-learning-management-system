@@ -1,26 +1,18 @@
-import {
-  Box,
-  Flex,
-  Button,
-  useMediaQuery,
-} from "@chakra-ui/react";
-import React, { useState } from "react";
+import { Box } from "@chakra-ui/react";
+import React, { useState,useEffect } from "react";
 import "../CreateLecturePage/index.css";
 import Navbar from "../../../components/AdminsideComponents/AdminNavbar/index";
-import {ICreateLectureValues} from "../../../Services/LectureInterface"
-import {
-  LectureEditService,
-} from "../../../Services/LectureServices";
+import { ICreateLectureValues } from "../../../Services/LectureInterface";
+import { LectureEditService, LectureSingleService } from "../../../Services/LectureServices";
 import SecondNavforLectureCreate from "../../../components/AdminsideComponents/CreateLecture/SecondNavforCreateLecture";
 import { useParams } from "react-router-dom";
 import InputTakingSection from "../../../components/AdminsideComponents/CreateLecture/InputTakingSection";
+import Loading from "../../../components/Modal/Loader";
 import CommonModalComponent from "../../../components/Modal/commonModal";
 
 const AdminLectureEdit = () => {
-
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [body,setBody] = useState<string>("")
-  const [isLargerThan900] = useMediaQuery("(min-width: 900px)");
+  const [modalBody, setModalErrorBody] = useState<string>("");
   const [LectureEditValues, setLectureEditValues] =
     useState<ICreateLectureValues>({
       title: "",
@@ -29,65 +21,66 @@ const AdminLectureEdit = () => {
       section: "",
       type: "",
       schedule: new Date(),
-      concludes:new Date(),
-      user: "",
-      tags: [],
+      concludes: new Date(),
+      createdBy: "",
+      tags: ["rrr","ee"],
       hideVideo: false,
-      optional:false,
+      optional: false,
       zoomLink: "",
       week: "",
       day: "",
       notes: "",
     });
 
-  // get data from params using useparams
+  // get data from params using useparams for editing lecture
   const { id } = useParams();
   //Edit lecture service call
-  const EditLecture = () => {
-    const hasEmptyString = Object.values(LectureEditValues).some(value => value === '')
-    if(LectureEditValues.schedule < new Date()){
-      setBody("Schedule time should not be Before than Current time")
-     setIsOpen(true)
+  useEffect(() => {
+    const fetchData = async ()=> {
+      try{
+    const response = await LectureSingleService(id);
+    if(response.title){
+      setLectureEditValues(response);
     }
-   else if(LectureEditValues.concludes <= LectureEditValues.schedule){
-      setBody("Conculde time should not be Before than Schedule time")
-      setIsOpen(true)
-    }else if(hasEmptyString){
-      setBody("All feilds are mandatory please fill all fields")
-      setIsOpen(true)
+      }catch(error){      
+        setIsOpen(true);
+        setModalErrorBody(
+          "Sorry about that! There is a scheduled downtime on your servers, so please check them"
+        );
+      }
     }
-    LectureEditService(LectureEditValues, id).then((res) => {});
-  };
-
+    fetchData()
+  }, [id]);
+  
   return (
     <div className="container">
       <Navbar />
       <SecondNavforLectureCreate />
-      <CommonModalComponent isOpen={isOpen} setIsOpen={setIsOpen} body={body}/>
+      <CommonModalComponent
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        modalBody={modalBody}
+      />
       <Box
         w="80%"
         ml="10%"
         mt="60px"
         h="auto"
-        boxShadow="2px 4px 6px rgba(0, 0, 0, 0.1)">
+        boxShadow="2px 4px 6px rgba(0, 0, 0, 0.1)"
+      >
         <Box w="100%" p="2%" bg="white" h="auto">
-          <InputTakingSection LectureValues ={LectureEditValues} setLectureValues={setLectureEditValues} />    
-          <Flex justifyContent={"flex-end"}>
-            <Button
-              fontSize={isLargerThan900 ? "16px":"12px"}
-              w="auto"
-              mt="20px"
-              color="white"
-              bg="rgb(31 41 55)"
-              _hover={{ bg: "rgb(76, 84, 95)" }}
-              onClick={EditLecture}
-            >
-              EDIT LECTURE
-            </Button>
-          </Flex>
+      {LectureEditValues?.title ?   (  <Box w="100%" p="2%" h="auto">
+          <InputTakingSection
+            LectureValues={LectureEditValues}
+            setLectureValues={setLectureEditValues}
+            buttonName={"Edit Lecture"}
+            LectureSendService ={LectureEditService}
+            id={id}
+          />
+        </Box>): <Box ><Loading /></Box>}        
         </Box>
       </Box>
-      <Box w="80%" ml="10%" bg="white" h="100vh"></Box>
+     
     </div>
   );
 };

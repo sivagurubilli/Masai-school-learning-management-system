@@ -66,3 +66,13 @@ justify-content: center;
   width: auto;
   height: 30px;
 }
+
+.errorlist{
+  color: red;
+  padding-top: 10px;
+}
+
+.errorlist li{
+  margin-left: 50px;
+  list-style: none;
+}

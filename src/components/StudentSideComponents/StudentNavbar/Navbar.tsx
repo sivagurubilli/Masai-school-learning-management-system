@@ -20,16 +20,13 @@ import {
   Button,
 } from "@chakra-ui/react";
 import { masaiimage, NavbarArray } from "../../../assets/assets";
-import { useSelector } from "react-redux";
-import { RootState } from "../../../redux/store";
 
 const Navbar = () => {
   const [clicked, setClicked] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
   const [userName, setUserName] = useState<any | null>(null);
   const navigate = useNavigate()
-  const state = useSelector((state: RootState) => state.Authreducer);
-
+ 
   //   this handleclick function for open and closing of side navbar in smaller screens
   const handleclick = () => {
     setClicked(!clicked);
@@ -71,8 +68,8 @@ const Navbar = () => {
             <Hide below="1100px">
               <Flex w="70%" justifyContent={"space-around"} align="center">
                 {NavbarArray.map((el) => (
-                  <Box className="li">
-                    <NavLink key={el} to={"/admin/" + el.toLowerCase()}>{el}</NavLink>
+                  <Box key={el}  className="li">
+                    <NavLink key={el} to={"/student/" + el.toLowerCase()}>{el}</NavLink>
                   </Box>
                 ))}
               </Flex>
@@ -123,18 +120,18 @@ const Navbar = () => {
                   className={clicked ? "navbar-mobile active" : "navbar-mobile"}
                 >
                   {NavbarArray.map((el) => (
-                    <li>
-                      <NavLink key={el} to={"/admin/" + el.toLowerCase()}>
+                    <li key={el} >
+                      <NavLink key={el} to={"/student/" + el.toLowerCase()}>
                         {el}
                       </NavLink>
                     </li>
                   ))}
                   <Divider borderColor="gray.300" />
                   <Text color="black" padding="10px">
-                    <NavLink to="/admin/profile">Profile</NavLink>
+                    <NavLink to="">Profile</NavLink>
                   </Text>
                   <Text color="black" padding="10px">
-                    <NavLink to="/transcript">Transcript </NavLink>
+                    <NavLink to="">Transcript </NavLink>
                   </Text>
                   <Text
                     color="black"

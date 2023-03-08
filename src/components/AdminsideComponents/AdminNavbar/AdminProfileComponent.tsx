@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React from "react";
 
 import { Link, useNavigate } from "react-router-dom";
 import { Box, Text, Divider } from "@chakra-ui/react";
@@ -11,18 +11,6 @@ interface ProfilecomponentProps {
 const AdminProfileComponent = ({ setshow1 }: ProfilecomponentProps) => {
   const navigate = useNavigate();
 
-  const bodyRef = useRef(document.body);
-
-  useEffect(() => {
-    bodyRef.current.addEventListener("click", handleBodyClick);
-    return () => {
-      bodyRef.current.removeEventListener("click", handleBodyClick);
-    };
-  }, []);
-
-  function handleBodyClick() {
-    setshow1(false);
-  }
   const Logout = () => {
     localStorage.clear();
     setshow1(false);
@@ -50,12 +38,12 @@ const AdminProfileComponent = ({ setshow1 }: ProfilecomponentProps) => {
         Manage Access
       </Text>
       <Text color="black" padding="5px">
-        <Link to="/admin/profile" onClick={() => setshow1(false)}>
+        <Link to="" onClick={() => setshow1(false)}>
           Profile
         </Link>
       </Text>
       <Text color="black" padding="5px">
-        <Link to="admin/transcript" onClick={() => setshow1(false)}>
+        <Link to="" onClick={() => setshow1(false)}>
           Transcript{" "}
         </Link>
       </Text>

@@ -1,21 +1,21 @@
+import React  from "react";
+import { Route, Routes } from "react-router-dom";
 import AdminLecture from "../Pages/AdminSidePages/AdminLecturePage/index";
 import StudentLecture from "../Pages/StudentSidePages/StudentLecturePage/index";
 import AdminSignup from "../Pages/AdminSidePages/AdminSignup/index";
-import React  from "react";
-import { Route, Routes } from "react-router-dom";
 import ForgetPassword from "../Pages/ForgotPassword/index";
-import Dashborad from "../Pages/StudentSidePages/StudentDashboard/Index";
+import Dashborad from "../Pages/StudentSidePages/StudentDashboard/index";
 import AdminDashboard from "../Pages/AdminSidePages/AdminDashboard";
-import AdminLectureDetail from "../Pages/AdminSidePages/AdminLectureDetail/Index"
+import AdminLectureDetail from "../Pages/AdminSidePages/AdminLectureDetail/index"
 import LandingPage from "../Pages/AdminSidePages/LandingPage";
 import AdminLectureCreate from "../Pages/AdminSidePages/CreateLecturePage";
-import AdminLectureEdit from "../Pages/AdminSidePages/EditLecturePage/Index";
-import CreateBulkLecture from "../Pages/AdminSidePages/CreateBulkLecture/Index";
+import AdminLectureEdit from "../Pages/AdminSidePages/EditLecturePage/index";
+import CreateBulkLecture from "../Pages/AdminSidePages/CreateBulkLecture/index";
 import ResetPassword from "../Pages/ResetPassword/index"
 import Login from "../Pages/StudentSidePages/Login";
-import CopyLecture from "../Pages/AdminSidePages/CopyLecture/Index";
-import BookMarks from "../Pages/StudentSidePages/BookMarks/Index";
-import BookMarkDetails from "../Pages/StudentSidePages/BookMarkDetails/Index";
+
+import CopyLecture from "../Pages/AdminSidePages/CopyLecture/index";
+import BookMarks from "../Pages/StudentSidePages/BookMarks/index";
 import StudentLectureDetail from "../Pages/StudentSidePages/LectureDetailPage/index";
 import StudentLectureDiscussion from './../Pages/StudentSidePages/LectureDiscussionPage/index';
 
@@ -43,7 +43,6 @@ const Allroutes = () => {
         <Route path="/student/dashboard" element={<Dashborad />} />
         <Route path="/forgot-password" element={<ForgetPassword />} />
         <Route path="/student/bookmarks" element={<BookMarks/>} />
-        <Route path="/student/bookmarks/:id" element={<BookMarkDetails />} />
         <Route path ="/login" element ={<Login/>} />
         <Route path="/reset-password" element={< ResetPassword/>} />
       </Routes>

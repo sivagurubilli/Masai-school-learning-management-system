@@ -1,5 +1,4 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
 import {
   Box,
   Flex,
@@ -10,7 +9,6 @@ import {
 
 // this component is navbar below component in dash board page
 const SecondNavbar = () => {
-  const navigate = useNavigate();
   const [isLargerThan900] = useMediaQuery("(min-width: 900px)");
 
   return (

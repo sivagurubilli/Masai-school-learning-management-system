@@ -1,13 +1,11 @@
 import React, { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import {  Link } from "react-router-dom";
 import {
   Box,
-  Text,
   Flex,
   Heading,
   ButtonGroup,
   Button,
-  Spacer,
   useMediaQuery,
 } from "@chakra-ui/react";
 import { LectureDeleteService } from "../../../Services/LectureServices";
@@ -16,16 +14,16 @@ import ModalComponent from "../../../components/Modal/ModalComponent";
 
 // this component is lecture page navbar down below component
 const SecondNavforLectureDetail = ({ id }: { id: string | undefined  }) => {
-  const navigate = useNavigate();
   const [isLargerThan900] = useMediaQuery("(min-width: 900px)");
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
 const handleOpen=()=>setIsOpen(true)
-
-  const DeleteLecture =()=>{
-   LectureDeleteService(id).then((res)=>{
+  const DeleteLecture =async ()=>{
+  const response = await LectureDeleteService(id)
+  if(response.message){
        setIsOpen(false)
-   })
+  }
+  
   }
   return (
     <Box bg="white" pt="20px" pb="20px">

@@ -1,41 +1,3 @@
-export const suggestions = [
-  "dsa",
-  "react",
-  "jsa",
-  "redux",
-  "java",
-  "typescript",
-  "recursion",
-  "javascript",
-  "Es6",
-];
-
-
-
-export const LectureDetailkeys=
-{
-  "lectur_id": 3,
-  "title": "Introduction to react",
-  "category": "Coding Platform",
-  "batch": "fw19",
-  "section": "jso101",
-  "type": "Video",
-  "schedule": "25-02-2023 10:00:00",
-  "concludes": "25-02-2023 12:00:00",
-  "tags": [
-      "Spring Boot",
-      "Java"
-  ],
-  "user": "Tridip",
-  "hideVideo": false,
-  "zoomLink": "https://zoom.us/j/1234567890?pwd=xxxxxxxxxxxx",
-  "day": "Monday",
-  "week": "Week 1",
-  "notes": "This lecture will cover the basics of Spring Boot and how to get started with building web applications using this framework."
-}
-
-
-
 
 export const HelperSectionValues = [
   {
@@ -68,6 +30,6 @@ export const HelperSectionValues = [
   {
     heading: "Embedding google slides",
     data: "You can also Embed your buy me coffe button by writing following ",
-    example: "% google slides SLIDES_URL_HERE",
+    example: "% google slides SLIDES_URL_HERE %",
   },
 ];

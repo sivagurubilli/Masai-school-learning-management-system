@@ -2,25 +2,18 @@ import React, { useState,useEffect } from "react";
 import Navbar from "../../../components/StudentSideComponents/StudentNavbar/Navbar";
 import {
   Box,
-  Tabs,
-  TabList,
-  Tab,
-  TabPanels,
-  TabPanel,
   Flex,
   WrapItem,
   Button,
   Wrap,
   Text,
 } from "@chakra-ui/react";
-import { Link,useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { AiOutlineDownload } from "react-icons/ai";
 import { LectureSingleService } from "../../../Services/LectureServices";
-import Video from "./../../../components/StudentSideComponents/StudentLectureComponents/Video";
 import "./index.css";
 import {
   ILectureResponse,
-  ISingledata,
 } from "../../../Services/LectureInterface";
 import DetailTab from "./../../../components/StudentSideComponents/StudentLectureComponents/Tabs/DetailTab";
 
@@ -35,7 +28,7 @@ const StudentLectureDetail = () => {
     LectureSingleService(id).then((res) => {
       setLectureDetail(res);
     });
-  }, []);
+  }, [id]);
 
   const handleDownload = async () => {
     const videoUrl =
@@ -83,7 +76,7 @@ const StudentLectureDetail = () => {
           </Flex>
           <Text>
             {" "}
-            <span className="nameSpan">{ lectureDetail.user}</span>{" "}
+            <span className="nameSpan">{ lectureDetail.createdBy}</span>{" "}
             <span>{lectureDetail.schedule.toLocaleString()}</span>
           </Text>
         </Box>

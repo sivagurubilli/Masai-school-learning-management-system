@@ -2,12 +2,10 @@ import React from "react";
 import { useNavigate, Link } from "react-router-dom";
 import {
   Box,
-  Text,
   Flex,
   Heading,
   ButtonGroup,
   Button,
-  Spacer,
   useMediaQuery,
 } from "@chakra-ui/react";
 
