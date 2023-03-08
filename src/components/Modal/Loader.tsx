@@ -1,14 +1,11 @@
-import React from "react";
-import { Spinner } from "@chakra-ui/react";
-
-interface LoadingProps {
-  size?: string;
-  thickness?: string;
-  color?: string;
+import React from 'react'
+import { Box, SkeletonCircle, SkeletonText } from '@chakra-ui/react'
+const Loader = () => {
+    return (
+        <Box padding='6' boxShadow='lg' bg='white'>
+            <SkeletonCircle size='10' />
+            <SkeletonText mt='4' noOfLines={16} spacing='4' skeletonHeight='2' />
+        </Box>
+    )
 }
-
-const Loading: React.FC<LoadingProps> = ({ size = "xl", thickness = "2px", color = "blue.500" }) => {
-  return <Spinner size={size} thickness={thickness} color={color} />;
-};
-
-export default Loading;
+export default Loader

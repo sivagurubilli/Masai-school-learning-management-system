@@ -98,12 +98,10 @@ export async function GetAllLectureService(
 
   try {
     const response = await axios.get(
-        "/api/lecture/lectures/lectureList",  
+        "/api/lecture/lectureList",  
     );
-   
     return response.data;
   } catch (error: any) {
-  
     return error.response;
   }
 }

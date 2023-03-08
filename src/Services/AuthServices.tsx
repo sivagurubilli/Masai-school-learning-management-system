@@ -1,6 +1,6 @@
 
 import axios from "axios";
-import bcrypt from "bcryptjs";
+
 
 import { IAuthlogin,IAdminAccountCreate,IAuthloginResponse,IAuthsignupResponse,IForgotPassword,
 IStudentAccountCreate } from "./AuthInterface";
@@ -9,8 +9,7 @@ export async function LoginService(
   data: IAuthlogin
 ): Promise<IAuthloginResponse> {
   const { username, password,rememberMe } = data;
-  const salt = bcrypt.genSaltSync(10);
-  const hashedPassword = bcrypt.hashSync(password, salt);
+
   try {
     const response = await axios.post("/api/login", {
      "username": username,
@@ -86,6 +85,7 @@ export async function ForgotPasswordService(
        "email":email
      }
    );
+   return response
   } catch (error) {
      return "Something Went Wrong"
   }

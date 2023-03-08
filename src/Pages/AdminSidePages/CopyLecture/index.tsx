@@ -78,7 +78,7 @@ const CopyLecture = () => {
             LectureSendService={ LectureCopyService}
             id={id}
           />     
-        </Box>):  <Box mt="10%" ml="50%"><Loading /></Box>}  
+        </Box>):  <Box ><Loading /></Box>}  
       </Box>
       </Box>
     

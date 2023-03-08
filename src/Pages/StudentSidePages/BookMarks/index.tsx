@@ -16,7 +16,6 @@ const BookMarks = () => {
 
 
   //getting all bookmarks when user enters into page by using useEffect
-
   useEffect(() => {
     const fetchData = async () => {
       // const id = Number(localStorage.getItem("uerId"))
@@ -69,7 +68,7 @@ const BookMarks = () => {
                 <Text pl="20px">{el.title}</Text>
                 {/* <Text ml="20px">{el.author}</Text>
                 <Text ml="30px">{el.schedule}</Text> */}
-                <Link to={"/student/bookmarks/" + el.id}>
+                <Link to={"/student/lectures/" + el.id}>
                   {" "}
                   <Text pr="20px" color="blue">
                     View

@@ -32,7 +32,7 @@ const AdminLectureEdit = () => {
       notes: "",
     });
 
-  // get data from params using useparams
+  // get data from params using useparams for editing lecture
   const { id } = useParams();
   //Edit lecture service call
   useEffect(() => {
@@ -77,7 +77,7 @@ const AdminLectureEdit = () => {
             LectureSendService ={LectureEditService}
             id={id}
           />
-        </Box>): <Box mt="10%" ml="50%"><Loading /></Box>}        
+        </Box>): <Box ><Loading /></Box>}        
         </Box>
       </Box>
      

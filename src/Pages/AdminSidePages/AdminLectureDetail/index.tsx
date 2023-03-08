@@ -35,6 +35,8 @@ const AdminLectureDetail = () => {
     setVideoActive(!isVideoActive);
   };
 
+
+  //when user enters this page get the details of lecture using useEffect 
   useEffect(() => {
     const fetchData = async ()=> {
       try{
@@ -83,7 +85,7 @@ const AdminLectureDetail = () => {
         pb="20%"
       >
         <Navbar />
-        {!lectureDetail?.title ? (<Box mt="10%" ml="50%"><Loading /></Box>):
+        {!lectureDetail?.title ? (<Box mt="0%" ><Loading /></Box>):
 
         ( <div>
         <SecondNavforLectureDetail id={id} />

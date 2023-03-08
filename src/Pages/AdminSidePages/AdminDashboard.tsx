@@ -3,6 +3,7 @@ import "../../App.css";
 import Navbar from "../../components/AdminsideComponents/AdminNavbar";
 import { Container } from "@chakra-ui/react";
 
+//there is nothing to show in this page from admin side
 const AdminDashboard = () => {
   return (
     <div className="container">

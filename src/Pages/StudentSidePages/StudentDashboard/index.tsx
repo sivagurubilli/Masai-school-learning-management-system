@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Box } from "@chakra-ui/react";
-// import "../../App.css";
+import "../StudentLecturePage/index.css";
 import Navbar from "../../../components/StudentSideComponents/StudentNavbar/Navbar";
 import DashboardNavbar from "../../../components/StudentSideComponents/StudentDashboard/DashboardNavbar";
 import { GetDashboardLecturesService } from "../../../Services/LectureServices";
@@ -14,6 +14,7 @@ const Dashborad = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [modalBody, setModalErrorBody] = useState<string>("");
 
+  // when student user enters this page all lectures for that date schedule is displayed here
     useEffect(()=>{
       const fetchData = async() =>{
         try{

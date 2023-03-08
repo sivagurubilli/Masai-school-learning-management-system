@@ -11,6 +11,7 @@ import {
 import { ILectureResponse } from "../../../Services/LectureInterface";
 import CommonModalComponent from "../../../components/Modal/commonModal";
 import LectureSearchInput from "../../../components/AdminsideComponents/AdminLecture/LectureSearchInput";
+import Loader from "../../../components/Modal/Loader";
 
 
 interface IFilteredValues {
@@ -40,8 +41,8 @@ const AdminLecture = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [modalBody, setModalErrorBody] = useState<string>("");
 
-console.log(lecturesData)
-  // calling service for getting list for lectures
+
+//user search and get lectures by provideing different values
   const GetLectures = async () => {
     setLoading(true);
     setTimeout(() => {
@@ -64,6 +65,7 @@ console.log(lecturesData)
     }
   };
 
+    // when user enters into admin lectures page call service for getlist of lectures using useEffect
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -147,7 +149,7 @@ console.log(lecturesData)
         </Box>
       </Box>
       <Box w="90%" ml="5%" bg="white" h="auto" mt="20px">
-        {lecturesData && <TableHeading LecturesData={lecturesData} />}
+        {lecturesData ? <TableHeading LecturesData={lecturesData} /> : <Loader />}
       </Box>
     </div>
   );

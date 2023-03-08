@@ -107,7 +107,7 @@ console.log(LectureValues)
     useFormik({
       onSubmit,
       initialValues,
-
+      validationSchema,
     });
 
   //create Lecture service for create lecture

@@ -8,6 +8,7 @@ import {
 } from "../../../Services/SelelctionService";
 
 const GetSelectTags = ({
+  
   setBatchArray,
   setSectionArray,
   setCategoryArray,

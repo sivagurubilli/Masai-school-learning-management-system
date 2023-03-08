@@ -3,15 +3,19 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const DashboardLectureCard = () => {
-
-
-
   return (
     <div>
       <Box w="100%" p="10px" pb="10px">
         <Flex w="100%" h="auto" justifyContent="space-between">
           <Flex w="60%">
-            <Box minWidth="100px" w="20%" textAlign="center" bg="rgb(20,110,190)" borderRadius="10px" color="white">
+            <Box
+              minWidth="100px"
+              w="20%"
+              textAlign="center"
+              bg="rgb(20,110,190)"
+              borderRadius="10px"
+              color="white"
+            >
               <Flex justifyContent="center" mt="30px" alignItems="center">
                 <i className="fa-solid fa-calendar-days"></i>
                 <Text ml="20px">7:30 pm </Text>

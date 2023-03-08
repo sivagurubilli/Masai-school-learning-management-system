@@ -106,8 +106,7 @@ const NoteSection = ({ handleChange,values,LectureValues, setLectureValues }: an
         <Box>
        
           <Input
-            name="notes"
-            
+            name="notes"   
             type="file"
             accept="image/jpeg, image/png"
             display="none"
