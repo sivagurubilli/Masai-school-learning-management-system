@@ -130,10 +130,10 @@ const Navbar = () => {
                   ))}
                   <Divider borderColor="gray.300" />
                   <Text color="black" padding="5px">
-                    <NavLink to="/admin/profile">Profile</NavLink>
+                    <NavLink to="">Profile</NavLink>
                   </Text>
                   <Text color="black" padding="5px">
-                    <NavLink to="/transcript">Transcript </NavLink>
+                    <NavLink to="">Transcript </NavLink>
                   </Text>
                   <Text
                     color="black"

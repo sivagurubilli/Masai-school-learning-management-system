@@ -37,12 +37,14 @@ const TagInput = ({ values, LectureValues, setLectureValues }: any) => {
   }, [values,setLectureValues,tags]);
 
   useEffect(() => {
-    Categoery.map((el) => {
-      if (el.key === values.category) {
-        setSuggestionsTags(el.tags);
-      }
-    });
+    const categoryElement = Categoery.find(el => el.key === values.category);
+    if (categoryElement) {
+      setSuggestionsTags(categoryElement.tags);
+    } else {
+      setSuggestionsTags([]);
+    }
   }, [values.category]);
+  
 
   return (
     <div>

@@ -11,8 +11,7 @@ import {
 import { ILectureResponse } from "../../../Services/LectureInterface";
 import CommonModalComponent from "../../../components/Modal/commonModal";
 import LectureSearchInput from "../../../components/AdminsideComponents/AdminLecture/LectureSearchInput";
-import { useSelector } from "react-redux";
-import { RootState } from "../../../redux/store";
+
 
 interface IFilteredValues {
   title: string;
@@ -41,8 +40,7 @@ const AdminLecture = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [modalBody, setModalErrorBody] = useState<string>("");
 
-  const state = useSelector((state: RootState) => state.Authreducer);
-
+console.log(lecturesData)
   // calling service for getting list for lectures
   const GetLectures = async () => {
     setLoading(true);

@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   Button,
   Container,
   Flex,
-  FormControl,
   FormLabel,
   Input,
   Text,
@@ -111,7 +110,7 @@ const Captcha = ({ setCaptcha1 }: any) => {
                 alignItems="center"
               >
                 {captcha.map((el, index: number) => {
-                  if (index % 2 == 0) {
+                  if (index % 2 === 0) {
                     return (
                       <Text
                         fontStyle="italic"

@@ -1,11 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   Text,
   Button,
   Modal,
   ModalOverlay,
   ModalContent,
-  ModalHeader,
   ModalBody,
   ModalFooter,
   useMediaQuery,

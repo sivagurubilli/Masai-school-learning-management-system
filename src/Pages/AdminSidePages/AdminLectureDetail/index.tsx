@@ -63,7 +63,7 @@ const AdminLectureDetail = () => {
   // uploading video file 
   const uploadFile =async()=>{ 
     try{
-      const response = await AddVideoFileService(id)
+      const response = await AddVideoFileService(id,videoFile)
       if(response.message){
         setIsOpen(true)
         setModalErrorBody("Video added to the lecture successfully")
@@ -122,6 +122,7 @@ const AdminLectureDetail = () => {
           <Box w="100%">
             {keyValueArray.map(([key, value], index) => (
               <Flex
+              key={index}
                 h="auto"
                 p="20px"
                 bg={index % 2 === 1 ? "gray.100" : "white"}

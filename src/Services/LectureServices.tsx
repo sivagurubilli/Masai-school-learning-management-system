@@ -195,8 +195,7 @@ export async function GetAllBookMarksService(
           {
             "userId": "105",
             "lectureid": "205"
-        }
-        
+        }   
         );
           return response.data;
       } catch (error: any) {
@@ -204,7 +203,6 @@ export async function GetAllBookMarksService(
       }
     }
 
- 
 //Remove BookMarks service
     export async function RemoveBookMarksService(
       {id}:any
@@ -236,12 +234,14 @@ export async function GetAllBookMarksService(
  
     // add video file service
     export async function AddVideoFileService(
-               lectureId:any
+               file:any,lectureId:any
       ) {  
         try {
           const response = await axios.post(
             `/api/lecture/${lectureId}/video`,  
+            file
           );
+        
             return response.data;
         } catch (error: any) {
           return error.response;

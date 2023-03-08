@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from "axios";
+import axios from "axios";
 import {
   IBatchObject,
   ICategoryObject,
@@ -32,7 +32,7 @@ export async function getSectionArray() : Promise<ISectionObject[]>{
 export async function getTypeArray(): Promise<ITypeObject[]> {
   try {
     const response = await axios.get(
-      "lectureType/getLectureTypeList"
+      "api/gettypeList"
     );
     return response.data;
   } catch (error: any) {
@@ -56,7 +56,7 @@ export async function getUserArray(): Promise<IUserObject[]> {
 export async function getCategoryArrray(): Promise<ICategoryObject[]>{
   try {
     const response = await axios.get(
-      "/category/getCategoryList"
+      "/api/getList"
           );
 
     return response.data;

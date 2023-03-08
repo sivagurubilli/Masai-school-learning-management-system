@@ -71,9 +71,9 @@ const InputTakingSection = ({buttonName, LectureValues, setLectureValues,Lecture
     setTimeout(()=>{
       setLoading(false)
     },2000)
-
-    if(buttonName === "Copy Lecture" || buttonName ==="Edit Lecture"){
-      console.log(LectureValues)
+console.log(LectureValues)
+    if(buttonName === "Copy Lecture" || buttonName === "Edit Lecture"){
+     
     try {
       const response = await LectureSendService(LectureValues,id);
       if (response.message) {
@@ -107,7 +107,7 @@ const InputTakingSection = ({buttonName, LectureValues, setLectureValues,Lecture
     useFormik({
       onSubmit,
       initialValues,
-   
+
     });
 
   //create Lecture service for create lecture

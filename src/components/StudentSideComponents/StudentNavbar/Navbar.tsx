@@ -20,8 +20,6 @@ import {
   Button,
 } from "@chakra-ui/react";
 import { masaiimage, NavbarArray } from "../../../assets/assets";
-import { useSelector } from "react-redux";
-import { RootState } from "../../../redux/store";
 
 const Navbar = () => {
   const [clicked, setClicked] = useState(false);
@@ -130,10 +128,10 @@ const Navbar = () => {
                   ))}
                   <Divider borderColor="gray.300" />
                   <Text color="black" padding="10px">
-                    <NavLink to="/admin/profile">Profile</NavLink>
+                    <NavLink to="">Profile</NavLink>
                   </Text>
                   <Text color="black" padding="10px">
-                    <NavLink to="/transcript">Transcript </NavLink>
+                    <NavLink to="">Transcript </NavLink>
                   </Text>
                   <Text
                     color="black"

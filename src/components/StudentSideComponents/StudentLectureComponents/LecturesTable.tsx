@@ -1,5 +1,4 @@
 import React from "react";
-import moment from "moment";
 import { Link } from "react-router-dom";
 import {
     ILectureResponse,
@@ -14,15 +13,11 @@ import {
     Td,
     Badge,
     Text,
-    Button,
-    Flex,
     TableContainer,
     Box,
 } from "@chakra-ui/react";
-import { useNavigate } from "react-router-dom";
 
 const TableHeading = ({ LecturesData }: ISearchResponse) => {
-    const navigate = useNavigate();
 
     return (
         <div>

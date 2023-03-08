@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
 import { Box } from "@chakra-ui/react";
 // import "../../App.css";
 import Navbar from "../../../components/StudentSideComponents/StudentNavbar/Navbar";
@@ -14,7 +13,6 @@ const Dashborad = () => {
   const [dashboardLectures,setDashboardLectures] = useState<ILectureResponse[]>()
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [modalBody, setModalErrorBody] = useState<string>("");
-
 
     useEffect(()=>{
       const fetchData = async() =>{
@@ -52,7 +50,7 @@ const Dashborad = () => {
           ml="10%"
           mt="70px"
         >   
-        <DashboardLectureCard />
+      {dashboardLectures &&  <DashboardLectureCard />}
 
 
         </Box>

@@ -13,15 +13,14 @@ const BookMarks = () => {
  const [bookMarks,setBookMarks] = useState<IBookMarkObject[]>()
  const [isOpen, setIsOpen] = useState<boolean>(false);
  const [modalBody, setModalErrorBody] = useState<string>("");
-  const ele = [
-    { tile: "siva", author: "ravi", schedule: "1234njdjjdjd", id: 3 },
-  ];
+
 
   //getting all bookmarks when user enters into page by using useEffect
 
   useEffect(() => {
     const fetchData = async () => {
-      const id = Number(localStorage.getItem("uerId"))
+      // const id = Number(localStorage.getItem("uerId"))
+   const id=102
       try {
         const response = await  GetAllBookMarksService(id);
         if(response.length){

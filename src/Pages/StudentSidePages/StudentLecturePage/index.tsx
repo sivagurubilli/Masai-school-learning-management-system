@@ -1,7 +1,6 @@
 import { Box, Flex, Button, useMediaQuery } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import "./index.css";
-import Secondnav from "../../../components/AdminsideComponents/AdminLecture/LectureSearchNavbar";
 import Navbar from "../../../components/AdminsideComponents/AdminNavbar/index";
 import TableHeading from "../../../components/StudentSideComponents/StudentLectureComponents/LecturesTable";
 import {
@@ -52,7 +51,7 @@ const StudentLecture = () => {
     LectureSearchService(filterValues).then((res: any) => {
       if (res.length > 1) {
         setLecturesData(res);
-      } else if (res.data.success == false) {
+      } else if (res.data.success === false) {
         setIsOpen(true);
         setBody("These values did not match the lecture data!");
       }
@@ -82,7 +81,6 @@ const StudentLecture = () => {
   return (
     <div className="container">
       <Navbar />
-      {/* <Secondnav /> */}
       <SecondNavbar />
       <CommonModalComponent isOpen={isOpen} setIsOpen={setIsOpen} body={body} />
       <Box

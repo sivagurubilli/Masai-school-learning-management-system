@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   Box,
   Button,
@@ -8,41 +8,12 @@ import {
 import "../AdminLecturePage/index.css";
 import Navbar from "../../../components/StudentSideComponents/StudentNavbar/Navbar";
 import SecondNavforLectureCreate from "../../../components/AdminsideComponents/CreateLecture/SecondNavforCreateLecture";
-interface CsvData {
-  [key: string]: string;
-}
 
 const CreateBulkLecture = () => {
-  const [csvData, setCsvData] = useState<CsvData[]>([]);
-  
 
-  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
+const handleFileUpload=()=>{
 
-    const reader = new FileReader();
-
-    reader.onload = (event) => {
-      if (!event.target) return;
-      const content = event.target.result as string;
-
-      const rows = content.trim().split('\n');
-      const headers = rows[0].split(',');
-
-      const csvData = rows
-        .slice(1)
-        .map((row) =>
-          row
-            .split(',')
-            .reduce((obj, value, index) => ({ ...obj, [headers[index]]: value }), {})
-        );
-
-      setCsvData(csvData);
-    };
-
-    reader.readAsText(file);
-  };
-
+}
 
 
   return (

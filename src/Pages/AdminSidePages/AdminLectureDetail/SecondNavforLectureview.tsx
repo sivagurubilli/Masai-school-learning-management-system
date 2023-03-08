@@ -18,10 +18,12 @@ const SecondNavforLectureDetail = ({ id }: { id: string | undefined  }) => {
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
 const handleOpen=()=>setIsOpen(true)
-  const DeleteLecture =()=>{
-   LectureDeleteService(id).then((res)=>{
+  const DeleteLecture =async ()=>{
+  const response = await LectureDeleteService(id)
+  if(response.message){
        setIsOpen(false)
-   })
+  }
+  
   }
   return (
     <Box bg="white" pt="20px" pb="20px">

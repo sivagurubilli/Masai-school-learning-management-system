@@ -15,7 +15,6 @@ import ResetPassword from "../Pages/ResetPassword/index"
 import Login from "../Pages/StudentSidePages/Login";
 import CopyLecture from "../Pages/AdminSidePages/CopyLecture";
 import BookMarks from "../Pages/StudentSidePages/BookMarks";
-import BookMarkDetails from "../Pages/StudentSidePages/BookMarkDetails";
 
 const Allroutes = () => {
   return (
@@ -39,7 +38,6 @@ const Allroutes = () => {
         <Route path="/student/dashboard" element={<Dashborad />} />
         <Route path="/forgot-password" element={<ForgetPassword />} />
         <Route path="/student/bookmarks" element={<BookMarks/>} />
-        <Route path="/student/bookmarks/:id" element={<BookMarkDetails />} />
         <Route path ="/login" element ={<Login/>} />
         <Route path="/reset-password" element={< ResetPassword/>} />
       </Routes>

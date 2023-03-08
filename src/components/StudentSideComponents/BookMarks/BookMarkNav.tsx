@@ -1,5 +1,5 @@
 import React from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {
   Box,
   Flex,
@@ -12,7 +12,6 @@ import { referAndEarnLink, } from "../../../assets/assets";
 
 // this component is navbar below component in dash board page
 const BookMarkNav = () => {
-  const navigate = useNavigate();
   const [isLargerThan900] = useMediaQuery("(min-width: 900px)");
 
   return (

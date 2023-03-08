@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import * as yup from "yup";
 import { useFormik } from "formik";
 import {
@@ -11,7 +11,6 @@ import {
 } from "@chakra-ui/react";
 import { Box, Image } from "@chakra-ui/react";
 import { masaiimage } from "../../../assets/assets";
-import { IAuthsignupResponse } from "../../../Services/AuthInterface";
 import { AdminSignupService } from "../../../Services/AuthServices";
 import "./index.css";
 import { useNavigate } from "react-router-dom";
@@ -69,7 +68,6 @@ const initialCaptcha: Icaptchamatched = {
 
 //signup for admin component start here
 export default function AdminSignup() {
-  const [signupState, setSignupState] = useState(initialValues);
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [errorBody, setErrorBody] = useState<string>("");
   const [BackendError, setBackendError] = useState({

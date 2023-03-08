@@ -1,7 +1,7 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect } from "react";
 
 import { Link, useNavigate } from "react-router-dom";
-import { Box, Text, Divider, Button } from "@chakra-ui/react";
+import { Box, Text, Divider } from "@chakra-ui/react";
 // this component is for when clicking user name in navbar this component should display
 interface ProfilecomponentProps {
   setshow1: (show: boolean) => void;
@@ -9,18 +9,17 @@ interface ProfilecomponentProps {
 
 const Profilecomponent = ({ setshow1 }: ProfilecomponentProps) => {
   const navigate = useNavigate();
-  const bodyRef = useRef(document.body);
 
   useEffect(() => {
-    bodyRef.current.addEventListener("click", handleBodyClick);
+    const handleBodyClick =()=> {
+      setshow1(false);
+    }
+    document.body.addEventListener('click', handleBodyClick);
     return () => {
-      bodyRef.current.removeEventListener("click", handleBodyClick);
+      document.body.removeEventListener('click', handleBodyClick);
     };
-  }, []);
+  }, [setshow1]);
 
-  function handleBodyClick() {
-    setshow1(false);
-  }
   const Logout = () => {
     localStorage.clear();
     setshow1(false);
@@ -47,12 +46,12 @@ const Profilecomponent = ({ setshow1 }: ProfilecomponentProps) => {
         Manage Access
       </Text>
       <Text color="black" padding="5px">
-        <Link to="/user/profile" onClick={() => setshow1(false)}>
+        <Link to="" onClick={() => setshow1(false)}>
           Profile
         </Link>
       </Text>
       <Text color="black" padding="5px">
-        <Link to="/transcript" onClick={() => setshow1(false)}>
+        <Link to="" onClick={() => setshow1(false)}>
           Transcript{" "}
         </Link>
       </Text>

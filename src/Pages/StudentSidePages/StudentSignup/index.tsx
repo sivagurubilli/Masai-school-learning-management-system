@@ -17,7 +17,6 @@ import {
   getBatchArrray,
   getSectionArray,
 } from "../../../Services/SelelctionService";
-import { IAuthsignupResponse } from "../../../Services/AuthInterface";
 import { StudentSignupService } from "../../../Services/AuthServices";
 import "./index.css";
 import {

@@ -17,7 +17,6 @@ import { bindActionCreators } from "redux";
 import { actionCreators } from "../../../redux/Authreducer/index";
 import { Box, Image } from "@chakra-ui/react";
 import { masaiimage } from "../../../assets/assets";
-import { IAuthloginResponse } from "../../../Services/AuthInterface";
 import { LoginService } from "../../../Services/AuthServices";
 import { useNavigate } from "react-router-dom";
 
@@ -52,7 +51,7 @@ const initialValues: IFormData = {
 
 //student login component
 export default function StudentLogin({ setGotoSignup }: any) {
-  const [BackendError, setBackendError] = useState({
+  const [BackendError, setBackendError] = useState<IErrorDisplay>({
     backendErrorMessage: "",
     errorFromBackend: false,
   });
