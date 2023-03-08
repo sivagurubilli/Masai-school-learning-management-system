@@ -67,4 +67,5 @@ height: auto;
 
 .errorlist li{
   margin-left: 50px;
+  list-style: none;
 }

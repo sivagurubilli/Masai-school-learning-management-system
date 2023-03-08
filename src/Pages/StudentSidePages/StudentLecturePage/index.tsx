@@ -1,7 +1,6 @@
 import { Box, Flex, Button, useMediaQuery } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import "./index.css";
-import Secondnav from "../../../components/AdminsideComponents/AdminLecture/LectureSearchNavbar";
 import Navbar from "../../../components/AdminsideComponents/AdminNavbar/index";
 import TableHeading from "../../../components/StudentSideComponents/StudentLectureComponents/LectureTable/LecturesTable";
 import {
@@ -10,7 +9,6 @@ import {
   GettAllStudentLectureService
 } from "../../../Services/LectureServices";
 import {
-  ISearchResponse,
   ILectureResponse,
 } from "../../../Services/LectureInterface";
 import CommonModalComponent from "../../../components/Modal/commonModal";
@@ -25,8 +23,8 @@ interface IFilteredValues {
   batch: string;
   section: string;
   type: string;
-  user: string;
-  date: string;
+  createdBy: string;
+  startTime: string;
   week: string;
   day: string;
 }
@@ -37,8 +35,8 @@ const StudentLecture = () => {
     batch: "",
     section: "",
     type: "",
-    user: "",
-    date: "",
+    createdBy: "",
+    startTime: "",
     week: "",
     day: "",
   });
@@ -100,8 +98,8 @@ const handlePageChange = ({ selected }: { selected: number }) => {
       batch: "",
       section: "",
       type: "",
-      user: "",
-      date: "",
+      createdBy: "",
+      startTime: "",
       week: "",
       day: "",
     });

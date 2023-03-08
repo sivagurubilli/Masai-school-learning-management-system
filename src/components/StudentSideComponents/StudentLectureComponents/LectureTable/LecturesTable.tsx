@@ -1,22 +1,23 @@
-import React,{useState} from "react";
+import React from "react";
 import moment from "moment";
-import { Link } from "react-router-dom";
+
 import {
     ILectureResponse,
     ISearchResponse,
 } from "../../../../Services/LectureInterface";
 import {
-    Table,
-    Thead,
-    Tbody,
-    Tr,
-    Th,
-    Td,
-    Badge,
-    Text,
-    TableContainer,
-    Box,
+  Table,
+  Thead,
+  Tbody,
+  Tr,
+  Th,
+  Td,
+  Badge,
+  Text,
+  TableContainer,
+  Box,
 } from "@chakra-ui/react";
+
 import { useNavigate } from "react-router-dom";
 import { boolean } from "yup";
 import TimeDetails from "../Time/Time";
@@ -24,7 +25,7 @@ import TimeDetails from "../Time/Time";
 
 
 const TableHeading = ({ LecturesData }: ISearchResponse) => {
-    const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   const handleRedirect=(ad:ILectureResponse)=>{
         navigate(`/student/lectures/${ad.lectureid}`);

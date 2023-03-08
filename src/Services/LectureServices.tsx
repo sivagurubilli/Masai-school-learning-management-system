@@ -1,5 +1,6 @@
 import axios from "axios";
-import { IBookMarkObject, ICreateLectureValues, ILectureResponse,  ISearchValues, ISingledata } from "./LectureInterface";
+
+import { IBookMarkObject, ICreateLectureValues, ILectureResponse,  ISearchValues } from "./LectureInterface";
 
 //interface for creating lectures and editing lectures
 
@@ -10,7 +11,7 @@ message:string
 export async function LecturePostService(
   data: ICreateLectureValues
 ): Promise<ILecturePostResponse> {
-  const { title, batch, section, type, user,  category,
+  const { title, batch, section, type,createdBy,  category,
   schedule,
   concludes,
   tags,
@@ -24,12 +25,13 @@ export async function LecturePostService(
       batch,
       section,
       type,
-      user,
+      createdBy,
       category,
       schedule,
       concludes,
       tags,
       hideVideo,
+      optional,
       zoomLink,
       notes,
       week,
@@ -46,7 +48,7 @@ export async function LectureEditService(
   data: ICreateLectureValues,
   id: string | undefined
 ): Promise<ILecturePostResponse> {
-  const { title, batch, section, type, user,  category,
+  const { title, batch, section, type,createdBy,  category,
     schedule,
     concludes,
     tags,
@@ -58,7 +60,7 @@ export async function LectureEditService(
     const response = await axios.patch(
       `/api/lecture/updateLecture/${id}`,
       {
-        title, batch, section, type, user,  category,
+        title, batch, section, type,createdBy,  category,
     schedule,
     concludes,
     tags,
@@ -77,30 +79,29 @@ export async function LectureEditService(
 export async function LectureSearchService(
   data: ISearchValues,
 ): Promise<ILectureResponse[]> {
-  const { title, batch, section, type, user,day, week } = data;
+  const { title, batch, section, type,createdBy,startTime,day, week } = data;
+ 
   try {
     const response = await axios.post(
       "/api/lecture/lectures/search",
-      {title, batch, section, type, user,day, week}
+      {title, batch, section, type,startTime,createdBy,day, week}
     );
+   
     return response.data;
   } catch (error: any) {
     return error.response;
   }
 }
-
 // for getting all lectures when user enters to the lectures page
 export async function GetAllLectureService(
 ): Promise<ILectureResponse[]> {
- 
+
   try {
     const response = await axios.get(
         "http://3.27.61.194:8082/api/lecture/lectureList"
     );
-
     return response.data;
   } catch (error: any) {
-    console.log(error)
     return error.response;
   }
 }
@@ -122,14 +123,13 @@ id :any
 
 // deleting for Lecture Service
 export async function LectureDeleteService(
-  id: string| undefined
+  lectureId: any
  
 ): Promise<ILecturePostResponse> {
   try {
     const response = await axios.delete(
-      `/api/lecture/lectures/${id}`,
+      `/api/removeLecture/${lectureId}`,
     );
-
     return response.data;
   } catch (error: any) {
     return error.response;
@@ -139,21 +139,20 @@ export async function LectureDeleteService(
 // lectures copy service function
 export async function LectureCopyService(
   data: ICreateLectureValues,
-  id: string | undefined
+  lectureId: string | undefined
 ): Promise<ILecturePostResponse> {
-  const { title, batch, section, type, user,  category,
+  const { title, batch, section, type, createdBy,  category,
     schedule,
     concludes,
     tags,
     hideVideo,
     zoomLink,
     notes, week } = data;
-
   try {
     const response = await axios.post(
-      `/api/lecture/copyLecture/`,
+      `/api/lectures/${lectureId}/copy`,
       {
-        title, batch, section, type, user,  category,
+        title, batch, section, type, createdBy,  category,
     schedule,
     concludes,
     tags,
@@ -171,10 +170,11 @@ export async function LectureCopyService(
 
 // for getting all bookmarks
 export async function GetAllBookMarksService(
+  id: any
   ): Promise<IBookMarkObject[]> {  
     try {
       const response = await axios.get(
-        "/api/bookmarks/getList",  
+        `/api/getList/${id}`,  
       );
         return response.data;
     } catch (error: any) {
@@ -189,12 +189,11 @@ export async function GetAllBookMarksService(
      
       try {
         const response = await axios.post(
-          "/api/bookmark/getList",  
+          "/api/bookmark",  
           {
             "userId": "105",
             "lectureid": "205"
-        }
-        
+        }   
         );
           return response.data;
       } catch (error: any) {
@@ -202,20 +201,6 @@ export async function GetAllBookMarksService(
       }
     }
 
-    export async function SingleBookMarksService(
-      {id}:any
-      ): Promise<IBookMarkObject[]> {
-       
-        try {
-          const response = await axios.get(
-            `/api/bookmarks/getList/${id}` 
-          );
-            return response.data;
-        } catch (error: any) {
-          return error.response;
-        }
-      }
-    
 //Remove BookMarks service
     export async function RemoveBookMarksService(
       {id}:any
@@ -244,19 +229,23 @@ export async function GetAllBookMarksService(
       }
     }
 
-         //add bookmark service
-  export async function SingleDashboardLecturesService(
-    {id}:any
-    ): Promise<IBookMarkObject[]> {  
-      try {
-        const response = await axios.get(
-          `/api/dashboard/${id}`,  
-        );
-          return response.data;
-      } catch (error: any) {
-        return error.response;
+ 
+    // add video file service
+    export async function AddVideoFileService(
+               file:any,lectureId:any
+      ) {  
+        try {
+          const response = await axios.post(
+            `/api/lecture/${lectureId}/video`,  
+            file
+          );
+        
+            return response.data;
+        } catch (error: any) {
+          return error.response;
+        }
       }
-    }
+    
 
 
     // for getting all lectures when user enters to the lectures page

@@ -1,18 +1,16 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   Text,
   Button,
   Modal,
   ModalOverlay,
   ModalContent,
-  ModalHeader,
   ModalBody,
   ModalFooter,
   useMediaQuery,
 } from "@chakra-ui/react";
 
 const ModalComponent = ({ isOpen, setIsOpen, DeleteLecture }: any) => {
-  const handleOpen = () => setIsOpen(true);
   const handleClose = () => setIsOpen(false);
   const [isLargerThan900] = useMediaQuery("(min-width: 900px)");
 

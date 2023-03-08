@@ -2,12 +2,13 @@
 //interface for searching values
 export interface ISearchValues {  
        title:string,
-       user:string,
+       createdBy:string,
        type:string;
        batch:string;
        section:string;
        day:string;
        week:string;
+       startTime:string;
       
 }
 export interface ITags{
@@ -24,7 +25,7 @@ export interface ILectureResponse{
     schedule:Date,
     concludes:Date,
     createdBy: string,
-    tags:ITags[],
+    tags:string[],
     hideVideo:boolean,
     optional:boolean,
     zoomLink:string,
@@ -48,8 +49,8 @@ export interface ICreateLectureValues {
     type: string,
     schedule:Date,
     concludes:Date,
-    user: string,
-    tags:ITags[],
+    createdBy: string,
+    tags:string[],
     hideVideo:boolean,
     optional:boolean,
     zoomLink:string,
@@ -64,6 +65,6 @@ export interface ICreateLectureValues {
 
   export interface IBookMarkObject{
     id:number,
-    tilte:string,
+    title:string,
     date:string
   }

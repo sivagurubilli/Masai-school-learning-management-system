@@ -11,35 +11,70 @@ import {
   Flex,
   Input,
   Text,
-  useMediaQuery,
 } from "@chakra-ui/react";
-import { LectureDetailkeys } from "../CreateLecturePage/ConstantsforCreateLecture";
 import "../AdminLecturePage/index.css";
-import { LectureSingleService } from "../../../Services/LectureServices";
+import { AddVideoFileService, LectureSingleService } from "../../../Services/LectureServices";
 import {
   ILectureResponse,
-  ISingledata,
 } from "../../../Services/LectureInterface";
+import CommonModalComponent from "../../../components/Modal/commonModal";
+import Loading from "../../../components/Modal/Loader";
 
 const AdminLectureDetail = () => {
-  const { id } = useParams();
+  
   const [lectureDetail, setLectureDetail] = useState<
-    ILectureResponse | undefined
+    ILectureResponse 
   >();
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [modalBody, setModalErrorBody] = useState<string>("");
+  const [videoFile,setVideoFile ]= useState<File | null>(null);
   const [isVideoActive, setVideoActive] = useState<boolean>(false);
-  const keyValueArray = Object.entries(LectureDetailkeys);
-  const [isLargerThan900] = useMediaQuery("(min-width: 900px)");
-
+  const keyValueArray = lectureDetail ? Object.entries(lectureDetail) : [];
+  const { id } = useParams();
   const handeleClick = () => {
     setVideoActive(!isVideoActive);
   };
 
+
+  //when user enters this page get the details of lecture using useEffect 
   useEffect(() => {
-    LectureSingleService(id).then((res) => {
-      setLectureDetail(res);
-    });
+    const fetchData = async ()=> {
+      try{
+    const response = await LectureSingleService(id);
+    if(response.lectureid){
+      setLectureDetail(response);
+    }
+      }catch(error){
+        setIsOpen(true);
+        setModalErrorBody(
+          "Sorry about that! There is a scheduled downtime on your servers, so please check them"
+        );
+      }
+    }
+    fetchData()
   }, [id]);
 
+  // get the video file by onChange 
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target?.files?.[0];
+    if (file) {
+      setVideoFile(prevFile => file);
+    }
+  };
+  
+  // uploading video file 
+  const uploadFile =async()=>{ 
+    try{
+      const response = await AddVideoFileService(id,videoFile)
+      if(response.message){
+        setIsOpen(true)
+        setModalErrorBody("Video added to the lecture successfully")
+      }
+    }catch(error){
+      setIsOpen(true)
+      setModalErrorBody("Video not added to the lecture please try again!")
+    }
+  }
   return (
     <div>
       <Box
@@ -50,7 +85,15 @@ const AdminLectureDetail = () => {
         pb="20%"
       >
         <Navbar />
+        {!lectureDetail?.title ? (<Box mt="0%" ><Loading /></Box>):
+
+        ( <div>
         <SecondNavforLectureDetail id={id} />
+        <CommonModalComponent
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        modalBody={modalBody}
+      />
         <Box
           flex="1"
           mx={{ base: "10%", md: "20%" }}
@@ -61,10 +104,10 @@ const AdminLectureDetail = () => {
           h="auto"
         >
           <Box p="3%" h="120px">
-            <Text>React redux with crud app lecture</Text>
+            <Text>{lectureDetail?.title}</Text>
             <Flex alignItems="center" flexWrap="wrap">
-              <Text>fw1233 |</Text>
-              <Text ml="10px">rct 201 |</Text>
+              <Text>{lectureDetail?.batch} |</Text>
+              <Text ml="10px">{lectureDetail?.section} |</Text>
               <Badge
                 bg="orange"
                 size="sm"
@@ -75,21 +118,22 @@ const AdminLectureDetail = () => {
                 Check Attendance
               </Badge>
             </Flex>
-            <Text>Siva Gurubilli </Text>
+            <Text>{lectureDetail?.createdBy}</Text>
           </Box>
           <Divider />
           <Box w="100%">
             {keyValueArray.map(([key, value], index) => (
               <Flex
+              key={index}
                 h="auto"
                 p="20px"
-                bg={index % 2 == 1 ? "gray.100" : "white"}
+                bg={index % 2 === 1 ? "gray.100" : "white"}
               >
-                <Box display={index == 0 ? "none" : "block"} w="50%">
+                <Box display={index === 0 ? "none" : "block"} w="50%">
                   <Text>{key}</Text>
                 </Box>
-                <Box display={index == 0 ? "none" : "block"} w="50%">
-                  <Text>{value}</Text>
+                <Box display={index === 0 ? "none" : "block"} w="50%">
+                  <Text>{value ? value+"  ":""}</Text>
                 </Box>
               </Flex>
             ))}
@@ -145,18 +189,22 @@ const AdminLectureDetail = () => {
           <Flex mt="30px" p="20px" justifyContent="space-between">
             <Box>
               <Text color="blue">Upload Video</Text>
-              <Input type="file" placeholder="choose file" />
+              <Input type="file" placeholder="choose file" onChange={handleFileChange} />
             </Box>
             <Button
               mt="20px"
               bg="rgb(31 41 55)"
               _hover={{ bg: "rgb(76, 84, 95)" }}
               color="white"
+              onClick={uploadFile}
             >
               Save Video
             </Button>
           </Flex>
         </Box>
+        
+        </div>)
+}
       </Box>
     </div>
   );

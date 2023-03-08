@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import Navbar from "../../../components/StudentSideComponents/StudentNavbar/Navbar";
+import React from "react";
 import {
     Box,
     Tabs,
@@ -8,123 +7,85 @@ import {
     TabPanels,
     TabPanel,
     Flex,
-    WrapItem,
+    Input,
+    Select,
     Button,
-    Wrap,
-    Text,
+    Center
 } from "@chakra-ui/react";
 import { Link, useParams } from "react-router-dom";
-import { AiOutlineDownload } from "react-icons/ai";
-import { LectureSingleService } from "../../../Services/LectureServices";
-import Video from "../../../components/StudentSideComponents/StudentLectureComponents/NoteAndVideo/Video";
-import "./index.css";
-import Skeleton from "../../../components/Skeleton/index";
-import {
-    ILectureResponse,
-    ISingledata,
-} from "../../../Services/LectureInterface";
-import DiscussionTab from "./../../../components/StudentSideComponents/StudentLectureComponents/Tabs/DiscussionTab";
-import moment from 'moment';
+import Video from "../NoteAndVideo/Video";
+import { ILectureResponse } from "./../../../../Services/LectureInterface";
+import EmptyTab from "./EmptyTab";
 
-const StudentLectureDiscussion = () => {
-    const { id = "" } = useParams<{ id: string }>();
-    const [lectureDetail, setLectureDetail] = useState<
-        ILectureResponse | undefined
-    >();
-    const [downloadLink, setDownloadLink] = useState<string>("");
-    const [startTime, setStartTime]=useState<string>("")
-  const [endTime, setEndTime]=useState<string>("")
-  const [loading, setLoading]=useState<boolean>()
+interface DetailTabProps {
+    lectureDetail: ILectureResponse;
+    lectureId: string;
+}
 
-    useEffect(() => {
-        const fetchLecture = async () => {
-            setLoading(true)
-          try {
-            const res = await LectureSingleService(id);
-            setLectureDetail(res);
-            const formattedStartDate = moment(res.schedule).format('D MMM YY h:mm ');
-            const formattedEndDate = moment(res.concludes).format('h:mm A');
-            setStartTime(formattedStartDate)
-            setEndTime(formattedEndDate)
-
-      
-
-            setLoading(false)
-          } catch (err) {
-            console.error(err);
-          }
-        };
-        fetchLecture();
-      }, []);
-
-    const handleDownload = async () => {
-        const videoUrl =
-            "https://archive.org/download/BigBuckBunny_124/Content/big_buck_bunny_720p_surround.mp4";
-        const response = await fetch(videoUrl, { mode: "no-cors" });
-        const blob = await response.blob();
-        const url = window.URL.createObjectURL(blob);
-        console.log(url);
-        setDownloadLink(url);
-
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = "video.mp4";
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-    };
-
+const DiscussionTab = ({ lectureDetail, lectureId }: DetailTabProps) => {
     return (
-        <div>
-            <Navbar />
-            {loading && <Skeleton/>}
-            {lectureDetail && <Box>
-                <Flex
-                    justify="space-between"
-                    align="center"
-                    m="10"
-                    mt="50"
-                    boxShadow="base"
-                    p="6"
-                    rounded="md"
-                    bg="white"
+        <Tabs isFitted variant="enclosed" defaultIndex={1}>
+            <TabList mb="1em" h="80px">
+                <Tab
+                    _selected={{
+                        borderBottomWidth: "3px",
+                        borderBottomColor: "#504de6",
+                    }}
+                    _hover={{ bg: "#f9fafb" }}
                 >
-                    <Box>
-                        <Flex>
-                            <Box
-                                color="blue"
-                                fontSize="20"
-                                fontWeight="medium"
-                                _hover={{ textDecoration: "underline" }}
-                            >
-                                {lectureDetail.title}
-                            </Box>
-                            <span className="live2">{lectureDetail.category}</span>
-                            <span className="live">{lectureDetail.type}</span>
+                    <Link className="link" to={`/student/lectures/${lectureId}`}>
+                        Details
+                    </Link>
+                </Tab>
+                <Tab
+                    _selected={{
+                        borderBottomWidth: "3px",
+                        borderBottomColor: "#504de6",
+                    }}
+                    _hover={{ bg: "#f9fafb" }}
+                >
+                    <Link
+                        className="link"
+                        to={`/student/lectures/${lectureId}/discussion`}
+                    >
+                        Discussions
+                    </Link>
+                </Tab>
+            </TabList>
+            <TabPanels>
+                <TabPanel></TabPanel>
+                <TabPanel>
+                    <Box
+                        h="300px"
+                        m="20px"
+                        boxShadow="md"
+                        p="6"
+                        rounded="md"
+                        bg="white"
+                    >
+                        <Flex
+                            bg='RGBA(0, 0, 0, 0.04)'
+                            h='70px'
+                            alignItems='center'
+                        >
+                            <Input
+                                w="350px"
+                                placeholder="Title"
+                                ml='20px'
+                                bg='white'
+                            />
+                            <Select w="350px" ml='20px' bg='white'>
+                                <option value="">Is open</option>
+                                <option value="">Is close</option>
+                            </Select>
+                            <Button bg='black' color='white' ml='100px'>RESET</Button>
                         </Flex>
-                        <Text>
-                            {" "}
-                            <span className="nameSpan">{lectureDetail.createdBy}</span>{" "}
-                            {startTime && <span>{`(${startTime} - ${endTime})`}</span>}
-                        </Text>
+                        <EmptyTab />
                     </Box>
-                    <Box>
-                        <Wrap spacing={4}>
-                            <WrapItem>
-                                <Button bg={'black'} color='white'>CreateDiscussion</Button>
-                            </WrapItem>
-                        </Wrap>
-                    </Box>
-                </Flex>
-                <Box m="40px" boxShadow="md" p="6" rounded="base" bg="white">
-                    <DiscussionTab lectureDetail={lectureDetail} lectureId={id} />
-                </Box>
-            </Box>}
-            {downloadLink && (
-                <a href={downloadLink}>Click here to download the video</a>
-            )}
-        </div>
+                </TabPanel>
+            </TabPanels>
+        </Tabs>
     );
 };
 
-export default StudentLectureDiscussion;
+export default DiscussionTab;

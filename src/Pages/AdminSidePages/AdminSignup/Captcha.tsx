@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
+  Box,
   Button,
   Container,
   Flex,
-  FormControl,
   FormLabel,
   Input,
   Text,
+  useMediaQuery,
 } from "@chakra-ui/react";
 import "./index.css";
 
@@ -62,8 +63,8 @@ const Captcha = ({ setCaptcha1 }: any) => {
         setCaptcha(generateString(6));
       }
       setIsLoading(false);
-    setCaptchaValues({
-       captchaValue: "",
+      setCaptchaValues({
+        captchaValue: "",
         captchaMatch: false,
       });
     }, 3000);
@@ -76,13 +77,14 @@ const Captcha = ({ setCaptcha1 }: any) => {
     setCaptchaValues({ captchaValue: "", captchaMatch: false });
     setIsCaptchaVerified(false);
   };
+  const [isLargerThan900] = useMediaQuery("(min-width: 900px)");
 
   return (
     <div>
       <Container w="100%">
         {isCaptchaVerified ? (
           <Flex justifyContent="space-between" flexWrap="wrap">
-            <Text mt="8" fontSize="xl" color="green.500">
+            <Text mt="8" fontSize="20px" color="green.500">
               Captcha Verified
             </Text>
             <Button
@@ -102,39 +104,58 @@ const Captcha = ({ setCaptcha1 }: any) => {
         ) : (
           <>
             <div>
-              <Flex
-                borderRadius="4PX"
-                boxShadow="2px 4px 6px rgba(0, 0, 0, 0.1)"
-                pl="10px"
-                bg="#bfbfbf"
-                maxW="50%"
-                alignItems="center"
-              >
-                {captcha.map((el, index: number) => {
-                  if (index % 2 == 0) {
-                    return (
-                      <Text
-                        fontStyle="italic"
-                        color="blue.600"
-                        marginLeft="10px"
-                        fontSize="15px"
-                      >
-                        {el}
-                      </Text>
-                    );
-                  } else {
-                    return (
-                      <Text
-                        fontStyle="italic"
-                        color="green.700"
-                        marginLeft="10px"
-                        fontSize="25px"
-                      >
-                        {el}
-                      </Text>
-                    );
-                  }
-                })}
+              <Flex>
+                <Flex
+                  borderRadius="4PX"
+                  boxShadow="2px 4px 6px rgba(0, 0, 0, 0.1)"
+                  pl="10px"
+                  bg="#bfbfbf"
+                  pr="20px"
+                  minW="50%"
+                  alignItems="center"
+                  w={isLargerThan900 ? "40%" : "65%"}
+                >
+                  {captcha.map((el, index: number) => {
+                    if (index % 2 === 0) {
+                      return (
+                        <Text
+                          key={index}
+                          fontStyle="italic"
+                          color="blue.600"
+                          marginLeft="10px"
+                          fontSize="15px"
+                        >
+                          {el}
+                        </Text>
+                      );
+                    } else {
+                      return (
+                        <Text
+                          key={index}
+                          fontStyle="italic"
+                          color="green.700"
+                          marginLeft="10px"
+                          fontSize="25px"
+                        >
+                          {el}
+                        </Text>
+                      );
+                    }
+                  })}
+                </Flex>
+                <Box
+                  ml="20px"
+                  w="auto"
+                  h="auto"
+                  p="6px"
+                  cursor={"pointer"}
+                  boxShadow="2px 4px 6px rgba(0, 0, 0, 0.1)"
+                  bg="#bfbfbf"
+                  borderRadius="5px"
+                  onClick={handleRetry}
+                >
+                  <i className="fa-solid fa-rotate-right"></i>
+                </Box>
               </Flex>
             </div>
             <div className="form-group row"></div>
@@ -151,10 +172,13 @@ const Captcha = ({ setCaptcha1 }: any) => {
               <Input
                 id="inputType"
                 placeholder="Enter Captcha"
-                name="username"
+                name="captchaValue"
                 value={captchaValues.captchaValue}
                 onChange={handleChange}
                 autoComplete="off"
+                fontSize="18px"
+                fontFamily="itallic"
+                fontWeight="700"
                 w="60%"
                 mt="10px"
               />

@@ -1,8 +1,8 @@
+import React  from "react";
+import { Route, Routes } from "react-router-dom";
 import AdminLecture from "../Pages/AdminSidePages/AdminLecturePage/index";
 import StudentLecture from "../Pages/StudentSidePages/StudentLecturePage/index";
 import AdminSignup from "../Pages/AdminSidePages/AdminSignup/index";
-import React  from "react";
-import { Route, Routes } from "react-router-dom";
 import ForgetPassword from "../Pages/ForgotPassword/index";
 import Dashborad from "../Pages/StudentSidePages/StudentDashboard/index";
 import AdminDashboard from "../Pages/AdminSidePages/AdminDashboard";
@@ -13,9 +13,9 @@ import AdminLectureEdit from "../Pages/AdminSidePages/EditLecturePage/index";
 import CreateBulkLecture from "../Pages/AdminSidePages/CreateBulkLecture/index";
 import ResetPassword from "../Pages/ResetPassword/index"
 import Login from "../Pages/StudentSidePages/Login";
+
 import CopyLecture from "../Pages/AdminSidePages/CopyLecture/index";
 import BookMarks from "../Pages/StudentSidePages/BookMarks/index";
-import BookMarkDetails from "../Pages/StudentSidePages/BookMarkDetails/index";
 import StudentLectureDetail from "../Pages/StudentSidePages/LectureDetailPage/index";
 import StudentLectureDiscussion from './../Pages/StudentSidePages/LectureDiscussionPage/index';
 import Zoom from './../Pages/test/Zoom';
@@ -44,7 +44,6 @@ const Allroutes = () => {
         <Route path="/student/dashboard" element={<Dashborad />} />
         <Route path="/forgot-password" element={<ForgetPassword />} />
         <Route path="/student/bookmarks" element={<BookMarks/>} />
-        <Route path="/student/bookmarks/:id" element={<BookMarkDetails />} />
         <Route path ="/login" element ={<Login/>} />
         <Route path="/api/reset-password/:token/:email/:number" element={< ResetPassword/>} />
         <Route path="/zoom" element={< Zoom/>} />

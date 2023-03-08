@@ -14,7 +14,7 @@ const Note = ({ lectureDetail }: NoteTabProps) => {
         </Box>}
 
         </Box>
-    )
-}
+  );
+};
 
-export default Note
+export default Note;

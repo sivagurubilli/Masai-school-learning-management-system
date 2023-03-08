@@ -92,7 +92,7 @@ const ForgetPassword = () => {
                         <Text fontSize="16px" color="rgb(113, 120, 128)">
                             Reset your password
                         </Text>
-                        {message=="Reset Password Successfully" ? <Box color="#48BB78" >{message}</Box>:<Box color="#E53E3E" >{message}</Box>}
+                        {message==="Reset Password Successfully" ? <Box color="#48BB78" >{message}</Box>:<Box color="#E53E3E" >{message}</Box>}
                         <form onSubmit={handleSubmit}>
                             <div >
                                 <FormLabel

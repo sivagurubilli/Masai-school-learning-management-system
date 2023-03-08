@@ -2,9 +2,10 @@ import React from "react"
 import MDEditor from "@uiw/react-md-editor"
 
 interface Props {
-    content: string;
+    content:any;
   }
-  
+
+
 const MarkDown= ({content}:Props) => {
   return (
     <div>

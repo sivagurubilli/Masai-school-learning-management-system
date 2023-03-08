@@ -1,9 +1,4 @@
-import {
-  Box,
-  Flex,
-  Button,
-  useMediaQuery,
-} from "@chakra-ui/react";
+import { Box, Flex, Button, useMediaQuery, Divider } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import "./index.css";
 import Secondnav from "../../../components/AdminsideComponents/AdminLecture/LectureSearchNavbar";
@@ -13,20 +8,19 @@ import {
   GetAllLectureService,
   LectureSearchService,
 } from "../../../Services/LectureServices";
-import {
-  ISearchResponse,
-  ILectureResponse,
-} from "../../../Services/LectureInterface";
+import { ILectureResponse } from "../../../Services/LectureInterface";
 import CommonModalComponent from "../../../components/Modal/commonModal";
 import LectureSearchInput from "../../../components/AdminsideComponents/AdminLecture/LectureSearchInput";
+import Loader from "../../../components/Modal/Loader";
+
 
 interface IFilteredValues {
   title: string;
   batch: string;
   section: string;
   type: string;
-  user: string;
-  date: string;
+  createdBy: string;
+  startTime: string;
   week: string;
   day: string;
 }
@@ -37,37 +31,56 @@ const AdminLecture = () => {
     batch: "",
     section: "",
     type: "",
-    user: "",
-    date: "",
+    createdBy: "",
+    startTime: "",
     week: "",
     day: "",
   });
   const [isLoading, setLoading] = useState<boolean>(false);
   const [lecturesData, setLecturesData] = useState<ILectureResponse[]>();
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [body, setBody] = useState<string>("");
+  const [modalBody, setModalErrorBody] = useState<string>("");
 
-  // calling service for getting list for lectures
-  const GetLectures = () => {
+
+//user search and get lectures by provideing different values
+  const GetLectures = async () => {
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
     }, 1000);
-console.log(filterValues)
-    LectureSearchService(filterValues).then((res: any) => {
-      if (res.length > 1) {
-        setLecturesData(res);
-      } else if (res.data.success === false) {
+
+    try {
+      const response = await LectureSearchService(filterValues);
+      if (response.length > 1) {
+        setLecturesData(response);
+      } else if (!response.length) {
         setIsOpen(true);
-        setBody("These values did not match the lecture data!");
+        setModalErrorBody("These values did not match the lecture data!");
       }
-    });
+    } catch (error) {
+      setIsOpen(true);
+      setModalErrorBody(
+        "Sorry about that! There is a scheduled downtime on your servers, so please check them"
+      );
+    }
   };
 
+    // when user enters into admin lectures page call service for getlist of lectures using useEffect
   useEffect(() => {
-    GetAllLectureService().then((res) => {
-      setLecturesData(res);
-    });
+    const fetchData = async () => {
+      try {
+        const response = await GetAllLectureService();
+        if (response.length) {
+          setLecturesData(response);
+        }
+      } catch (error) {
+        setIsOpen(true);
+        setModalErrorBody(
+          "We were unable to find any data. It seems that something has gone wrong!"
+        );
+      }
+    };
+    fetchData();
   }, []);
 
   const Reset = () => {
@@ -76,19 +89,24 @@ console.log(filterValues)
       batch: "",
       section: "",
       type: "",
-      user: "",
-      date: "",
+      createdBy: "",
+      startTime: "",
       week: "",
       day: "",
     });
   };
 
   const [isLargerThan900] = useMediaQuery("(min-width: 900px)");
+
   return (
     <div className="container">
       <Navbar />
       <Secondnav />
-      <CommonModalComponent isOpen={isOpen} setIsOpen={setIsOpen} body={body} />
+      <CommonModalComponent
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        modalBody={modalBody}
+      />
       <Box
         w="90%"
         ml="5%"
@@ -104,7 +122,7 @@ console.log(filterValues)
           <Flex justifyContent={"flex-end"}>
             <Button
               w="15%"
-              mt="20px"
+              mt="10px"
               fontSize={isLargerThan900 ? "16px" : "12px"}
               color="white"
               bg="rgb(31 41 55)"
@@ -116,7 +134,7 @@ console.log(filterValues)
             </Button>
             <Button
               w="15%"
-              mt="20px"
+              mt="10px"
               color="white"
               ml="20px"
               bg="rgb(31 41 55)"
@@ -127,10 +145,11 @@ console.log(filterValues)
               Reset
             </Button>
           </Flex>
+          <Divider mt="10px" />
         </Box>
       </Box>
-      <Box w="90%" ml="5%" bg="white" h="100vh">
-        {lecturesData && <TableHeading LecturesData={lecturesData} />}
+      <Box w="90%" ml="5%" bg="white" h="auto" mt="20px">
+        {lecturesData ? <TableHeading LecturesData={lecturesData} /> : <Loader />}
       </Box>
     </div>
   );
