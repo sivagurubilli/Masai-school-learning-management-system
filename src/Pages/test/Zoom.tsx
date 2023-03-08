@@ -10,7 +10,7 @@ const Zoom = () => {
         window.location.href = ZOOM_MEETING_URL;
     };
 
-    const handleSettingsClick = () => {
+    const handleZoomSettingsClick = () => {
         window.location.href = ZOOM_SETTINGS_URL;
     };
 
@@ -32,8 +32,7 @@ const Zoom = () => {
                     bg='blue'
                     p='10px'>
                     
-                        <Text textDecoration="underline" onClick={handleSettingsClick}>Zoom Settings</Text>
-                    
+                        <Text textDecoration="underline" onClick={handleZoomSettingsClick}>Zoom Settings</Text>   
                 </Flex>
                 <Flex
                     align="center"

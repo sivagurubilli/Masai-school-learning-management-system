@@ -23,7 +23,7 @@ export interface ILectureResponse{
     type: string,
     schedule:Date,
     concludes:Date,
-    user: string,
+    createdBy: string,
     tags:ITags[],
     hideVideo:boolean,
     optional:boolean,

@@ -95,7 +95,7 @@ export async function GetAllLectureService(
  
   try {
     const response = await axios.get(
-        "/api/lecture/lectures/lectureList",  
+        "http://3.27.61.194:8082/api/lecture/lectureList"
     );
 
     return response.data;
@@ -112,12 +112,7 @@ id :any
 ): Promise<ILectureResponse> {
   try {
     const response = await axios.get(
-      `/api/lecture/lectures/${id}`,
-      {
-        headers: {
-        "ngrok-skip-browser-warning": "1",
-      },
-    } 
+    `http://3.27.61.194:8082/api/lecture/lectures/${id}`
     );
     return response.data;
   } catch (error: any) {
@@ -262,5 +257,22 @@ export async function GetAllBookMarksService(
         return error.response;
       }
     }
+
+
+    // for getting all lectures when user enters to the lectures page
+export async function GettAllStudentLectureService(
+  ): Promise<ILectureResponse[]> {
+   
+    try {
+      const response = await axios.get(
+          "http://3.27.61.194:8082/api/lecture/lectureList/student/2/2"
+      );
+  
+      return response.data;
+    } catch (error: any) {
+      console.log(error)
+      return error.response;
+    }
+  }
     
     

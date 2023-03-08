@@ -16,13 +16,15 @@ import {
 import { Link, useParams } from "react-router-dom";
 import { AiOutlineDownload } from "react-icons/ai";
 import { LectureSingleService } from "../../../Services/LectureServices";
-import Video from "./../../../components/StudentSideComponents/StudentLectureComponents/Video";
+import Video from "../../../components/StudentSideComponents/StudentLectureComponents/NoteAndVideo/Video";
 import "./index.css";
+import Skeleton from "../../../components/Skeleton/index";
 import {
     ILectureResponse,
     ISingledata,
 } from "../../../Services/LectureInterface";
 import DiscussionTab from "./../../../components/StudentSideComponents/StudentLectureComponents/Tabs/DiscussionTab";
+import moment from 'moment';
 
 const StudentLectureDiscussion = () => {
     const { id = "" } = useParams<{ id: string }>();
@@ -30,12 +32,30 @@ const StudentLectureDiscussion = () => {
         ILectureResponse | undefined
     >();
     const [downloadLink, setDownloadLink] = useState<string>("");
+    const [startTime, setStartTime]=useState<string>("")
+  const [endTime, setEndTime]=useState<string>("")
+  const [loading, setLoading]=useState<boolean>()
 
     useEffect(() => {
-        LectureSingleService(id).then((res) => {
+        const fetchLecture = async () => {
+            setLoading(true)
+          try {
+            const res = await LectureSingleService(id);
             setLectureDetail(res);
-        });
-    }, []);
+            const formattedStartDate = moment(res.schedule).format('D MMM YY h:mm ');
+            const formattedEndDate = moment(res.concludes).format('h:mm A');
+            setStartTime(formattedStartDate)
+            setEndTime(formattedEndDate)
+
+      
+
+            setLoading(false)
+          } catch (err) {
+            console.error(err);
+          }
+        };
+        fetchLecture();
+      }, []);
 
     const handleDownload = async () => {
         const videoUrl =
@@ -53,10 +73,11 @@ const StudentLectureDiscussion = () => {
         a.click();
         document.body.removeChild(a);
     };
-    console.log("I get the data", lectureDetail)
+
     return (
         <div>
             <Navbar />
+            {loading && <Skeleton/>}
             {lectureDetail && <Box>
                 <Flex
                     justify="space-between"
@@ -83,8 +104,8 @@ const StudentLectureDiscussion = () => {
                         </Flex>
                         <Text>
                             {" "}
-                            <span className="nameSpan">{lectureDetail.user}</span>{" "}
-                            <span>{lectureDetail.schedule.toLocaleString()}</span>
+                            <span className="nameSpan">{lectureDetail.createdBy}</span>{" "}
+                            {startTime && <span>{`(${startTime} - ${endTime})`}</span>}
                         </Text>
                     </Box>
                     <Box>

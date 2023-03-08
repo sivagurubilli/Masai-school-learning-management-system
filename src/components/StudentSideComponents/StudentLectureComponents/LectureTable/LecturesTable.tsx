@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import {
     ILectureResponse,
     ISearchResponse,
-} from "../../../Services/LectureInterface";
+} from "../../../../Services/LectureInterface";
 import {
     Table,
     Thead,
@@ -19,6 +19,7 @@ import {
 } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { boolean } from "yup";
+import TimeDetails from "../Time/Time";
 
 
 
@@ -26,14 +27,7 @@ const TableHeading = ({ LecturesData }: ISearchResponse) => {
     const navigate = useNavigate(); 
 
   const handleRedirect=(ad:ILectureResponse)=>{
-    const previousTime=moment(ad.concludes, 'DD-MM-YYYY HH:mm:ss')
-    const currentTime = moment();
-    const differenceInSeconds = currentTime.diff(previousTime, 'seconds');
-     if (differenceInSeconds < 0) {
-        window.open(ad.zoomLink, "_blank");
-      } else {
         navigate(`/student/lectures/${ad.lectureid}`);
-      }
   }
     return (
         <div>
@@ -71,11 +65,12 @@ const TableHeading = ({ LecturesData }: ISearchResponse) => {
                                                     </Badge>
                                                 </Text>
                                             </Box>
-                                            <Text>
+                                            {/* <Text>
                                                 <>
-                                                    Created by {ad.user} ({ad.category}) at {ad.schedule}
+                                                    Created by {ad.createdBy} ({ad.category}) at {ad.schedule}
                                                 </>
-                                            </Text>
+                                            </Text> */}
+                                            <TimeDetails lecture={ad}/>
                                         </Td>
                                     </Tr>
                                 ))}

@@ -13,7 +13,7 @@ import {
     Center
 } from "@chakra-ui/react";
 import { Link, useParams } from "react-router-dom";
-import Video from "../Video";
+import Video from "../NoteAndVideo/Video";
 import { ILectureResponse } from "./../../../../Services/LectureInterface";
 import EmptyTab from "./EmptyTab";
 

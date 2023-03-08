@@ -13,7 +13,8 @@ import {
     Text,
 } from "@chakra-ui/react";
 import { Link, useParams } from "react-router-dom";
-import Video from '../Video';
+import Video from '../NoteAndVideo/Video';
+import Note from '../NoteAndVideo/Note'
 import {
     ILectureResponse,
 
@@ -54,7 +55,8 @@ const DetailTab = ({ lectureDetail, lectureId }: DetailTabProps) => {
             </TabList>
             <TabPanels>
                 <TabPanel>
-                    <Video />
+                    <Video lectureDetail={lectureDetail} />
+                    <Note lectureDetail={lectureDetail} />
                 </TabPanel>
                 <TabPanel></TabPanel>
             </TabPanels>

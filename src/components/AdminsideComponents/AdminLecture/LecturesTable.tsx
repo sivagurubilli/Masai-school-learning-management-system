@@ -59,7 +59,7 @@ const TableHeading = ({ LecturesData }: ISearchResponse) => {
                       </Text>
                       <Text>
                         <>
-                         Created by {ad.user} ({ad.category}) at {ad.schedule}  
+                         Created by {ad.createdBy} ({ad.category}) at {ad.schedule}  
                         </>
                       </Text>
                     </Td>

@@ -19,6 +19,15 @@
   border-radius: 5px;
   margin-left: 20px;
  }
+ .live3{
+  background-color: green;
+  color: white;
+  height: 25px;
+  width: 60px;
+  text-align: center;
+  border-radius: 5px;
+  margin-left: 20px;
+ }
  .live2{
   background-color: yellow;
   height: 25px;
@@ -27,6 +36,7 @@
   border-radius: 8px;
   margin-left: 20px;
  }
+ 
  
  .nameSpan{
    font-weight: bolder;
