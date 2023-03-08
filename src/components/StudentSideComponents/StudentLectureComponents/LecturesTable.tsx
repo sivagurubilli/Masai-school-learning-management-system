@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState} from "react";
 import moment from "moment";
 import { Link } from "react-router-dom";
 import {
@@ -14,16 +14,27 @@ import {
     Td,
     Badge,
     Text,
-    Button,
-    Flex,
     TableContainer,
     Box,
 } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
+import { boolean } from "yup";
+
+
 
 const TableHeading = ({ LecturesData }: ISearchResponse) => {
-    const navigate = useNavigate();
+    const navigate = useNavigate(); 
 
+  const handleRedirect=(ad:ILectureResponse)=>{
+    const previousTime=moment(ad.concludes, 'DD-MM-YYYY HH:mm:ss')
+    const currentTime = moment();
+    const differenceInSeconds = currentTime.diff(previousTime, 'seconds');
+     if (differenceInSeconds < 0) {
+        window.open(ad.zoomLink, "_blank");
+      } else {
+        navigate(`/student/lectures/${ad.lectureid}`);
+      }
+  }
     return (
         <div>
             <Box overflow={"auto"}>
@@ -39,12 +50,14 @@ const TableHeading = ({ LecturesData }: ISearchResponse) => {
                                 LecturesData?.map((ad: ILectureResponse) => (
                                     <Tr key={ad.lectureid}
                                         _hover={{ bgColor: "#f9fafb" }}
+                                        onClick={() => handleRedirect(ad)}
                                     >
-                                        <Td w="35%">
-                                            <Link to={`/student/lectures/${ad.lectureid}`}>
+                                        <Td w="35%"  >
+                                           <Box>
                                                 <Text fontSize="20px"
                                                     color="#4f46e5"
                                                     _hover={{ textDecoration: "underline" }}
+                                                    cursor="pointer"
                                                 >
                                                     {ad.title}{" "}
                                                     <Badge
@@ -57,7 +70,7 @@ const TableHeading = ({ LecturesData }: ISearchResponse) => {
                                                         {ad.type}
                                                     </Badge>
                                                 </Text>
-                                            </Link>
+                                            </Box>
                                             <Text>
                                                 <>
                                                     Created by {ad.createdBy} ({ad.category}) at {ad.schedule}

@@ -98,7 +98,7 @@ export async function GetAllLectureService(
 
   try {
     const response = await axios.get(
-       "/api/lecture/lectures/lectureList",  
+        "/api/lecture/lectures/lectureList",  
     );
    
     return response.data;
@@ -116,6 +116,7 @@ id :any
   try {
     const response = await axios.get(
       `/api/lecture/lectures/${id}`,
+
     );
     return response.data;
   } catch (error: any) {
