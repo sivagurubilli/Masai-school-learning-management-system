@@ -11,6 +11,19 @@ export interface ISearchValues {
        startTime:string;
       
 }
+
+export interface ISearchValues2 {  
+  title:string,
+  createdBy:string,
+  type:string;
+  batch:string;
+  section:string;
+  day:string;
+  week:string;
+  startTime:string;
+  category:string
+ 
+}
 export interface ITags{
 tag:string
 }
