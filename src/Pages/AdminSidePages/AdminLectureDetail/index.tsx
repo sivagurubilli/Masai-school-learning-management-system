@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import "../AdminLecturePage/index.css";
 import Navbar from "../../../components/AdminsideComponents/AdminNavbar";
 import { useParams } from "react-router-dom";
@@ -11,6 +11,7 @@ import {
   Flex,
   Input,
   Text,
+  useMediaQuery,
 } from "@chakra-ui/react";
 import "../AdminLecturePage/index.css";
 import { AddVideoFileService, LectureSingleService } from "../../../Services/LectureServices";
@@ -21,7 +22,6 @@ import CommonModalComponent from "../../../components/Modal/commonModal";
 import Loading from "../../../components/Modal/Loader";
 
 const AdminLectureDetail = () => {
-  
   const [lectureDetail, setLectureDetail] = useState<
     ILectureResponse 
   >();
@@ -31,31 +31,31 @@ const AdminLectureDetail = () => {
   const [isVideoActive, setVideoActive] = useState<boolean>(false);
   const keyValueArray = lectureDetail ? Object.entries(lectureDetail) : [];
   const { id } = useParams();
+
   const handeleClick = () => {
     setVideoActive(!isVideoActive);
   };
 
-
-  //when user enters this page get the details of lecture using useEffect 
-  useEffect(() => {
-    const fetchData = async ()=> {
-      try{
-    const response = await LectureSingleService(id);
-    if(response.lectureid){
-
-      
-      setLectureDetail(response);
-    }
-      }catch(error){
-        setIsOpen(true);
-        setModalErrorBody(
-          "Sorry about that! There is a scheduled downtime on your servers, so please check them"
-        );
+  const fetchData = useCallback(async () => {
+    try {
+      const response = await LectureSingleService(id);
+      if (response.lectureid) {      
+        setLectureDetail(response);
       }
+    } catch (error) {
+      setIsOpen(true);
+      setModalErrorBody(
+        "Sorry about that! There is a scheduled downtime on your servers, so please check them"
+      );
     }
-    fetchData()
   }, [id]);
-
+  
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
+  
+ 
+  const [isLargerThan900] = useMediaQuery("(min-width: 900px)");
   // get the video file by onChange 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target?.files?.[0];
@@ -64,6 +64,7 @@ const AdminLectureDetail = () => {
     }
   };
   
+
   // uploading video file 
   const uploadFile =async()=>{ 
     try{
@@ -88,7 +89,7 @@ const AdminLectureDetail = () => {
       >
         <Navbar />
         <SecondNavforLectureDetail id={id} />
-        {!lectureDetail?.title ? (<Box mt="0%" ><Loading /></Box>):
+        {!lectureDetail?.title ? (<Box mt="1%" ><Loading /></Box>):
 
         ( <div>
        
@@ -200,6 +201,7 @@ const AdminLectureDetail = () => {
               _hover={{ bg: "rgb(76, 84, 95)" }}
               color="white"
               onClick={uploadFile}
+              fontSize={isLargerThan900 ? "16px" : "12px"}
             >
               Save Video
             </Button>

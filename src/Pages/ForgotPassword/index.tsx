@@ -33,9 +33,12 @@ const initialValues: IFormData = {
 
 const ForgetPassword = () => {
     const [isLoading, setLoading] = useState<boolean>(false)
-    
+    const [message, setMessage]= useState<string>("")
     const onSubmit = async (values: IFormData) => {
-        ForgotPasswordService(values)
+        setMessage("")
+        ForgotPasswordService(values).then((res)=>{
+            setMessage(res)
+        })
         setLoading(true)
         setTimeout(() => {
             setLoading(false)
@@ -72,7 +75,7 @@ const ForgetPassword = () => {
                             address and we will email password reset link. That will allow to
                             chooose new one.
                         </Text>
-                       
+                        {message==="We have emailed your password reset link!" ? <Box color="#48BB78" >{message}</Box>:<Box color="#E53E3E" >{message}</Box>}
                         <form onSubmit={handleSubmit}>
                             <div >
                                 <FormLabel

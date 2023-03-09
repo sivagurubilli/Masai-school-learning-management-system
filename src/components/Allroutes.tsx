@@ -17,7 +17,7 @@ import Login from "../Pages/StudentSidePages/Login";
 import CopyLecture from "../Pages/AdminSidePages/CopyLecture/index";
 import BookMarks from "../Pages/StudentSidePages/BookMarks/index";
 import StudentLectureDetail from "../Pages/StudentSidePages/LectureDetailPage/index";
-import StudentLectureDiscussion from './../Pages/StudentSidePages/LectureDiscussionPage/index';
+import LectureDiscussionTab from "../Pages/StudentSidePages/LectureDetailPage/index";
 
 const Allroutes = () => {
   return (
@@ -28,7 +28,7 @@ const Allroutes = () => {
         <Route path="/admin/lectures"  element= { <AdminLecture />}/>
         <Route path="/student/lectures"  element= { <StudentLecture />}/>
         <Route path="/student/lectures/:id"  element= { <StudentLectureDetail />}/>
-        <Route path="/student/lectures/:id/discussion"  element= { <StudentLectureDiscussion />}/>
+        <Route path="/student/lectures/:id/discussion"  element= { <LectureDiscussionTab />}/>
         <Route path="/admin/lectures/:id" element={<AdminLectureDetail />} />
         <Route path="/admin/lectures/edit/:id" element={<AdminLectureEdit />} />
         <Route path="/student/dashboard" element={<Dashborad />} />
@@ -44,7 +44,7 @@ const Allroutes = () => {
         <Route path="/forgot-password" element={<ForgetPassword />} />
         <Route path="/student/bookmarks" element={<BookMarks/>} />
         <Route path ="/login" element ={<Login/>} />
-        <Route path="/reset-password" element={< ResetPassword/>} />
+        <Route path="/api/reset-password/:token/:email/:number" element={< ResetPassword/>} />
       </Routes>
     </div>
   );

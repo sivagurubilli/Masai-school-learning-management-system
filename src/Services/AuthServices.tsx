@@ -80,12 +80,12 @@ export async function ForgotPasswordService(
   console.log(email)
   try {
     const response = await axios.post(
-      "/forgot-password",
+      "http://3.27.61.194:8082/api/forgot-password",
      {
        "email":email
      }
    );
-   return response
+   return response.data
   } catch (error) {
      return "Something Went Wrong"
   }
@@ -97,18 +97,17 @@ export interface IReset {
   token: string;
 }
 export async function ResetService(data: IReset): Promise<any> {
-
+     const {password, confirmPassword,token}=data 
   try {
     const response = await axios.post<IReset>(
-      "/reset-password/",
-      data,
+      `http://3.27.61.194:8082/api/reset-password/${token}`,
       {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
+        "password":password,
+        "confirmPassword":confirmPassword
       }
     );
-    return response.data;
+     return response.data;
+   
   } catch (error) {
     return "Something Went Wrong"
   }

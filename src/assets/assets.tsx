@@ -39,17 +39,44 @@ export const NavbarAdminArray  = ["Lectures","Assignments","Quizzes","Tickets"
 "Questions",
 "problems"]
 
-export const Categoery = [{ key:"General",tags:["dsa","coding","ecConnect","csbt"]},
-{key:"Coding Platform",tags:["javascript","java","html","css","react","redux"]},
+export const Categoery = [{id:"2", key:"General",tags:["dsa","coding","ecConnect","csbt"]},
+{id:"3",key:"Coding Platform",tags:["javascript","java","html","css","react","redux"]},
 
-{key:"CSBT",tags:["english","communication","mockInterview","Mac","speaking"]},
-{key:"DA",tags:["sql","data-analysis","machineLearning","python"]},
-{key:"DSA",tags:["recursion","two-pointers","linked-List","sorting","binary-search"]},
-{key:"Coding",tags:["javascript","java","html","css","react","redux"]},
- {key:"Maths",tags:["graphs","number-system","time-distance","integration"]},
- {key:"Logic",tags:["aptitude","number-system","time-distance","reasoning"]},
- {key:"Scrum",tags:["scrum","stand-up"]}]
+{id:"4",key:"CSBT",tags:["english","communication","mockInterview","Mac","speaking"]},
+{id:"5",key:"DA",tags:["sql","data-analysis","machineLearning","python"]},
+{id:"6",key:"DSA",tags:["recursion","two-pointers","linked-List","sorting","binary-search"]},
+{id:"7",key:"Coding",tags:["javascript","java","html","css","react","redux"]},
+ {id:"8",key:"Maths",tags:["graphs","number-system","time-distance","integration"]},
+ {id:"9",key:"Logic",tags:["aptitude","number-system","time-distance","reasoning"]},
+ {id:"10",key:"Scrum",tags:["scrum","stand-up"]}]
 
 export const ButtonValues =["BACK","EDIT","DISCUSSIONS","COPY"]
 export const repeactIcon = "https://cdn-icons-png.flaticon.com/512/148/148752.png"
 
+export const BatchLsitMap= [
+    { key:"2",el:"FT-WEB-24"},{key:"3",el:"FT-WEB-25"},
+    { key:"4",el:"FT-WEB-26"},{key:"5",el:"FT-WEB-27"},
+    { key:"6",el:"FT-DA-17"},{key:"7",el:"FT-DA-18"},
+    {key:"8",el:"FT-DA-19"}
+]
+
+export const SectionLsitMap= [
+    { key:"2",el:"JS201"},{key:"3",el:"JS301"},
+    { key:"4",el:"DSA101"},{key:"5",el:"DSA201"},
+    { key:"6",el:"DSA301"},{key:"7",el:"DSA401"},
+    {key:"8",el:"JA111"},{key:"9",el:"SB101"},{key:"10",el:"SB201"},
+   {key:"11",el:"RCT101"},{key:"12",el:"RCT201"},{key:"14",el:"NEM101"},
+   {key:"15",el:"NEM111"},{key:"16",el:"JS101"}
+]
+
+// BatchLsitMap.map((el)=>{
+//     if(LectureEditValues?.batch===el.el){
+//       setLectureEditValues({...LectureEditValues,batch:el.key})
+//     }
+//      })
+//      SectionLsitMap.map((el)=>{
+//       if(LectureEditValues?.section===el.el){
+//         setLectureEditValues({...LectureEditValues,section:el.key})
+//       }
+//        })
+>>>>>>> main

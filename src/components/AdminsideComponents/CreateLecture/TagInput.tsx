@@ -7,6 +7,7 @@ const TagInput = ({ values, LectureValues, setLectureValues }: any) => {
   const [suggestionTags, setSuggestionsTags] = useState<string[]>([]);
   const [tags, setTags] = useState<string[]>(values.tags);
 
+ 
   //on clicking on tag it added tgs array lecturevalues as well
   const handleTagClick = (tag: string) => {
     if (!LectureValues.tags.includes(tag)) {
@@ -23,7 +24,7 @@ const TagInput = ({ values, LectureValues, setLectureValues }: any) => {
     const Filtertag: any = tags.filter((tag: any) => tag !== tag1);
     setLectureValues({
       ...LectureValues,
-      tags: LectureValues.tags.filter((tag: any) => tag !== tag1),
+      tags: Filtertag,
     });
     setTags(Filtertag);
   };
@@ -34,17 +35,16 @@ const TagInput = ({ values, LectureValues, setLectureValues }: any) => {
 
   useEffect(() => {
     setLectureValues({ ...values, tags: tags });
-  }, [values,setLectureValues,tags]);
+  }, [values, setLectureValues, tags]);
 
   useEffect(() => {
-    const categoryElement = Categoery.find(el => el.key === values.category);
+    const categoryElement = Categoery.find((el) => el.id === values.category);
     if (categoryElement) {
       setSuggestionsTags(categoryElement.tags);
     } else {
       setSuggestionsTags([]);
     }
   }, [values.category]);
-
 
 
   return (
@@ -75,7 +75,7 @@ const TagInput = ({ values, LectureValues, setLectureValues }: any) => {
             alignItems="center"
             fontSize="13px"
             bg="blue.100"
-            key={tag}
+           
           >
             {tag}{" "}
             <li
