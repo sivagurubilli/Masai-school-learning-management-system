@@ -79,4 +79,3 @@ export const SectionLsitMap= [
 //         setLectureEditValues({...LectureEditValues,section:el.key})
 //       }
 //        })
->>>>>>> main

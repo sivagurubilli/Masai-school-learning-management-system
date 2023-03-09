@@ -78,7 +78,7 @@ export async function LectureEditService(
   } = data;
 
   try {
-    const response = await axios.patch(`/api/lecture/updateLecture/${id}`, {
+    const response = await axios.put(`/api/lecture/updateLecture/${id}`, {
       title,
       batch,
       section,
@@ -107,7 +107,7 @@ export async function LectureSearchService(
 
   try {
     const response = await axios.post(
-      "http://3.27.61.194:8082/api/lecture/lectures/search/student/2/2",
+      "/api/lecture/lectures/search",
       { title, batch, section, type, startTime, createdBy, day, week }
     );
 
@@ -130,7 +130,7 @@ export async function GetAllLectureService(): Promise<ILectureResponse[]> {
 export async function LectureSingleService(id: any): Promise<ILectureResponse> {
   try {
     const response = await axios.get(
-      `http://3.27.61.194:8082/api/lecture/lectures/${id}`
+      `/api/lecture/lectures/${id}`
     );
     return response.data;
   } catch (error: any) {
@@ -143,7 +143,7 @@ export async function LectureDeleteService(
   lectureId: any
 ): Promise<ILecturePostResponse> {
   try {
-    const response = await axios.delete(`/api/removeLecture/${lectureId}`);
+    const response = await axios.post(`/api/lecture/removeLecture/${lectureId}`);
     return response.data;
   } catch (error: any) {
     return error.response;
@@ -260,7 +260,7 @@ export async function GettAllStudentLectureService(): Promise<
 > {
   try {
     const response = await axios.get(
-      "http://3.27.61.194:8082/api/lecture/lectureList/student/2/2"
+      "/api/lecture/lectureList/student/2/2"
     );
 
     return response.data;

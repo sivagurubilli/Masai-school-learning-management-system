@@ -14,13 +14,14 @@ import LectureSearchInput from "../../../components/AdminsideComponents/AdminLec
 import Loader from "../../../components/Modal/Loader";
 
 
+
 interface IFilteredValues {
   title: string;
   batch: string;
   section: string;
   type: string;
   createdBy: string;
-  startTime: string;
+  startTime: Date | string;
   week: string;
   day: string;
 }
@@ -32,7 +33,7 @@ const AdminLecture = () => {
     section: "",
     type: "",
     createdBy: "",
-    startTime: "",
+    startTime:"",
     week: "",
     day: "",
   });
@@ -40,7 +41,7 @@ const AdminLecture = () => {
   const [lecturesData, setLecturesData] = useState<ILectureResponse[]>();
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [modalBody, setModalErrorBody] = useState<string>("");
-
+ 
 
 
 //user search and get lectures by provideing different values
@@ -122,6 +123,7 @@ const fetchData = async () => {
           <LectureSearchInput
             filterValues={filterValues}
             setFilterValues={setFilterValues}
+            setLecturesData={setLecturesData}
           />
           <Flex justifyContent={"flex-end"}>
             <Button

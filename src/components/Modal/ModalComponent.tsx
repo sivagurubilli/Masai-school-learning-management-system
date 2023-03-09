@@ -25,7 +25,8 @@ const ModalComponent = ({ isOpen, setIsOpen, DeleteLecture,modalBody }: any) => 
           </ModalBody>
           <ModalFooter>
             <Button
-              h={isLargerThan900 ? "35px" : "auto"}
+              h={isLargerThan900 ? "35px" : "30px"}
+              fontSize={isLargerThan900 ? "14px" : "auto"}
               color="white"
               bg="rgb(31 41 55)"
               _hover={{ bg: "rgb(76, 84, 95)" }}
@@ -34,7 +35,8 @@ const ModalComponent = ({ isOpen, setIsOpen, DeleteLecture,modalBody }: any) => 
               Confirm Delete
             </Button>
             <Button
-              h={isLargerThan900 ? "35px" : "auto"}
+              h={isLargerThan900 ? "35px" : "30px"}
+             fontSize= {isLargerThan900 ? "18px" : "14px"}
               color="white"
               bg="rgb(31 41 55)"
               ml="20px"

@@ -14,7 +14,6 @@ const BookMarks = () => {
  const [isOpen, setIsOpen] = useState<boolean>(false);
  const [modalBody, setModalErrorBody] = useState<string>("");
 
-
   //getting all bookmarks when user enters into page by using useEffect
   useEffect(() => {
     const fetchData = async () => {

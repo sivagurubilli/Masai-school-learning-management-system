@@ -1,7 +1,7 @@
 import { Box, Flex, Button, useMediaQuery } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import "./index.css";
-import Navbar from "../../../components/AdminsideComponents/AdminNavbar/index";
+import Navbar from "../../../components/StudentSideComponents/StudentNavbar/Navbar";
 import TableHeading from "../../../components/StudentSideComponents/StudentLectureComponents/LectureTable/LecturesTable";
 import {
   LectureSearchService,
@@ -20,7 +20,7 @@ interface IFilteredValues {
   section: string;
   type: string;
   createdBy: string;
-  startTime: string;
+  startTime: string | Date;
   week: string;
   day: string;
 }

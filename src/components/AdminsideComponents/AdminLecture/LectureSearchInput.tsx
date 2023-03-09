@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import {
   Divider,
   Grid,
@@ -11,6 +11,7 @@ import {
   getSectionArray,
   getUserArray,
   getTypeArray,
+  getCategoryArray,
 } from "../../../Services/SelelctionService";
 import {
   IBatchObject,
@@ -23,27 +24,32 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 import { actionCreators } from "../../../redux/SelectionReducer/index";
 import { bindActionCreators } from "redux";
-const LectureSearchInput = ({ filterValues, setFilterValues }: any) => {
+import { useSearchParams } from "react-router-dom";
+import { LectureSearchService } from "../../../Services/LectureServices";
+
+interface SearchQuery {
+  [key: string]: string;
+}
+
+const LectureSearchInput = ({ filterValues, setFilterValues ,setLecturesData}: any) => {
   const [batchArray, setBatchArray] = useState<IBatchObject[]>();
   const [sectionArray, setSectionArray] = useState<ISectionObject[]>();
   const [userArray, setUserArray] = useState<IUserObject[]>();
   const [typeArray, setTypeArray] = useState<ITypeObject[]>();
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [modalBody, setModalErrorBody] = useState<string>("");
+  const [queryParams] = useSearchParams();
   const dispatch = useDispatch();
-  const {
-    GetBatchData,
-    GetSectionData,
-    GetTypeData,
-
-  } = bindActionCreators(actionCreators, dispatch);
+  const { GetBatchData, GetSectionData, GetTypeData, GetCategoeryData } =
+    bindActionCreators(actionCreators, dispatch);
   const state = useSelector((state: RootState) => state);
 
   const getArrays = useCallback(async () => {
     try {
-      const [batchArray, sectionArray, typeArray, userArray] =
+      const [batchArray, categoryArray, sectionArray, typeArray, userArray] =
         await Promise.all([
           getBatchArrray(),
+          getCategoryArray(),
           getSectionArray(),
           getTypeArray(),
           getUserArray(),
@@ -57,8 +63,11 @@ const LectureSearchInput = ({ filterValues, setFilterValues }: any) => {
         GetSectionData(sectionArray);
         setSectionArray(sectionArray);
       }
+      if (categoryArray.length) {
+        GetCategoeryData(categoryArray);
+      }
       if (typeArray.length) {
-        GetTypeData(typeArray)
+        GetTypeData(typeArray);
         setTypeArray(typeArray);
       }
       if (userArray.length) {
@@ -70,7 +79,7 @@ const LectureSearchInput = ({ filterValues, setFilterValues }: any) => {
         "Oh no! There was a problem with getting the items from the selecting list"
       );
     }
-  }, [GetBatchData, GetSectionData,GetTypeData]);
+  }, [GetBatchData, GetSectionData, GetTypeData, GetCategoeryData]);
 
   useEffect(() => {
     const setSelectBatchValues = () => {
@@ -78,7 +87,10 @@ const LectureSearchInput = ({ filterValues, setFilterValues }: any) => {
       setSectionArray(state.SectionReducer.Section);
       setTypeArray(state.TypeReducer.Type);
     };
-    if (state.BatchReducer.Batch.length) {
+    if (
+      state.BatchReducer.Batch.length &&
+      state.CategoeryReducer.Categoery.length
+    ) {
       setSelectBatchValues();
     } else {
       getArrays();
@@ -88,19 +100,93 @@ const LectureSearchInput = ({ filterValues, setFilterValues }: any) => {
     state.BatchReducer.Batch,
     state.TypeReducer.Type,
     state.SectionReducer.Section,
+    state.CategoeryReducer.Categoery.length,
   ]);
+
+  // Get luctures if any useparams 
+  
+  // get the values from use params
+  useEffect(()=>{
+    const title = queryParams.get("title")
+   const batch=queryParams.get("batch")
+   const  section= queryParams.get("section")
+   const type= queryParams.get("type")
+    const createdBy= queryParams.get("createdBy")
+    const startTime=queryParams.get("startTime")
+   const  week=queryParams.get("week")
+   const day=queryParams.get("day")
+
+    setFilterValues({...filterValues,title:title,batch:batch,section:section,type:type,
+      createdBy:createdBy,startTime:startTime,
+    week:week,day:day
+    })
+
+  
+     },[filterValues,queryParams,setFilterValues,setLecturesData])
+
+
+  // this function is adding searching values to url
+  const useSearch = (): [SearchQuery, (newSearch: SearchQuery) => void] => {
+    const [searchParams, setSearchParams] = useSearchParams();
+
+    const prevSearchParamsRef = useRef(searchParams.toString());
+
+    useEffect(() => {
+      const currentSearchParams = searchParams.toString();
+      if (prevSearchParamsRef.current !== currentSearchParams) {
+        prevSearchParamsRef.current = currentSearchParams;
+      }
+    }, [searchParams]);
+
+    const updateSearch = (newSearch: SearchQuery): void => {
+      const params = new URLSearchParams(prevSearchParamsRef.current);
+
+      Object.entries(newSearch).forEach(([key, value]) => {
+        if (value) {
+          params.set(key, value);
+        } else {
+          params.delete(key);
+        }
+      });
+
+      setSearchParams(params.toString());
+    };
+
+    const currentSearch = Array.from(searchParams.entries()).reduce(
+      (acc, [key, value]) => ({
+        ...acc,
+        [key]: value,
+      }),
+      {}
+    );
+
+    return [currentSearch, updateSearch];
+  };
+
+
 
   // this is setting values from select tags
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = event.target;
+    updateSearch({
+      ...search,
+      [name]: value,
+    });
     setFilterValues({ ...filterValues, [name]: value });
   };
 
   //this is setting values from input elements
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
+    updateSearch({
+      ...search,
+      [name]: value,
+    });
     setFilterValues({ ...filterValues, [name]: value });
   };
+
+  const [search, updateSearch] = useSearch();
+
   const gridColumn = useBreakpointValue({
     base: "1 / -1", // Full width on small screens
     md: "1 / 4", // Span two columns on medium screens

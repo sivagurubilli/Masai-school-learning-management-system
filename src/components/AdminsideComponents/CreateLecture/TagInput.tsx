@@ -75,6 +75,7 @@ const TagInput = ({ values, LectureValues, setLectureValues }: any) => {
             alignItems="center"
             fontSize="13px"
             bg="blue.100"
+            key={tag}
            
           >
             {tag}{" "}

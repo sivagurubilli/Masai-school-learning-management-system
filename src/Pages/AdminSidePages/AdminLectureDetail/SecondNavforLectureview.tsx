@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import {  Link } from "react-router-dom";
+import {  Link, useNavigate } from "react-router-dom";
 import {
   Box,
   Flex,
@@ -17,12 +17,15 @@ const SecondNavforLectureDetail = ({ id }: { id: string | undefined  }) => {
   const [isLargerThan900] = useMediaQuery("(min-width: 900px)");
   const [modalBody,setModalBody] = useState("Do you want to delete this Lecture")
   const [isOpen, setIsOpen] = useState<boolean>(false);
-const handleOpen=()=>setIsOpen(true)
+  const navigate = useNavigate()
   
+const handleOpen=()=>setIsOpen(true)
 const DeleteLecture =async ()=>{
   try{
   const response = await LectureDeleteService(id)
+  console.log(response)
   if(response.message){
+    navigate("/admin/lectures")
     setModalBody(
       "The lecture has been successfully deleted"
     )

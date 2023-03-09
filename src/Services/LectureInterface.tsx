@@ -6,9 +6,9 @@ export interface ISearchValues {
        type:string;
        batch:string;
        section:string;
-       day:string;
+       day: string;
        week:string;
-       startTime:string;
+       startTime:string | Date;
       
 }
 export interface ITags{
