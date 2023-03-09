@@ -34,8 +34,11 @@ const Navbar = () => {
 
   useEffect(() => {
     const name = localStorage.getItem("username");
+    const SessionName = sessionStorage.getItem("username")
     if (name) {
       setUserName(name);
+    }else{
+      setUserName(SessionName)
     }
   }, []);
   const Logout = () => {

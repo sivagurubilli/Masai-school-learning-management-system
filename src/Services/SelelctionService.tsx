@@ -53,10 +53,10 @@ export async function getUserArray(): Promise<IUserObject[]> {
 
 
 
-export async function getCategoryArrray(): Promise<ICategoryObject[]>{
+export async function getCategoryArray(): Promise<ICategoryObject[]>{
   try {
     const response = await axios.get(
-      "/api/getList"
+      "/api/categoryList"
           );
 
     return response.data;

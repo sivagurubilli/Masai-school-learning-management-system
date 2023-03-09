@@ -1,6 +1,6 @@
-import React, {   useState,useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import "../../../Pages/AdminSidePages/CreateLecturePage/index.css";
-import validationSchema from "./FormikYupValidation"
+import validationSchema from "./FormikYupValidation";
 import { useFormik } from "formik";
 import "react-datetime/css/react-datetime.css";
 import {
@@ -26,79 +26,107 @@ import {
   IUserObject,
 } from "../../../Services/SelectionInterface";
 import CommonModalComponent from "../../../components/Modal/commonModal";
-import { getBatchArrray, getCategoryArrray, getSectionArray, getTypeArray, getUserArray } from "../../../Services/SelelctionService";
+import {
+  getBatchArrray,
+  getCategoryArray,
+  getSectionArray,
+  getTypeArray,
+  getUserArray,
+} from "../../../Services/SelelctionService";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../../redux/store";
+import { actionCreators } from "../../../redux/SelectionReducer/index";
+import { bindActionCreators } from "redux";
 
-
-
-const InputTakingSection = ({buttonName, LectureValues, setLectureValues,LectureSendService ,id}: any) => {
+const InputTakingSection = ({
+  buttonName,
+  LectureValues,
+  setLectureValues,
+  LectureSendService,
+  id,
+}: any) => {
   const [isLargerThan900] = useMediaQuery("(min-width: 900px)");
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [modalBody, setModalErrorBody] = useState<string>("");
-  const [isLoading,setLoading] = useState<boolean>(false)
+  const [isLoading, setLoading] = useState<boolean>(false);
   const [batchArray, setBatchArray] = useState<IBatchObject[]>();
   const [sectionArray, setSectionArray] = useState<ISectionObject[]>();
   const [userArray, setUserArray] = useState<IUserObject[]>();
   const [typeArray, setTypeArray] = useState<ITypeObject[]>();
   const [categoryArray, setCategoryArray] = useState<ICategoryObject[]>();
+  const dispatch = useDispatch();
+  const {
+    GetBatchData,
+    GetCategoeryData,
+    GetSectionData,
+    GetTypeData,
+    GetUserData,
+  } = bindActionCreators(actionCreators, dispatch);
+  const state = useSelector((state: RootState) => state);
 
   // getSelected array to get all selected tags values from backend
+  const getArrays = useCallback(async () => {
+    try {
+      const [batchArray, categoryArray, sectionArray, typeArray, userArray] =
+        await Promise.all([
+          getBatchArrray(),
+          getCategoryArray(),
+          getSectionArray(),
+          getTypeArray(),
+          getUserArray(),
+        ]);
+      if (batchArray.length) {
+        GetBatchData(batchArray);
+        setBatchArray(batchArray);
+      }
+      if (categoryArray.length) {
+        GetCategoeryData(categoryArray);
+        setCategoryArray(categoryArray);
+      }
+      if (sectionArray.length) {
+        GetSectionData(sectionArray);
+        setSectionArray(sectionArray);
+      }
+      if (typeArray.length) {
+        GetTypeData(typeArray);
+        setTypeArray(typeArray);
+      }
+      if (userArray.length) {
+        setUserArray(userArray);
+      }
+    } catch (error) {
+      setIsOpen(true);
+      setModalErrorBody(
+        "Oh no! There was a problem with getting the items from the selecting list"
+      );
+    }
+  }, [GetBatchData, GetSectionData, GetCategoeryData, GetTypeData]);
 
   useEffect(() => {
-    const getArrays = () => {
-      gettingBatchArrray();
-      gettingSectionArray();
-      gettingTypeArray();
-      gettingUserArray();
-      gettingCategoryArrray();
+    const setSelectBatchValues = () => {
+      setBatchArray(state.BatchReducer.Batch);
+      setSectionArray(state.SectionReducer.Section);
+      setCategoryArray(state.CategoeryReducer.Categoery);
+      setTypeArray(state.TypeReducer.Type);
     };
-  
-    getArrays();
-  }, []);
+    if (state.BatchReducer.Batch.length) {
+      setSelectBatchValues();
+    } else {
+      getArrays();
+    }
+  }, [
+    state.CategoeryReducer.Categoery,
+    state.TypeReducer.Type,
+    getArrays,
+    state.BatchReducer.Batch,
+    state.SectionReducer.Section,
+  ]);
 
+  // state.BatchReducer.Batch , state.SectionReducer.Section, state.CategoeryReducer.Categoery,GetBatchData,state.TypeReducer.Type
 
-  const gettingBatchArrray = async () => {
-    try {
-      const response = await getBatchArrray();
-      if (response.length) {
-        setBatchArray(response);
-      }
-    } catch (error) {}
-  };
+  //&& state.SectionReducer.Section.length && state.CategoeryReducer.Categoery.length
 
-  const gettingCategoryArrray = async () => {
-    try {
-      const response = await getCategoryArrray();
-      if (response.length) {
-        setCategoryArray(response);
-      }
-    } catch (error) {}
-  };
-  const gettingSectionArray = async () => {
-    try {
-      const response = await getSectionArray();
-      if (response.length) {
-        setSectionArray(response);
-      }
-    } catch (error) {}
-  };
-  const gettingTypeArray = async () => {
-    try {
-      const response = await getTypeArray();
-      if (response.length) {
-        setTypeArray(response);
-      }
-    } catch (error) {}
-  };
-  const gettingUserArray = async () => {
-    try {
-      const response = await getUserArray();
-      if (response.length) {
-        setUserArray(response);
-      }
-    } catch (error) {}
-  };
-
-//initial values for formik
+  //initial values for formik
   const initialValues = {
     title: LectureValues.title,
     batch: LectureValues.batch,
@@ -117,51 +145,56 @@ const InputTakingSection = ({buttonName, LectureValues, setLectureValues,Lecture
     notes: LectureValues.notes,
   };
 
-
   // onSubmitting it calls the services based on type of action like addlecture and edit lecture and copy lecture
   const onSubmit = async () => {
-    setLoading(true)
-    setTimeout(()=>{
-      setLoading(false)
-    },2000)
-console.log(LectureValues)
-    if(buttonName === "Copy Lecture" || buttonName === "Edit Lecture"){
-     
-    try {
-      const response = await LectureSendService(LectureValues,id);
-      if (response.message) {
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+
+    if (buttonName === "Copy Lecture" || buttonName === "Edit Lecture") {
+      try {
+        const response = await LectureSendService(LectureValues, id);
+        if (response.message) {
+          setIsOpen(true);
+          setModalErrorBody("The lecture was Success fully added with Changes");
+        }
+      } catch (error) {
         setIsOpen(true);
-        setModalErrorBody("The lecture was Success fully added with Changes");
+        setModalErrorBody(
+          "Sorry about that! There is a scheduled downtime on your servers, so please check them"
+        );
       }
-    } catch (error) {
-      setIsOpen(true);
-      setModalErrorBody(
-        "Sorry about that! There is a scheduled downtime on your servers, so please check them"
-      );
-    }
-  }else{
-    try {
-      const response = await LectureSendService(LectureValues);
-      if (response.message) {
+    } else {
+      try {
+        const response = await LectureSendService(LectureValues);
+        if (response.message) {
+          setIsOpen(true);
+          setModalErrorBody("The lecture was Success fully added");
+        }
+      } catch (error) {
         setIsOpen(true);
-        setModalErrorBody("The lecture was Success fully added");
+        setModalErrorBody(
+          "Sorry about that! There is a scheduled downtime on your servers, so please check them"
+        );
       }
-    } catch (error) {
-      setIsOpen(true);
-      setModalErrorBody(
-        "Sorry about that! There is a scheduled downtime on your servers, so please check them"
-      );
     }
-  }
-}
-  
-//using useFormik get the methods for handlesubmit and hadlechange and values
-  const { handleSubmit, handleBlur, touched, actions,handleChange, values, errors } =
-    useFormik({
-      onSubmit,
-      initialValues,
-      validationSchema,
-    });
+  };
+
+  //using useFormik get the methods for handlesubmit and hadlechange and values
+  const {
+    handleSubmit,
+    handleBlur,
+    touched,
+    actions,
+    handleChange,
+    values,
+    errors,
+  } = useFormik({
+    onSubmit,
+    initialValues,
+   
+  });
 
   //create Lecture service for create lecture
   const gridColumn = useBreakpointValue({
@@ -177,7 +210,7 @@ console.log(LectureValues)
 
   return (
     <div>
-       <CommonModalComponent
+      <CommonModalComponent
         isOpen={isOpen}
         setIsOpen={setIsOpen}
         modalBody={modalBody}
@@ -227,7 +260,9 @@ console.log(LectureValues)
                 placeholder="Select Categoery"
               >
                 {categoryArray?.map((el) => (
-                  <option value={el.id}>{el.category}</option>
+                  <option key={el.id} value={el.id}>
+                    {el.categoryName}
+                  </option>
                 ))}
               </Select>
               {touched.category && errors.category && (
@@ -247,7 +282,9 @@ console.log(LectureValues)
                 placeholder="Select batch"
               >
                 {batchArray?.map((el) => (
-                  <option value={el.batch}>{el.batch}</option>
+                  <option key={el.batchId} value={el.batchId}>
+                    {el.batch}
+                  </option>
                 ))}
               </Select>
               {touched.batch && errors.batch && (
@@ -267,7 +304,9 @@ console.log(LectureValues)
                 onChange={handleChange}
               >
                 {sectionArray?.map((el) => (
-                  <option value={el.section}>{el.section}</option>
+                  <option key={el.sectionId} value={el.sectionId}>
+                    {el.section}
+                  </option>
                 ))}
               </Select>
               {touched.section && errors.section && (
@@ -296,7 +335,9 @@ console.log(LectureValues)
                 onChange={handleChange}
               >
                 {typeArray?.map((el) => (
-                  <option value={el.type}>{el.type}</option>
+                  <option key={el.id} value={el.id}>
+                    {el.type}
+                  </option>
                 ))}
               </Select>
               {touched.type && errors.type && (
@@ -361,7 +402,9 @@ console.log(LectureValues)
                 onChange={handleChange}
               >
                 {userArray?.map((el) => (
-                  <option value={el.user}>{el.user}</option>
+                  <option key={el.id} value={el.id}>
+                    {el.user}
+                  </option>
                 ))}
               </Select>
               {touched.createdBy && errors.createdBy && (
@@ -466,7 +509,7 @@ console.log(LectureValues)
             />
           </Box>
           <Divider mt="10px" />
-           <Flex justifyContent={"flex-end"}>
+          <Flex justifyContent={"flex-end"}>
             <Button
               fontSize={isLargerThan900 ? "16px" : "12px"}
               mt="20px"

@@ -5,7 +5,7 @@ export interface ISectionObject {
   }
   export interface ICategoryObject {
   id:number
-      category: string;
+      categoryName: string;
   }
 
 

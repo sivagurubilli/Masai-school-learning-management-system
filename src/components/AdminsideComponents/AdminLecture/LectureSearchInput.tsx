@@ -1,5 +1,11 @@
-import React, { useState, useEffect } from "react";
-import { Divider, Grid, Input, Select, useBreakpointValue } from "@chakra-ui/react";
+import React, { useState, useEffect, useCallback } from "react";
+import {
+  Divider,
+  Grid,
+  Input,
+  Select,
+  useBreakpointValue,
+} from "@chakra-ui/react";
 import {
   getBatchArrray,
   getSectionArray,
@@ -13,7 +19,10 @@ import {
   IUserObject,
 } from "../../../Services/SelectionInterface";
 import CommonModalComponent from "../../../components/Modal/commonModal";
-
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../../redux/store";
+import { actionCreators } from "../../../redux/SelectionReducer/index";
+import { bindActionCreators } from "redux";
 const LectureSearchInput = ({ filterValues, setFilterValues }: any) => {
   const [batchArray, setBatchArray] = useState<IBatchObject[]>();
   const [sectionArray, setSectionArray] = useState<ISectionObject[]>();
@@ -21,52 +30,65 @@ const LectureSearchInput = ({ filterValues, setFilterValues }: any) => {
   const [typeArray, setTypeArray] = useState<ITypeObject[]>();
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [modalBody, setModalErrorBody] = useState<string>("");
+  const dispatch = useDispatch();
+  const {
+    GetBatchData,
+    GetSectionData,
+    GetTypeData,
+    GetUserData,
+  } = bindActionCreators(actionCreators, dispatch);
+  const state = useSelector((state: RootState) => state);
 
-
-  useEffect(() => {
-    gettingBatchArrray();
-    gettingSectionArray();
-    gettingTypeArray();
-    gettingUserArray();
-  }, []);
-
-  const gettingBatchArrray = async () => {
+  const getArrays = useCallback(async () => {
     try {
-      const response = await getBatchArrray();
-      if(response.length){
-        setBatchArray(response);
+      const [batchArray, sectionArray, typeArray, userArray] =
+        await Promise.all([
+          getBatchArrray(),
+          getSectionArray(),
+          getTypeArray(),
+          getUserArray(),
+        ]);
+      if (batchArray.length) {
+        GetBatchData(batchArray);
+        setBatchArray(batchArray);
+      }
+
+      if (sectionArray.length) {
+        GetSectionData(sectionArray);
+        setSectionArray(sectionArray);
+      }
+      if (typeArray.length) {
+        GetTypeData(typeArray)
+        setTypeArray(typeArray);
+      }
+      if (userArray.length) {
+        setUserArray(userArray);
       }
     } catch (error) {
       setIsOpen(true);
-      setModalErrorBody("We were unable to find batch data. It seems that something has gone wrong!");
+      setModalErrorBody(
+        "Oh no! There was a problem with getting the items from the selecting list"
+      );
     }
-  };
-  const gettingSectionArray = async () => {
-    try {
-      const response = await getSectionArray();
-      if(response.length){
-      setSectionArray(response);
-      }
-    } catch (error) {
-    
+  }, [GetBatchData, GetSectionData,GetTypeData]);
+
+  useEffect(() => {
+    const setSelectBatchValues = () => {
+      setBatchArray(state.BatchReducer.Batch);
+      setSectionArray(state.SectionReducer.Section);
+      setTypeArray(state.TypeReducer.Type);
+    };
+    if (state.BatchReducer.Batch.length) {
+      setSelectBatchValues();
+    } else {
+      getArrays();
     }
-  };
-  const gettingTypeArray = async () => {
-    try {
-      const response = await getTypeArray();
-      if(response.length){
-      setTypeArray(response);
-      }
-    } catch (error) {}
-  };
-  const gettingUserArray = async () => {
-    try {
-      const response = await getUserArray();
-      if(response.length){
-      setUserArray(response);
-      }
-    } catch (error) {}
-  };
+  }, [
+    getArrays,
+    state.BatchReducer.Batch,
+    state.TypeReducer.Type,
+    state.SectionReducer.Section,
+  ]);
 
   // this is setting values from select tags
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -92,7 +114,7 @@ const LectureSearchInput = ({ filterValues, setFilterValues }: any) => {
 
   return (
     <div>
-       <CommonModalComponent
+      <CommonModalComponent
         isOpen={isOpen}
         setIsOpen={setIsOpen}
         modalBody={modalBody}
@@ -129,7 +151,9 @@ const LectureSearchInput = ({ filterValues, setFilterValues }: any) => {
           placeholder="Select batch"
         >
           {batchArray?.map((el) => (
-            <option key={el.batchId} value={el.batchId}>{el.batch}</option>
+            <option key={el.batchId} value={el.batchId}>
+              {el.batch}
+            </option>
           ))}
         </Select>
         <Select
@@ -141,7 +165,9 @@ const LectureSearchInput = ({ filterValues, setFilterValues }: any) => {
           onChange={handleChange}
         >
           {sectionArray?.map((el) => (
-            <option key={el.sectionId} value={el.sectionId}>{el.section}</option>
+            <option key={el.sectionId} value={el.sectionId}>
+              {el.section}
+            </option>
           ))}
         </Select>
         <Select
@@ -153,7 +179,9 @@ const LectureSearchInput = ({ filterValues, setFilterValues }: any) => {
           onChange={handleChange}
         >
           {typeArray?.map((el) => (
-            <option key={el.id} value={el.id}>{el.type}</option>
+            <option key={el.id} value={el.id}>
+              {el.type}
+            </option>
           ))}
         </Select>
         <Input
@@ -198,7 +226,9 @@ const LectureSearchInput = ({ filterValues, setFilterValues }: any) => {
           onChange={handleChange}
         >
           {userArray?.map((el) => (
-            <option key={el.id} value={el.id}>{el.user}</option>
+            <option key={el.id} value={el.id}>
+              {el.user}
+            </option>
           ))}
         </Select>
       </Grid>
