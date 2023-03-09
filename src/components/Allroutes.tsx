@@ -17,7 +17,6 @@ import Login from "../Pages/StudentSidePages/Login";
 import CopyLecture from "../Pages/AdminSidePages/CopyLecture/index";
 import BookMarks from "../Pages/StudentSidePages/BookMarks/index";
 import StudentLectureDetail from "../Pages/StudentSidePages/LectureDetailPage/index";
-import Zoom from './../Pages/test/Zoom';
 import LectureDiscussionTab from "../Pages/StudentSidePages/LectureDetailPage/index";
 
 const Allroutes = () => {
@@ -46,7 +45,6 @@ const Allroutes = () => {
         <Route path="/student/bookmarks" element={<BookMarks/>} />
         <Route path ="/login" element ={<Login/>} />
         <Route path="/api/reset-password/:token/:email/:number" element={< ResetPassword/>} />
-        <Route path="/zoom" element={< Zoom/>} />
       </Routes>
     </div>
   );
