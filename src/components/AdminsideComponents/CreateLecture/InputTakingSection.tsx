@@ -104,7 +104,7 @@ const InputTakingSection = ({buttonName, LectureValues, setLectureValues,Lecture
     setTimeout(()=>{
       setLoading(false)
     },2000)
-console.log(LectureValues)
+
     if(buttonName === "Copy Lecture" || buttonName === "Edit Lecture"){
      
     try {
@@ -227,7 +227,7 @@ console.log(LectureValues)
                 placeholder="Select batch"
               >
                 {batchArray?.map((el) => (
-                  <option key={el.batchId}  value={el.batch}>{el.batch}</option>
+                  <option key={el.batchId}  value={el.batchId}>{el.batch}</option>
                 ))}
               </Select>
               {touched.batch && errors.batch && (
@@ -247,7 +247,7 @@ console.log(LectureValues)
                 onChange={handleChange}
               >
                 {sectionArray?.map((el) => (
-                  <option key={el.sectionId} value={el.section}>{el.section}</option>
+                  <option key={el.sectionId} value={el.sectionId}>{el.section}</option>
                 ))}
               </Select>
               {touched.section && errors.section && (
@@ -276,7 +276,7 @@ console.log(LectureValues)
                 onChange={handleChange}
               >
                 {typeArray?.map((el) => (
-                  <option key={el.id} value={el.type}>{el.type}</option>
+                  <option key={el.id} value={el.id}>{el.type}</option>
                 ))}
               </Select>
               {touched.type && errors.type && (
@@ -341,7 +341,7 @@ console.log(LectureValues)
                 onChange={handleChange}
               >
                 {userArray?.map((el) => (
-                  <option key={el.id} value={el.user}>{el.user}</option>
+                  <option key={el.id} value={el.id}>{el.user}</option>
                 ))}
               </Select>
               {touched.createdBy && errors.createdBy && (

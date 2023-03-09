@@ -10,9 +10,10 @@ import {
   useMediaQuery,
 } from "@chakra-ui/react";
 
-const ModalComponent = ({ isOpen, setIsOpen, DeleteLecture }: any) => {
+const ModalComponent = ({ isOpen, setIsOpen, DeleteLecture,modalBody }: any) => {
   const handleClose = () => setIsOpen(false);
   const [isLargerThan900] = useMediaQuery("(min-width: 900px)");
+ 
 
   return (
     <div>
@@ -20,7 +21,7 @@ const ModalComponent = ({ isOpen, setIsOpen, DeleteLecture }: any) => {
         <ModalOverlay />
         <ModalContent>
           <ModalBody>
-            <Text p="30px">Do you want to delete this Lecture</Text>
+            <Text p="30px">{modalBody}</Text>
           </ModalBody>
           <ModalFooter>
             <Button

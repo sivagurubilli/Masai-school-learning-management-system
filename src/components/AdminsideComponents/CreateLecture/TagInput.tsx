@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Box, Flex, FormLabel, Text } from "@chakra-ui/react";
-import { Categoery } from "../../../assets/assets";
+import {  Categoery } from "../../../assets/assets";
 
 const TagInput = ({ values, LectureValues, setLectureValues }: any) => {
   const [showSuggestions, setShowSuggestions] = useState<boolean>(false);
@@ -44,7 +44,8 @@ const TagInput = ({ values, LectureValues, setLectureValues }: any) => {
       setSuggestionsTags([]);
     }
   }, [values.category]);
-  
+
+
 
   return (
     <div>

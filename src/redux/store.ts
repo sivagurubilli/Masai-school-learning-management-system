@@ -6,6 +6,7 @@ import {
 } from "redux";
 import thunk from "redux-thunk";
 import { reducer as Authreducer } from "./Authreducer/reducer";
+import {reducer as LectureReducer} from "./Lecturereducer/reducer"
 declare global {
   interface Window {
     __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
@@ -13,7 +14,7 @@ declare global {
 }
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-const rootreducer = combineReducers({ Authreducer });
+const rootreducer = combineReducers({ Authreducer,LectureReducer });
 
 export const store = legacy_createStore(
   rootreducer,

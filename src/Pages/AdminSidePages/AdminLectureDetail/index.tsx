@@ -42,6 +42,8 @@ const AdminLectureDetail = () => {
       try{
     const response = await LectureSingleService(id);
     if(response.lectureid){
+
+      
       setLectureDetail(response);
     }
       }catch(error){
@@ -85,10 +87,11 @@ const AdminLectureDetail = () => {
         pb="20%"
       >
         <Navbar />
+        <SecondNavforLectureDetail id={id} />
         {!lectureDetail?.title ? (<Box mt="0%" ><Loading /></Box>):
 
         ( <div>
-        <SecondNavforLectureDetail id={id} />
+       
         <CommonModalComponent
         isOpen={isOpen}
         setIsOpen={setIsOpen}

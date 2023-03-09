@@ -1,5 +1,5 @@
 import { Box, Flex, Button, useMediaQuery, Divider } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState} from "react";
 import "./index.css";
 import Secondnav from "../../../components/AdminsideComponents/AdminLecture/LectureSearchNavbar";
 import Navbar from "../../../components/AdminsideComponents/AdminNavbar/index";
@@ -42,48 +42,53 @@ const AdminLecture = () => {
   const [modalBody, setModalErrorBody] = useState<string>("");
 
 
+
 //user search and get lectures by provideing different values
-  const GetLectures = async () => {
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-    }, 1000);
+const GetLecturesByFilter =()=>{
+  setLoading(true)
+  setTimeout(()=>{
+    setLoading(false)
+  },1000)
+  GetLectures()
+}
 
-    try {
-      const response = await LectureSearchService(filterValues);
-      if (response.length > 1) {
-        setLecturesData(response);
-      } else if (!response.length) {
-        setIsOpen(true);
-        setModalErrorBody("These values did not match the lecture data!");
-      }
-    } catch (error) {
+const GetLectures = async () => {
+  try {
+    const response = await LectureSearchService(filterValues);
+    if (response.length) {
+      setLecturesData(response);
+    } else {
       setIsOpen(true);
-      setModalErrorBody(
-        "Sorry about that! There is a scheduled downtime on your servers, so please check them"
-      );
+      setModalErrorBody("There was a discrepancy between these values and the lecture data!");
     }
-  };
+  } catch (error) {
+    setIsOpen(true);
+    setModalErrorBody(
+      "I'm sorry about that! There is no data found, so please check the values"
+    );
+  }
+}
 
+const fetchData = async () => {
+  try {
+    const response = await GetAllLectureService();
+    if (response.length) {  
+      setLecturesData(response);
+    }
+  } catch (error) {
+    setIsOpen(true);
+    setModalErrorBody(
+      "We were unable to find any data. It seems that something has gone wrong!"
+    );
+  }
+};
     // when user enters into admin lectures page call service for getlist of lectures using useEffect
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await GetAllLectureService();
-        if (response.length) {
-          setLecturesData(response);
-        }
-      } catch (error) {
-        setIsOpen(true);
-        setModalErrorBody(
-          "We were unable to find any data. It seems that something has gone wrong!"
-        );
-      }
-    };
     fetchData();
   }, []);
 
   const Reset = () => {
+    fetchData()
     setFilterValues({
       title: "",
       batch: "",
@@ -97,7 +102,6 @@ const AdminLecture = () => {
   };
 
   const [isLargerThan900] = useMediaQuery("(min-width: 900px)");
-
   return (
     <div className="container">
       <Navbar />
@@ -128,7 +132,7 @@ const AdminLecture = () => {
               bg="rgb(31 41 55)"
               isLoading={isLoading}
               _hover={{ bg: "rgb(76, 84, 95)" }}
-              onClick={GetLectures}
+              onClick={GetLecturesByFilter}
             >
               Filter
             </Button>
@@ -148,7 +152,7 @@ const AdminLecture = () => {
           <Divider mt="10px" />
         </Box>
       </Box>
-      <Box w="90%" ml="5%" bg="white" h="auto" mt="20px">
+      <Box w="90%" ml="5%" bg="white" h="auto" mt="20px" pb="10%">
         {lecturesData ? <TableHeading LecturesData={lecturesData} /> : <Loader />}
       </Box>
     </div>
