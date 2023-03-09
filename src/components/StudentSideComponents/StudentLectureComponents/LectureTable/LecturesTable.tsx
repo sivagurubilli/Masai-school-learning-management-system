@@ -1,10 +1,8 @@
 import React from "react";
-import moment from "moment";
-
 import {
   ILectureResponse,
   ISearchResponse,
-} from "../../../Services/LectureInterface";
+} from "../../../../Services/LectureInterface";
 import {
   Table,
   Thead,
@@ -17,24 +15,17 @@ import {
   TableContainer,
   Box,
 } from "@chakra-ui/react";
-
 import { useNavigate } from "react-router-dom";
+import TimeDetails from "../Time/Time";
 
 const TableHeading = ({ LecturesData }: ISearchResponse) => {
   const navigate = useNavigate();
 
   const handleRedirect = (ad: ILectureResponse) => {
-    const previousTime = moment(ad.concludes, "DD-MM-YYYY HH:mm:ss");
-    const currentTime = moment();
-    const differenceInSeconds = currentTime.diff(previousTime, "seconds");
-    if (differenceInSeconds < 0) {
-      window.open(ad.zoomLink, "_blank");
-    } else {
-      navigate(`/student/lectures/${ad.lectureid}`);
-    }
+    navigate(`/student/lectures/${ad.lectureid}`);
   };
   return (
-    <div>
+    <Box>
       <Box overflow={"auto"}>
         <TableContainer>
           <Table position="relative" w="100%">
@@ -43,7 +34,7 @@ const TableHeading = ({ LecturesData }: ISearchResponse) => {
                 <Th w="35%">TITLE</Th>
               </Tr>
             </Thead>
-            <Tbody w="100%">
+            <Tbody w="100%" h="200px">
               {LecturesData &&
                 LecturesData?.map((ad: ILectureResponse) => (
                   <Tr
@@ -71,12 +62,7 @@ const TableHeading = ({ LecturesData }: ISearchResponse) => {
                           </Badge>
                         </Text>
                       </Box>
-                      <Text>
-                        <>
-                          Created by {ad.createdBy} ({ad.category}) at{" "}
-                          {ad.schedule}
-                        </>
-                      </Text>
+                      <TimeDetails lecture={ad} />
                     </Td>
                   </Tr>
                 ))}
@@ -84,7 +70,7 @@ const TableHeading = ({ LecturesData }: ISearchResponse) => {
           </Table>
         </TableContainer>
       </Box>
-    </div>
+    </Box>
   );
 };
 

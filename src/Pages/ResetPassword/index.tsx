@@ -3,6 +3,8 @@ import { masaiimage } from "../../assets/assets";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { ResetService } from "../../Services/AuthServices";
+import { useParams } from "react-router-dom";
+
 import {
     Flex,
     Box,
@@ -14,7 +16,6 @@ import {
     Text,
     Container,
 } from "@chakra-ui/react";
-
 interface IFormData {
     password: string;
     confirmPassword: string;
@@ -34,19 +35,21 @@ const validationSchema = yup.object().shape({
         .oneOf([yup.ref("password")], "ReEntered Password must match witch previous password"),
 });
 
-const queryParams = new URLSearchParams(window.location.search);
-const token = queryParams.get('token');
 const initialValues: IFormData = {
     password: "",
     confirmPassword: "",
-    token: token
+    token: ""
 };
 
 const ForgetPassword = () => {
+    const { token = "" } = useParams<{ token: string }>();
     const [isLoading, setLoading] = useState<boolean>(false)
-   
+    const [message, setMessage]= useState<string>("")
     const onSubmit = async (values: IFormData) => {
-        ResetService(values)
+        values.token = token;
+        ResetService(values).then((res)=>{
+            setMessage(res)
+        })
         setLoading(true)
         setTimeout(() => {
             setLoading(false)
@@ -82,7 +85,7 @@ const ForgetPassword = () => {
                         <Text fontSize="16px" color="rgb(113, 120, 128)">
                             Reset your password
                         </Text>
-                        
+                        {message==="Reset Password Successfully" ? <Box color="#48BB78" >{message}</Box>:<Box color="#E53E3E" >{message}</Box>}
                         <form onSubmit={handleSubmit}>
                             <div >
                                 <FormLabel

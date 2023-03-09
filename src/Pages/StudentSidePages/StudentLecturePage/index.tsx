@@ -2,17 +2,17 @@ import { Box, Flex, Button, useMediaQuery } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import "./index.css";
 import Navbar from "../../../components/AdminsideComponents/AdminNavbar/index";
-import TableHeading from "../../../components/StudentSideComponents/StudentLectureComponents/LecturesTable";
+import TableHeading from "../../../components/StudentSideComponents/StudentLectureComponents/LectureTable/LecturesTable";
 import {
-  GetAllLectureService,
   LectureSearchService,
+  GettAllStudentLectureService,
 } from "../../../Services/LectureServices";
-import {
-  ILectureResponse,
-} from "../../../Services/LectureInterface";
+import { ILectureResponse } from "../../../Services/LectureInterface";
 import CommonModalComponent from "../../../components/Modal/commonModal";
 import LectureSearchInput from "../../../components/AdminsideComponents/AdminLecture/LectureSearchInput";
 import SecondNavbar from "../../../components/StudentSideComponents/StudentLectureComponents/SecondNavbar";
+import Skeleton from "./../../../components/Skeleton/index";
+import ReactPaginate from "react-paginate";
 
 interface IFilteredValues {
   title: string;
@@ -36,18 +36,14 @@ const StudentLecture = () => {
     week: "",
     day: "",
   });
-  const [isLoading, setLoading] = useState<boolean>(false);
+  const [isLoading, setLoading] = useState<boolean>();
   const [lecturesData, setLecturesData] = useState<ILectureResponse[]>();
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [body, setBody] = useState<string>("");
+  const [lectureDataLength, setLectureDataLength] = useState<number>(0);
 
   // calling service for getting list for lectures
   const GetLectures = () => {
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-    }, 1000);
-
     LectureSearchService(filterValues).then((res: any) => {
       if (res.length > 1) {
         setLecturesData(res);
@@ -59,10 +55,28 @@ const StudentLecture = () => {
   };
 
   useEffect(() => {
-    GetAllLectureService().then((res) => {
-      setLecturesData(res);
-    });
+    const fetchLecture = async () => {
+      setLoading(true);
+      try {
+        const res = await GettAllStudentLectureService();
+        setLecturesData(res);
+        setLectureDataLength(res.length);
+        setLoading(false);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    fetchLecture();
   }, []);
+
+  const [currentPage, setCurrentPage] = useState<number>(0);
+  const ITEMS_PER_PAGE = 2;
+  const startIndex = currentPage * ITEMS_PER_PAGE;
+  const endIndex = startIndex + ITEMS_PER_PAGE;
+  const paginatedLecturesData = lecturesData?.slice(startIndex, endIndex);
+  const handlePageChange = ({ selected }: { selected: number }) => {
+    setCurrentPage(selected);
+  };
 
   const Reset = () => {
     setFilterValues({
@@ -96,19 +110,19 @@ const StudentLecture = () => {
           />
           <Flex justifyContent={"flex-end"}>
             <Button
-              w="20%"
+              w="15%"
               mt="20px"
               fontSize={isLargerThan900 ? "16px" : "12px"}
               color="white"
               bg="rgb(31 41 55)"
-              isLoading={isLoading}
+              // isLoading={isLoading}
               _hover={{ bg: "rgb(76, 84, 95)" }}
               onClick={GetLectures}
             >
               Filter
             </Button>
             <Button
-              w="20%"
+              w="15%"
               mt="20px"
               color="white"
               ml="20px"
@@ -122,9 +136,44 @@ const StudentLecture = () => {
           </Flex>
         </Box>
       </Box>
-      <Box w="90%" ml="5%" bg="white" h="100vh">
-        {lecturesData && <TableHeading LecturesData={lecturesData} />}
+      <Box w="90%" ml="5%" bg="white" h="auto">
+        {isLoading && <Skeleton />}
+        {lecturesData && <TableHeading LecturesData={paginatedLecturesData} />}
       </Box>
+      <Flex
+        className="react-paginate"
+        justify="space-between"
+        align="center"
+        ml="60px"
+        mr="60px"
+        boxShadow="base"
+        p="6"
+        rounded="md"
+        bg="white"
+      >
+        <Box>
+          <Box>
+            Showing{" "}
+            <span className="nameSpan">{currentPage * ITEMS_PER_PAGE + 1}</span>{" "}
+            to{" "}
+            <span className="nameSpan">
+              {(currentPage + 1) * ITEMS_PER_PAGE}
+            </span>{" "}
+            of <span className="nameSpan">{lectureDataLength}</span>
+          </Box>
+        </Box>
+        <Box>
+          <ReactPaginate
+            pageCount={Math.ceil(lectureDataLength / ITEMS_PER_PAGE)}
+            onPageChange={handlePageChange}
+            containerClassName={"pagination"}
+            previousLabel={"<"}
+            nextLabel={">"}
+            breakLabel={"..."}
+            activeClassName={"active"}
+          />
+        </Box>
+      </Flex>
     </div>
   );
 };
