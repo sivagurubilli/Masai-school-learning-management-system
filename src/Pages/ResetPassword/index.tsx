@@ -16,18 +16,11 @@ import {
     Text,
     Container,
 } from "@chakra-ui/react";
-
-// interface RouteParams {
-//     token: any;
-//   }
-  
-
 interface IFormData {
     password: string;
     confirmPassword: string;
     token: any;
 }
-
 
 const validationSchema = yup.object().shape({
     password: yup

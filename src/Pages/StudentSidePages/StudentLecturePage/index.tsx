@@ -4,7 +4,6 @@ import "./index.css";
 import Navbar from "../../../components/AdminsideComponents/AdminNavbar/index";
 import TableHeading from "../../../components/StudentSideComponents/StudentLectureComponents/LectureTable/LecturesTable";
 import {
-  GetAllLectureService,
   LectureSearchService,
   GettAllStudentLectureService,
 } from "../../../Services/LectureServices";
@@ -41,7 +40,7 @@ const StudentLecture = () => {
   const [lecturesData, setLecturesData] = useState<ILectureResponse[]>();
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [body, setBody] = useState<string>("");
-  const [lectureDataLength, setLectureDataLength] = useState<any>();
+  const [lectureDataLength, setLectureDataLength] = useState<number>(0);
 
   // calling service for getting list for lectures
   const GetLectures = () => {

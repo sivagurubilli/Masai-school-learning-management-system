@@ -32,7 +32,7 @@ export async function getSectionArray() : Promise<ISectionObject[]>{
 export async function getTypeArray(): Promise<ITypeObject[]> {
   try {
     const response = await axios.get(
-      "api/gettypeList"
+      "api/typeList"
     );
     return response.data;
   } catch (error: any) {
@@ -43,7 +43,7 @@ export async function getTypeArray(): Promise<ITypeObject[]> {
 export async function getUserArray(): Promise<IUserObject[]> {
   try {
     const response = await axios.get(
-      "/api/user"
+      "/api/userList"
     );
     return response.data;
   } catch (error: any) {
