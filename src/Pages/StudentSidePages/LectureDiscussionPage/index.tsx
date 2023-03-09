@@ -9,20 +9,18 @@ import {
     Flex,
     Input,
     Select,
-    Button,
-    Center
+    Button
 } from "@chakra-ui/react";
-import { Link, useParams } from "react-router-dom";
-import Video from "../NoteAndVideo/Video";
-import { ILectureResponse } from "./../../../../Services/LectureInterface";
-import EmptyTab from "./EmptyTab";
+import { Link } from "react-router-dom";
+import { ILectureResponse } from "../../../Services/LectureInterface";
+import EmptyTab from "../../../components/StudentSideComponents/StudentLectureComponents/Tabs/EmptyTab";
 
 interface DetailTabProps {
     lectureDetail: ILectureResponse;
     lectureId: string;
 }
 
-const DiscussionTab = ({ lectureDetail, lectureId }: DetailTabProps) => {
+const LectureDiscussionTab = ({ lectureDetail, lectureId }: DetailTabProps) => {
     return (
         <Tabs isFitted variant="enclosed" defaultIndex={1}>
             <TabList mb="1em" h="80px">
@@ -88,4 +86,4 @@ const DiscussionTab = ({ lectureDetail, lectureId }: DetailTabProps) => {
     );
 };
 
-export default DiscussionTab;
+export default LectureDiscussionTab;

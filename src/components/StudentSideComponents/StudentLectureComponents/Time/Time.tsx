@@ -2,8 +2,7 @@ import React from "react";
 import moment from "moment";
 import { ILectureResponse } from "../../../../Services/LectureInterface";
 import { Text } from "@chakra-ui/react";
-import "./Time.css"
-
+import "./Time.css";
 
 type LectureDetailsProps = {
   lecture: ILectureResponse;
@@ -16,7 +15,9 @@ const TimeDetails = ({ lecture }: LectureDetailsProps) => {
 
   return (
     <Text>
-       <span className="bolderSpan">{lecture.createdBy}</span> scheduled <span className="bolderSpan">({lecture.category})</span> at {formattedSchedule}
+      <span className="bolderSpan">{lecture.createdBy}</span> scheduled{" "}
+      <span className="bolderSpan">({lecture.category})</span> at{" "}
+      {formattedSchedule}
     </Text>
   );
 };

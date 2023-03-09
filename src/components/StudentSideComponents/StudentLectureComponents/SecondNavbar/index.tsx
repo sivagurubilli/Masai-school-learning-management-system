@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  Box,
-  Flex,
-  Heading,
-  useMediaQuery,
-} from "@chakra-ui/react";
-
+import { Box, Flex, Heading, useMediaQuery } from "@chakra-ui/react";
 
 // this component is navbar below component in dash board page
 const SecondNavbar = () => {
@@ -25,8 +19,6 @@ const SecondNavbar = () => {
         <Box mb={isLargerThan900 ? 0 : 2}>
           <Heading size="md">Lectures</Heading>
         </Box>
-
-       
       </Flex>
     </Box>
   );
