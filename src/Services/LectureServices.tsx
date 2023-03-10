@@ -109,7 +109,7 @@ export async function LectureSearchService(
   console.log("data",data)
   try {
     const response = await axios.post(
-      "http://3.27.61.194:8082/api/lecture/lectures/search/student/2/2",
+      "/api/lecture/lectures/search/",
       { title, batch, section, type, startTime, createdBy, day, week }
     );
     return response.data;
@@ -120,7 +120,7 @@ export async function LectureSearchService(
 // for getting all lectures when user enters to the lectures page
 export async function GetAllLectureService(): Promise<ILectureResponse[]> {
   try {
-     const response = await axios.get("http://3.27.61.194:8082/api/lecture/lectureList");
+     const response = await axios.get("/api/lecture/lectureList");
     return response.data;
   } catch (error: any) {
     return error.response;
@@ -128,10 +128,10 @@ export async function GetAllLectureService(): Promise<ILectureResponse[]> {
 }
 
 // getting single lecture details service
-export async function LectureSingleService(id: any): Promise<ILectureResponse> {
+export async function LectureSingleService(id: any) {
   try {
     const response = await axios.get(
-      `http://3.27.61.194:8082/api/lecture/lectures/${id}`
+      `/api/lecture/lectures/${id}`
     );
     return response.data;
   } catch (error: any) {
@@ -261,7 +261,7 @@ export async function GettAllStudentLectureService(): Promise<
 > {
   try {
     const response = await axios.get(
-      "http://3.27.61.194:8082/api/lecture/lectureList/student/2/2"
+      "/api/lecture/lectureList/student/2/2"
     );
 
     return response.data;

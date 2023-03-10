@@ -7,22 +7,48 @@ import { LectureSingleService } from "../../../Services/LectureServices";
 import { BiBookmark } from "react-icons/bi";
 import "./index.css";
 import moment from "moment";
-import { ILectureResponse } from "../../../Services/LectureInterface";
 import DetailTab from "./../../../components/StudentSideComponents/StudentLectureComponents/Tabs/DetailTab";
 import axios from "axios";
 import Skeleton from "../../../components/Skeleton/index";
+import { BatchListMap, CategoryMap, SectionListMap, TypeListMap } from "../../../assets/assets";
 
 const StudentLectureDetail = () => {
   const { id = "" } = useParams<{ id: string }>();
-  const [lectureDetail, setLectureDetail] = useState<
-    ILectureResponse | undefined
-  >();
+  const [lectureDetail, setLectureDetail] = useState({
+    lectureId:"",
+    title: "",
+    batch: "",
+    category: "",
+    section: "",
+    type: "",
+    schedule: new Date(),
+    concludes: new Date(),
+    createdBy: "",
+    tags: [],
+    hideVideo: false,
+    optional: false,
+    zoomLink: "",
+    week: "",
+    day: "",
+    notes: "",
+  });
   const [downloadLink, setDownloadLink] = useState<string>("");
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [startTime, setStartTime] = useState<string>("");
   const [endTime, setEndTime] = useState<string>("");
   const [loading, setLoading] = useState<boolean>();
   const [zoomLinkActive, setZoomLinkActive] = useState<boolean>(false);
+
+  useEffect(() => {
+    const BElem  = BatchListMap.find((el) => Number(el.key) === Number(lectureDetail?.batch))
+const SElem = SectionListMap.find((el) => Number(el.key) === Number(lectureDetail?.section))
+//const UserElem = UserListLsitMap.find((el) => Number(el.key) === Number(lectureDetail?.createdBy))
+const CategoryElem = CategoryMap.find((el)=> Number(el.id) === Number(lectureDetail?.category))
+const TypeElem =TypeListMap.find((el) => Number(el.id) === Number(lectureDetail?.type))
+    if (BElem && SElem && CategoryElem && TypeElem) {
+  setLectureDetail({...lectureDetail,batch:BElem.el,section:SElem?.el,category:CategoryElem?.el,type:TypeElem.el})
+    }
+  }, [lectureDetail?.batch,lectureDetail]);
 
   useEffect(() => {
     const fetchLecture = async () => {
@@ -70,13 +96,14 @@ const StudentLectureDetail = () => {
     document.body.removeChild(a);
   };
 
-  const handleBookmarkClick = async () => {
+  const handleBookmarkClick = async () => {   
     try {
+      const userId = localStorage.getItem("userId");
       if (isBookmarked) {
-        await axios.delete(`http://localhost:8070/bookmark/${id}`);
+        await axios.delete(`http://3.27.61.194:8082/api/${userId}/${lectureDetail.lectureId}`);
         setIsBookmarked(false);
       } else {
-        await axios.post("http://localhost:8070/bookmark", lectureDetail);
+        await axios.post("http://3.27.61.194:8082/api/bookmark/", {"userId":userId,"lectureId":lectureDetail.lectureId});
         setIsBookmarked(true);
       }
     } catch (err) {
@@ -84,12 +111,12 @@ const StudentLectureDetail = () => {
     }
   };
 
-  const handleJoinMeetingClick = (lectureDetail: ILectureResponse) => {
+  const handleJoinMeetingClick = (lectureDetail:any) => {
     window.open(lectureDetail.zoomLink, "_blank");
   };
 
   const handleZoomSettingsClick = () => {
-    //  window.location.href = ZOOM_SETTINGS_URL;
+      window.location.href = "https://us06web.zoom.us/profile/setting";
   };
 
   return (
@@ -180,6 +207,9 @@ const StudentLectureDetail = () => {
                   <Text
                     textDecoration="underline"
                     onClick={handleZoomSettingsClick}
+                    _hover={{
+                      cursor: "pointer",
+                    }}
                   >
                     Zoom Settings
                   </Text>

@@ -38,8 +38,8 @@ const TableHeading = ({ LecturesData }: ISearchResponse) => {
             <Tbody w="100%">
               {LecturesData &&
                 LecturesData?.map((ad: ILectureResponse) => (
-                  <Tr key={ad.lectureid}>
-                    <Td w="6%">{ad.lectureid}</Td>
+                  <Tr key={ad.lectureId}>
+                    <Td w="6%">{ad.lectureId}</Td>
                     <Td w="35%">
                       <Text fontSize="20px">
                         {ad.title}{" "}
@@ -93,7 +93,7 @@ const TableHeading = ({ LecturesData }: ISearchResponse) => {
                     </Td>
                     <Td w="15%">
                       <Flex>
-                        <Link to={`/admin/lectures/${ad.lectureid}`}>
+                        <Link to={`/admin/lectures/${ad.lectureId}`}>
                           {" "}
                           <Button
                             variant="link"
@@ -103,7 +103,7 @@ const TableHeading = ({ LecturesData }: ISearchResponse) => {
                             View
                           </Button>
                         </Link>
-                        <Link to={`/admin/lectures/edit/${ad.lectureid}`}>
+                        <Link to={`/admin/lectures/edit/${ad.lectureId}`}>
                           {" "}
                           <Button
                             variant="link"

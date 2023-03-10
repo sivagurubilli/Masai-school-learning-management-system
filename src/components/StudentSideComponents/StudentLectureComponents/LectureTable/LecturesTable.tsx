@@ -22,7 +22,7 @@ const TableHeading = ({ LecturesData }: ISearchResponse) => {
   const navigate = useNavigate();
 
   const handleRedirect = (ad: ILectureResponse) => {
-    navigate(`/student/lectures/${ad.lectureid}`);
+    navigate(`/student/lectures/${ad.lectureId}`);
   };
   return (
     <Box>
@@ -38,7 +38,7 @@ const TableHeading = ({ LecturesData }: ISearchResponse) => {
               {LecturesData &&
                 LecturesData?.map((ad: ILectureResponse) => (
                   <Tr
-                    key={ad.lectureid}
+                    key={ad.lectureId}
                     _hover={{ bgColor: "#f9fafb" }}
                     onClick={() => handleRedirect(ad)}
                   >

@@ -29,7 +29,7 @@ tag:string
 }
 //iinteface for lecture response
 export interface ILectureResponse{
-    lectureid:number
+    lectureId:number
     title: string;
     batch: string;
     category:string,
