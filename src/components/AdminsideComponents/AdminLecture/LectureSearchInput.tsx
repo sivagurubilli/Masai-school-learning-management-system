@@ -36,7 +36,7 @@ const LectureSearchInput = ({ filterValues, setFilterValues ,setLecturesData,sea
   const [modalBody, setModalErrorBody] = useState<string>("");
   const [queryParams] = useSearchParams();
   const dispatch = useDispatch();
-  const { GetBatchData, GetSectionData, GetTypeData, GetCategoeryData } =
+  const { GetBatchData, GetSectionData, GetTypeData, GetUserData,GetCategoeryData } =
     bindActionCreators(actionCreators, dispatch);
   const state = useSelector((state: RootState) => state);
 
@@ -68,6 +68,7 @@ const LectureSearchInput = ({ filterValues, setFilterValues ,setLecturesData,sea
         setTypeArray(typeArray);
       }
       if (userArray.length) {
+        GetUserData(userArray)
         setUserArray(userArray);
       }
     } catch (error) {
@@ -76,7 +77,7 @@ const LectureSearchInput = ({ filterValues, setFilterValues ,setLecturesData,sea
         "Oh no! There was a problem with getting the items from the selecting list"
       );
     }
-  }, [GetBatchData, GetSectionData, GetTypeData, GetCategoeryData]);
+  }, [GetBatchData, GetSectionData,GetUserData, GetTypeData, GetCategoeryData]);
 
   useEffect(() => {
     const setSelectBatchValues = () => {

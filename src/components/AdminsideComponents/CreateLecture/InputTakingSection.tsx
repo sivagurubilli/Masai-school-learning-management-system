@@ -109,6 +109,8 @@ const InputTakingSection = ({
     GetTypeData,
   ]);
 
+  console.log(userArray)
+
   const setSelectBatchValues = useCallback(() => {
     setBatchArray(state.BatchReducer.Batch);
     setSectionArray(state.SectionReducer.Section);
@@ -125,14 +127,14 @@ const InputTakingSection = ({
 
   // if there is dropdown down arrays in redux dont need to fetch values from backend
   useEffect(() => {
-    if (state.BatchReducer.Batch.length) {
+    if (state.UserReducer.User.length) {
       setSelectBatchValues();
     } else {
       getDropDownArrays();
     }
   }, [
     getDropDownArrays,
-    state.BatchReducer.Batch.length,
+    state.UserReducer.User.length,
     setSelectBatchValues,
   ]);
 

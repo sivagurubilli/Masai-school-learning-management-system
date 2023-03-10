@@ -162,17 +162,19 @@ const AdminLectureDetail = () => {
       >
         <Navbar />
         <SecondNavforLectureDetail id={id} />
-        {!lectureDetail?.title ? (
-          <Box mt="1%">
-            <Loading />
-          </Box>
-        ) : (
+       
           <div>
             <CommonModalComponent
               isOpen={isOpen}
               setIsOpen={setIsOpen}
               modalBody={modalBody}
             />
+             {!lectureDetail?.title ? (
+          <Box mt="1%">
+            <Loading />
+          </Box>
+        ) : (
+          <div>
             <Box
               flex="1"
               mx={{ base: "10%", md: "20%" }}
@@ -287,11 +289,16 @@ const AdminLectureDetail = () => {
                 </Button>
               </Flex>
             </Box>
+            
             <Box mt="100px" w="40%" h="500px" ml="30%">
     {videoFile && <video src={videoFile} controls />}
     </Box>
+    
+
+   
           </div>
         )}
+        </div>
       </Box>
     
     </div>
