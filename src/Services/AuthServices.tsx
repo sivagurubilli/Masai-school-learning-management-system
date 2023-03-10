@@ -1,7 +1,5 @@
 
 import axios from "axios";
-
-
 import { IAuthlogin,IAdminAccountCreate,IAuthloginResponse,IAuthsignupResponse,IForgotPassword,
 IStudentAccountCreate } from "./AuthInterface";
 

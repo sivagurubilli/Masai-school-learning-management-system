@@ -4,12 +4,12 @@ import "./index.css";
 import Navbar from "../../../components/AdminsideComponents/AdminNavbar/index";
 import TableHeading from "../../../components/StudentSideComponents/StudentLectureComponents/LectureTable/LecturesTable";
 import {
-  LectureSearchService,
+  LectureStudentSearchService,
   GettAllStudentLectureService,
 } from "../../../Services/LectureServices";
 import { ILectureResponse } from "../../../Services/LectureInterface";
 import CommonModalComponent from "../../../components/Modal/commonModal";
-import LectureSearchInput from "../../../components/AdminsideComponents/AdminLecture/LectureSearchInput";
+import LectureSearchInput from "../../../components/StudentSideComponents/StudentLectureComponents/LectureSearchInput"
 import SecondNavbar from "../../../components/StudentSideComponents/StudentLectureComponents/SecondNavbar";
 import Skeleton from "./../../../components/Skeleton/index";
 import ReactPaginate from "react-paginate";
@@ -17,6 +17,7 @@ import ReactPaginate from "react-paginate";
 interface IFilteredValues {
   title: string;
   batch: string;
+  category: string;
   section: string;
   type: string;
   createdBy: string;
@@ -29,6 +30,7 @@ const StudentLecture = () => {
   const [filterValues, setFilterValues] = useState<IFilteredValues>({
     title: "",
     batch: "",
+    category: "",
     section: "",
     type: "",
     createdBy: "",
@@ -44,8 +46,10 @@ const StudentLecture = () => {
 
   // calling service for getting list for lectures
   const GetLectures = () => {
-    LectureSearchService(filterValues).then((res: any) => {
-      if (res.length > 1) {
+    setLoading(true)
+    LectureStudentSearchService(filterValues).then((res: any) => {
+      setLoading(false)
+      if (res.length > 0) {
         setLecturesData(res);
       } else if (res.data.success === false) {
         setIsOpen(true);
@@ -82,6 +86,7 @@ const StudentLecture = () => {
     setFilterValues({
       title: "",
       batch: "",
+      category: "",
       section: "",
       type: "",
       createdBy: "",

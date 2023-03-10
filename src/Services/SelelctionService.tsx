@@ -5,24 +5,21 @@ import {
   ISectionObject,
   ITypeObject,
   IUserObject,
+  ICategorySectionObject,
 } from "./SelectionInterface";
 
-export async function getBatchArrray(): Promise<IBatchObject[]>{
+export async function getBatchArrray(): Promise<IBatchObject[]> {
   try {
-    const response = await axios.get(
-      "/api/batchList",
-    );
+    const response = await axios.get("/api/batchList");
     return response.data;
   } catch (error: any) {
     return error;
   }
 }
 
-export async function getSectionArray() : Promise<ISectionObject[]>{
+export async function getSectionArray(): Promise<ISectionObject[]> {
   try {
-    const response= await axios.get(
-      "/api/sectionList"
-    );
+    const response = await axios.get("/api/sectionList");
     return response.data;
   } catch (error: any) {
     return error;
@@ -31,9 +28,7 @@ export async function getSectionArray() : Promise<ISectionObject[]>{
 
 export async function getTypeArray(): Promise<ITypeObject[]> {
   try {
-    const response = await axios.get(
-      "api/typeList"
-    );
+    const response = await axios.get("api/typeList");
     return response.data;
   } catch (error: any) {
     return error;
@@ -42,23 +37,31 @@ export async function getTypeArray(): Promise<ITypeObject[]> {
 
 export async function getUserArray(): Promise<IUserObject[]> {
   try {
-    const response = await axios.get(
-      "/api/userList"
-    );
+    const response = await axios.get("/api/userList");
     return response.data;
   } catch (error: any) {
     return error;
   }
 }
 
+export async function getCategoryArrray(): Promise<ICategoryObject[]> {
+  try {
+    const response = await axios.get("/api/categoryList");
 
+    return response.data;
+  } catch (error: any) {
+    return error;
+  }
+}
 
-export async function getCategoryArrray(): Promise<ICategoryObject[]>{
+export async function getCategorySectionArrray(): Promise<
+  ICategorySectionObject[]
+> {
   try {
     const response = await axios.get(
-      "/api/getList"
-          );
-
+      "http://3.27.61.194:8082/api/categoryList"
+    );
+    console.log("category", response.data);
     return response.data;
   } catch (error: any) {
     return error;

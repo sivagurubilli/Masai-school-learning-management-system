@@ -41,7 +41,7 @@ const AdminLectureDetail = () => {
     const fetchData = async ()=> {
       try{
     const response = await LectureSingleService(id);
-    if(response.lectureid){
+    if(response.lectureId){
       setLectureDetail(response);
     }
       }catch(error){
