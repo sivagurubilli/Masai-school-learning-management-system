@@ -16,15 +16,15 @@ tag:string
 }
 //iinteface for lecture response
 export interface ILectureResponse{
-    lectureid:number
+    lectureId:number
     title: string;
-    batch: string;
-    category:string,
+    batch: string ;
+    category:string ,
     section: string,
-    type: string,
+    type: string ,
     schedule:Date,
     concludes:Date,
-    createdBy: string,
+    createdBy: string ,
     tags:string[],
     hideVideo:boolean,
     optional:boolean,
@@ -45,7 +45,7 @@ export interface ICreateLectureValues {
     title: string;
     batch: string;
     category:string,
-    section: string,
+    section: string ,
     type: string,
     schedule:Date,
     concludes:Date,
@@ -63,8 +63,8 @@ export interface ICreateLectureValues {
     id:number | undefined;
   }
 
-  export interface IBookMarkObject{
-    id:number,
-    title:string,
-    date:string
+  export interface IAddBookMarkObject{
+   lectureId:string | number;
+   userId: string| number;
+    
   }

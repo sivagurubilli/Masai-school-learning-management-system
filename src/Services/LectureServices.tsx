@@ -1,7 +1,7 @@
 import axios from "axios";
 
 import {
-  IBookMarkObject,
+  IAddBookMarkObject,
   ICreateLectureValues,
   ILectureResponse,
   ISearchValues,
@@ -78,7 +78,7 @@ export async function LectureEditService(
   } = data;
 
   try {
-    const response = await axios.put(`/api/lecture/updateLecture/${id}`, {
+    const response = await axios.put(`/api/lecture/UpdateLecture/${id}`, {
       title,
       batch,
       section,
@@ -127,7 +127,7 @@ export async function GetAllLectureService(): Promise<ILectureResponse[]> {
 }
 
 // getting single lecture details service
-export async function LectureSingleService(id: any): Promise<ILectureResponse> {
+export async function LectureSingleService(id: any) {
   try {
     const response = await axios.get(
       `/api/lecture/lectures/${id}`
@@ -195,7 +195,7 @@ export async function LectureCopyService(
 // for getting all bookmarks
 export async function GetAllBookMarksService(
   id: any
-): Promise<IBookMarkObject[]> {
+): Promise<ILectureResponse[]> {
   try {
     const response = await axios.get(`/api/getList/${id}`);
     return response.data;
@@ -207,7 +207,7 @@ export async function GetAllBookMarksService(
 //add bookmark service
 export async function AddBookMarksService({
   id,
-}: any): Promise<IBookMarkObject[]> {
+}: any): Promise<IAddBookMarkObject[]> {
   try {
     const response = await axios.post("/api/bookmark", {
       userId: "105",
@@ -222,7 +222,7 @@ export async function AddBookMarksService({
 //Remove BookMarks service
 export async function RemoveBookMarksService({
   id,
-}: any): Promise<IBookMarkObject[]> {
+}: any) {
   try {
     const response = await axios.delete(`/api/bookmark/${id}`);
     return response.data;
@@ -235,8 +235,10 @@ export async function RemoveBookMarksService({
 export async function GetDashboardLecturesService(): Promise<
   ILectureResponse[]
 > {
+  // const   {batchId,sectionId} =data
+ // console.log(batchId,sectionId)
   try {
-    const response = await axios.get("/api/dashboard");
+    const response = await axios.get(`/api/dashboard/lectures/${2}/${2}`);
     return response.data;
   } catch (error: any) {
     return error.response;
@@ -246,7 +248,7 @@ export async function GetDashboardLecturesService(): Promise<
 // add video file service
 export async function AddVideoFileService(file: any, lectureId: any) {
   try {
-    const response = await axios.post(`/api/lecture/${lectureId}/video`, file);
+    const response = await axios.post(`/api/lecture/${lectureId}/video`, {file});
 
     return response.data;
   } catch (error: any) {
@@ -260,7 +262,7 @@ export async function GettAllStudentLectureService(): Promise<
 > {
   try {
     const response = await axios.get(
-      "/api/lecture/lectureList/student/2/2"
+      "/api/lecture/lectureList"
     );
 
     return response.data;

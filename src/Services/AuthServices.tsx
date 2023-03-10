@@ -2,12 +2,12 @@
 import axios from "axios";
 
 
-import { IAuthlogin,IAdminAccountCreate,IAuthloginResponse,IAuthsignupResponse,IForgotPassword,
+import { IAuthlogin,IAdminAccountCreate,IAuthsignupResponse,IForgotPassword,
 IStudentAccountCreate } from "./AuthInterface";
 
 export async function LoginService(
   data: IAuthlogin
-): Promise<IAuthloginResponse> {
+){
   const { username, password,rememberMe } = data;
 
   try {
@@ -35,6 +35,20 @@ export async function LoginService(
   } catch (error: any) {
     console.log(error);
     return error.response;
+  }
+}
+
+
+export async function EmailVerifycationService(email:string){
+  try {
+    const response = await axios.post(
+      "/api/emailVerify",
+      {  email }
+    );
+    return response.data;
+  } catch (error: any) {
+    return error.response.data;
+
   }
 }
 

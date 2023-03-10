@@ -53,14 +53,14 @@ export const Categoery = [{id:"2", key:"General",tags:["dsa","coding","ecConnect
 export const ButtonValues =["BACK","EDIT","DISCUSSIONS","COPY"]
 export const repeactIcon = "https://cdn-icons-png.flaticon.com/512/148/148752.png"
 
-export const BatchLsitMap= [
+export const BatchListMap= [
     { key:"2",el:"FT-WEB-24"},{key:"3",el:"FT-WEB-25"},
     { key:"4",el:"FT-WEB-26"},{key:"5",el:"FT-WEB-27"},
     { key:"6",el:"FT-DA-17"},{key:"7",el:"FT-DA-18"},
     {key:"8",el:"FT-DA-19"}
 ]
 
-export const SectionLsitMap= [
+export const SectionListMap= [
     { key:"2",el:"JS201"},{key:"3",el:"JS301"},
     { key:"4",el:"DSA101"},{key:"5",el:"DSA201"},
     { key:"6",el:"DSA301"},{key:"7",el:"DSA401"},
@@ -69,13 +69,76 @@ export const SectionLsitMap= [
    {key:"15",el:"NEM111"},{key:"16",el:"JS101"}
 ]
 
-// BatchLsitMap.map((el)=>{
-//     if(LectureEditValues?.batch===el.el){
-//       setLectureEditValues({...LectureEditValues,batch:el.key})
-//     }
-//      })
-//      SectionLsitMap.map((el)=>{
-//       if(LectureEditValues?.section===el.el){
-//         setLectureEditValues({...LectureEditValues,section:el.key})
-//       }
-//        })
+export const TypeListMap =[
+    {
+        "id": "1",
+        "el": "Live"
+    },
+    {
+        "id": "2",
+        "el": "Video"
+    },
+    {
+        "id": "3",
+        "el": "Reading"
+    }
+]
+export const CategoryMap= [
+    {
+        "id": "2",
+        "el": "General"
+    },
+    {
+        "id": "3",
+        "el": "Coding Platform"
+    },
+    {
+        "id": "4",
+        "el": "CSBT"
+    },
+    {
+        "id": "5",
+        "el": " DA"
+    },
+    {
+        "id": "6",
+        "el": " DSA"
+    },
+    {
+        "id": "7",
+        "el": " Coding"
+    },
+    {
+        "id": "8",
+        "el": " Maths"
+    },
+    {
+        "id": "9",
+        "el": " Logic"
+    },
+    {
+        "id": "10",
+        "el": " Scrum"
+    },
+    {
+        "id": "11",
+        "el": "Logic"
+    },
+    {
+        "id": "12",
+        "el": "Scrum"
+    }
+]
+
+
+export const adminListMap=[
+    {
+        "id":"1",
+        "el": "Vishal Singh",   
+    },
+    {
+        "id":"2",
+        "el": "Tridip Rong"
+    }
+      
+]

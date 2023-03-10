@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useRef } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import {
   Divider,
   Grid,
@@ -25,13 +25,9 @@ import { RootState } from "../../../redux/store";
 import { actionCreators } from "../../../redux/SelectionReducer/index";
 import { bindActionCreators } from "redux";
 import { useSearchParams } from "react-router-dom";
-import { LectureSearchService } from "../../../Services/LectureServices";
 
-interface SearchQuery {
-  [key: string]: string;
-}
 
-const LectureSearchInput = ({ filterValues, setFilterValues ,setLecturesData}: any) => {
+const LectureSearchInput = ({ filterValues, setFilterValues ,setLecturesData,search,updateSearch}: any) => {
   const [batchArray, setBatchArray] = useState<IBatchObject[]>();
   const [sectionArray, setSectionArray] = useState<ISectionObject[]>();
   const [userArray, setUserArray] = useState<IUserObject[]>();
@@ -44,7 +40,8 @@ const LectureSearchInput = ({ filterValues, setFilterValues ,setLecturesData}: a
     bindActionCreators(actionCreators, dispatch);
   const state = useSelector((state: RootState) => state);
 
-  const getArrays = useCallback(async () => {
+  // Get Selection Arrays
+  const getDropDownArrays = useCallback(async () => {
     try {
       const [batchArray, categoryArray, sectionArray, typeArray, userArray] =
         await Promise.all([
@@ -93,78 +90,41 @@ const LectureSearchInput = ({ filterValues, setFilterValues ,setLecturesData}: a
     ) {
       setSelectBatchValues();
     } else {
-      getArrays();
+      getDropDownArrays();
     }
   }, [
-    getArrays,
+    getDropDownArrays,
     state.BatchReducer.Batch,
     state.TypeReducer.Type,
     state.SectionReducer.Section,
     state.CategoeryReducer.Categoery.length,
   ]);
 
-  // Get luctures if any useparams 
   
   // get the values from use params
-  useEffect(()=>{
+  useEffect(() => {
     const title = queryParams.get("title")
-   const batch=queryParams.get("batch")
-   const  section= queryParams.get("section")
-   const type= queryParams.get("type")
-    const createdBy= queryParams.get("createdBy")
-    const startTime=queryParams.get("startTime")
-   const  week=queryParams.get("week")
-   const day=queryParams.get("day")
-
-    setFilterValues({...filterValues,title:title,batch:batch,section:section,type:type,
-      createdBy:createdBy,startTime:startTime,
-    week:week,day:day
-    })
-
+    const batch = queryParams.get("batch")
+    const section = queryParams.get("section")
+    const type = queryParams.get("type")
+    const createdBy = queryParams.get("createdBy")
+    const startTime = queryParams.get("startTime")
+    const week = queryParams.get("week")
+    const day = queryParams.get("day")
   
-     },[filterValues,queryParams,setFilterValues,setLecturesData])
-
-
-  // this function is adding searching values to url
-  const useSearch = (): [SearchQuery, (newSearch: SearchQuery) => void] => {
-    const [searchParams, setSearchParams] = useSearchParams();
-
-    const prevSearchParamsRef = useRef(searchParams.toString());
-
-    useEffect(() => {
-      const currentSearchParams = searchParams.toString();
-      if (prevSearchParamsRef.current !== currentSearchParams) {
-        prevSearchParamsRef.current = currentSearchParams;
-      }
-    }, [searchParams]);
-
-    const updateSearch = (newSearch: SearchQuery): void => {
-      const params = new URLSearchParams(prevSearchParamsRef.current);
-
-      Object.entries(newSearch).forEach(([key, value]) => {
-        if (value) {
-          params.set(key, value);
-        } else {
-          params.delete(key);
-        }
-      });
-
-      setSearchParams(params.toString());
-    };
-
-    const currentSearch = Array.from(searchParams.entries()).reduce(
-      (acc, [key, value]) => ({
-        ...acc,
-        [key]: value,
-      }),
-      {}
-    );
-
-    return [currentSearch, updateSearch];
-  };
-
-
-
+    setFilterValues((prevFilterValues :any)=> ({
+      ...prevFilterValues,
+      title: title,
+      batch: batch,
+      section: section,
+      type: type,
+      createdBy: createdBy,
+      startTime: startTime,
+      week: week,
+      day: day
+    }));
+  }, [queryParams,setFilterValues]);
+  
   // this is setting values from select tags
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = event.target;
@@ -185,7 +145,6 @@ const LectureSearchInput = ({ filterValues, setFilterValues ,setLecturesData}: a
     setFilterValues({ ...filterValues, [name]: value });
   };
 
-  const [search, updateSearch] = useSearch();
 
   const gridColumn = useBreakpointValue({
     base: "1 / -1", // Full width on small screens
@@ -313,12 +272,13 @@ const LectureSearchInput = ({ filterValues, setFilterValues ,setLecturesData}: a
         >
           {userArray?.map((el) => (
             <option key={el.id} value={el.id}>
-              {el.user}
+              {el.name}
             </option>
           ))}
         </Select>
       </Grid>
       <Divider mt="20px" />
+      
     </div>
   );
 };

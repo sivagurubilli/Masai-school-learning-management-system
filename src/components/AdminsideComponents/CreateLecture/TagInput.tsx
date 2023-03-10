@@ -93,7 +93,7 @@ const TagInput = ({ values, LectureValues, setLectureValues }: any) => {
           </Flex>
         ))}
       </Flex>
-      {values.category && (
+      {LectureValues.category && (
         <Flex
           flexWrap="wrap"
           mt="10px"
@@ -124,7 +124,7 @@ const TagInput = ({ values, LectureValues, setLectureValues }: any) => {
           ))}
         </Flex>
       )}
-      {!values.category && (
+      {!LectureValues.category && (
         <Text color="orange" fontSize="14PX">
           Select Categoery to get the relevent tags
         </Text>

@@ -43,8 +43,9 @@ export async function getTypeArray(): Promise<ITypeObject[]> {
 export async function getUserArray(): Promise<IUserObject[]> {
   try {
     const response = await axios.get(
-      "/api/userList"
+      "/api/users/adminlist"
     );
+    
     return response.data;
   } catch (error: any) {
     return error;

@@ -60,12 +60,12 @@ const InputTakingSection = ({
     GetCategoeryData,
     GetSectionData,
     GetTypeData,
-    
+    GetUserData,
   } = bindActionCreators(actionCreators, dispatch);
   const state = useSelector((state: RootState) => state);
 
   // getSelected array to get all selected tags values from backend
-  const getArrays = useCallback(async () => {
+  const getDropDownArrays = useCallback(async () => {
     try {
       const [batchArray, categoryArray, sectionArray, typeArray, userArray] =
         await Promise.all([
@@ -92,6 +92,7 @@ const InputTakingSection = ({
         setTypeArray(typeArray);
       }
       if (userArray.length) {
+        GetUserData(userArray);
         setUserArray(userArray);
       }
     } catch (error) {
@@ -100,26 +101,39 @@ const InputTakingSection = ({
         "Oh no! There was a problem with getting the items from the selecting list"
       );
     }
-  }, [GetBatchData, GetSectionData, GetCategoeryData, GetTypeData]);
+  }, [
+    GetBatchData,
+    GetUserData,
+    GetSectionData,
+    GetCategoeryData,
+    GetTypeData,
+  ]);
 
+  const setSelectBatchValues = useCallback(() => {
+    setBatchArray(state.BatchReducer.Batch);
+    setSectionArray(state.SectionReducer.Section);
+    setCategoryArray(state.CategoeryReducer.Categoery);
+    setUserArray(state.UserReducer.User);
+    setTypeArray(state.TypeReducer.Type);
+  }, [
+    state.CategoeryReducer.Categoery,
+    state.UserReducer.User,
+    state.TypeReducer.Type,
+    state.BatchReducer.Batch,
+    state.SectionReducer.Section,
+  ]);
+
+  // if there is dropdown down arrays in redux dont need to fetch values from backend
   useEffect(() => {
-    const setSelectBatchValues = () => {
-      setBatchArray(state.BatchReducer.Batch);
-      setSectionArray(state.SectionReducer.Section);
-      setCategoryArray(state.CategoeryReducer.Categoery);
-      setTypeArray(state.TypeReducer.Type);
-    };
     if (state.BatchReducer.Batch.length) {
       setSelectBatchValues();
     } else {
-      getArrays();
+      getDropDownArrays();
     }
   }, [
-    state.CategoeryReducer.Categoery,
-    state.TypeReducer.Type,
-    getArrays,
-    state.BatchReducer.Batch,
-    state.SectionReducer.Section,
+    getDropDownArrays,
+    state.BatchReducer.Batch.length,
+    setSelectBatchValues,
   ]);
 
   // state.BatchReducer.Batch , state.SectionReducer.Section, state.CategoeryReducer.Categoery,GetBatchData,state.TypeReducer.Type
@@ -153,6 +167,7 @@ const InputTakingSection = ({
     }, 2000);
 
     if (buttonName === "Copy Lecture" || buttonName === "Edit Lecture") {
+      console.log(buttonName);
       try {
         const response = await LectureSendService(LectureValues, id);
         if (response.message) {
@@ -193,7 +208,7 @@ const InputTakingSection = ({
   } = useFormik({
     onSubmit,
     initialValues,
-   validationSchema
+    validationSchema
   });
 
   //create Lecture service for create lecture
@@ -403,7 +418,7 @@ const InputTakingSection = ({
               >
                 {userArray?.map((el) => (
                   <option key={el.id} value={el.id}>
-                    {el.user}
+                    {el.name}
                   </option>
                 ))}
               </Select>

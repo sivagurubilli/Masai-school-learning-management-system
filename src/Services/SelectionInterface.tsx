@@ -1,4 +1,5 @@
 
+
 export interface ISectionObject {
     sectionId:number
       section: string;
@@ -22,10 +23,21 @@ export interface ISectionObject {
   }
 
   //inttterface for user
-
+export interface IRoles{
+ 
+        "id": string | number,
+        "name": string
+    
+}
   export interface IUserObject {
-    id:number
- user:string
-    lectures: string;   
-  }
+    
+      "id": string| number,
+      "name": string ,
+      "email": string,
+      "batch": string,
+      "section": string,
+      "roles":IRoles
+     
+  }  
+  
 
