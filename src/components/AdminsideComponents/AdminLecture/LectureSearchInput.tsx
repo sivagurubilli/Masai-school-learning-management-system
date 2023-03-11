@@ -34,7 +34,6 @@ const LectureSearchInput = ({ filterValues, setFilterValues ,setLecturesData,sea
   const [typeArray, setTypeArray] = useState<ITypeObject[]>();
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [modalBody, setModalErrorBody] = useState<string>("");
-  const [queryParams] = useSearchParams();
   const dispatch = useDispatch();
   const { GetBatchData, GetSectionData, GetTypeData, GetUserData,GetCategoeryData } =
     bindActionCreators(actionCreators, dispatch);
@@ -101,30 +100,8 @@ const LectureSearchInput = ({ filterValues, setFilterValues ,setLecturesData,sea
     state.CategoeryReducer.Categoery.length,
   ]);
 
-  
-  // get the values from use params
-  useEffect(() => {
-    const title = queryParams.get("title")
-    const batch = queryParams.get("batch")
-    const section = queryParams.get("section")
-    const type = queryParams.get("type")
-    const createdBy = queryParams.get("createdBy")
-    const startTime = queryParams.get("startTime")
-    const week = queryParams.get("week")
-    const day = queryParams.get("day")
-  
-    setFilterValues((prevFilterValues :any)=> ({
-      ...prevFilterValues,
-      title: title,
-      batch: batch,
-      section: section,
-      type: type,
-      createdBy: createdBy,
-      startTime: startTime,
-      week: week,
-      day: day
-    }));
-  }, [queryParams,setFilterValues]);
+
+
   
   // this is setting values from select tags
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {

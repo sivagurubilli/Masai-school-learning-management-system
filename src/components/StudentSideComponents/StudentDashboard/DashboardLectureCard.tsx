@@ -10,7 +10,7 @@ const DashboardLectureCard = ({ lectureData }: any) => {
   const navigate = useNavigate();
 
   const goTolecture = () => {
-    const targetTime = new Date("2023-03-11 20:00:00");
+    const targetTime = new Date(lectureData.schedule);
     const currentTime = new Date();
 
     const diffInSeconds = Math.floor(
