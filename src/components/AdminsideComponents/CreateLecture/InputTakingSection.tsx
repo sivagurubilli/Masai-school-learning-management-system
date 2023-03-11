@@ -109,7 +109,7 @@ const InputTakingSection = ({
     GetTypeData,
   ]);
 
-  console.log(userArray)
+
 
   const setSelectBatchValues = useCallback(() => {
     setBatchArray(state.BatchReducer.Batch);
@@ -161,15 +161,16 @@ const InputTakingSection = ({
     notes: LectureValues.notes,
   };
 
+console.log(LectureValues)
+
   // onSubmitting it calls the services based on type of action like addlecture and edit lecture and copy lecture
   const onSubmit = async () => {
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
     }, 2000);
-
+   
     if (buttonName === "Copy Lecture" || buttonName === "Edit Lecture") {
-      console.log(buttonName);
       try {
         const response = await LectureSendService(LectureValues, id);
         if (response.message) {
@@ -212,6 +213,8 @@ const InputTakingSection = ({
     initialValues,
     validationSchema
   });
+
+
 
   //create Lecture service for create lecture
   const gridColumn = useBreakpointValue({

@@ -12,7 +12,6 @@ const validationSchema = yup.object().shape({
   createdBy: yup.string().required("This feild is required"),
   week: yup.string().required("This feild is required"),
   day: yup.string().required("This feild is required"),
-  tags: yup.string().required("This feild is required"),
   zoomLink: yup
     .string()
     .matches(

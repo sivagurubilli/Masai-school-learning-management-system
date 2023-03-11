@@ -1,3 +1,6 @@
+
+
+
 export const masaiimage: string = 'https://masaischool.com/img/navbar/logo.svg';
 export const recaptchasitekey: string = "6LcL1IYkAAAAAOpjnAkBX46h3M2Z3HS7a6mDBndW";
 export const reacptchasecret: string = "6LcL1IYkAAAAANf6T89oYeZtG-RbKeBCjFpXSK61";
@@ -52,6 +55,8 @@ export const Categoery = [{id:"2", key:"General",tags:["dsa","coding","ecConnect
 
 export const ButtonValues =["BACK","EDIT","DISCUSSIONS","COPY"]
 export const repeactIcon = "https://cdn-icons-png.flaticon.com/512/148/148752.png"
+
+
 
 export const BatchListMap= [
     { key:"2",el:"FT-WEB-24"},{key:"3",el:"FT-WEB-25"},
@@ -131,7 +136,7 @@ export const CategoryMap= [
 ]
 
 
-export const adminListMap=[
+export const adminListMap1=[
     {
         "id":"1",
         "el": "Vishal Singh",   
@@ -142,3 +147,5 @@ export const adminListMap=[
     }
       
 ]
+
+

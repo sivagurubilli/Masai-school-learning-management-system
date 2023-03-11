@@ -58,7 +58,7 @@ export default function StudentLogin({ setGotoSignup }: any) {
     errorFromBackend: false,
   });
   const [isLoading, setLoading] = useState<boolean>(false);
-  const [isOpen,setIsOpen ] = useState<boolean>(true);
+  const [isOpen,setIsOpen ] = useState<boolean>(false);
   const [modalBody,setModalBody] = useState<string>()
   const [email,setEmail] = useState<string>()
   const navigate = useNavigate();
@@ -100,12 +100,14 @@ export default function StudentLogin({ setGotoSignup }: any) {
           navigate("/admin/dashboard");
         }
       }
-
+      console.log(response)
       if (!response.token) {
-        setBackendError({ ...BackendError, errorFromBackend: true });
+      
+        setBackendError({ ...BackendError, errorFromBackend:response.data.message });
       }
-    } catch (error) {
-      setBackendError({ ...BackendError, errorFromBackend: true,backendErrorMessage:error });
+    } catch (error:any) {
+
+      setBackendError({ ...BackendError, errorFromBackend: true,backendErrorMessage:error.response.date.message });
     }
   };
   //destructuring methods from useFormik
