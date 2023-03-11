@@ -34,7 +34,6 @@ const LectureSearchInput = ({ filterValues, setFilterValues ,setLecturesData,sea
   const [typeArray, setTypeArray] = useState<ITypeObject[]>();
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [modalBody, setModalErrorBody] = useState<string>("");
-  const [queryParams] = useSearchParams();
   const dispatch = useDispatch();
   const { GetBatchData, GetSectionData, GetTypeData, GetUserData,GetCategoeryData } =
     bindActionCreators(actionCreators, dispatch);
