@@ -2,6 +2,7 @@ import axios from "axios";
 import {
   IBatchObject,
   ICategoryObject,
+  ICategorySectionObject,
   ISectionObject,
   ITypeObject,
   IUserObject,
@@ -60,6 +61,19 @@ export async function getCategoryArray(): Promise<ICategoryObject[]>{
       "/api/categoryList"
           );
 
+    return response.data;
+  } catch (error: any) {
+    return error;
+  }
+}
+
+export async function getCategorySectionArrray(): Promise<
+  ICategorySectionObject[]
+> {
+  try {
+    const response = await axios.get(
+      "http://3.27.61.194:8082/api/categoryList"
+    );
     return response.data;
   } catch (error: any) {
     return error;

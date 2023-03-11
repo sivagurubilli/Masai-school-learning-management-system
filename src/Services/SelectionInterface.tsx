@@ -9,7 +9,10 @@ id:number
     categoryName: string;
 }
 
-
+export interface ICategorySectionObject {
+  id: number;
+  categoryName: string;
+}
 
 export interface IBatchObject {
 batchId:number
