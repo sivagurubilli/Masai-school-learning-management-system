@@ -4,8 +4,7 @@ import {
   IAddBookMarkObject,
   ICreateLectureValues,
   ILectureResponse,
-  ISearchValues,
-  ISearchValues2,
+  ISearchValues
 
 } from "./LectureInterface";
 
@@ -284,12 +283,12 @@ export async function GettAllStudentLectureService(): Promise<
 }
 
 export async function LectureStudentSearchService(
-  data: ISearchValues2
+  data :any
 ): Promise<ILectureResponse[]> {
   const { title, batch, section, type, createdBy, startTime, day, week, category } = data;
   try {
     const response = await axios.post(
-      "http://3.27.61.194:8082/api/lecture/lectures/search/student/2/2",
+      "/api/lecture/lectures/search/student/2/2",
       { title, batch, section, type, startTime, createdBy, day, week, category }
     );
     return response.data;
