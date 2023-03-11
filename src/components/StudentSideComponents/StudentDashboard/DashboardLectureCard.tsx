@@ -20,7 +20,7 @@ const DashboardLectureCard = ({ lectureData }: any) => {
     if (diffInMinutes > 10) {
       setIsOpen(true);
       setModalErrorBody(
-        "You are able to go to lecture befoore 10 minutes only"
+        "Lectures can only be attended before 10 minutes"
       );
     } else {
       navigate("/student/lectures/" + lectureData.lectureId);
