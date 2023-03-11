@@ -16,21 +16,40 @@ export async function LoginService(
      "username": username,
       "password": password,
     });
-   
+   console.log(response)
  if(response.data.token){
     //setting for remember me in
+    
    if (rememberMe ) {
-    localStorage.setItem("username", username);
+    if(response.data.user.roles[0].name==="STUDENT_USER"){
+    localStorage.setItem("username", response.data.email);
+    localStorage.setItem("userId", response.data.user.id);
+    localStorage.setItem("userType",response.data.user.roles[0].name);
+    localStorage.setItem("token", response.data.token);
+    localStorage.setItem("batchId",response.data.user.batch.batch)
+    localStorage.setItem("sectionId",response.data.user.section.section)
+  }else{
+    localStorage.setItem("username", response.data.email);
     localStorage.setItem("userId", response.data.user.id);
     localStorage.setItem("userType",response.data.user.roles[0].name);
     localStorage.setItem("token", response.data.token);
   }
+}
   if (!rememberMe) {
-    sessionStorage.setItem("username", username);
+    if(response.data.user.roles[0].name==="STUDENT_USER"){
+    sessionStorage.setItem("username", response.data.email);
+    sessionStorage.setItem("userId", response.data.user.id);
+    sessionStorage.setItem("userType",response.data.user.roles[0].name)
+    sessionStorage.setItem("token", response.data.token);
+    sessionStorage.setItem("batchId",response.data.user.batch.batch)
+    sessionStorage.setItem("sectionId",response.data.user.section.section)
+  }else{
+    sessionStorage.setItem("username",response.data.email);
     sessionStorage.setItem("userId", response.data.user.id);
     sessionStorage.setItem("userType",response.data.user.roles[0].name)
     sessionStorage.setItem("token", response.data.token);
   }
+}
 }
     return response.data;
   } catch (error: any) {
