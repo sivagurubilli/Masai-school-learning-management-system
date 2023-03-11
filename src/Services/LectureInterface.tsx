@@ -16,6 +16,7 @@ tag:string
 }
 //iinteface for lecture response
 export interface ILectureResponse{
+
     lectureId:number
     title: string;
     batch: string ;
@@ -33,8 +34,15 @@ export interface ILectureResponse{
     day: string,
     notes:string
 }
-export interface ISearchResponse{
-    LecturesData: ILectureResponse[] | undefined;
+
+export interface ILectureResponse1{
+    content: ILectureResponse[] | undefined;
+    lastPage:boolean
+    pageNumber:number
+    pageSize:number|string
+    
+    totalElements:number|string
+    totalPages: number| string
 }
 
 export interface ITags{

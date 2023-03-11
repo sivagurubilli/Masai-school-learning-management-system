@@ -1,3 +1,4 @@
+
 import { Button } from "@chakra-ui/react";
 import React, { useState, useEffect } from "react";
 import "./index.css";
@@ -7,6 +8,9 @@ interface PaginationProps {
   totalPages: number;
   onChange: (page: number) => void;
   setPage: (page: number) => void;
+  lectureData:any;
+  setLectureData:any;
+  perPage:any;
 }
 
 const Pagination: React.FC<PaginationProps> = ({
@@ -14,13 +18,14 @@ const Pagination: React.FC<PaginationProps> = ({
   totalPages,
   onChange,
   setPage,
+  lectureData,setLectureData,perPage
 }) => {
   const [pages, setPages] = useState<number[]>([]);
   useEffect(() => {
     const newPages = [];
-    let startPage = 1;
-    let endPage = 16;
-    const maxPages = 5;
+    let startPage = currentPage;
+    let endPage = 3;
+    const maxPages = 2;
     if (totalPages > maxPages) {
       const middlePage = Math.floor(maxPages / 2);
       if (currentPage > middlePage) {
@@ -40,10 +45,18 @@ const Pagination: React.FC<PaginationProps> = ({
     }
 
     setPages(newPages);
-  }, [currentPage, totalPages]);
+  }, [currentPage, totalPages])
+
 
   const handlePageChange = (page: any) => {
+    
+  const startIndex = (currentPage - 1) * perPage ;
+  const endIndex = startIndex + perPage;
     if (page !== currentPage && page >= 1 && page <= totalPages) {
+
+     const lecturdata=  lectureData.slice(startIndex,endIndex)
+        
+     setLectureData(lecturdata)
       setPage(page);
       onChange(page);
     }
@@ -54,7 +67,7 @@ const Pagination: React.FC<PaginationProps> = ({
       <ul className="pagination">
         <li>
           <Button
-            isDisabled={currentPage === 1}
+            isDisabled={currentPage === 0}
             w="auto"
             borderRadius="6px"
             h="32px"

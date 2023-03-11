@@ -1,9 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import {
-  ILectureResponse,
-  ISearchResponse,
-} from "../../../Services/LectureInterface";
+
 import {
   Table,
   Thead,
@@ -18,7 +15,7 @@ import {
   TableContainer,
   Box,
 } from "@chakra-ui/react";
-const TableHeading = ({ LecturesData }: ISearchResponse) => {
+const TableHeading = ({ LecturesData }:any) => {
   return (
     <div>
       <Box overflow={"auto"}>
@@ -36,7 +33,7 @@ const TableHeading = ({ LecturesData }: ISearchResponse) => {
             </Thead>
             <Tbody w="100%">
               {LecturesData &&
-                LecturesData?.map((lecture: ILectureResponse) => (
+                LecturesData?.map((lecture:any) => (
                   <Tr key={lecture.lectureId}>
                     <Td w="6%">{lecture.lectureId}</Td>
                     <Td w="35%">

@@ -1,12 +1,9 @@
 import React from "react";
 import { Box, Flex } from "@chakra-ui/react";
-import { ILectureResponse } from "../../../../Services/LectureInterface";
 
-interface VideoTabProps {
-  lectureDetail: ILectureResponse;
-}
 
-const Video = ({ lectureDetail }: VideoTabProps) => {
+
+const Video = ({ lectureDetail }:any) => {
   return (
     <Box>
       {lectureDetail.type === "Video" && (

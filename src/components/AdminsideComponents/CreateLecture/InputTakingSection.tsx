@@ -37,6 +37,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 import { actionCreators } from "../../../redux/SelectionReducer/index";
 import { bindActionCreators } from "redux";
+import { LectureEditService, LecturePostService } from "../../../Services/LectureServices";
 
 const InputTakingSection = ({
   buttonName,
@@ -161,7 +162,7 @@ const InputTakingSection = ({
     notes: LectureValues.notes,
   };
 
-console.log(LectureValues)
+
 
   // onSubmitting it calls the services based on type of action like addlecture and edit lecture and copy lecture
   const onSubmit = async () => {
@@ -172,7 +173,8 @@ console.log(LectureValues)
    
     if (buttonName === "Copy Lecture" || buttonName === "Edit Lecture") {
       try {
-        const response = await LectureSendService(LectureValues, id);
+        
+        const response = await LectureEditService(LectureValues, id);
         if (response.message) {
           setIsOpen(true);
           setModalErrorBody("The lecture was Success fully added with Changes");
@@ -185,7 +187,7 @@ console.log(LectureValues)
       }
     } else {
       try {
-        const response = await LectureSendService(LectureValues);
+        const response = await LecturePostService(LectureValues);
         if (response.message) {
           setIsOpen(true);
           setModalErrorBody("The lecture was Success fully added");

@@ -15,7 +15,7 @@ import {
   GetAllLectureService,
   LectureSearchService,
 } from "../../../Services/LectureServices";
-import { ILectureResponse } from "../../../Services/LectureInterface";
+
 import CommonModalComponent from "../../../components/Modal/commonModal";
 import LectureSearchInput from "../../../components/AdminsideComponents/AdminLecture/LectureSearchInput";
 import Loader from "../../../components/Modal/Loader";
@@ -49,11 +49,13 @@ const AdminLecture = () => {
     day: "",
   });
   const [isLoading, setLoading] = useState<boolean>(false);
-  const [lecturesData, setLecturesData] = useState<ILectureResponse[]>();
+  const [lecturesData, setLecturesData] = useState([]);
+ const [paginatedData,setPaginatedData] = useState([])
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [modalBody, setModalErrorBody] = useState<string>("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(15);
+  const [totalPages, setTotalPages] = useState(1);
+  const [itemsPerPage, setItemsPage] = useState(1);
 
   //user search and get lectures by provideing different values
   const GetLecturesByFilter = () => {
@@ -68,8 +70,7 @@ const AdminLecture = () => {
     try {
       const response = await LectureSearchService(filterValues);
       if (response.length) {
-        //setCurrentPage(response.currentPage);
-        // setTotalPages(response.totalPages);
+    
         setLecturesData(response);
       } else {
         setIsOpen(true);
@@ -85,11 +86,17 @@ const AdminLecture = () => {
     }
   };
 
+
   const fetchData = async () => {
     try {
       const response = await GetAllLectureService();
-      if (response.length) {
-        setLecturesData(response);
+
+      if (response) {
+            setCurrentPage(response.pageNumber+1);
+        setTotalPages(3);
+        setPaginatedData(response.content)
+       // setLecturesData(response.content);
+        setItemsPage(6)
       }
     } catch (error) {
       setIsOpen(true);
@@ -102,6 +109,19 @@ const AdminLecture = () => {
   useEffect(() => {
     fetchData();
   }, []);
+
+  useEffect(()=>{
+    if(paginatedData){
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    const lecturedata=  paginatedData.slice(startIndex,endIndex)
+    console.log(lecturedata,paginatedData)
+    setLecturesData(lecturedata)
+    }
+  },[currentPage,itemsPerPage,paginatedData])
+
+
+
 
   const useSearch = (): [SearchQuery, (newSearch: SearchQuery) => void] => {
     const [searchParams, setSearchParams] = useSearchParams();
@@ -141,11 +161,11 @@ const AdminLecture = () => {
   };
   const [search, updateSearch] = useSearch();
   const handlePageChange = (page: any) => {
+
     updateSearch({
       ...search,
       page: page,
     });
-    GetLectures();
   };
 
   const Reset = () => {
@@ -233,6 +253,9 @@ const AdminLecture = () => {
               totalPages={totalPages}
               onChange={handlePageChange}
               setPage={setCurrentPage}
+              lectureData={paginatedData}
+              perPage= {itemsPerPage}
+              setLectureData= {setLecturesData}
             />
           </Flex>
         </Box>

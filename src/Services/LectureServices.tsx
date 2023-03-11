@@ -26,6 +26,7 @@ export async function LecturePostService(
     schedule,
     concludes,
     tags,
+    day,
     hideVideo,
     optional,
     zoomLink,
@@ -43,6 +44,7 @@ export async function LecturePostService(
       schedule,
       concludes,
       tags,
+      day,
       hideVideo,
       optional,
       zoomLink,
@@ -61,6 +63,7 @@ export async function LectureEditService(
   data: ICreateLectureValues,
   id: string | undefined
 ): Promise<ILecturePostResponse> {
+ 
   const {
     title,
     batch,
@@ -71,6 +74,8 @@ export async function LectureEditService(
     schedule,
     concludes,
     tags,
+    day,
+    optional,
     hideVideo,
     zoomLink,
     notes,
@@ -88,6 +93,8 @@ export async function LectureEditService(
       schedule,
       concludes,
       tags,
+      day,
+      optional,
       hideVideo,
       zoomLink,
       notes,
@@ -102,7 +109,7 @@ export async function LectureEditService(
 // lectures searching service
 export async function LectureSearchService(
   data: ISearchValues
-): Promise<ILectureResponse[]> {
+){
   const { title, batch, section, type, createdBy, startTime, day, week } = data;
 
   try {
@@ -117,7 +124,7 @@ export async function LectureSearchService(
   }
 }
 // for getting all lectures when user enters to the lectures page
-export async function GetAllLectureService(): Promise<ILectureResponse[]> {
+export async function GetAllLectureService() {
   try {
     const response = await axios.get("/api/lecture/lectureList");
     return response.data;
@@ -165,6 +172,8 @@ export async function LectureCopyService(
     schedule,
     concludes,
     tags,
+    optional,
+    day,
     hideVideo,
     zoomLink,
     notes,
@@ -181,6 +190,7 @@ export async function LectureCopyService(
       schedule,
       concludes,
       tags,
+      optional,day,
       hideVideo,
       zoomLink,
       notes,
@@ -195,7 +205,7 @@ export async function LectureCopyService(
 // for getting all bookmarks
 export async function GetAllBookMarksService(
   id: any
-): Promise<ILectureResponse[]> {
+) {
   try {
     const response = await axios.get(`/api/getList/${id}`);
     return response.data;

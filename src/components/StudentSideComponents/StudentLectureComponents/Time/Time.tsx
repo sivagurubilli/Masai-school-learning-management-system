@@ -1,14 +1,11 @@
 import React from "react";
 import moment from "moment";
-import { ILectureResponse } from "../../../../Services/LectureInterface";
 import { Text } from "@chakra-ui/react";
 import "./Time.css";
 
-type LectureDetailsProps = {
-  lecture: ILectureResponse;
-};
 
-const TimeDetails = ({ lecture }: LectureDetailsProps) => {
+
+const TimeDetails = ({ lecture }: any) => {
   const formattedSchedule = moment(lecture.schedule).format(
     "MMM Do YY, h:mm a"
   );
