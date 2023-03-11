@@ -42,7 +42,7 @@ const Navbar = () => {
 
     }
 
-  }, [userName]);
+  }, []);
 
 
   const Logout =()=>{
