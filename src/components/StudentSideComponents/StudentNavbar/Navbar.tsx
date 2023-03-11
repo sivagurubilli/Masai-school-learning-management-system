@@ -36,7 +36,9 @@ const Navbar = () => {
     const name = localStorage.getItem("username");
     if (name) {
       setUserName(name);
-    }
+    }else{
+      const name1 = sessionStorage.getItem("username");
+      setUserName(name1);
   }, [userName]);
 
 
