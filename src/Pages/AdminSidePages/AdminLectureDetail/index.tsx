@@ -112,11 +112,13 @@ const [categoryArray,setCategoryArray] = useState<ICategoryObject[]>()
     setVideoActive(!isVideoActive);
   };
 
+
   const fetchData = useCallback(async () => {
     try {
       const response = await LectureSingleService(id);
       if (response.title) {
         setLectureDetail(response);
+
       }
     } catch (error) {
       setIsOpen(true);

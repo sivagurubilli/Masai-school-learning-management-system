@@ -10,6 +10,7 @@ import moment from "moment";
 import DetailTab from "./../../../components/StudentSideComponents/StudentLectureComponents/Tabs/DetailTab";
 import axios from "axios";
 import Skeleton from "../../../components/Skeleton/index";
+import { BatchListMap, CategoryMap, SectionListMap, TypeListMap } from "../../../assets/assets";
 
 import {getBatchArrray,getCategoryArray,getSectionArray,getTypeArray,getUserArray} from "../../../Services/SelelctionService"
 import { IBatchObject, ICategoryObject, ISectionObject, ITypeObject, IUserObject } from './../../../Services/SelectionInterface';
@@ -17,11 +18,13 @@ import CommonModalComponent from "../../../components/Modal/commonModal";
 
 const StudentLectureDetail = () => {
   const { id = "" } = useParams<{ id: string }>();
+
   const [batchArray, setBatchArray] = useState<IBatchObject[]>();
   const [sectionArray, setSectionArray] = useState<ISectionObject[]>();
   const [userArray, setUserArray] = useState<IUserObject[]>();
   const [typeArray, setTypeArray] = useState<ITypeObject[]>();
 const [categoryArray,setCategoryArray] = useState<ICategoryObject[]>()
+
   const [lectureDetail, setLectureDetail] = useState({
     lectureId:"",
     title: "",
@@ -129,6 +132,17 @@ const [categoryArray,setCategoryArray] = useState<ICategoryObject[]>()
 
 
 
+
+  useEffect(() => {
+    const BElem  = BatchListMap.find((el) => Number(el.key) === Number(lectureDetail?.batch))
+const SElem = SectionListMap.find((el) => Number(el.key) === Number(lectureDetail?.section))
+//const UserElem = UserListLsitMap.find((el) => Number(el.key) === Number(lectureDetail?.createdBy))
+const CategoryElem = CategoryMap.find((el)=> Number(el.id) === Number(lectureDetail?.category))
+const TypeElem =TypeListMap.find((el) => Number(el.id) === Number(lectureDetail?.type))
+    if (BElem && SElem && CategoryElem && TypeElem) {
+  setLectureDetail({...lectureDetail,batch:BElem.el,section:SElem?.el,category:CategoryElem?.el,type:TypeElem.el})
+    }
+  }, [lectureDetail?.batch,lectureDetail]);
 
   useEffect(() => {
     const fetchLecture = async () => {
