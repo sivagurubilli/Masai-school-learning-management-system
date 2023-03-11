@@ -1,5 +1,6 @@
 
 
+
 export interface ISectionObject {
   sectionId:number
     section: string;
@@ -63,3 +64,8 @@ export interface IUserObject {
 }  
 
 
+
+export interface ICategorySectionObject {
+  id: number;
+  categoryName: string;
+}

@@ -115,7 +115,7 @@ export async function LectureSearchService(
   console.log("data",data)
   try {
     const response = await axios.post(
-      "http://3.27.61.194:8082/api/lecture/lectures/search/student/2/2",
+      "/api/lecture/lectures/search/",
       { title, batch, section, type, startTime, createdBy, day, week }
     );
     return response.data;

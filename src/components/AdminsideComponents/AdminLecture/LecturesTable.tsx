@@ -34,9 +34,11 @@ const TableHeading = ({ LecturesData }:any) => {
             <Tbody w="100%">
               {LecturesData &&
 
+
                 LecturesData?.map((lecture:any) => (
                   <Tr key={lecture.lectureId}>
                     <Td w="6%">{lecture.lectureId}</Td>
+
 
                     <Td w="35%">
                       <Text fontSize="20px">
@@ -93,9 +95,10 @@ const TableHeading = ({ LecturesData }:any) => {
                     <Td w="15%">
                       <Flex>
 
+
                         <Link to={`/admin/lectures/${lecture.lectureId}`}>
 
-                  
+
                           {" "}
                           <Button
                             variant="link"
@@ -105,6 +108,7 @@ const TableHeading = ({ LecturesData }:any) => {
                             View
                           </Button>
                         </Link>
+
 
                         <Link to={`/admin/lectures/edit/${lecture.lectureId}`}>
 

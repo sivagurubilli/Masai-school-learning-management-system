@@ -19,7 +19,9 @@ const TableHeading = ({ LecturesData }:any) => {
   const navigate = useNavigate();
 
 
+
   const handleRedirect = (ad:any) => {
+
 
     navigate(`/student/lectures/${ad.lectureId}`);
   };
