@@ -43,7 +43,9 @@ const Navbar = () => {
   }, []);
   const Logout = () => {
     localStorage.clear();
-    localStorage.clear();
+
+     sessionStorage.clear();
+
     navigate("/login");
   };
 
