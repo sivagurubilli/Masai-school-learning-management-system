@@ -159,39 +159,34 @@ export async function LectureDeleteService(
 
 // lectures copy service function
 export async function LectureCopyService(
-  data: ICreateLectureValues,
+  data:any,
   lectureId: string | undefined
 ): Promise<ILecturePostResponse> {
   const {
     title,
     batch,
-    section,
-    type,
-    createdBy,
-    category,
     schedule,
     concludes,
     tags,
-    optional,
-    day,
-    hideVideo,
+    day,  
     zoomLink,
     notes,
     week,
   } = data;
   try {
+    let updatedBy
+    updatedBy = Number(localStorage.getItem("userId"))
+    if(!updatedBy){
+      updatedBy = Number(sessionStorage.getItem("userId"))
+    }
     const response = await axios.post(`/api/lectures/${lectureId}/copy`, {
       title,
       batch,
-      section,
-      type,
-      createdBy,
-      category,
       schedule,
       concludes,
       tags,
-      optional,day,
-      hideVideo,
+     day,
+     updatedBy:updatedBy,
       zoomLink,
       notes,
       week,
