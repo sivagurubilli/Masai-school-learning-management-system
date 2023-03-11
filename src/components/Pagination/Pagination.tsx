@@ -22,7 +22,7 @@ const Pagination: React.FC<PaginationProps> = ({
 }) => {
   const [pages, setPages] = useState<number[]>([]);
   useEffect(() => {
-    const newPages = [];
+    const newPages:number[] =[];
     let startPage = currentPage;
     let endPage = 3;
     const maxPages = 2;
@@ -41,7 +41,7 @@ const Pagination: React.FC<PaginationProps> = ({
       }
     }
     for (let i = startPage; i <= endPage; i++) {
-      newPages.push(i);
+      newPages?.push(i);
     }
 
     setPages(newPages);
@@ -67,7 +67,7 @@ const Pagination: React.FC<PaginationProps> = ({
       <ul className="pagination">
         <li>
           <Button
-            isDisabled={currentPage === 0}
+            isDisabled={currentPage === 1}
             w="auto"
             borderRadius="6px"
             h="32px"

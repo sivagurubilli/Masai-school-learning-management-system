@@ -21,7 +21,7 @@ import LectureSearchInput from "../../../components/AdminsideComponents/AdminLec
 import Loader from "../../../components/Modal/Loader";
 import { useSearchParams } from "react-router-dom";
 import Pagination from "../../../components/Pagination/Pagination";
-import { ILectureResponse } from "@/Services/LectureInterface";
+import { ILectureResponse } from "../../../Services/LectureInterface";
 
 interface SearchQuery {
   [key: string]: string;
