@@ -7,6 +7,7 @@ import { GetDashboardLecturesService } from "../../../Services/LectureServices";
 import { ILectureResponse } from "../../../Services/LectureInterface";
 import DashboardLectureCard from "../../../components/StudentSideComponents/StudentDashboard/DashboardLectureCard";
 import CommonModalComponent from "../../../components/Modal/commonModal";
+import Loader from "../../../components/Modal/Loader";
 
 
 // this component displays student side dashboard
@@ -48,6 +49,8 @@ const Dashborad = () => {
         setIsOpen={setIsOpen}
         modalBody={modalBody}
       />
+
+      {!dashboardLectures?.length ?<Loader />:
         <Box
           w="80%"
           borderRadius="10px"
@@ -57,13 +60,14 @@ const Dashborad = () => {
           ml="10%"
           mt="70px"
         >   
-      {dashboardLectures &&  dashboardLectures.map((lecture)=>(
-      <DashboardLectureCard lectureData={lecture} />
+      {dashboardLectures  &&  dashboardLectures.map((lecture)=>(
+      <DashboardLectureCard key ={lecture.batch} lectureData={lecture} />
     
     ))}
-
+      
 
         </Box>
+}
       </div>
     </>
   );
