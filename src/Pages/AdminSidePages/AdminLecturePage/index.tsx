@@ -21,6 +21,7 @@ import LectureSearchInput from "../../../components/AdminsideComponents/AdminLec
 import Loader from "../../../components/Modal/Loader";
 import { useSearchParams } from "react-router-dom";
 import Pagination from "../../../components/Pagination/Pagination";
+import { ILectureResponse } from "@/Services/LectureInterface";
 
 interface SearchQuery {
   [key: string]: string;
@@ -49,13 +50,15 @@ const AdminLecture = () => {
     day: "",
   });
   const [isLoading, setLoading] = useState<boolean>(false);
-  const [lecturesData, setLecturesData] = useState([]);
+  const [lecturesData, setLecturesData] = useState<ILectureResponse[]>([]);
  const [paginatedData,setPaginatedData] = useState([])
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [modalBody, setModalErrorBody] = useState<string>("");
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [itemsPerPage, setItemsPage] = useState(1);
+const [startIndex,setStartIndex] = useState<number>()
+const [endIndex,setEndIndex] = useState<number>()
 
   //user search and get lectures by provideing different values
   const GetLecturesByFilter = () => {
@@ -71,7 +74,7 @@ const AdminLecture = () => {
       const response = await LectureSearchService(filterValues);
       if (response.length) {
     
-        setLecturesData(response);
+        setPaginatedData(response);
       } else {
         setIsOpen(true);
         setModalErrorBody(
@@ -93,8 +96,9 @@ const AdminLecture = () => {
 
       if (response) {
             setCurrentPage(response.pageNumber+1);
-        setTotalPages(3);
+       
         setPaginatedData(response.content)
+        setTotalPages(Math.ceil(response.content.length/6));
        // setLecturesData(response.content);
         setItemsPage(6)
       }
@@ -114,8 +118,10 @@ const AdminLecture = () => {
     if(paginatedData){
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
+      setStartIndex(startIndex)
+      setEndIndex(endIndex)
     const lecturedata=  paginatedData.slice(startIndex,endIndex)
-    console.log(lecturedata,paginatedData)
+ 
     setLecturesData(lecturedata)
     }
   },[currentPage,itemsPerPage,paginatedData])
@@ -246,7 +252,7 @@ const AdminLecture = () => {
 
         <Box mt="40px">
           <Flex justifyContent="space-between">
-            <Text ml="30px">Showing 26 to 50 of 189 results</Text>
+            <Text ml="30px">Showing {startIndex} to {endIndex}  of {paginatedData.length} results</Text>
 
             <Pagination
               currentPage={currentPage}
