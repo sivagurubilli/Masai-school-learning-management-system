@@ -34,3 +34,18 @@ const Video = ({ lectureDetail }: VideoTabProps) => {
 };
 
 export default Video;
+
+
+   
+
+
+
+
+
+ 
+
+
+
+
+          
+

@@ -44,7 +44,7 @@ export async function getUserArray(): Promise<IUserObject[]> {
   }
 }
 
-export async function getCategoryArrray(): Promise<ICategoryObject[]> {
+export async function getCategoryArray(): Promise<ICategoryObject[]> {
   try {
     const response = await axios.get("/api/categoryList");
 
@@ -61,7 +61,6 @@ export async function getCategorySectionArrray(): Promise<
     const response = await axios.get(
       "http://3.27.61.194:8082/api/categoryList"
     );
-    console.log("category", response.data);
     return response.data;
   } catch (error: any) {
     return error;

@@ -58,18 +58,20 @@ const StudentLecture = () => {
     });
   };
 
+  const fetchLecture = async () => {
+    setLoading(true);
+    try {
+      const res = await GettAllStudentLectureService();
+      setLecturesData(res);
+      setLectureDataLength(res.length);
+      setLoading(false);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   useEffect(() => {
-    const fetchLecture = async () => {
-      setLoading(true);
-      try {
-        const res = await GettAllStudentLectureService();
-        setLecturesData(res);
-        setLectureDataLength(res.length);
-        setLoading(false);
-      } catch (err) {
-        console.error(err);
-      }
-    };
+   
     fetchLecture();
   }, []);
 
@@ -94,6 +96,7 @@ const StudentLecture = () => {
       week: "",
       day: "",
     });
+    fetchLecture();
   };
   const [isLargerThan900] = useMediaQuery("(min-width: 900px)");
   return (

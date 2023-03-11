@@ -170,7 +170,7 @@ const LectureSearchInput = ({ filterValues, setFilterValues }: any) => {
         >
           {userArray?.map((el) => (
             <option key={el.id} value={el.id}>
-              {el.user}
+              {el.name}
             </option>
           ))}
         </Select>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import Navbar from "../../../components/StudentSideComponents/StudentNavbar/Navbar";
 import { Box, Flex, WrapItem, Button, Wrap, Text } from "@chakra-ui/react";
 import { useParams } from "react-router-dom";
@@ -11,9 +11,16 @@ import DetailTab from "./../../../components/StudentSideComponents/StudentLectur
 import axios from "axios";
 import Skeleton from "../../../components/Skeleton/index";
 import { BatchListMap, CategoryMap, SectionListMap, TypeListMap } from "../../../assets/assets";
+import {getBatchArrray,getCategoryArray,getSectionArray,getTypeArray,getUserArray} from "../../../Services/SelelctionService"
+import { IBatchObject, ICategoryObject, ISectionObject, ITypeObject, IUserObject } from './../../../Services/SelectionInterface';
 
 const StudentLectureDetail = () => {
   const { id = "" } = useParams<{ id: string }>();
+  const [batchArray, setBatchArray] = useState<IBatchObject[]>();
+  const [sectionArray, setSectionArray] = useState<ISectionObject[]>();
+  const [userArray, setUserArray] = useState<IUserObject[]>();
+  const [typeArray, setTypeArray] = useState<ITypeObject[]>();
+const [categoryArray,setCategoryArray] = useState<ICategoryObject[]>()
   const [lectureDetail, setLectureDetail] = useState({
     lectureId:"",
     title: "",
@@ -38,17 +45,89 @@ const StudentLectureDetail = () => {
   const [endTime, setEndTime] = useState<string>("");
   const [loading, setLoading] = useState<boolean>();
   const [zoomLinkActive, setZoomLinkActive] = useState<boolean>(false);
+  const [isOpen,setIsOpen]= useState<boolean>(false)
+  const [modalErrorBody,setModalErrorBody]=useState<string>("")
 
-  useEffect(() => {
-    const BElem  = BatchListMap.find((el) => Number(el.key) === Number(lectureDetail?.batch))
-const SElem = SectionListMap.find((el) => Number(el.key) === Number(lectureDetail?.section))
-//const UserElem = UserListLsitMap.find((el) => Number(el.key) === Number(lectureDetail?.createdBy))
-const CategoryElem = CategoryMap.find((el)=> Number(el.id) === Number(lectureDetail?.category))
-const TypeElem =TypeListMap.find((el) => Number(el.id) === Number(lectureDetail?.type))
-    if (BElem && SElem && CategoryElem && TypeElem) {
-  setLectureDetail({...lectureDetail,batch:BElem.el,section:SElem?.el,category:CategoryElem?.el,type:TypeElem.el})
+  const getDropDownArrays = useCallback(async () => {
+    try {
+      const [batchArray, categoryArray, sectionArray, typeArray, userArray] =
+        await Promise.all([
+          getBatchArrray(),
+          getCategoryArray(),
+          getSectionArray(),
+          getTypeArray(),
+          getUserArray(),
+        ]);
+      if (batchArray.length) {
+        setBatchArray(batchArray);
+      }
+      if (sectionArray.length) {
+        setSectionArray(sectionArray);
+      }
+      if (categoryArray.length) {
+        setCategoryArray(categoryArray);
+      }
+      if (typeArray.length) {
+        setTypeArray(typeArray);
+      }
+      if (userArray.length) {
+        setUserArray(userArray);
+      }
+    } catch (error) {
+      setIsOpen(true);
+      setModalErrorBody(
+        "Oh no! There was a problem with getting the items from the selecting list"
+      );
     }
-  }, [lectureDetail?.batch,lectureDetail]);
+  }, [
+  ]);
+  useEffect(() => {
+    getDropDownArrays();
+  }, [getDropDownArrays]);
+
+
+
+
+
+
+
+
+
+  // useEffect(() => {
+  //   fetchData();
+  // }, [fetchData]);
+  useEffect(() => {
+    const BElem = batchArray?.find(
+      (el) => Number(el.batchId) === Number(lectureDetail?.batch)
+    );
+    const SElem = sectionArray?.find(
+      (el) => Number(el.sectionId) === Number(lectureDetail?.section)
+    );
+    const UserElem = userArray?.find(
+      (el) => Number(el.id) === Number(lectureDetail?.createdBy)
+    );
+    const CategoryElem = categoryArray?.find(
+      (el) => Number(el.id) === Number(lectureDetail?.category)
+    );
+    const TypeElem = typeArray?.find(
+      (el) => Number(el.id) === Number(lectureDetail?.type)
+    );
+    if (BElem && SElem && CategoryElem && TypeElem && UserElem) {
+      setLectureDetail({
+        ...lectureDetail,
+        batch: BElem.batch,
+        section: SElem?.section,
+        category: CategoryElem?.categoryName,
+        type: TypeElem.type,
+        createdBy: UserElem?.name,
+      });
+    }
+  }, [ lectureDetail,batchArray, categoryArray, sectionArray, typeArray,userArray]);
+
+
+
+
+
 
   useEffect(() => {
     const fetchLecture = async () => {
