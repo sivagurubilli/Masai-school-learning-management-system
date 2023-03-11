@@ -24,8 +24,8 @@ const Pagination: React.FC<PaginationProps> = ({
   useEffect(() => {
     const newPages:number[] =[];
     let startPage = currentPage;
-    let endPage = 3;
-    const maxPages = 2;
+    let endPage = totalPages;
+    const maxPages = totalPages;
     if (totalPages > maxPages) {
       const middlePage = Math.floor(maxPages / 2);
       if (currentPage > middlePage) {

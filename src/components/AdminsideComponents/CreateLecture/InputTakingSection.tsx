@@ -37,7 +37,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 import { actionCreators } from "../../../redux/SelectionReducer/index";
 import { bindActionCreators } from "redux";
-import { LectureEditService, LecturePostService } from "../../../Services/LectureServices";
+import { LectureCopyService, LectureEditService, LecturePostService } from "../../../Services/LectureServices";
 
 const InputTakingSection = ({
   buttonName,
@@ -171,7 +171,7 @@ const InputTakingSection = ({
       setLoading(false);
     }, 2000);
    
-    if (buttonName === "Copy Lecture" || buttonName === "Edit Lecture") {
+    if (buttonName === "Edit Lecture") {
       try {
         
         const response = await LectureEditService(LectureValues, id);
@@ -185,7 +185,23 @@ const InputTakingSection = ({
           "Sorry about that! There is a scheduled downtime on your servers, so please check them"
         );
       }
-    } else {
+    }else if(buttonName === "Copy Lecture" ){
+      try {
+        
+        const response = await LectureCopyService(LectureValues, id);
+        if (response.message) {
+          setIsOpen(true);
+          setModalErrorBody("The lecture was  Success fully Copied with Changes");
+        }
+      } catch (error) {
+        setIsOpen(true);
+        setModalErrorBody(
+          "Sorry about that! There is a scheduled downtime on your servers, so please check them"
+        );
+      }
+    }
+    
+    else {
       try {
         const response = await LecturePostService(LectureValues);
         if (response.message) {
