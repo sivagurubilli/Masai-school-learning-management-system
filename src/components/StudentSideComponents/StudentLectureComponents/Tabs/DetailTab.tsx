@@ -3,14 +3,7 @@ import { Tabs, TabList, Tab, TabPanels, TabPanel } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import Video from "../NoteAndVideo/Video";
 import Note from "../NoteAndVideo/Note";
-import { ILectureResponse } from "./../../../../Services/LectureInterface";
-
-interface DetailTabProps {
-  lectureDetail: ILectureResponse;
-  lectureId: string;
-}
-
-const DetailTab = ({ lectureDetail, lectureId }: DetailTabProps) => {
+const DetailTab = ({ lectureDetail, lectureId }:any) => {
   return (
     <Tabs isFitted variant="enclosed">
       <TabList mb="1em" h="80px">

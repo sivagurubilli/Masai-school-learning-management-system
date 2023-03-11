@@ -103,4 +103,6 @@ const EmailVerificationModal = ({ isOpen, setIsOpen, email,modalBody,setModalBod
   );
 };
 
+
 export default EmailVerificationModal;
+

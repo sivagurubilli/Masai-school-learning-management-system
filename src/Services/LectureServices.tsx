@@ -5,6 +5,8 @@ import {
   ICreateLectureValues,
   ILectureResponse,
   ISearchValues,
+  ISearchValues2,
+
 } from "./LectureInterface";
 
 //interface for creating lectures and editing lectures
@@ -111,13 +113,12 @@ export async function LectureSearchService(
   data: ISearchValues
 ){
   const { title, batch, section, type, createdBy, startTime, day, week } = data;
-
+  console.log("data",data)
   try {
     const response = await axios.post(
-      "/api/lecture/lectures/search",
+      "http://3.27.61.194:8082/api/lecture/lectures/search/student/2/2",
       { title, batch, section, type, startTime, createdBy, day, week }
     );
-
     return response.data;
   } catch (error: any) {
     return error.response;
@@ -126,7 +127,7 @@ export async function LectureSearchService(
 // for getting all lectures when user enters to the lectures page
 export async function GetAllLectureService() {
   try {
-    const response = await axios.get("/api/lecture/lectureList");
+     const response = await axios.get("/api/lecture/lectureList");
     return response.data;
   } catch (error: any) {
     return error.response;
@@ -272,12 +273,27 @@ export async function GettAllStudentLectureService(): Promise<
 > {
   try {
     const response = await axios.get(
-      "/api/lecture/lectureList"
+      "http://3.27.61.194:8082/api/lecture/lectureList/student/2/2"
     );
 
     return response.data;
   } catch (error: any) {
     console.log(error);
+    return error.response;
+  }
+}
+
+export async function LectureStudentSearchService(
+  data: ISearchValues2
+): Promise<ILectureResponse[]> {
+  const { title, batch, section, type, createdBy, startTime, day, week, category } = data;
+  try {
+    const response = await axios.post(
+      "http://3.27.61.194:8082/api/lecture/lectures/search/student/2/2",
+      { title, batch, section, type, startTime, createdBy, day, week, category }
+    );
+    return response.data;
+  } catch (error: any) {
     return error.response;
   }
 }
