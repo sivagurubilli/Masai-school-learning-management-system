@@ -61,7 +61,7 @@ const DashboardLectureCard = ({ lectureData }: any) => {
              {lectureData.type==="Live" ? <a  
             style={{ color:"rgb(20,110,190)",
                   fontSize:"18px",
-                  fontWeight:"medium",
+                  fontWeight:"900",
                   cursor:"pointer"}}
                    href={lectureData.zoomLink}>{lectureData.title}</a>:
                 <Text
@@ -117,7 +117,7 @@ const DashboardLectureCard = ({ lectureData }: any) => {
          {lectureData.type==="Live" ? <a  
             style={{ color:"rgb(20,110,190)",
                   fontSize:"18px",
-                  fontWeight:"medium",
+                  fontWeight:"900",
                   cursor:"pointer"}}
                    href={lectureData.zoomLink}>{lectureData.title}</a>:
               <Text

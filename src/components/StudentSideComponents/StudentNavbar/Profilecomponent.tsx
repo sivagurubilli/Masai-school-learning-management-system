@@ -13,6 +13,7 @@ const Profilecomponent = ({ setshow1 }: ProfilecomponentProps) => {
 
   const Logout = () => {
     localStorage.clear();
+    sessionStorage.clear();
     setshow1(false);
     navigate("/login");
   };
