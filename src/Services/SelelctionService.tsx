@@ -6,7 +6,7 @@ import {
   ISectionObject,
   ITypeObject,
   IUserObject,
- 
+
 } from "./SelectionInterface";
 
 export async function getBatchArrray(): Promise<IBatchObject[]> {
@@ -72,7 +72,6 @@ export async function getCategoryArray(): Promise<ICategoryObject[]>{
     return error;
   }
 }
-
 export async function getCategorySectionArrray(): Promise<
   ICategorySectionObject[]
 > {
@@ -85,4 +84,6 @@ export async function getCategorySectionArrray(): Promise<
     return error;
   }
 }
+
+
 
