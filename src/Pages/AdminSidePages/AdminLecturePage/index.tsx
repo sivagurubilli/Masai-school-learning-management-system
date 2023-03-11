@@ -57,7 +57,7 @@ const AdminLecture = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [itemsPerPage, setItemsPage] = useState(1);
-const [startIndex,setStartIndex] = useState<number>()
+const [startIndex,setStartIndex] = useState<number>(1)
 const [endIndex,setEndIndex] = useState<number>()
 
   //user search and get lectures by provideing different values
@@ -75,6 +75,8 @@ const [endIndex,setEndIndex] = useState<number>()
       if (response.length) {
     
         setPaginatedData(response);
+        setCurrentPage(1);
+        setTotalPages(Math.ceil(response.length/6));
       } else {
         setIsOpen(true);
         setModalErrorBody(
@@ -118,9 +120,14 @@ const [endIndex,setEndIndex] = useState<number>()
     if(paginatedData){
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
-      setStartIndex(startIndex)
+      setStartIndex(startIndex+1)
       setEndIndex(endIndex)
     const lecturedata=  paginatedData.slice(startIndex,endIndex)
+    if(endIndex >paginatedData.length){
+      setEndIndex(paginatedData.length)
+    }else{
+      setEndIndex(endIndex)
+    }
  
     setLecturesData(lecturedata)
     }
@@ -175,7 +182,7 @@ const [endIndex,setEndIndex] = useState<number>()
   };
 
   const Reset = () => {
-    fetchData();
+    
     setFilterValues({
       title: "",
       batch: "",
@@ -186,6 +193,7 @@ const [endIndex,setEndIndex] = useState<number>()
       week: "",
       day: "",
     });
+    fetchData();
   };
 
   const [isLargerThan900] = useMediaQuery("(min-width: 900px)");
@@ -243,7 +251,7 @@ const [endIndex,setEndIndex] = useState<number>()
         </Box>
       </Box>
       <Box w="90%" ml="5%" bg="white" h="auto" mt="20px" pb="10%">
-        {lecturesData ? (
+        {lecturesData.length ? (
           <TableHeading LecturesData={lecturesData} />
         ) : (
           <Loader />
@@ -252,7 +260,7 @@ const [endIndex,setEndIndex] = useState<number>()
 
         <Box mt="40px">
           <Flex justifyContent="space-between">
-            <Text ml="30px">Showing {startIndex} to {endIndex}  of {paginatedData.length} results</Text>
+            <Text ml="30px">Showing {startIndex  } to {endIndex}  of {paginatedData.length} results</Text>
 
             <Pagination
               currentPage={currentPage}
@@ -265,8 +273,9 @@ const [endIndex,setEndIndex] = useState<number>()
             />
           </Flex>
         </Box>
+        <Divider mt="20px" />
       </Box>
-      <Divider />
+      
     </div>
   );
 };
