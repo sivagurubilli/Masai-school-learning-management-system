@@ -4,8 +4,7 @@ import {
   IAddBookMarkObject,
   ICreateLectureValues,
   ILectureResponse,
-  ISearchValues,
-  ISearchValues2,
+  ISearchValues
 
 } from "./LectureInterface";
 
