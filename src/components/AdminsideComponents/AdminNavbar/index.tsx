@@ -34,8 +34,11 @@ const Navbar = () => {
 
   useEffect(() => {
     const name = localStorage.getItem("username");
+    const SessionName = sessionStorage.getItem("username")
     if (name) {
       setUserName(name);
+    }else{
+      setUserName(SessionName)
     }
   }, []);
   const Logout = () => {
@@ -56,7 +59,7 @@ const Navbar = () => {
           color={"gray.600"}
         >
           <Flex align="center" flex={"2"}>
-            <Link to="/dashboard">
+            <Link to="/admin/dashboard">
               {" "}
               <Image objectFit="contain" src={masaiimage} alt="Masai logo" />
             </Link>

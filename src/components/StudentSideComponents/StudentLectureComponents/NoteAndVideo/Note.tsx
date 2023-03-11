@@ -1,12 +1,9 @@
 import React from "react";
 import { Box, Flex } from "@chakra-ui/react";
-import { ILectureResponse } from "../../../../Services/LectureInterface";
 
-interface NoteTabProps {
-  lectureDetail: ILectureResponse;
-}
 
-const Note = ({ lectureDetail }: NoteTabProps) => {
+
+const Note = ({ lectureDetail }: any) => {
   return (
     <Box>
       {lectureDetail.notes !== "" && (

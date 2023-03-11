@@ -6,9 +6,9 @@ export interface ISearchValues {
        type:string;
        batch:string;
        section:string;
-       day:string;
+       day: string;
        week:string;
-       startTime:string;
+       startTime:string | Date;
       
 }
 
@@ -29,15 +29,16 @@ tag:string
 }
 //iinteface for lecture response
 export interface ILectureResponse{
+
     lectureId:number
     title: string;
-    batch: string;
-    category:string,
+    batch: string ;
+    category:string ,
     section: string,
-    type: string,
+    type: string ,
     schedule:Date,
     concludes:Date,
-    createdBy: string,
+    createdBy: string ,
     tags:string[],
     hideVideo:boolean,
     optional:boolean,
@@ -46,8 +47,15 @@ export interface ILectureResponse{
     day: string,
     notes:string
 }
-export interface ISearchResponse{
-    LecturesData: ILectureResponse[] | undefined;
+
+export interface ILectureResponse1{
+    content: ILectureResponse[] | undefined;
+    lastPage:boolean
+    pageNumber:number
+    pageSize:number|string
+    
+    totalElements:number|string
+    totalPages: number| string
 }
 
 export interface ITags{
@@ -58,7 +66,7 @@ export interface ICreateLectureValues {
     title: string;
     batch: string;
     category:string,
-    section: string,
+    section: string ,
     type: string,
     schedule:Date,
     concludes:Date,
@@ -76,8 +84,8 @@ export interface ICreateLectureValues {
     id:number | undefined;
   }
 
-  export interface IBookMarkObject{
-    id:number,
-    title:string,
-    date:string
+  export interface IAddBookMarkObject{
+   lectureId:string | number;
+   userId: string| number;
+    
   }

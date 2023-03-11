@@ -2,6 +2,7 @@ import * as yup from "yup";
 import { useFormik } from "formik";
 import React, { useState } from "react";
 import "./index.css";
+import EmailVerificationModal from "../../../components/Modal/EmailVerificationModal"
 import {
   Button,
   Checkbox,
@@ -57,6 +58,9 @@ export default function StudentLogin({ setGotoSignup }: any) {
     errorFromBackend: false,
   });
   const [isLoading, setLoading] = useState<boolean>(false);
+  const [isOpen,setIsOpen ] = useState<boolean>(false);
+  const [modalBody,setModalBody] = useState<string>()
+  const [email,setEmail] = useState<string>()
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { IsAuthenticated } = bindActionCreators(actionCreators, dispatch);
@@ -73,8 +77,10 @@ export default function StudentLogin({ setGotoSignup }: any) {
     }, 3000);
     try {
       const response = await LoginService(values);
+      setEmail(values.username)
       if (response.token) {
         if (response.user.roles[0].name === "STUDENT_USER") {
+          
           IsAuthenticated({
             isAuth: true,
             username: response.user.name,
@@ -94,12 +100,14 @@ export default function StudentLogin({ setGotoSignup }: any) {
           navigate("/admin/dashboard");
         }
       }
-
+      console.log(response)
       if (!response.token) {
-        setBackendError({ ...BackendError, errorFromBackend: true });
+      
+        setBackendError({ ...BackendError, errorFromBackend:response.data.message });
       }
-    } catch (error) {
-      setBackendError({ ...BackendError, errorFromBackend: true,backendErrorMessage:error });
+    } catch (error:any) {
+
+      setBackendError({ ...BackendError, errorFromBackend: true,backendErrorMessage:error.response.date.message });
     }
   };
   //destructuring methods from useFormik
@@ -113,6 +121,7 @@ export default function StudentLogin({ setGotoSignup }: any) {
     <>
       <div className="container">
         <Container mt="120px" alignItems="center" w="100%" centerContent>
+          <EmailVerificationModal isOpen={isOpen} setIsOpen={setIsOpen}   email ={email} modalBody ={modalBody} setModalBody= {setModalBody} />
           <Image
             height="60px"
             objectFit="contain"

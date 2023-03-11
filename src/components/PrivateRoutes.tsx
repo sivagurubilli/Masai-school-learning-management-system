@@ -1,16 +1,23 @@
-import React, { useState, useEffect } from "react";
-import { Navigate, Outlet, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { RootState } from "../redux/store";
+import React from "react";
+import { Navigate, Outlet} from "react-router-dom";
 
-interface IPrtectedRoutes {
-  children: any;
-}
 
-const PrivateRoute = () => {
-  const state = useSelector((state: RootState) => state.Authreducer);
-  const username = localStorage.getItem("username");
-  return username ? <Outlet /> : <Navigate to="/admin/login" replace />;
+const AdminPrivateRoute = () => {
+  let username
+  let userType
+ username = localStorage.getItem("username");
+ userType= localStorage.getItem("userType")
+ if(!username){
+  username = sessionStorage.getItem("username");
+  userType= sessionStorage.getItem("userType")
+ }
+ 
+  if(username && userType?.trim() === "STUDENT_USER"){
+ return <Outlet /> 
+  }else{
+    return <Navigate to="/login" replace />;
+  }
+
 };
 
-export default PrivateRoute;
+export default AdminPrivateRoute;

@@ -23,6 +23,7 @@ import {
   IBatchObject,
   ISectionObject,
 } from "../../../Services/SelectionInterface";
+import { Link } from "react-router-dom";
 
 //interface for form data
 interface IFormData {
@@ -331,6 +332,17 @@ export default function StudentSignup({ setGotoSignup }: any) {
                  SIGN UP
                 </Button>
               </Flex>
+              <Link to="/admin/signup">
+              <button
+                  className="buttonlogin"
+                  type="button"
+                 
+                >
+                  <Text fontSize="14px">
+                    If you are admin please click here to signup
+                  </Text>
+                </button>
+                  </Link>
             </form>
           </Box>
         </Container>

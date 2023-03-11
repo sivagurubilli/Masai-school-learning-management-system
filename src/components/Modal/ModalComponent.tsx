@@ -10,9 +10,10 @@ import {
   useMediaQuery,
 } from "@chakra-ui/react";
 
-const ModalComponent = ({ isOpen, setIsOpen, DeleteLecture }: any) => {
+const ModalComponent = ({ isOpen, setIsOpen, DeleteLecture,modalBody }: any) => {
   const handleClose = () => setIsOpen(false);
   const [isLargerThan900] = useMediaQuery("(min-width: 900px)");
+ 
 
   return (
     <div>
@@ -20,11 +21,12 @@ const ModalComponent = ({ isOpen, setIsOpen, DeleteLecture }: any) => {
         <ModalOverlay />
         <ModalContent>
           <ModalBody>
-            <Text p="30px">Do you want to delete this Lecture</Text>
+            <Text p="30px">{modalBody}</Text>
           </ModalBody>
           <ModalFooter>
             <Button
-              h={isLargerThan900 ? "35px" : "auto"}
+              h={isLargerThan900 ? "35px" : "30px"}
+              fontSize={isLargerThan900 ? "14px" : "auto"}
               color="white"
               bg="rgb(31 41 55)"
               _hover={{ bg: "rgb(76, 84, 95)" }}
@@ -33,7 +35,8 @@ const ModalComponent = ({ isOpen, setIsOpen, DeleteLecture }: any) => {
               Confirm Delete
             </Button>
             <Button
-              h={isLargerThan900 ? "35px" : "auto"}
+              h={isLargerThan900 ? "35px" : "30px"}
+             fontSize= {isLargerThan900 ? "18px" : "14px"}
               color="white"
               bg="rgb(31 41 55)"
               ml="20px"

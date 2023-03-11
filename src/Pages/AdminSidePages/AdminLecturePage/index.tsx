@@ -1,5 +1,12 @@
-import { Box, Flex, Button, useMediaQuery, Divider } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
+import {
+  Box,
+  Flex,
+  Button,
+  useMediaQuery,
+  Divider,
+  Text,
+} from "@chakra-ui/react";
+import React, { useEffect, useRef, useState } from "react";
 import "./index.css";
 import Secondnav from "../../../components/AdminsideComponents/AdminLecture/LectureSearchNavbar";
 import Navbar from "../../../components/AdminsideComponents/AdminNavbar/index";
@@ -8,11 +15,17 @@ import {
   GetAllLectureService,
   LectureSearchService,
 } from "../../../Services/LectureServices";
-import { ILectureResponse } from "../../../Services/LectureInterface";
+
 import CommonModalComponent from "../../../components/Modal/commonModal";
 import LectureSearchInput from "../../../components/AdminsideComponents/AdminLecture/LectureSearchInput";
 import Loader from "../../../components/Modal/Loader";
+import { useSearchParams } from "react-router-dom";
+import Pagination from "../../../components/Pagination/Pagination";
+import { ILectureResponse } from "../../../Services/LectureInterface";
 
+interface SearchQuery {
+  [key: string]: string;
+}
 
 interface IFilteredValues {
   title: string;
@@ -37,53 +50,132 @@ const AdminLecture = () => {
     day: "",
   });
   const [isLoading, setLoading] = useState<boolean>(false);
-  const [lecturesData, setLecturesData] = useState<ILectureResponse[]>();
+  const [lecturesData, setLecturesData] = useState<ILectureResponse[]>([]);
+ const [paginatedData,setPaginatedData] = useState([])
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [modalBody, setModalErrorBody] = useState<string>("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [itemsPerPage, setItemsPage] = useState(1);
+const [startIndex,setStartIndex] = useState<number>()
+const [endIndex,setEndIndex] = useState<number>()
 
-
-//user search and get lectures by provideing different values
-  const GetLectures = async () => {
+  //user search and get lectures by provideing different values
+  const GetLecturesByFilter = () => {
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
     }, 1000);
+    GetLectures();
+  };
 
+  const GetLectures = async () => {
     try {
       const response = await LectureSearchService(filterValues);
-      if (response.length > 1) {
-        setLecturesData(response);
-      } else if (!response.length) {
+      if (response.length) {
+    
+        setPaginatedData(response);
+      } else {
         setIsOpen(true);
-        setModalErrorBody("These values did not match the lecture data!");
+        setModalErrorBody(
+          "There was a discrepancy between these values and the lecture data!"
+        );
       }
     } catch (error) {
       setIsOpen(true);
       setModalErrorBody(
-        "Sorry about that! There is a scheduled downtime on your servers, so please check them"
+        "I'm sorry about that! There is no data found, so please check the values"
       );
     }
   };
 
-    // when user enters into admin lectures page call service for getlist of lectures using useEffect
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await GetAllLectureService();
-        if (response.length) {
-          setLecturesData(response);
-        }
-      } catch (error) {
-        setIsOpen(true);
-        setModalErrorBody(
-          "We were unable to find any data. It seems that something has gone wrong!"
-        );
+
+  const fetchData = async () => {
+    try {
+      const response = await GetAllLectureService();
+
+      if (response) {
+            setCurrentPage(response.pageNumber+1);
+       
+        setPaginatedData(response.content)
+        setTotalPages(Math.ceil(response.content.length/6));
+       // setLecturesData(response.content);
+        setItemsPage(6)
       }
-    };
+    } catch (error) {
+      setIsOpen(true);
+      setModalErrorBody(
+        "We were unable to find any data. It seems that something has gone wrong!"
+      );
+    }
+  };
+  // when user enters into admin lectures page call service for getlist of lectures using useEffect
+  useEffect(() => {
     fetchData();
   }, []);
 
+  useEffect(()=>{
+    if(paginatedData){
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+      setStartIndex(startIndex)
+      setEndIndex(endIndex)
+    const lecturedata=  paginatedData.slice(startIndex,endIndex)
+ 
+    setLecturesData(lecturedata)
+    }
+  },[currentPage,itemsPerPage,paginatedData])
+
+
+
+
+  const useSearch = (): [SearchQuery, (newSearch: SearchQuery) => void] => {
+    const [searchParams, setSearchParams] = useSearchParams();
+
+    const prevSearchParamsRef = useRef(searchParams.toString());
+
+    useEffect(() => {
+      const currentSearchParams = searchParams.toString();
+      if (prevSearchParamsRef.current !== currentSearchParams) {
+        prevSearchParamsRef.current = currentSearchParams;
+      }
+    }, [searchParams]);
+
+    const updateSearch = (newSearch: SearchQuery): void => {
+      const params = new URLSearchParams(prevSearchParamsRef.current);
+
+      Object.entries(newSearch).forEach(([key, value]) => {
+        if (value) {
+          params.set(key, value);
+        } else {
+          params.delete(key);
+        }
+      });
+
+      setSearchParams(params.toString());
+    };
+
+    const currentSearch = Array.from(searchParams.entries()).reduce(
+      (acc, [key, value]) => ({
+        ...acc,
+        [key]: value,
+      }),
+      {}
+    );
+
+    return [currentSearch, updateSearch];
+  };
+  const [search, updateSearch] = useSearch();
+  const handlePageChange = (page: any) => {
+
+    updateSearch({
+      ...search,
+      page: page,
+    });
+  };
+
   const Reset = () => {
+    fetchData();
     setFilterValues({
       title: "",
       batch: "",
@@ -97,7 +189,6 @@ const AdminLecture = () => {
   };
 
   const [isLargerThan900] = useMediaQuery("(min-width: 900px)");
-
   return (
     <div className="container">
       <Navbar />
@@ -118,6 +209,9 @@ const AdminLecture = () => {
           <LectureSearchInput
             filterValues={filterValues}
             setFilterValues={setFilterValues}
+            setLecturesData={setLecturesData}
+            search={search}
+            updateSearch={updateSearch}
           />
           <Flex justifyContent={"flex-end"}>
             <Button
@@ -128,7 +222,7 @@ const AdminLecture = () => {
               bg="rgb(31 41 55)"
               isLoading={isLoading}
               _hover={{ bg: "rgb(76, 84, 95)" }}
-              onClick={GetLectures}
+              onClick={GetLecturesByFilter}
             >
               Filter
             </Button>
@@ -148,9 +242,31 @@ const AdminLecture = () => {
           <Divider mt="10px" />
         </Box>
       </Box>
-      <Box w="90%" ml="5%" bg="white" h="auto" mt="20px">
-        {lecturesData ? <TableHeading LecturesData={lecturesData} /> : <Loader />}
+      <Box w="90%" ml="5%" bg="white" h="auto" mt="20px" pb="10%">
+        {lecturesData ? (
+          <TableHeading LecturesData={lecturesData} />
+        ) : (
+          <Loader />
+        )}
+        <Divider />
+
+        <Box mt="40px">
+          <Flex justifyContent="space-between">
+            <Text ml="30px">Showing {startIndex} to {endIndex}  of {paginatedData.length} results</Text>
+
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onChange={handlePageChange}
+              setPage={setCurrentPage}
+              lectureData={paginatedData}
+              perPage= {itemsPerPage}
+              setLectureData= {setLecturesData}
+            />
+          </Flex>
+        </Box>
       </Box>
+      <Divider />
     </div>
   );
 };

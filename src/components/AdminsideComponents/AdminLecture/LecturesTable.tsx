@@ -1,9 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import {
-  ILectureResponse,
-  ISearchResponse,
-} from "../../../Services/LectureInterface";
+
 import {
   Table,
   Thead,
@@ -18,8 +15,7 @@ import {
   TableContainer,
   Box,
 } from "@chakra-ui/react";
-const TableHeading = ({ LecturesData }: ISearchResponse) => {
-
+const TableHeading = ({ LecturesData }:any) => {
   return (
     <div>
       <Box overflow={"auto"}>
@@ -37,37 +33,42 @@ const TableHeading = ({ LecturesData }: ISearchResponse) => {
             </Thead>
             <Tbody w="100%">
               {LecturesData &&
-                LecturesData?.map((ad: ILectureResponse) => (
-                  <Tr key={ad.lectureId}>
-                    <Td w="6%">{ad.lectureId}</Td>
+
+
+                LecturesData?.map((lecture:any) => (
+                  <Tr key={lecture.lectureId}>
+                    <Td w="6%">{lecture.lectureId}</Td>
+
+
                     <Td w="35%">
                       <Text fontSize="20px">
-                        {ad.title}{" "}
+                        {lecture.title}{" "}
                         <Badge
                           colorScheme={"green"}
                           variant="solid"
                           h="20px"
                           w="auto"
-                          pl="8px" 
+                          pl="8px"
                         >
-                          {ad.type}
+                          {lecture.type}
                         </Badge>
                       </Text>
                       <Text>
                         <>
-                         Created by {ad.createdBy} ({ad.category}) at {ad.schedule}  
+                          Created by {lecture.createdBy} ({lecture.category}) at{" "}
+                          {lecture.schedule}
                         </>
                       </Text>
                     </Td>
-                    <Td w="15%">{ad.batch}</Td>
+                    <Td w="15%">{lecture.batch}</Td>
                     <Td w="15%">
                       <Text>
                         <>
-                     Start At   {ad.schedule}
-                        <br/>
-                    Conclude At {ad.concludes}
-                     </>
-                     </Text>
+                          Start At {lecture.schedule}
+                          <br />
+                          Conclude At {lecture.concludes}
+                        </>
+                      </Text>
                     </Td>
                     <Td w="15%">
                       <Flex>
@@ -78,22 +79,26 @@ const TableHeading = ({ LecturesData }: ISearchResponse) => {
                           w="auto"
                           pl="8px"
                         >
-                          {ad.week}
-                          </Badge>
-                          <Badge
-                            colorScheme={"blue"}
-                            variant="solid"
-                            h="20px"
-                            ml="10px"
-                            w="auto"
-                          >
-                            {ad.day}
-                          </Badge>   
+                          {lecture.week}
+                        </Badge>
+                        <Badge
+                          colorScheme={"blue"}
+                          variant="solid"
+                          h="20px"
+                          ml="10px"
+                          w="auto"
+                        >
+                          {lecture.day}
+                        </Badge>
                       </Flex>{" "}
                     </Td>
                     <Td w="15%">
                       <Flex>
-                        <Link to={`/admin/lectures/${ad.lectureId}`}>
+
+
+                        <Link to={`/admin/lectures/${lecture.lectureId}`}>
+
+
                           {" "}
                           <Button
                             variant="link"
@@ -103,7 +108,10 @@ const TableHeading = ({ LecturesData }: ISearchResponse) => {
                             View
                           </Button>
                         </Link>
-                        <Link to={`/admin/lectures/edit/${ad.lectureId}`}>
+
+
+                        <Link to={`/admin/lectures/edit/${lecture.lectureId}`}>
+
                           {" "}
                           <Button
                             variant="link"

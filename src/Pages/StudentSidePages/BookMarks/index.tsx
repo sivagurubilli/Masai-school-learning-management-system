@@ -4,22 +4,20 @@ import BookMarkNav from "../../../components/StudentSideComponents/BookMarks/Boo
 import "./index.css";
 import { Box, Divider, Flex, Text } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
-import { IBookMarkObject } from "../../../Services/LectureInterface";
+import { ILectureResponse } from "../../../Services/LectureInterface";
 import { GetAllBookMarksService } from "../../../Services/LectureServices";
 import CommonModalComponent from "../../../components/Modal/commonModal";
 
 
 const BookMarks = () => {
- const [bookMarks,setBookMarks] = useState<IBookMarkObject[]>()
+ const [bookMarks,setBookMarks] = useState<ILectureResponse[]>()
  const [isOpen, setIsOpen] = useState<boolean>(false);
  const [modalBody, setModalErrorBody] = useState<string>("");
-
 
   //getting all bookmarks when user enters into page by using useEffect
   useEffect(() => {
     const fetchData = async () => {
-      // const id = Number(localStorage.getItem("uerId"))
-   const id=102
+     const id = Number(localStorage.getItem("uerId"))
       try {
         const response = await  GetAllBookMarksService(id);
         if(response.length){
@@ -66,9 +64,13 @@ const BookMarks = () => {
             <div>
               <Flex padding="10px" justifyContent="space-between">
                 <Text pl="20px">{el.title}</Text>
-                {/* <Text ml="20px">{el.author}</Text>
-                <Text ml="30px">{el.schedule}</Text> */}
-                <Link to={"/student/lectures/" + el.id}>
+                <Text ml="20px">{el.createdBy}</Text>
+                <Text ml="30px">
+                  <>
+                  {el.schedule}
+                  
+                  </></Text>
+                <Link to={"/student/lectures/" + el.lectureId}>
                   {" "}
                   <Text pr="20px" color="blue">
                     View

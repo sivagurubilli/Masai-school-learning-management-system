@@ -1,8 +1,5 @@
 import React from "react";
-import {
-  ILectureResponse,
-  ISearchResponse,
-} from "../../../../Services/LectureInterface";
+
 import {
   Table,
   Thead,
@@ -18,10 +15,14 @@ import {
 import { useNavigate } from "react-router-dom";
 import TimeDetails from "../Time/Time";
 
-const TableHeading = ({ LecturesData }: ISearchResponse) => {
+const TableHeading = ({ LecturesData }:any) => {
   const navigate = useNavigate();
 
-  const handleRedirect = (ad: ILectureResponse) => {
+
+
+  const handleRedirect = (ad:any) => {
+
+
     navigate(`/student/lectures/${ad.lectureId}`);
   };
   return (
@@ -36,7 +37,7 @@ const TableHeading = ({ LecturesData }: ISearchResponse) => {
             </Thead>
             <Tbody w="100%" h="200px">
               {LecturesData &&
-                LecturesData?.map((ad: ILectureResponse) => (
+                LecturesData?.map((ad: any) => (
                   <Tr
                     key={ad.lectureId}
                     _hover={{ bgColor: "#f9fafb" }}

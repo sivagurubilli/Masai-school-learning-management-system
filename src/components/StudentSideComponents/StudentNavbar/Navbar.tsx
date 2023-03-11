@@ -58,7 +58,7 @@ const Navbar = () => {
           color={"gray.600"}
         >
           <Flex align="center" flex={"2"}>
-            <Link to="/dashboard">
+            <Link to="/student/dashboard">
               {" "}
               <Image objectFit="contain" src={masaiimage} alt="Masai logo" />
             </Link>

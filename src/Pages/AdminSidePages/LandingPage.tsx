@@ -1,4 +1,4 @@
-import React, { useEffect} from "react";
+import React, { useEffect,useCallback} from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -11,7 +11,20 @@ const LandingPage = () => {
    // when user enters to landing page it checks for username in localstorage and in session storage 
    // if find username find update state in redux based on values 
    // if not find values in local storage  navigate to login
-  useEffect(() => {
+   
+   const gotoLogin = useCallback(() => {
+    navigate("/login");
+  }, [navigate]);
+
+  const goToStudentDashboard = useCallback(() => {
+    navigate("/student/dashboard");
+  }, [navigate]);
+
+  const goToAdminDashboard = useCallback(() => {
+    navigate("/admin/dashboard");
+  }, [navigate]);
+ 
+   useEffect(() => {
     let usertype;
     let username;
     let userId;
@@ -30,7 +43,7 @@ const LandingPage = () => {
         userId: userId,
         isAdmin: false,
       });
-      navigate("/student/dashboard");
+     goToStudentDashboard()
     }
     if (username && usertype !== "STUDENT_USER") {
       IsAuthenticated({
@@ -39,12 +52,12 @@ const LandingPage = () => {
         userId: userId,
         isAdmin: true,
       });
-      navigate("/admin/dashboard");
+     goToAdminDashboard()
     }
-    if (!usertype) {
-      navigate("/login");
-    }
-  }, [IsAuthenticated,navigate]);
+    if(!username){
+      gotoLogin()
+      }
+  }, [gotoLogin,IsAuthenticated,goToAdminDashboard,goToStudentDashboard]);
 
   return <div></div>;
 };

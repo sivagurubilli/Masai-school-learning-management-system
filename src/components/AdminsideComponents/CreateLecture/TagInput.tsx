@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Box, Flex, FormLabel, Text } from "@chakra-ui/react";
-import { Categoery } from "../../../assets/assets";
+import {  Categoery } from "../../../assets/assets";
 
 const TagInput = ({ values, LectureValues, setLectureValues }: any) => {
   const [showSuggestions, setShowSuggestions] = useState<boolean>(false);
   const [suggestionTags, setSuggestionsTags] = useState<string[]>([]);
   const [tags, setTags] = useState<string[]>(values.tags);
 
+ 
   //on clicking on tag it added tgs array lecturevalues as well
   const handleTagClick = (tag: string) => {
     if (!LectureValues.tags.includes(tag)) {
@@ -23,7 +24,7 @@ const TagInput = ({ values, LectureValues, setLectureValues }: any) => {
     const Filtertag: any = tags.filter((tag: any) => tag !== tag1);
     setLectureValues({
       ...LectureValues,
-      tags: LectureValues.tags.filter((tag: any) => tag !== tag1),
+      tags: Filtertag,
     });
     setTags(Filtertag);
   };
@@ -34,17 +35,17 @@ const TagInput = ({ values, LectureValues, setLectureValues }: any) => {
 
   useEffect(() => {
     setLectureValues({ ...values, tags: tags });
-  }, [values,setLectureValues,tags]);
+  }, [values, setLectureValues, tags]);
 
   useEffect(() => {
-    const categoryElement = Categoery.find(el => el.key === values.category);
+    const categoryElement = Categoery.find((el) => el.id === values.category);
     if (categoryElement) {
       setSuggestionsTags(categoryElement.tags);
     } else {
       setSuggestionsTags([]);
     }
   }, [values.category]);
-  
+
 
   return (
     <div>
@@ -75,6 +76,7 @@ const TagInput = ({ values, LectureValues, setLectureValues }: any) => {
             fontSize="13px"
             bg="blue.100"
             key={tag}
+           
           >
             {tag}{" "}
             <li
@@ -91,7 +93,7 @@ const TagInput = ({ values, LectureValues, setLectureValues }: any) => {
           </Flex>
         ))}
       </Flex>
-      {values.category && (
+      {LectureValues.category && (
         <Flex
           flexWrap="wrap"
           mt="10px"
@@ -122,7 +124,7 @@ const TagInput = ({ values, LectureValues, setLectureValues }: any) => {
           ))}
         </Flex>
       )}
-      {!values.category && (
+      {!LectureValues.category && (
         <Text color="orange" fontSize="14PX">
           Select Categoery to get the relevent tags
         </Text>

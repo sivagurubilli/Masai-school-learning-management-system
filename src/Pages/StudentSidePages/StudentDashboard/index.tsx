@@ -8,27 +8,33 @@ import { ILectureResponse } from "../../../Services/LectureInterface";
 import DashboardLectureCard from "../../../components/StudentSideComponents/StudentDashboard/DashboardLectureCard";
 import CommonModalComponent from "../../../components/Modal/commonModal";
 
+
 // this component displays student side dashboard
 const Dashborad = () => {
   const [dashboardLectures,setDashboardLectures] = useState<ILectureResponse[]>()
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [modalBody, setModalErrorBody] = useState<string>("");
 
+
+
+  const fetchData = async() =>{
+    try{
+    const response = await GetDashboardLecturesService();
+    if(response.length){
+    setDashboardLectures(response);
+    }
+  }catch(error){
+    setIsOpen(true);
+    setModalErrorBody(
+      "Sorry about that! There is a scheduled downtime on your servers, so please check them"
+    );
+  }
+}
+
+
   // when student user enters this page all lectures for that date schedule is displayed here
     useEffect(()=>{
-      const fetchData = async() =>{
-        try{
-        const response = await GetDashboardLecturesService();
-        if(response.length){
-        setDashboardLectures(response);
-        }
-      }catch(error){
-        setIsOpen(true);
-        setModalErrorBody(
-          "Sorry about that! There is a scheduled downtime on your servers, so please check them"
-        );
-      }
-    }
+   
       fetchData();
       },[])
 
@@ -51,7 +57,10 @@ const Dashborad = () => {
           ml="10%"
           mt="70px"
         >   
-      {dashboardLectures &&  <DashboardLectureCard />}
+      {dashboardLectures &&  dashboardLectures.map((lecture)=>(
+      <DashboardLectureCard lectureData={lecture} />
+    
+    ))}
 
 
         </Box>

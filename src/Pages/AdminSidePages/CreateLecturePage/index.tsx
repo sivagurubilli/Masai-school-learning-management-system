@@ -25,7 +25,7 @@ const AdminLectureCreate = () => {
     day: "",
     notes: "",
   });
-
+console.log(LectureValues)
   return (
     <div className="container">
       <Navbar />

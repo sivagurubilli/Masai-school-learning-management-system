@@ -1,8 +1,11 @@
+
+import moment from "moment";
 import { Badge, Box, Divider, Flex, Text } from "@chakra-ui/react";
 import React from "react";
 import { Link } from "react-router-dom";
 
-const DashboardLectureCard = () => {
+const DashboardLectureCard = ({lectureData}:any) => {
+ 
   return (
     <div>
       <Box w="100%" p="10px" pb="10px">
@@ -18,21 +21,26 @@ const DashboardLectureCard = () => {
             >
               <Flex justifyContent="center" mt="30px" alignItems="center">
                 <i className="fa-solid fa-calendar-days"></i>
-                <Text ml="20px">7:30 pm </Text>
+                <Text ml="10px">{ moment(lectureData.schedule).format('h:mm A')} </Text>
               </Flex>
-              <Text>Lecture</Text>
+              <Text>{lectureData.type}</Text>
             </Box>
             <Box p="10px" pl="20px" w="70%">
-              <Link to="">
-                <Text
+            <Link to={"/student/lectures/" + lectureData.lectureId}>
+              <Text
                   color="rgb(20,110,190)"
                   fontSize="18px"
                   fontWeight="medium"
-                >
-                  23 jan lecture
-                </Text>
+                > {lectureData.title}</Text>
               </Link>
-              <Text>kunal starting at 10.30 pm </Text>
+              <Text
+                  
+                  fontSize="16px"
+                  fontWeight="medium"
+                >
+                  {moment(lectureData.schedule).format("MMM D")} {lectureData.day}
+                </Text>
+              <Text fontWeight={"900px"} >{lectureData.createdBy} starting at {  moment(lectureData.schedule).format('h:mm A')} </Text>
               <Flex>
                 <Badge
                   bg="blue.200"
@@ -43,7 +51,7 @@ const DashboardLectureCard = () => {
                   ml="10px"
                 >
                   {" "}
-                  coding
+                  {lectureData.category}
                 </Badge>
                 <Badge
                   bg="blue.200"
@@ -53,7 +61,7 @@ const DashboardLectureCard = () => {
                   p="6px"
                   ml="10px"
                 >
-                  live
+                  {lectureData.type}
                 </Badge>
               </Flex>
             </Box>
@@ -64,7 +72,7 @@ const DashboardLectureCard = () => {
             alignItems="center"
             w="15%"
           >
-            <Link to="">
+            <Link to={"/student/lectures/" + lectureData.lectureId}>
               <Text
                 color="rgb(20,110,190)"
                 mr="10px"

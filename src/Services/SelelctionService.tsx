@@ -37,7 +37,13 @@ export async function getTypeArray(): Promise<ITypeObject[]> {
 
 export async function getUserArray(): Promise<IUserObject[]> {
   try {
-    const response = await axios.get("/api/userList");
+
+    const response = await axios.get(
+      "/api/users/adminlist"
+    );
+    
+
+
     return response.data;
   } catch (error: any) {
     return error;
@@ -53,15 +59,13 @@ export async function getCategoryArrray(): Promise<ICategoryObject[]> {
     return error;
   }
 }
-
-export async function getCategorySectionArrray(): Promise<
-  ICategorySectionObject[]
-> {
+export async function getCategoryArray(): Promise<ICategoryObject[]>{
   try {
     const response = await axios.get(
-      "http://3.27.61.194:8082/api/categoryList"
-    );
-    console.log("category", response.data);
+      "/api/categoryList"
+          );
+
+
     return response.data;
   } catch (error: any) {
     return error;

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import {  Link } from "react-router-dom";
+import {  Link, useNavigate } from "react-router-dom";
 import {
   Box,
   Flex,
@@ -15,19 +15,31 @@ import ModalComponent from "../../../components/Modal/ModalComponent";
 // this component is lecture page navbar down below component
 const SecondNavforLectureDetail = ({ id }: { id: string | undefined  }) => {
   const [isLargerThan900] = useMediaQuery("(min-width: 900px)");
-
+  const [modalBody,setModalBody] = useState("Do you want to delete this Lecture")
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const navigate = useNavigate()
+  
 const handleOpen=()=>setIsOpen(true)
-  const DeleteLecture =async ()=>{
+const DeleteLecture =async ()=>{
+  try{
   const response = await LectureDeleteService(id)
+  console.log(response)
   if(response.message){
-       setIsOpen(false)
+    navigate("/admin/lectures")
+    setModalBody(
+      "The lecture has been successfully deleted"
+    )
   }
+}catch(error){
+  setModalBody(
+    "Something went wrong!  The lecture not deleted"
+  )
+}
   
   }
   return (
     <Box bg="white" pt="20px" pb="20px">
-    <ModalComponent DeleteLecture={DeleteLecture} isOpen={isOpen} setIsOpen={setIsOpen} /> 
+    <ModalComponent DeleteLecture={DeleteLecture} isOpen={isOpen} modalBody={modalBody} setIsOpen={setIsOpen} /> 
       <Flex
         direction={isLargerThan900 ? "row" : "column"}
         alignItems="center"
