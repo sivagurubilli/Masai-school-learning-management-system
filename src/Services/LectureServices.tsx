@@ -263,11 +263,14 @@ export async function AddVideoFileService(file: any, lectureId: any) {
 
 // for getting all lectures when user enters to the lectures page
 export async function GettAllStudentLectureService(): Promise<
-  ILectureResponse[]
+  // ILectureResponse[]
+  any
 > {
   try {
+    let batchId = localStorage.getItem("batchId") || sessionStorage.getItem("batchId");
+    let sectionId = localStorage.getItem("sectionId") || sessionStorage.getItem("sectionId");
     const response = await axios.get(
-      "/api/lecture/lectureList/student/2/2"
+      `/api/lecture/lectureList/student/${sectionId}/${batchId}`
     );
 
     return response.data;
@@ -282,8 +285,10 @@ export async function LectureStudentSearchService(
 ): Promise<ILectureResponse[]> {
   const { title, batch, section, type, createdBy, startTime, day, week, category } = data;
   try {
+    let batchId = localStorage.getItem("batchId") || sessionStorage.getItem("batchId");
+    let sectionId = localStorage.getItem("sectionId") || sessionStorage.getItem("sectionId");
     const response = await axios.post(
-      "/api/lecture/lectures/search/student/2/2",
+      `/api/lecture/lectures/search/student/${sectionId}/${batchId}`,
       { title, batch, section, type, startTime, createdBy, day, week, category }
     );
     return response.data;
