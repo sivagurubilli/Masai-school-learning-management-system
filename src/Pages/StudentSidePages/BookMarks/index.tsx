@@ -17,7 +17,11 @@ const BookMarks = () => {
   //getting all bookmarks when user enters into page by using useEffect
   useEffect(() => {
     const fetchData = async () => {
-     const id = Number(localStorage.getItem("uerId"))
+     let id;
+     id = Number(localStorage.getItem("userId"))
+      if(!id){
+  id=Number(sessionStorage.getItem("userId"))
+      }
       try {
         const response = await  GetAllBookMarksService(id);
         if(response.length){

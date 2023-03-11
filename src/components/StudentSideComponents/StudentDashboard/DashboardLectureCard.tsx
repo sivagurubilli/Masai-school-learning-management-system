@@ -1,16 +1,19 @@
 import moment from "moment";
 import { Badge, Box, Divider, Flex, Text } from "@chakra-ui/react";
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import CommonModalComponent from "../../../components/Modal/commonModal";
+
 
 const DashboardLectureCard = ({ lectureData }: any) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [modalBody, setModalErrorBody] = useState<string>("");
+
   const navigate = useNavigate();
 
+
   const goTolecture = () => {
-    const targetTime = new Date("2023-03-11 20:00:00");
+    const targetTime = new Date(lectureData.schedule);
     const currentTime = new Date();
 
     const diffInSeconds = Math.floor(
@@ -22,8 +25,9 @@ const DashboardLectureCard = ({ lectureData }: any) => {
       setModalErrorBody(
         "Lectures can only be attended before 10 minutes"
       );
-    } else {
+    } else{
       navigate("/student/lectures/" + lectureData.lectureId);
+
     }
   };
 
@@ -54,16 +58,23 @@ const DashboardLectureCard = ({ lectureData }: any) => {
               <Text>{lectureData.type}</Text>
             </Box>
             <Box p="10px" pl="20px" w="70%">
-              <Link to="" onClick={goTolecture}>
+             {lectureData.type==="Live" ? <a  
+            style={{ color:"rgb(20,110,190)",
+                  fontSize:"18px",
+                  fontWeight:"medium",
+                  cursor:"pointer"}}
+                   href={lectureData.zoomLink}>{lectureData.title}</a>:
                 <Text
+                 onClick={goTolecture}
                   color="rgb(20,110,190)"
                   fontSize="18px"
                   fontWeight="medium"
+                  cursor="pointer"
                 >
                   {" "}
                   {lectureData.title}
                 </Text>
-              </Link>
+                              }
               <Text fontSize="16px" fontWeight="medium">
                 {moment(lectureData.schedule).format("MMM D")} {lectureData.day}
               </Text>
@@ -96,23 +107,31 @@ const DashboardLectureCard = ({ lectureData }: any) => {
               </Flex>
             </Box>
           </Flex>
+        
           <Box
             display="flex"
             justifyContent="center"
             alignItems="center"
             w="15%"
           >
-            <Link to="" onClick={goTolecture}>
+         {lectureData.type==="Live" ? <a  
+            style={{ color:"rgb(20,110,190)",
+                  fontSize:"18px",
+                  fontWeight:"medium",
+                  cursor:"pointer"}}
+                   href={lectureData.zoomLink}>{lectureData.title}</a>:
               <Text
+              onClick={goTolecture}
                 color="rgb(20,110,190)"
                 mr="10px"
                 fontSize="18px"
+                cursor="pointer"
                 fontWeight="medium"
               >
                 Details{" "}
               </Text>
-            </Link>
-            <i className="fa-solid fa-angle-right"></i>
+}
+            <i   style={{ color:"rgb(20,110,190)",marginLeft:"10px"}} className="fa-solid fa-angle-right"></i>
           </Box>
         </Flex>
       </Box>

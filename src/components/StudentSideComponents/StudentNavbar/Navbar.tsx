@@ -40,7 +40,7 @@ const Navbar = () => {
       const name1 = sessionStorage.getItem("username");
       setUserName(name1);
     }
-  }, [userName]);
+  }, []);
 
 
   const Logout =()=>{
