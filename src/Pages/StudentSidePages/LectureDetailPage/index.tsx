@@ -175,7 +175,7 @@ const [categoryArray,setCategoryArray] = useState<ICategoryObject[]>()
         await axios.delete(`http://3.27.61.194:8082/api/${userId}/${lectureDetail.lectureId}`);
         setIsBookmarked(false);
       } else {
-        await axios.post("http://3.27.61.194:8082/api/bookmark/", {"userId":userId,"lectureId":lectureDetail.lectureId});
+        await axios.post("http://3.27.61.194:8082/api/bookmark/", {"userId":userId,"lectureId":lectureDetail.lectureId,"status":true});
         setIsBookmarked(true);
       }
     } catch (err) {

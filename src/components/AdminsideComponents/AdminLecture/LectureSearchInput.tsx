@@ -147,6 +147,7 @@ const LectureSearchInput = ({ filterValues, setFilterValues ,setLecturesData,sea
           base: "1fr 1fr",
         }}
         gap={4}
+        
       >
         <Input
           name="title"
