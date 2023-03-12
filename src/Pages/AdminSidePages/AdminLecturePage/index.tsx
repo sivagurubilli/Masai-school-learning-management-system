@@ -72,11 +72,11 @@ const [endIndex,setEndIndex] = useState<number>()
   const GetLectures = async () => {
     try {
       const response = await LectureSearchService(filterValues);
-      if (response.length) {
+      if (response?.length) {
     
         setPaginatedData(response);
         setCurrentPage(1);
-        setTotalPages(Math.ceil(response.length/6));
+        setTotalPages(Math.ceil(response?.length/6));
       } else {
         setIsOpen(true);
         setModalErrorBody(
@@ -97,10 +97,10 @@ const [endIndex,setEndIndex] = useState<number>()
       const response = await GetAllLectureService();
 
       if (response) {
-            setCurrentPage(response.pageNumber+1);
+            setCurrentPage(response?.pageNumber+1);
        
-        setPaginatedData(response.content)
-        setTotalPages(Math.ceil(response.content.length/6));
+        setPaginatedData(response?.content)
+        setTotalPages(Math.ceil(response?.content?.length/6));
        // setLecturesData(response.content);
         setItemsPage(6)
       }
@@ -182,7 +182,7 @@ const [endIndex,setEndIndex] = useState<number>()
   };
 
   const Reset = () => {
-    
+    updateSearch({});
     setFilterValues({
       title: "",
       batch: "",
@@ -193,6 +193,8 @@ const [endIndex,setEndIndex] = useState<number>()
       week: "",
       day: "",
     });
+    window.history.pushState({}, "", window.location.pathname);
+   
     fetchData();
   };
 

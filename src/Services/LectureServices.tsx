@@ -170,6 +170,7 @@ export async function LectureCopyService(
     tags,
     day,  
     zoomLink,
+    optional,
     notes,
     week,
   } = data;
@@ -179,13 +180,14 @@ export async function LectureCopyService(
     if(!updatedBy){
       updatedBy = Number(sessionStorage.getItem("userId"))
     }
-    const response = await axios.post(`/api/lectures/${lectureId}/copy`, {
+    const response = await axios.post(`/api/lecture/lectures/${lectureId}/copy`, {
       title,
       batch,
       schedule,
       concludes,
       tags,
      day,
+     optional,
      updatedBy:updatedBy,
       zoomLink,
       notes,
@@ -252,8 +254,13 @@ export async function GetDashboardLecturesService(): Promise<
 
 // add video file service
 export async function AddVideoFileService(file: any, lectureId: any) {
+  
   try {
-    const response = await axios.post(`/api/lecture/${lectureId}/video`, {file});
+    const formData = new FormData();
+    formData.append('file', file);
+    const response = await axios.post(`/api/lecture/${lectureId}/video`,
+   { body: formData,}
+    );
 
     return response.data;
   } catch (error: any) {

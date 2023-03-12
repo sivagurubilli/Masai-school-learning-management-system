@@ -12,6 +12,7 @@ import {
   Input,
   Text,
   useMediaQuery,
+  
 } from "@chakra-ui/react";
 import "../AdminLecturePage/index.css";
 import {
@@ -53,17 +54,22 @@ const AdminLectureDetail = () => {
     week: "",
     day: "",
     notes: "",
+    video:{
+      id:"",
+      data:""
+    }
   });
+
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [modalBody, setModalErrorBody] = useState<string>("");
-  const [videoFile, setVideoFile] = useState<string | undefined>(undefined);
+  const [videoFile, setVideoFile] = useState<string | undefined | File>(undefined);
   const [isVideoActive, setVideoActive] = useState<boolean>(false);
   const [batchArray, setBatchArray] = useState<IBatchObject[]>();
   const [sectionArray, setSectionArray] = useState<ISectionObject[]>();
   const [userArray, setUserArray] = useState<IUserObject[]>();
   const [typeArray, setTypeArray] = useState<ITypeObject[]>();
 const [categoryArray,setCategoryArray] = useState<ICategoryObject[]>()
-
+const [url,setUrl] = useState("")
   const keyValueArray = lectureDetail ? Object.entries(lectureDetail) : [];
   const { id } = useParams();
 
@@ -165,16 +171,20 @@ const [categoryArray,setCategoryArray] = useState<ICategoryObject[]>()
   const [isLargerThan900] = useMediaQuery("(min-width: 900px)");
   // get the video file by onChange
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    
     const files = event.target!.files;
+ 
     if (files) {
+   
       let reader = new FileReader();
       reader.readAsDataURL(files[0]);
-
-      reader.onload = (event) => {
-        console.log(event.target?.result);
+      reader.onload = (event) => {   
         const fileEvent = event.target?.result;
         if (typeof fileEvent === "string") {
-          setVideoFile(fileEvent);
+         
+          const base64String =fileEvent.replace(/^data:video\/mp4;base64,/, '')
+          setVideoFile(base64String)
+        
         } else {
           const arrayBuffer = fileEvent as ArrayBuffer;
           const uint8Array = new Uint8Array(arrayBuffer);
@@ -182,20 +192,42 @@ const [categoryArray,setCategoryArray] = useState<ICategoryObject[]>()
             null,
             Array.from(uint8Array)
           );
+      
+        
           setVideoFile(convertedString);
         }
       };
     }
   };
+ 
+ 
 
-  // uploading video file
+  useEffect(()=>{
+    if(lectureDetail?.video?.data){
+      const binaryData = atob(lectureDetail?.video?.data);
+      const uint8Array = new Uint8Array(binaryData.length);
+    for (let i = 0; i < binaryData.length; i++) {
+      uint8Array[i] = binaryData.charCodeAt(i);
+    }
+    const blob = new Blob([uint8Array], { type: "video/mp4" });
+    const url1 = URL.createObjectURL(blob);
+    setUrl(url1)
+
+  }
+
+  },[lectureDetail?.video?.data])
+
   const uploadFile = async () => {
     try {
-      const response = await AddVideoFileService(id, videoFile);
-      console.log(videoFile);
+      const response = await AddVideoFileService(videoFile,id);
+    
       if (response.message) {
+        fetchData();
         setIsOpen(true);
         setModalErrorBody("Video added to the lecture successfully");
+      }else{
+        setIsOpen(true);
+      setModalErrorBody("Video not added to the lecture please try again!");
       }
     } catch (error) {
       setIsOpen(true);
@@ -220,7 +252,7 @@ const [categoryArray,setCategoryArray] = useState<ICategoryObject[]>()
             setIsOpen={setIsOpen}
             modalBody={modalBody}
           />
-          {!lectureDetail?.batch? (
+          {!lectureDetail?.batch  ? (
             <Box mt="1%">
               <Loading />
             </Box>
@@ -260,6 +292,7 @@ const [categoryArray,setCategoryArray] = useState<ICategoryObject[]>()
                       h="auto"
                       p="20px"
                       bg={index % 2 === 1 ? "gray.100" : "white"}
+                      display={key === "video" ? "none" : "flex"}
                     >
                       <Box display={index === 0 ? "none" : "block"} w="50%">
                         <Text>{key}</Text>
@@ -292,7 +325,7 @@ const [categoryArray,setCategoryArray] = useState<ICategoryObject[]>()
                     onClick={handeleClick}
                     justifyContent="center"
                   >
-                    <Text color="blue">Vimeo Video</Text>
+                    <Text color="blue"> Video 1</Text>
                   </Flex>
                   <Flex
                     h="40px"
@@ -302,22 +335,34 @@ const [categoryArray,setCategoryArray] = useState<ICategoryObject[]>()
                     onClick={handeleClick}
                     justifyContent="center"
                   >
-                    <Text color="blue">S3 Video</Text>
+                    <Text color="blue"> Video 2</Text>
                   </Flex>
                 </Flex>
                 <Flex
                   fontSize="20px"
                   color="blue"
                   w="100%"
-                  h="60px"
+                  h="auto"
                   justifyContent="center"
                   alignItems="center"
                 >
-                  {isVideoActive
-                    ? "No S3 video Available"
-                    : "No Vimeo Video Availble"}
+                  {!isVideoActive
+                   &&    lectureDetail?.video?.data ?
+                   
+                    
+                    <Box mt="50px" w="60%" h="350px" ml="20%"  
+                   bg="white"
+                   justifyContent="center"
+                   alignItems="center">
+                
+                <video src ={url} controls />
+      
+ 
+               </Box> :
+                     "No Video Availble"
+                   }
                 </Flex>
-                <Divider />
+                <Divider mt="20px" />
                 <Flex mt="30px" p="20px" justifyContent="space-between">
                   <Box>
                     <Text color="blue">Upload Video</Text>
@@ -341,9 +386,7 @@ const [categoryArray,setCategoryArray] = useState<ICategoryObject[]>()
                 </Flex>
               </Box>
 
-              <Box mt="100px" w="40%" h="500px" ml="30%">
-                {videoFile && <video src={videoFile} controls />}
-              </Box>
+           
             </div>
           )}
         </div>

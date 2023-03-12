@@ -10,9 +10,9 @@ import moment from "moment";
 import DetailTab from "./../../../components/StudentSideComponents/StudentLectureComponents/Tabs/DetailTab";
 import axios from "axios";
 import Skeleton from "../../../components/Skeleton/index";
-import { BatchListMap, CategoryMap, SectionListMap, TypeListMap } from "../../../assets/assets";
 import {getBatchArrray,getCategoryArray,getSectionArray,getTypeArray,getUserArray} from "../../../Services/SelelctionService"
 import { IBatchObject, ICategoryObject, ISectionObject, ITypeObject, IUserObject } from './../../../Services/SelectionInterface';
+import CommonModalComponent from "../../../components/Modal/commonModal";
 
 const StudentLectureDetail = () => {
   const { id = "" } = useParams<{ id: string }>();
@@ -121,7 +121,6 @@ const [categoryArray,setCategoryArray] = useState<ICategoryObject[]>()
 
 
 
-
   useEffect(() => {
     const fetchLecture = async () => {
       setLoading(true);
@@ -194,6 +193,7 @@ const [categoryArray,setCategoryArray] = useState<ICategoryObject[]>()
   return (
     <div>
       <Navbar />
+      <CommonModalComponent  isOpen={isOpen} modalBody={modalErrorBody}/>
       {loading && <Skeleton />}
       {lectureDetail && (
         <Box>

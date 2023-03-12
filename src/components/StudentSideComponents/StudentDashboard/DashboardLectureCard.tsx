@@ -8,7 +8,7 @@ import CommonModalComponent from "../../../components/Modal/commonModal";
 const DashboardLectureCard = ({ lectureData }: any) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [modalBody, setModalErrorBody] = useState<string>("");
-
+const [gotoLive,setGotoLive] = useState(false)
   const navigate = useNavigate();
 
 
@@ -20,11 +20,15 @@ const DashboardLectureCard = ({ lectureData }: any) => {
       (targetTime.getTime() - currentTime.getTime()) / 1000
     );
     const diffInMinutes = Math.floor(diffInSeconds / 60);
+  
     if (diffInMinutes > 10) {
+ 
       setIsOpen(true);
       setModalErrorBody(
         "Lectures can only be attended before 10 minutes"
       );
+    }else if(diffInMinutes < 10){
+      setGotoLive(true)
     } else{
       navigate("/student/lectures/" + lectureData.lectureId);
 
@@ -58,7 +62,7 @@ const DashboardLectureCard = ({ lectureData }: any) => {
               <Text>{lectureData.type}</Text>
             </Box>
             <Box p="10px" pl="20px" w="70%">
-             {lectureData.type==="Live" ? <a  
+             {lectureData.type==="Live" && gotoLive === true ? <a  
             style={{ color:"rgb(20,110,190)",
                   fontSize:"18px",
                   fontWeight:"900",
@@ -114,12 +118,12 @@ const DashboardLectureCard = ({ lectureData }: any) => {
             alignItems="center"
             w="15%"
           >
-         {lectureData.type==="Live" ? <a  
+         {lectureData.type==="Live"   && gotoLive === true ? <a  
             style={{ color:"rgb(20,110,190)",
                   fontSize:"18px",
                   fontWeight:"900",
                   cursor:"pointer"}}
-                   href={lectureData.zoomLink}>{lectureData.title}</a>:
+                   href={lectureData.zoomLink}>Details</a>:
               <Text
               onClick={goTolecture}
                 color="rgb(20,110,190)"
@@ -130,7 +134,7 @@ const DashboardLectureCard = ({ lectureData }: any) => {
               >
                 Details{" "}
               </Text>
-}
+              }
             <i   style={{ color:"rgb(20,110,190)",marginLeft:"10px"}} className="fa-solid fa-angle-right"></i>
           </Box>
         </Flex>
