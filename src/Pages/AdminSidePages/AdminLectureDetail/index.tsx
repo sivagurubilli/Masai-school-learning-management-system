@@ -175,7 +175,6 @@ const [url,setUrl] = useState("")
     const files = event.target!.files;
  
     if (files) {
-   
       let reader = new FileReader();
       reader.readAsDataURL(files[0]);
       reader.onload = (event) => {   
@@ -191,9 +190,7 @@ const [url,setUrl] = useState("")
           const convertedString = String.fromCharCode.apply(
             null,
             Array.from(uint8Array)
-          );
-      
-        
+          )
           setVideoFile(convertedString);
         }
       };

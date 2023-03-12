@@ -259,7 +259,7 @@ export async function AddVideoFileService(file: any, lectureId: any) {
     const formData = new FormData();
     formData.append('file', file);
     const response = await axios.post(`/api/lecture/${lectureId}/video`,
-   { body: formData,}
+    file
     );
 
     return response.data;

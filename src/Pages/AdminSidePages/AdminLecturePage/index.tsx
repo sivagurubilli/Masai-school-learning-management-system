@@ -19,7 +19,7 @@ import {
 import CommonModalComponent from "../../../components/Modal/commonModal";
 import LectureSearchInput from "../../../components/AdminsideComponents/AdminLecture/LectureSearchInput";
 import Loader from "../../../components/Modal/Loader";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import Pagination from "../../../components/Pagination/Pagination";
 import { ILectureResponse } from "../../../Services/LectureInterface";
 
@@ -59,7 +59,7 @@ const AdminLecture = () => {
   const [itemsPerPage, setItemsPage] = useState(1);
 const [startIndex,setStartIndex] = useState<number>(1)
 const [endIndex,setEndIndex] = useState<number>()
-
+const navigate = useNavigate();
   //user search and get lectures by provideing different values
   const GetLecturesByFilter = () => {
     setLoading(true);
@@ -193,8 +193,8 @@ const [endIndex,setEndIndex] = useState<number>()
       week: "",
       day: "",
     });
-    window.history.pushState({}, "", window.location.pathname);
-   
+  //  window.history.pushState({}, "", window.location.pathname);
+  navigate("");
     fetchData();
   };
 
