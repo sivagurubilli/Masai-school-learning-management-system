@@ -161,10 +161,10 @@ const LectureSearchInput = ({ filterValues, setFilterValues }: any) => {
         gap={4}
       >
         <Select
-          name="user"
+          name="createdBy"
           width={selectWidth}
           color="rgb(75 85 99)"
-          value={filterValues.user}
+          value={filterValues.createdBy}
           placeholder="Select user"
           onChange={handleChange}
         >

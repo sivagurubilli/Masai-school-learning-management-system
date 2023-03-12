@@ -1,5 +1,6 @@
-import { Box, Flex, Button, useMediaQuery } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
+
+import { Box, Flex, Button, useMediaQuery, Text } from "@chakra-ui/react";
+import React, { useEffect, useState, useRef } from "react";
 import "./index.css";
 import Navbar from "../../../components/StudentSideComponents/StudentNavbar/Navbar";
 import TableHeading from "../../../components/StudentSideComponents/StudentLectureComponents/LectureTable/LecturesTable";
@@ -12,7 +13,12 @@ import CommonModalComponent from "../../../components/Modal/commonModal";
 import LectureSearchInput from "../../../components/StudentSideComponents/StudentLectureComponents/LectureSearchInput"
 import SecondNavbar from "../../../components/StudentSideComponents/StudentLectureComponents/SecondNavbar";
 import Skeleton from "./../../../components/Skeleton/index";
-import ReactPaginate from "react-paginate";
+import Pagination from "../../../components/Pagination/Pagination";
+import { useSearchParams } from "react-router-dom";
+
+interface SearchQuery {
+  [key: string]: string;
+}
 
 interface IFilteredValues {
   title: string;
@@ -38,52 +44,134 @@ const StudentLecture = () => {
     week: "",
     day: "",
   });
-  const [isLoading, setLoading] = useState<boolean>();
-  const [lecturesData, setLecturesData] = useState<ILectureResponse[]>();
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+
+
+
   const [body, setBody] = useState<string>("");
-  const [lectureDataLength, setLectureDataLength] = useState<number>(0);
+  const [isLoading, setLoading] = useState<boolean>(false);
+  const [lecturesData, setLecturesData] = useState<ILectureResponse[]>([]);
+  const [paginatedData, setPaginatedData] = useState<ILectureResponse[]>([])
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [modalBody, setModalErrorBody] = useState<string>("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [itemsPerPage, setItemsPage] = useState(1);
+  const [startIndex, setStartIndex] = useState<number>(1)
+  const [endIndex, setEndIndex] = useState<number>()
 
   // calling service for getting list for lectures
-  const GetLectures = async() => {
-    setLoading(true)
-        try{
-   const res= await LectureStudentSearchService(filterValues)
-      if (res.length > 0) {
-        setLoading(false)
-        setLecturesData(res);
-      }     
-    }catch(error){    
+
+
+  const GetLectures = async () => {
+    try {
+      setLoading(true);
+      const response = await LectureStudentSearchService(filterValues);
+      setLoading(false);
+
+      if (response.length > 0) {
+        setPaginatedData(response);
+        setCurrentPage(1);
+        setTotalPages(Math.ceil(response.length / 2));
+      } else {
         setIsOpen(true);
-        setBody("These values did not match the lecture data!");
+        setModalErrorBody(
+          "There was a discrepancy between these values and the lecture data!"
+        );
       }
-   
+    } catch (error) {
+      setLoading(false);
+      console.error("An error occurred while fetching data:", error);
+      setIsOpen(true);
+      setModalErrorBody("An error occurred while fetching data. Please try again later.");
+    }
+
   };
 
   const fetchLecture = async () => {
-    setLoading(true);
     try {
-      const res = await GettAllStudentLectureService();
-      setLecturesData(res);
-      setLectureDataLength(res.length);
+      setLoading(true);
+      const response = await GettAllStudentLectureService();
       setLoading(false);
-    } catch (err) {
-      console.error(err);
+      if (response) {
+        setCurrentPage(1);
+
+        setPaginatedData(response)
+        setTotalPages(Math.ceil(response.length / 6));
+        setItemsPage(6)
+        setLoading(false)
+      }
+    } catch (error) {
+      setLoading(false);
+      setIsOpen(true);
+      setModalErrorBody(
+        "We were unable to find any data. It seems that something has gone wrong!"
+      );
     }
-  };
+  }
 
   useEffect(() => {
-   
     fetchLecture();
   }, []);
 
-  const [currentPage, setCurrentPage] = useState<number>(0);
-  const ITEMS_PER_PAGE = 2;
-  const startIndex = currentPage * ITEMS_PER_PAGE;
-  const endIndex = startIndex + ITEMS_PER_PAGE;
-  const paginatedLecturesData = lecturesData?.slice(startIndex, endIndex);
-  const handlePageChange = ({ selected }: { selected: number }) => {
-    setCurrentPage(selected);
+  useEffect(() => {
+    if (paginatedData) {
+      const startIndex = (currentPage - 1) * itemsPerPage;
+      const endIndex = startIndex + itemsPerPage;
+      setStartIndex(startIndex + 1)
+      setEndIndex(endIndex)
+      const lecturedata = paginatedData.slice(startIndex, endIndex)
+      if (endIndex > paginatedData.length) {
+        setEndIndex(paginatedData.length)
+      } else {
+        setEndIndex(endIndex)
+      }
+      setLecturesData(lecturedata)
+    }
+  }, [currentPage, itemsPerPage, paginatedData])
+
+  const useSearch = (): [SearchQuery, (newSearch: SearchQuery) => void] => {
+    const [searchParams, setSearchParams] = useSearchParams();
+
+    const prevSearchParamsRef = useRef(searchParams.toString());
+
+    useEffect(() => {
+      const currentSearchParams = searchParams.toString();
+      if (prevSearchParamsRef.current !== currentSearchParams) {
+        prevSearchParamsRef.current = currentSearchParams;
+      }
+    }, [searchParams]);
+
+    const updateSearch = (newSearch: SearchQuery): void => {
+      const params = new URLSearchParams(prevSearchParamsRef.current);
+
+      Object.entries(newSearch).forEach(([key, value]) => {
+        if (value) {
+          params.set(key, value);
+        } else {
+          params.delete(key);
+        }
+      });
+
+      setSearchParams(params.toString());
+    };
+
+    const currentSearch = Array.from(searchParams.entries()).reduce(
+      (acc, [key, value]) => ({
+        ...acc,
+        [key]: value,
+      }),
+      {}
+    );
+
+    return [currentSearch, updateSearch];
+  };
+  const [search, updateSearch] = useSearch();
+  const handlePageChange = (page: any) => {
+
+    updateSearch({
+      ...search,
+      page: page,
+    });
   };
 
   const Reset = () => {
@@ -147,11 +235,9 @@ const StudentLecture = () => {
         </Box>
       </Box>
       <Box w="90%" ml="5%" bg="white" h="auto">
-        {isLoading && <Skeleton />}
-        {lecturesData ? <TableHeading LecturesData={paginatedLecturesData} />:<Box>There is no data for this batch</Box>}
+        {lecturesData.length>0 ? (<TableHeading LecturesData={lecturesData} />) : (<Skeleton />)}
       </Box>
       <Flex
-        className="react-paginate"
         justify="space-between"
         align="center"
         ml="60px"
@@ -161,26 +247,18 @@ const StudentLecture = () => {
         rounded="md"
         bg="white"
       >
-        <Box>
           <Box>
-            Showing{" "}
-            <span className="nameSpan">{currentPage * ITEMS_PER_PAGE + 1}</span>{" "}
-            to{" "}
-            <span className="nameSpan">
-              {(currentPage + 1) * ITEMS_PER_PAGE}
-            </span>{" "}
-            of <span className="nameSpan">{lectureDataLength}</span>
+            <Text ml="30px">Showing <span className="nameSpan">{startIndex}</span> to <span className="nameSpan">{endIndex}</span>  of <span className="nameSpan">{paginatedData.length}</span> results</Text>
           </Box>
-        </Box>
-        <Box>
-          <ReactPaginate
-            pageCount={Math.ceil(lectureDataLength / ITEMS_PER_PAGE)}
-            onPageChange={handlePageChange}
-            containerClassName={"pagination"}
-            previousLabel={"<"}
-            nextLabel={">"}
-            breakLabel={"..."}
-            activeClassName={"active"}
+          <Box >
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onChange={handlePageChange}
+            setPage={setCurrentPage}
+            lectureData={paginatedData}
+            perPage={itemsPerPage}
+            setLectureData={setLecturesData}
           />
         </Box>
       </Flex>

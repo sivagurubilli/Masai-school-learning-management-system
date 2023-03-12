@@ -294,6 +294,7 @@ export async function LectureStudentSearchService(
   try {
     let batchId = localStorage.getItem("batchId") || sessionStorage.getItem("batchId");
     let sectionId = localStorage.getItem("sectionId") || sessionStorage.getItem("sectionId");
+    console.log("data",data)
     const response = await axios.post(
       `/api/lecture/lectures/search/student/${sectionId}/${batchId}`,
       { title, batch, section, type, startTime, createdBy, day, week, category }
