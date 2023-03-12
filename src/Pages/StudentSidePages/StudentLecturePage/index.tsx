@@ -9,7 +9,6 @@ import {
   GettAllStudentLectureService,
 } from "../../../Services/LectureServices";
 import { ILectureResponse } from "../../../Services/LectureInterface";
-import CommonModalComponent from "../../../components/Modal/commonModal";
 import LectureSearchInput from "../../../components/StudentSideComponents/StudentLectureComponents/LectureSearchInput"
 import SecondNavbar from "../../../components/StudentSideComponents/StudentLectureComponents/SecondNavbar";
 import Skeleton from "./../../../components/Skeleton/index";
@@ -47,65 +46,44 @@ const StudentLecture = () => {
 
 
 
-  const [body, setBody] = useState<string>("");
-  const [isLoading, setLoading] = useState<boolean>(false);
   const [lecturesData, setLecturesData] = useState<ILectureResponse[]>([]);
   const [paginatedData, setPaginatedData] = useState<ILectureResponse[]>([])
-  const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [modalBody, setModalErrorBody] = useState<string>("");
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [itemsPerPage, setItemsPage] = useState(1);
   const [startIndex, setStartIndex] = useState<number>(1)
   const [endIndex, setEndIndex] = useState<number>()
 
-  // calling service for getting list for lectures
 
 
   const GetLectures = async () => {
     try {
-      setLoading(true);
       const response = await LectureStudentSearchService(filterValues);
-      setLoading(false);
 
       if (response.length > 0) {
         setPaginatedData(response);
         setCurrentPage(1);
         setTotalPages(Math.ceil(response.length / 2));
       } else {
-        setIsOpen(true);
-        setModalErrorBody(
-          "There was a discrepancy between these values and the lecture data!"
-        );
       }
     } catch (error) {
-      setLoading(false);
       console.error("An error occurred while fetching data:", error);
-      setIsOpen(true);
-      setModalErrorBody("An error occurred while fetching data. Please try again later.");
     }
 
   };
 
   const fetchLecture = async () => {
     try {
-      setLoading(true);
       const response = await GettAllStudentLectureService();
-      setLoading(false);
       if (response) {
         setCurrentPage(1);
 
         setPaginatedData(response)
         setTotalPages(Math.ceil(response.length / 6));
         setItemsPage(6)
-        setLoading(false)
       }
     } catch (error) {
-      setLoading(false);
-      setIsOpen(true);
-      setModalErrorBody(
-        "We were unable to find any data. It seems that something has gone wrong!"
-      );
+      // setIsOpen(true);
     }
   }
 
@@ -193,7 +171,6 @@ const StudentLecture = () => {
     <div className="container">
       <Navbar />
       <SecondNavbar />
-      <CommonModalComponent isOpen={isOpen} setIsOpen={setIsOpen} body={body} />
       <Box
         w="90%"
         ml="5%"
