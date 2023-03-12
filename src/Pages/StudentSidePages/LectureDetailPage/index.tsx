@@ -85,10 +85,6 @@ const [categoryArray,setCategoryArray] = useState<ICategoryObject[]>()
     getDropDownArrays();
   }, [getDropDownArrays]);
 
-
-  // useEffect(() => {
-  //   fetchData();
-  // }, [fetchData]);
   useEffect(() => {
     const BElem = batchArray?.find(
       (el) => Number(el.batchId) === Number(lectureDetail?.batch)
