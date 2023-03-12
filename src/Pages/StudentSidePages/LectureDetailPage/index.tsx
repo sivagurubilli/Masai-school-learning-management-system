@@ -39,7 +39,7 @@ const [categoryArray,setCategoryArray] = useState<ICategoryObject[]>()
     day: "",
     notes: "",
   });
-  const [downloadLink, setDownloadLink] = useState<string>("");
+  // const [downloadLink, setDownloadLink] = useState<string>("");
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [startTime, setStartTime] = useState<string>("");
   const [endTime, setEndTime] = useState<string>("");
@@ -47,6 +47,8 @@ const [categoryArray,setCategoryArray] = useState<ICategoryObject[]>()
   const [zoomLinkActive, setZoomLinkActive] = useState<boolean>(false);
   const [isOpen,setIsOpen]= useState<boolean>(false)
   const [modalErrorBody,setModalErrorBody]=useState<string>("")
+  const [videourl2, setVideourl2] = useState("");
+  const [lectureDetail2,setLectureDetail2]=useState<any>()
 
   const getDropDownArrays = useCallback(async () => {
     try {
@@ -123,6 +125,7 @@ const [categoryArray,setCategoryArray] = useState<ICategoryObject[]>()
       try {
         const res = await LectureSingleService(id);
         setLectureDetail(res);
+        setLectureDetail2(res)
         const formattedStartDate = moment(res.schedule).format(
           "D MMM YY h:mm "
         );
@@ -146,21 +149,24 @@ const [categoryArray,setCategoryArray] = useState<ICategoryObject[]>()
     fetchLecture();
   }, [id]);
 
-  const handleDownload = async () => {
-    const videoUrl =
-      "https://archive.org/download/BigBuckBunny_124/Content/big_buck_bunny_720p_surround.mp4";
-    const response = await fetch(videoUrl, { mode: "no-cors" });
-    const blob = await response.blob();
-    const url = window.URL.createObjectURL(blob);
-    console.log(url);
-    setDownloadLink(url);
+  useEffect(() => {
+    if (lectureDetail2?.video?.data) {
+      const binaryData = atob(lectureDetail2?.video?.data);
+      const uint8Array = new Uint8Array(binaryData.length);
+      for (let i = 0; i < binaryData.length; i++) {
+        uint8Array[i] = binaryData.charCodeAt(i);
+      }
+      const blob = new Blob([uint8Array], { type: "video/mp4" });
+      const url1 = URL.createObjectURL(blob);
+      setVideourl2(url1);
+    }
+  }, [lectureDetail2?.video?.data]);
 
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "video.mp4";
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
+  const handleDownload = async () => {
+    const link = document.createElement("a");
+    link.href = videourl2;
+    link.download = `${lectureDetail.title}.mp4`;
+    link.click();
   };
 
   const handleBookmarkClick = async () => {   
@@ -239,7 +245,7 @@ const [categoryArray,setCategoryArray] = useState<ICategoryObject[]>()
                   </Button>
                 </WrapItem>
                 <WrapItem>
-                  {lectureDetail.type === "Video" && (
+                  {lectureDetail2?.video?.data && (
                     <Button onClick={handleDownload}>
                       {" "}
                       <span>
@@ -307,9 +313,6 @@ const [categoryArray,setCategoryArray] = useState<ICategoryObject[]>()
         </Box>
       )}
 
-      {downloadLink && (
-        <a href={downloadLink}>Click here to download the video</a>
-      )}
     </div>
   );
 };

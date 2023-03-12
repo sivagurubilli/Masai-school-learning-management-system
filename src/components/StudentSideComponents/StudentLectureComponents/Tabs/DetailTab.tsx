@@ -35,8 +35,8 @@ const DetailTab = ({ lectureDetail, lectureId }:any) => {
       </TabList>
       <TabPanels>
         <TabPanel>
-          <Video lectureDetail={lectureDetail} />
-          <Note lectureDetail={lectureDetail} />
+          {lectureDetail.video && <Video lectureDetail={lectureDetail} />}
+          {lectureDetail.notes && <Note lectureDetail={lectureDetail} />}
         </TabPanel>
         <TabPanel></TabPanel>
       </TabPanels>
