@@ -40,16 +40,16 @@ export const NavbarAdminArray  = ["Lectures","Assignments","Quizzes","Tickets"
 "problems"]
 
 
-export const Categoery = [{id:"2", key:"General",tags:["dsa","coding","ecConnect","csbt"]},
-{id:"3",key:"Coding Platform",tags:["javascript","java","html","css","react","redux"]},
+export const Categoery = [{id:"4", key:"General",tags:["dsa","coding","ecConnect","csbt"]},
+{id:"5",key:"Coding Platform",tags:["javascript","java","html","css","react","redux"]},
 
-{id:"4",key:"CSBT",tags:["english","communication","mockInterview","Mac","speaking"]},
-{id:"5",key:"DA",tags:["sql","data-analysis","machineLearning","python"]},
-{id:"6",key:"DSA",tags:["recursion","two-pointers","linked-List","sorting","binary-search"]},
-{id:"7",key:"Coding",tags:["javascript","java","html","css","react","redux"]},
- {id:"8",key:"Maths",tags:["graphs","number-system","time-distance","integration"]},
- {id:"9",key:"Logic",tags:["aptitude","number-system","time-distance","reasoning"]},
- {id:"10",key:"Scrum",tags:["scrum","stand-up"]}]
+{id:"6",key:"CSBT",tags:["english","communication","mockInterview","Mac","speaking"]},
+{id:"7",key:"DA",tags:["sql","data-analysis","machineLearning","python"]},
+{id:"8",key:"DSA",tags:["recursion","two-pointers","linked-List","sorting","binary-search"]},
+{id:"9",key:"Coding",tags:["javascript","java","html","css","react","redux"]},
+ {id:"10",key:"Maths",tags:["graphs","number-system","time-distance","integration"]},
+ {id:"11",key:"Logic",tags:["aptitude","number-system","time-distance","reasoning"]},
+ {id:"12",key:"Scrum",tags:["scrum","stand-up"]}]
 
 
 export const ButtonValues =["BACK","EDIT","DISCUSSIONS","COPY"]

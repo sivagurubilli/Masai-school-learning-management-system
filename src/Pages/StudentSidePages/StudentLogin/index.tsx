@@ -103,7 +103,7 @@ export default function StudentLogin({ setGotoSignup }: any) {
       console.log(response)
       if (!response.token) {
       
-        setBackendError({ ...BackendError, errorFromBackend:response.data.message });
+        setBackendError({ ...BackendError,  errorFromBackend: true,backendErrorMessage:response.data.message });
       }
     } catch (error:any) {
 
@@ -146,6 +146,7 @@ export default function StudentLogin({ setGotoSignup }: any) {
                   <p>
                     Whoops! Something went wrong.
                     <li> {ErrorMessage.backendErrorMessage}</li>
+                    <li>Please check your username and password and try again</li>
                   </p>
                 </ul>
               </div>

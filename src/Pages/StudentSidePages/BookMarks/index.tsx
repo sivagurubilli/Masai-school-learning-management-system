@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import { ILectureResponse } from "../../../Services/LectureInterface";
 import { GetAllBookMarksService } from "../../../Services/LectureServices";
 import CommonModalComponent from "../../../components/Modal/commonModal";
+import Loader from "../../../components/Modal/Loader";
 
 
 const BookMarks = () => {
@@ -64,7 +65,8 @@ const BookMarks = () => {
             <Text mr="70px"></Text>
           </Flex>
           <Divider />
-          {bookMarks && bookMarks.map((el) => (
+
+          {bookMarks ? bookMarks.map((el) => (
             <div>
               <Flex padding="10px" justifyContent="space-between">
                 <Text pl="20px">{el.title}</Text>
@@ -83,7 +85,7 @@ const BookMarks = () => {
               </Flex>
               <Divider />
             </div>
-          ))}
+          )):<Loader />} 
         </Box>
       </Box>
     </div>

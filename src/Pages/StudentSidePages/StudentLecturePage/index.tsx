@@ -45,17 +45,19 @@ const StudentLecture = () => {
   const [lectureDataLength, setLectureDataLength] = useState<number>(0);
 
   // calling service for getting list for lectures
-  const GetLectures = () => {
+  const GetLectures = async() => {
     setLoading(true)
-    LectureStudentSearchService(filterValues).then((res: any) => {
-      setLoading(false)
+        try{
+   const res= await LectureStudentSearchService(filterValues)
       if (res.length > 0) {
+        setLoading(false)
         setLecturesData(res);
-      } else if (res.data.success === false) {
+      }     
+    }catch(error){    
         setIsOpen(true);
         setBody("These values did not match the lecture data!");
       }
-    });
+   
   };
 
   const fetchLecture = async () => {

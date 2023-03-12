@@ -126,7 +126,7 @@ const TagInput = ({ values, LectureValues, setLectureValues }: any) => {
       )}
       {!LectureValues.category && (
         <Text color="orange" fontSize="14PX">
-          Select Categoery to get the relevent tags
+          Select Categoeory to get the relevent tags
         </Text>
       )}
     </div>
