@@ -8,6 +8,8 @@
     "outDir": "./dist",
     "allowSyntheticDefaultImports": true,
     "baseUrl": ".",
+    "types": ["react"],
+    "skipLibCheck": true,
     "paths": {
       "@/*": ["src/*"]
     },

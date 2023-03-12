@@ -245,7 +245,7 @@ const LectureSearchInput = ({ filterValues, setFilterValues ,setLecturesData,sea
           name="createdBy"
           width={selectWidth}
           color="rgb(75 85 99)"
-          value={filterValues.user}
+          value={filterValues.createdBy}
           placeholder="Select user"
           onChange={handleChange}
         >

@@ -15,8 +15,8 @@ const validationSchema = yup.object().shape({
   zoomLink: yup
     .string()
     .matches(
-      /^https:\/\/((www\.)?|us02web\.)zoom\.us\/(j|my)\/\w{10}\?*\S*$/,
-      "Please enter a valid Zoom meeting link"
+      /^https?:\/\/[a-z\d]+\.zoom\.us\/j\/\d{9,}$/,
+  'Please enter a valid Zoom meeting link'
     )
     .required("Zoom meeting link is required"),
   schedule: yup
