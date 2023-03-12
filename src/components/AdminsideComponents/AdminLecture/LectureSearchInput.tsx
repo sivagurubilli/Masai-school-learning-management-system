@@ -24,7 +24,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 import { actionCreators } from "../../../redux/SelectionReducer/index";
 import { bindActionCreators } from "redux";
-import { useSearchParams } from "react-router-dom";
+
 
 
 const LectureSearchInput = ({ filterValues, setFilterValues ,setLecturesData,search,updateSearch}: any) => {
@@ -242,7 +242,7 @@ const LectureSearchInput = ({ filterValues, setFilterValues ,setLecturesData,sea
           onChange={handleInputChange}
         />
         <Select
-          name="user"
+          name="createdBy"
           width={selectWidth}
           color="rgb(75 85 99)"
           value={filterValues.user}
