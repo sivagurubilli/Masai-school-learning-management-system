@@ -10,28 +10,31 @@ const DashboardLectureCard = ({ lectureData }: any) => {
   const [modalBody, setModalErrorBody] = useState<string>("");
 const [gotoLive,setGotoLive] = useState(false)
   const navigate = useNavigate();
-
+ 
 
   const goTolecture = () => {
     const targetTime = new Date(lectureData.schedule);
     const currentTime = new Date();
-
+const endTime = new Date(lectureData.concludes)
     const diffInSeconds = Math.floor(
       (targetTime.getTime() - currentTime.getTime()) / 1000
     );
     const diffInMinutes = Math.floor(diffInSeconds / 60);
-  
+ 
     if (diffInMinutes > 10) {
  
       setIsOpen(true);
       setModalErrorBody(
         "Lectures can only be attended before 10 minutes"
       );
-    }else if(diffInMinutes < 10){
-      setGotoLive(true)
-    } else{
+    } else if(endTime.getDate() <= currentTime.getDate() && endTime.getTime() < currentTime.getTime() ){
+  
+      setGotoLive(false)
       navigate("/student/lectures/" + lectureData.lectureId);
 
+    }else if(diffInMinutes < 10){
+
+      setGotoLive(true)
     }
   };
 
