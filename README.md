@@ -1,4 +1,4 @@
-# <h1 align="center"> Masai Course Platform</h1>
+# <h1 align="center"> Masai School Learning Management System</h1>
 
 
 <h2>About Project</h2>This Project is About creating Learning Management system for Masai school which provides training on full-stack web developement training. Students can signup to the site and login to the site and search for lectures and watch previous lectures and attend live lectures and submit assignments. and save lectures by bookmarking them. And on admin side admins can login to the site and upload lectures and search for lectures copy lectures and edit lectures and delete lectures.
