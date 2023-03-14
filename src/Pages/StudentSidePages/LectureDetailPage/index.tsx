@@ -115,13 +115,18 @@ const [categoryArray,setCategoryArray] = useState<ICategoryObject[]>()
     }
   }, [ lectureDetail,batchArray, categoryArray, sectionArray, typeArray,userArray]);
 
-
+  useEffect(()=>{
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 4000);
+  },[])
 
 
 
   useEffect(() => {
     const fetchLecture = async () => {
-      setLoading(true);
+      
       try {
         const res = await LectureSingleService(id);
         setLectureDetail(res);
@@ -141,7 +146,7 @@ const [categoryArray,setCategoryArray] = useState<ICategoryObject[]>()
           setZoomLinkActive(false);
         }
 
-        setLoading(false);
+       
       } catch (err) {
         console.error(err);
       }
@@ -196,7 +201,8 @@ const [categoryArray,setCategoryArray] = useState<ICategoryObject[]>()
     <div>
       <Navbar />
       <CommonModalComponent  isOpen={isOpen} modalBody={modalErrorBody}/>
-      {loading && <Skeleton />}
+      {loading  ?<Skeleton />:
+      <div>
       {lectureDetail && (
         <Box>
           <Flex
@@ -312,7 +318,8 @@ const [categoryArray,setCategoryArray] = useState<ICategoryObject[]>()
           </Box>
         </Box>
       )}
-
+      </div>
+}
     </div>
   );
 };

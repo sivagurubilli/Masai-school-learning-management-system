@@ -50,7 +50,7 @@ const TagInput = ({ values, LectureValues, setLectureValues }: any) => {
   return (
     <div>
       <FormLabel mt="10px" color="rgb(75 85 99)">
-        Tags (comma seperated)
+        Tags 
       </FormLabel>
       <Flex
         flexWrap="wrap"
@@ -126,7 +126,7 @@ const TagInput = ({ values, LectureValues, setLectureValues }: any) => {
       )}
       {!LectureValues.category && (
         <Text color="orange" fontSize="14PX">
-          Select Categoeory to get the relevent tags
+          Select Category to get the relevent tags
         </Text>
       )}
     </div>

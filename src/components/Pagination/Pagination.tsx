@@ -89,6 +89,8 @@ const Pagination: React.FC<PaginationProps> = ({
               w="auto"
               borderRadius="6px"
               h="32px"
+              _hover={{bg:"blue",color:"white"}}
+             
               border="1px solid rgb(209,213,219)"
               onClick={() => handlePageChange(page)}
             >

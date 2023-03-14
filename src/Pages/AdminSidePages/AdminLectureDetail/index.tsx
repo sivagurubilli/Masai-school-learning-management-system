@@ -64,6 +64,7 @@ const AdminLectureDetail = () => {
   const [modalBody, setModalErrorBody] = useState<string>("");
   const [videoFile, setVideoFile] = useState<string | undefined | File>(undefined);
   const [isVideoActive, setVideoActive] = useState<boolean>(false);
+  const [isLoading,setLoading] = useState(true)
   const [batchArray, setBatchArray] = useState<IBatchObject[]>();
   const [sectionArray, setSectionArray] = useState<ISectionObject[]>();
   const [userArray, setUserArray] = useState<IUserObject[]>();
@@ -113,7 +114,12 @@ const [url,setUrl] = useState("")
     getDropDownArrays();
   }, [getDropDownArrays]);
 
-
+useEffect(()=>{
+  setLoading(true);
+  setTimeout(() => {
+    setLoading(false);
+  }, 6000);
+},[])
   const handeleClick = () => {
     setVideoActive(!isVideoActive);
   };
@@ -249,7 +255,7 @@ const [url,setUrl] = useState("")
             setIsOpen={setIsOpen}
             modalBody={modalBody}
           />
-          {!lectureDetail?.batch  ? (
+          { isLoading ? (
             <Box mt="1%">
               <Loading />
             </Box>

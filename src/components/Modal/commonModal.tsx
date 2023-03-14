@@ -20,7 +20,7 @@ const CommonModalComponent = ({ isOpen, setIsOpen, modalBody }: any) => {
         <ModalOverlay />
         <ModalContent>
           <ModalBody>
-            <Text p="30px">{modalBody}</Text>
+            <Text p="30px" fontWeight="medium">{modalBody}</Text>
           </ModalBody>
           <ModalFooter>
             <Button

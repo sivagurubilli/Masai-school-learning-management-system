@@ -177,7 +177,7 @@ const InputTakingSection = ({
         const response = await LectureEditService(LectureValues, id);
         if (response.message) {
           setIsOpen(true);
-          setModalErrorBody("The lecture was Success fully added with Changes");
+          setModalErrorBody("The lecture was Successfully added with Changes");
         }
       } catch (error) {
         setIsOpen(true);
@@ -191,7 +191,7 @@ const InputTakingSection = ({
         const response = await LectureCopyService(LectureValues, id);
         if (response.message) {
           setIsOpen(true);
-          setModalErrorBody("The lecture was  Success fully Copied with Changes");
+          setModalErrorBody("In the lecture, the topic was Success Copied with Changes");
         }
       } catch (error) {
         setIsOpen(true);
@@ -206,7 +206,7 @@ const InputTakingSection = ({
         const response = await LecturePostService(LectureValues);
         if (response.message) {
           setIsOpen(true);
-          setModalErrorBody("The lecture was Success fully added");
+          setModalErrorBody("The lecture was Successfully added");
         }
       } catch (error) {
         setIsOpen(true);
@@ -268,7 +268,7 @@ const InputTakingSection = ({
               name="title"
               value={values.title}
               gridColumn={gridColumn}
-              placeholder="Enter text"
+              placeholder="Enter title"
               onBlur={handleBlur}
               onChange={handleChange}
             />

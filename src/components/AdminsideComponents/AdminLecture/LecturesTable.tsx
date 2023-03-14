@@ -15,7 +15,9 @@ import {
   TableContainer,
   Box,
 } from "@chakra-ui/react";
+import moment from "moment";
 const TableHeading = ({ LecturesData }:any) => {
+  console.log(LecturesData)
   return (
     <div>
       <Box overflow={"auto"}>
@@ -56,7 +58,9 @@ const TableHeading = ({ LecturesData }:any) => {
                       <Text>
                         <>
                           Created by {lecture.createdBy} ({lecture.category}) at{" "}
-                          {lecture.schedule}
+                          {moment(lecture.schedule).format(
+    "MMM Do YY, h:mm a"
+  )}
                         </>
                       </Text>
                     </Td>
@@ -64,9 +68,13 @@ const TableHeading = ({ LecturesData }:any) => {
                     <Td w="15%">
                       <Text>
                         <>
-                          Start At {lecture.schedule}
+                          Start At  {moment(lecture.schedule).format(
+    "MMM Do YY, h:mm a"
+  )}
                           <br />
-                          Conclude At {lecture.concludes}
+                          Conclude At  {moment(lecture.concludes).format(
+    "MMM Do YY, h:mm a"
+  )}
                         </>
                       </Text>
                     </Td>

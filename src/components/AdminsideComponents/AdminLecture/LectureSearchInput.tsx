@@ -34,6 +34,7 @@ const LectureSearchInput = ({ filterValues, setFilterValues ,setLecturesData,sea
   const [typeArray, setTypeArray] = useState<ITypeObject[]>();
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [modalBody, setModalErrorBody] = useState<string>("");
+  
   const dispatch = useDispatch();
   const { GetBatchData, GetSectionData, GetTypeData, GetUserData,GetCategoeryData } =
     bindActionCreators(actionCreators, dispatch);
@@ -83,6 +84,7 @@ const LectureSearchInput = ({ filterValues, setFilterValues ,setLecturesData,sea
       setBatchArray(state.BatchReducer.Batch);
       setSectionArray(state.SectionReducer.Section);
       setTypeArray(state.TypeReducer.Type);
+      setUserArray(state.UserReducer.User);
     };
     if (
       state.BatchReducer.Batch.length &&
@@ -96,6 +98,7 @@ const LectureSearchInput = ({ filterValues, setFilterValues ,setLecturesData,sea
     getDropDownArrays,
     state.BatchReducer.Batch,
     state.TypeReducer.Type,
+    state.UserReducer.User,
     state.SectionReducer.Section,
     state.CategoeryReducer.Categoery.length,
   ]);
@@ -105,12 +108,41 @@ const LectureSearchInput = ({ filterValues, setFilterValues ,setLecturesData,sea
   
   // this is setting values from select tags
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const { name, value } = event.target;
+    let { name, value} = event.target;
+    let value1= value
+    if(name==="batch"){
+      batchArray?.map((el)=>{
+        if(el.batchId=== Number(value)){
+          value=el.batch
+        }
+      })
+    }
+    if(name==="section"){
+      sectionArray?.map((el)=>{
+        if(el.sectionId=== Number(value)){
+          value=el.section
+        }
+      })
+    }
+    if(name==="type"){
+      typeArray?.map((el)=>{
+        if(el.id=== Number(value)){
+          value=el.type
+        }
+      })
+    }
+    if(name==="createdBy"){
+      userArray?.map((el)=>{
+        if(el.id=== Number(value)){
+          value=el.name
+        }
+      })
+    }
     updateSearch({
       ...search,
       [name]: value,
     });
-    setFilterValues({ ...filterValues, [name]: value });
+    setFilterValues({ ...filterValues, [name]: value1 });
   };
 
   //this is setting values from input elements
@@ -153,7 +185,7 @@ const LectureSearchInput = ({ filterValues, setFilterValues ,setLecturesData,sea
           name="title"
           value={filterValues.title}
           gridColumn={gridColumn}
-          placeholder="Enter text"
+          placeholder="Enter title"
           onChange={handleInputChange}
         />
       </Grid>

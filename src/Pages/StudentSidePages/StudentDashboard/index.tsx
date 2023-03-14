@@ -15,7 +15,7 @@ const Dashborad = () => {
   const [dashboardLectures,setDashboardLectures] = useState<ILectureResponse[]>()
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [modalBody, setModalErrorBody] = useState<string>("");
-
+  const [loading, setLoading] = useState<boolean>();
 
 
   const fetchData = async() =>{
@@ -32,7 +32,12 @@ const Dashborad = () => {
   }
 }
 
-
+useEffect(()=>{
+  setLoading(true);
+  setTimeout(() => {
+    setLoading(false);
+  }, 3000);
+},[])
   // when student user enters this page all lectures for that date schedule is displayed here
     useEffect(()=>{
    
@@ -50,7 +55,7 @@ const Dashborad = () => {
         modalBody={modalBody}
       />
 
-      {!dashboardLectures?.length ?<Loader />:
+      {loading ?<Loader />:
         <Box
           w="80%"
           borderRadius="10px"
@@ -60,7 +65,7 @@ const Dashborad = () => {
           ml="10%"
           mt="70px"
         >   
-      {dashboardLectures  &&  dashboardLectures.map((lecture)=>(
+      {dashboardLectures  &&  dashboardLectures?.map((lecture)=>(
       <DashboardLectureCard key ={lecture.batch} lectureData={lecture} />
     
     ))}
